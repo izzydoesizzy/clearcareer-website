@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "@fontsource-variable/inter";
+@import "@fontsource/dm-serif-display";
 
 @theme {
   /* ClearCareer Brand Colors */
@@ -21,6 +22,7 @@
 
   /* Typography */
   --font-sans: 'Inter Variable', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'DM Serif Display', Georgia, serif;
 }
 
 /* ── Scroll Animations ── */
