@@ -7,7 +7,8 @@
     "quote": "I reached out to Izzy with no expectations, as I'd never sought career advice before. Izzy gave me exactly what I needed; a kickstart! In just our first talk he listened to me and helped me identify some action items I could do right away. He gave me things to think about to help me decide on an area of focus. He had a couple of phrases that I found very insightful and poignant that made me feel a little more confident and optimistic in my search for a new career path. He was generous with his time and thoughtful in his approach and that makes the process of asking for his help that much easier. I would recommend that anyone take advantage of his knowledge, skillset, and attitude.",
     "source": "clearcareer-ops/marketing/testimonials/README.md, coaching-quality.md",
     "hasImage": false,
-    "category": "coaching-quality"
+    "category": "coaching-quality",
+    "pullQuote": "Izzy gave me exactly what I needed: a kickstart! In just our first talk he helped me identify action items I could do right away."
   },
   {
     "name": "Alex",
@@ -17,7 +18,8 @@
     "quote": "Izzy showed a lot of useful tools and techniques I didn't know about. He was very insightful, the style he presents is engaging and he's a funny guy. I recommend his webinars to everyone.",
     "source": "Talkadot survey export, workshop-feedback.md",
     "hasImage": false,
-    "category": "workshop"
+    "category": "workshop",
+    "pullQuote": "Izzy showed a lot of useful tools and techniques I didn't know about. I recommend his webinars to everyone."
   },
   {
     "name": "Alison Gibbins",
@@ -29,7 +31,8 @@
     "hasImage": false,
     "category": "career-outcome",
     "tagline": "Top of salary range, extra vacation, and a role that matters.",
-    "sortPriority": 19
+    "sortPriority": 19,
+    "pullQuote": "Top of salary range, extra vacation, and a role that matters."
   },
   {
     "name": "Andrew Cameron",
@@ -39,7 +42,8 @@
     "quote": "Before working with Izzy, I had taken expensive career courses that didn't lead anywhere. It all felt like busywork with no results. Izzy creates a positive group dynamic of like-minded people who support and motivate one-another by sharing their successes, learnings and failures. Izzy's system completely transformed my job search from sending out hundreds of applications with no results, to receiving responses from employers within the first week of joining his program. Now, all the work I do seems to feel more productive and get immediate responses. Highly recommend working with him.",
     "source": "clearcareer-ops/marketing/testimonials/README.md, career-outcomes.md, professional-archive.docx",
     "hasImage": true,
-    "category": "career-outcome"
+    "category": "career-outcome",
+    "pullQuote": "Izzy's system completely transformed my job search from hundreds of applications with no results to receiving responses within the first week."
   },
   {
     "name": "Angie Graves",
@@ -49,7 +53,8 @@
     "quote": "Great content, learned about new tools that I didn't know were out there. Made an intimidating concept not so scary!",
     "source": "Talkadot survey export, workshop-feedback.md",
     "hasImage": false,
-    "category": "workshop"
+    "category": "workshop",
+    "pullQuote": "Great content, learned about new tools that I didn't know were out there. Made an intimidating concept not so scary!"
   },
   {
     "name": "Annie Bell",
@@ -61,7 +66,8 @@
     "hasImage": true,
     "category": "career-outcome",
     "tagline": "Stuck in a job search black hole. 2 offers in weeks.",
-    "sortPriority": 2
+    "sortPriority": 2,
+    "pullQuote": "Stuck in a job search black hole. 2 offers in weeks."
   },
   {
     "name": "Athena Hernandez",
@@ -71,7 +77,8 @@
     "quote": "Izzy Piyale-Sheard's expertise as a career coach is unparalleled. His guidance on leveraging ChatGPT for crafting compelling professional summaries, quantifying achievements, and optimizing LinkedIn profiles transformed my job search strategy. With his insightful advice and curated resources, I feel equipped to navigate the competitive job market with confidence.",
     "source": "clearcareer-ops/marketing/testimonials/README.md, coaching-quality.md, professional-archive.docx",
     "hasImage": false,
-    "category": "coaching-quality"
+    "category": "coaching-quality",
+    "pullQuote": "His guidance on leveraging ChatGPT for professional summaries, quantifying achievements, and optimizing LinkedIn transformed my job search strategy."
   },
   {
     "name": "Barbara Dye",
@@ -81,7 +88,8 @@
     "quote": "I was blown away by a recent session Izzy led on 10 AI Strategies to Level Up Your Job Search. He definitely knows the GenAI landscape and it was clear he's spent a lot of time perfecting various prompts. If he is this good during a GenAI session I'm sure as a career coach he is even more effective. This session gave me a boost in hope and confidence in my job search efforts - highly recommend Izzy!",
     "source": "clearcareer-ops/marketing/testimonials/README.md, workshop-feedback.md, professional-archive.docx",
     "hasImage": false,
-    "category": "workshop"
+    "category": "workshop",
+    "pullQuote": "This session gave me a boost in hope and confidence in my job search efforts. If he is this good during a GenAI session, as a career coach he is even more effective."
   },
   {
     "name": "Beckie Thain-Blonk",
@@ -91,7 +99,8 @@
     "quote": "Izzy is the best when it comes to technology to make your job search waaay easier.",
     "source": "clearcareer-ops/marketing/testimonials/README.md, coaching-quality.md, professional-archive.docx",
     "hasImage": false,
-    "category": "peer-endorsement"
+    "category": "peer-endorsement",
+    "pullQuote": "Izzy is the best when it comes to technology to make your job search waaay easier."
   },
   {
     "name": "Blake McDermott",
@@ -104,7 +113,8 @@
     "category": "career-outcome",
     "imagePath": "/images/testimonials/blake-mcdermott.png",
     "tagline": "200+ failed apps. 27 targeted emails. 13 replies. 1 offer.",
-    "sortPriority": 6
+    "sortPriority": 6,
+    "pullQuote": "200+ failed apps. 27 targeted emails. 13 replies. 1 offer."
   },
   {
     "name": "Chris Chipman",
@@ -116,7 +126,8 @@
     "hasImage": false,
     "category": "career-outcome",
     "tagline": "$25K raise. Associate Director. One program.",
-    "sortPriority": 8
+    "sortPriority": 8,
+    "pullQuote": "$25K raise. Associate Director. One program."
   },
   {
     "name": "Courtenay Badran",
@@ -126,7 +137,8 @@
     "quote": "Izzy is the most caring, supportive, and dedicated career coach I've ever worked with. He has not only transformed the way I apply for jobs, but also helped build my confidence. 10/10 would recommend!",
     "source": "clearcareer-ops/marketing/testimonials/README.md, coaching-quality.md, professional-archive.docx",
     "hasImage": false,
-    "category": "coaching-quality"
+    "category": "coaching-quality",
+    "pullQuote": "Izzy is the most caring, supportive, and dedicated career coach I've ever worked with. 10/10 would recommend!"
   },
   {
     "name": "Daniela Dyer Melhado",
@@ -138,7 +150,8 @@
     "hasImage": false,
     "category": "career-outcome",
     "tagline": "Nervous about a World Bank interview. Got the offer.",
-    "sortPriority": 18
+    "sortPriority": 18,
+    "pullQuote": "Nervous about a World Bank interview. Got the offer."
   },
   {
     "name": "Danica Stark",
@@ -148,7 +161,8 @@
     "quote": "Izzy was able to guide me in thinking differently about my achievements, which helped me understand the true impact of my work and feel confident in my professional accomplishments. He really took the time to understand the intricacies of my experiences and allowed them to be highlighted in a way that felt authentic and unique to me. I wholeheartedly recommend Izzy to anyone seeking not only a resume overhaul but also a positive and empowering experience in navigating their career journey.",
     "source": "clearcareer-ops/marketing/testimonials/README.md, coaching-quality.md, professional-archive.docx",
     "hasImage": true,
-    "category": "coaching-quality"
+    "category": "coaching-quality",
+    "pullQuote": "Izzy guided me in thinking differently about my achievements, which helped me understand the true impact of my work."
   },
   {
     "name": "Darin Mellor",
@@ -161,7 +175,8 @@
     "category": "linkedin-review",
     "imagePath": "/images/testimonials/darin-mellor.png",
     "tagline": "600+ applications, 3 interviews. Then everything changed.",
-    "sortPriority": 12
+    "sortPriority": 12,
+    "pullQuote": "600+ applications, 3 interviews. Then everything changed."
   },
   {
     "name": "Dave Basham",
@@ -171,7 +186,8 @@
     "quote": "An engaging presentation about how to use AI throughout the entire job search, including lots of examples, and tools you probably didn't know existed!",
     "source": "Talkadot survey export, workshop-feedback.md",
     "hasImage": false,
-    "category": "workshop"
+    "category": "workshop",
+    "pullQuote": "An engaging presentation about how to use AI throughout the entire job search, including lots of examples, and tools you probably didn't know existed!"
   },
   {
     "name": "Denise Merzon",
@@ -181,7 +197,8 @@
     "quote": "If you want to learn about AI which is so important today and for the future, especially as an older individual in competing in today's highly competitive marketplace, it is imperative to become comfortable with AI. It could be scary at first, however, it can be fun as well.",
     "source": "Talkadot survey export, workshop-feedback.md",
     "hasImage": false,
-    "category": "workshop"
+    "category": "workshop",
+    "pullQuote": "It could be scary at first, however, it can be fun as well. It is imperative to become comfortable with AI."
   },
   {
     "name": "Ellie Hoekman",
@@ -191,7 +208,8 @@
     "quote": "Izzy is a wizard! I went to his workshop on utilizing AI to build a resume, prep for interviews, and succeed in the job search with ease. Izzy has broken down the fundamentals of impactful career coaching into AI models to make excellent resume writing, email writing, and interviewing accessible to more job seekers! He's also a genuine person who wants to see you succeed.",
     "source": "clearcareer-ops/marketing/testimonials/README.md, workshop-feedback.md, professional-archive.docx",
     "hasImage": false,
-    "category": "workshop"
+    "category": "workshop",
+    "pullQuote": "Izzy is a wizard! He's broken down the fundamentals of career coaching into AI models to make resume writing, email writing, and interviewing accessible to more job seekers."
   },
   {
     "name": "Erin Marini",
@@ -201,7 +219,8 @@
     "quote": "Izzy was incredible when helping me review my resume and cover letter. He taught me really good tricks for getting your resume noticed and key points to include and frame your cover letter. He was so patient, friendly and helpful. I would highly recommend Izzy to anyone who is looking for career advice, job applications or general insight into job searches.",
     "source": "clearcareer-ops/marketing/testimonials/README.md, coaching-quality.md, professional-archive.docx",
     "hasImage": false,
-    "category": "coaching-quality"
+    "category": "coaching-quality",
+    "pullQuote": "He taught me really good tricks for getting your resume noticed. I would highly recommend Izzy to anyone looking for career advice."
   },
   {
     "name": "Gamze Aluc",
@@ -211,7 +230,8 @@
     "quote": "Izzy's insights and suggestions about my resume were valuable so that I could create my next steps. Also, he showed me some points I had never realized before about the interviewing process. Getting feedback from a professional is helpful, and you must work with him if you want to invest in your career.",
     "source": "clearcareer-ops/marketing/testimonials/README.md, coaching-quality.md, professional-archive.docx",
     "hasImage": false,
-    "category": "coaching-quality"
+    "category": "coaching-quality",
+    "pullQuote": "He showed me points I had never realized before about the interviewing process. You must work with him if you want to invest in your career."
   },
   {
     "name": "Glenna Eastwood",
@@ -221,7 +241,8 @@
     "quote": "I had the privilege of attending Izzy's '10 AI Strategies to Level Up Your Job Search' session recently, and it was truly amazing. The library of prompts he shared for maximizing the potential of ChatGPT to support job search efforts is invaluable. I am excited to dive in and create more targeted artifacts to support my job search.",
     "source": "clearcareer-ops/marketing/testimonials/README.md, workshop-feedback.md, professional-archive.docx",
     "hasImage": false,
-    "category": "workshop"
+    "category": "workshop",
+    "pullQuote": "The library of prompts he shared for maximizing the potential of ChatGPT to support job search efforts is invaluable."
   },
   {
     "name": "Haddie Lengyuen",
@@ -231,7 +252,8 @@
     "quote": "Izzy's encouragement along with easy-to-follow career tools bolstered my confidence to ask for informational interviews with those I admired - and I landed new jobs! In fact, the majority of my jobs were from reaching out! At the time, I only had a high school diploma as my highest level of education so I had a difficult time getting past the gatekeepers for online job applications. Much of my career success can be attributed to the core principles Izzy taught me at the start of my career.",
     "source": "clearcareer-ops/marketing/testimonials/README.md, career-outcomes.md, professional-archive.docx",
     "hasImage": false,
-    "category": "career-outcome"
+    "category": "career-outcome",
+    "pullQuote": "I only had a high school diploma and had a difficult time getting past the gatekeepers. Much of my career success can be attributed to the core principles Izzy taught me."
   },
   {
     "name": "Hamsharan Mahalingam",
@@ -241,7 +263,8 @@
     "quote": "I had a great time with Izzy and I would like to start doing what he has recommended more. Here's to me landing a job.",
     "source": "clearcareer-ops/marketing/testimonials/README.md, coaching-quality.md, professional-archive.docx",
     "hasImage": false,
-    "category": "coaching-quality"
+    "category": "coaching-quality",
+    "pullQuote": "I had a great time with Izzy and I would like to start doing what he has recommended more. Here's to me landing a job."
   },
   {
     "name": "Heidi Priebe",
@@ -251,7 +274,8 @@
     "quote": "When I was struggling professionally, Izzy took the time to brainstorm ideas one-on-one with me. When group members experienced personal challenges, Izzy was the first one to check in with them and ensure they felt heard and cared for. And when anyone was feeling remotely down, Izzy was there to pump up the energy level and get everyone excited. I'm not sure I've ever met someone who works so hard and so efficiently at both the technical and personal aspects of maintaining a community.",
     "source": "clearcareer-ops/marketing/testimonials/README.md, coaching-quality.md, professional-archive.docx",
     "hasImage": false,
-    "category": "peer-endorsement"
+    "category": "peer-endorsement",
+    "pullQuote": "I'm not sure I've ever met someone who works so hard at both the technical and personal aspects of maintaining a community."
   },
   {
     "name": "Henrique Perez",
@@ -263,7 +287,8 @@
     "hasImage": true,
     "category": "career-outcome",
     "tagline": "2 job offers in 1 week. 30% salary increase.",
-    "sortPriority": 9
+    "sortPriority": 9,
+    "pullQuote": "2 job offers in 1 week. 30% salary increase."
   },
   {
     "name": "Jeska Edens",
@@ -273,7 +298,8 @@
     "quote": "Honestly it all sounds so much more achievable with Izzy's confidence in what I have to do! I already feel so much better about my prospects it's crazy.",
     "source": "clearcareer-ops/marketing/testimonials/README.md, coaching-quality.md, professional-archive.docx",
     "hasImage": false,
-    "category": "coaching-quality"
+    "category": "coaching-quality",
+    "pullQuote": "Honestly it all sounds so much more achievable with Izzy's confidence in what I have to do! I already feel so much better about my prospects it's crazy."
   },
   {
     "name": "Jesse Norton",
@@ -283,7 +309,8 @@
     "quote": "Izzy is outstanding in his ability to motivate, focus and inspire individuals with his indefatigable dedication to providing perspective, insight and vision. So if you're looking to work with somebody dependable, approachable and inspiring consider yourself lucky to work with Izzy - he's as cool as cucumber and as awesome as a stegosaurus with laser beams attached to its head.",
     "source": "clearcareer-ops/marketing/testimonials/README.md, coaching-quality.md, professional-archive.docx",
     "hasImage": false,
-    "category": "peer-endorsement"
+    "category": "peer-endorsement",
+    "pullQuote": "If you're looking to work with somebody dependable, approachable and inspiring, consider yourself lucky to work with Izzy."
   },
   {
     "name": "Jessica Leung",
@@ -293,7 +320,8 @@
     "quote": "Izzy is extremely generous with his time, positive, insightful, knowledgeable, approachable, and produces high-quality work. When he agreed to help me create a website, he showed genuine interest in my career and was determined to help build my online media presence. He took the time to get to know me, my personality, and my brand as a performing artist to ensure that the design he used effectively reflected my brand. Extra time was spent outside of our meetings to continue developing and adding to my website. I met Izzy approximately three months ago and he has been inspiring me with his work and drive ever since. I would recommend people to work with Iskender on their projects as well!",
     "source": "clearcareer-ops/marketing/testimonials/README.md, coaching-quality.md, professional-archive.docx",
     "hasImage": false,
-    "category": "coaching-quality"
+    "category": "coaching-quality",
+    "pullQuote": "He took the time to get to know me, my personality, and my brand to ensure that the design effectively reflected who I am."
   },
   {
     "name": "Jorge Garboza",
@@ -305,7 +333,8 @@
     "hasImage": true,
     "category": "career-outcome",
     "tagline": "12 months, 0 offers. Then $6K negotiated above \"final.\"",
-    "sortPriority": 16
+    "sortPriority": 16,
+    "pullQuote": "12 months, 0 offers. Then $6K negotiated above \"final.\""
   },
   {
     "name": "Julie Boettger",
@@ -315,7 +344,8 @@
     "quote": "Izzy is very informative and knowledgeable about the subject at hand. He makes it enjoyable with his little anecdotes along the way. I thoroughly enjoyed this webinar and I am jazzed to get started with the information he conveyed. This is a very informative webinar and crucial to have when searching for a new job.",
     "source": "Talkadot survey export, workshop-feedback.md",
     "hasImage": false,
-    "category": "workshop"
+    "category": "workshop",
+    "pullQuote": "I am jazzed to get started with the information he conveyed. This is a very informative webinar and crucial to have when searching for a new job."
   },
   {
     "name": "Julian Pedraza",
@@ -327,7 +357,8 @@
     "hasImage": true,
     "category": "career-outcome",
     "tagline": "$20K raise and a full industry switch.",
-    "sortPriority": 11
+    "sortPriority": 11,
+    "pullQuote": "$20K raise and a full industry switch."
   },
   {
     "name": "Kay Woods",
@@ -337,7 +368,8 @@
     "quote": "Izzy is no hype. This man is a real life wizard of 'work', and he's sensitive with a big ole heart. He is worth every penny. In fact he doesn't charge enough for what he does. Someone said resourceful, I'd agree. He's leveraging technology in ways most coaches don't even know HOW TO use yet. If and when his prices go up it will be fair and overdue - so get in now, while you still can. Izzy will be one of those coaches you heard of people using - but they don't accept new clients. Don't be sorry.",
     "source": "clearcareer-ops/marketing/testimonials/README.md, coaching-quality.md, professional-archive.docx",
     "hasImage": false,
-    "category": "coaching-quality"
+    "category": "coaching-quality",
+    "pullQuote": "He is worth every penny. He's leveraging technology in ways most coaches don't even know HOW TO use yet."
   },
   {
     "name": "Kedar Nadkarny",
@@ -347,7 +379,8 @@
     "quote": "I am a new immigrant to Canada and needed help with my resume to be in Canadian format. I came across Izzy and he helped me fine tune my resume. The focus on mentioning metrics based performance for tech profile like mine was really important. My Resume came across more mature to recruiters and people in my network. Highly recommend Izzy.",
     "source": "clearcareer-ops/marketing/testimonials/README.md, coaching-quality.md, professional-archive.docx",
     "hasImage": false,
-    "category": "coaching-quality"
+    "category": "coaching-quality",
+    "pullQuote": "My resume came across more mature to recruiters and people in my network. Highly recommend Izzy."
   },
   {
     "name": "Ken Alperin",
@@ -357,7 +390,8 @@
     "quote": "The webinar was both very important and very well prepared and delivered. If you are looking for a job and have had little knowledge or exposure to the benefits of AI, then this webinar is for you. I got plenty of valuable information, websites and tools to use for my current job search.",
     "source": "Talkadot survey export, workshop-feedback.md",
     "hasImage": false,
-    "category": "workshop"
+    "category": "workshop",
+    "pullQuote": "I got plenty of valuable information, websites and tools to use for my current job search."
   },
   {
     "name": "Kenenna",
@@ -367,7 +401,8 @@
     "quote": "The AI Enhanced Interview Prep with Izzy Piyale-Sheard was so awesome, and surely going to invite my friends seeking career change in future trainings. Keep it up, guys. So impressed with the content of the event.",
     "source": "Talkadot survey export, workshop-feedback.md",
     "hasImage": false,
-    "category": "workshop"
+    "category": "workshop",
+    "pullQuote": "So impressed with the content of the event. Surely going to invite my friends seeking career change in future trainings."
   },
   {
     "name": "Kevin Truong",
@@ -377,7 +412,8 @@
     "quote": "Being a startup founder and having a jack of all trades skillset; I struggled with narrowing my career pathway. Working with Izzy, he helped me identify key elements of my experience, craft a stronger intro story and creating an impact profile through my resume and social feeds. Izzy provides a very interpersonal 1:1 approach towards one career journey!",
     "source": "clearcareer-ops/marketing/testimonials/README.md, coaching-quality.md, professional-archive.docx",
     "hasImage": false,
-    "category": "coaching-quality"
+    "category": "coaching-quality",
+    "pullQuote": "I struggled with narrowing my career pathway. Izzy helped me identify key elements, craft a stronger intro story and create an impact profile."
   },
   {
     "name": "Kira Howe",
@@ -390,7 +426,8 @@
     "category": "career-outcome",
     "imagePath": "/images/testimonials/kira-howe.png",
     "tagline": "From freelancer to $127K + 30 PTO days negotiated",
-    "sortPriority": 1
+    "sortPriority": 1,
+    "pullQuote": "From freelancer to $127K + 30 PTO days negotiated"
   },
   {
     "name": "Kris Adams",
@@ -400,7 +437,8 @@
     "quote": "First real exposure on how to best utilize AI, especially prompts to use. Very beneficial!!!",
     "source": "Talkadot survey export, workshop-feedback.md",
     "hasImage": false,
-    "category": "workshop"
+    "category": "workshop",
+    "pullQuote": "First real exposure on how to best utilize AI, especially prompts to use. Very beneficial!!!"
   },
   {
     "name": "Kristin Davis",
@@ -413,7 +451,8 @@
     "category": "career-outcome",
     "imagePath": "/images/testimonials/kristin-davis.png",
     "tagline": "1 year unemployed. Employed in 3 weeks.",
-    "sortPriority": 4
+    "sortPriority": 4,
+    "pullQuote": "1 year unemployed. Employed in 3 weeks."
   },
   {
     "name": "Laura Salamanca",
@@ -426,7 +465,8 @@
     "category": "career-outcome",
     "imagePath": "/images/testimonials/laura-salamanca.png",
     "tagline": "$22K more per year. The dream role. 30% salary jump.",
-    "sortPriority": 10
+    "sortPriority": 10,
+    "pullQuote": "$22K more per year. The dream role. 30% salary jump."
   },
   {
     "name": "Leanne Saldanha",
@@ -438,7 +478,8 @@
     "hasImage": true,
     "category": "career-outcome",
     "tagline": "One outreach email. Opened 4 times. Interview scheduled.",
-    "sortPriority": 20
+    "sortPriority": 20,
+    "pullQuote": "One outreach email. Opened 4 times. Interview scheduled."
   },
   {
     "name": "Linda Tu",
@@ -448,7 +489,8 @@
     "quote": "Izzy's session was to the point, with valuable information on AI tools to use and what to avoid or look for. He was engaging, interactive, humble, and authentic. He covered the needs of beginners, intermediates, and senior job seekers from an outside-in perspective.",
     "source": "Talkadot survey export, workshop-feedback.md",
     "hasImage": false,
-    "category": "workshop"
+    "category": "workshop",
+    "pullQuote": "He was engaging, interactive, humble, and authentic. He covered the needs of beginners, intermediates, and senior job seekers."
   },
   {
     "name": "Linet Okerio",
@@ -458,7 +500,8 @@
     "quote": "I really recommend it to my colleagues because Izzy explains everything clearly and smart. This is the best event I have attended. I really liked it.",
     "source": "Talkadot survey export, workshop-feedback.md",
     "hasImage": false,
-    "category": "workshop"
+    "category": "workshop",
+    "pullQuote": "This is the best event I have attended. Izzy explains everything clearly and smart."
   },
   {
     "name": "Lucretia",
@@ -468,7 +511,8 @@
     "quote": "WOW! I was given so much more tools to use and a different perspective to be set up for success! I have a big interview upcoming and this will help me prep for sure.",
     "source": "Talkadot survey export, workshop-feedback.md",
     "hasImage": false,
-    "category": "workshop"
+    "category": "workshop",
+    "pullQuote": "WOW! I was given so much more tools to use and a different perspective to be set up for success!"
   },
   {
     "name": "Maggie",
@@ -478,7 +522,8 @@
     "quote": "Wow! I knew there I could do a lot with AI in my search for a new position. I attended a session Izzy led on 10 AI Strategies to Level Up Your Job Search. Each of the AI prompts Izzy shared was directly applicable to the job search process. The prompts went beyond the 'Create a thank you email ...' I usually write. My takeaway prompt? The 'Writing the unforgettable thank you email.' I'll definitely use it. The session boosted my confidence in using AI to help me write my thank yous. I recommend Izzy highly!",
     "source": "clearcareer-ops/marketing/testimonials/README.md, workshop-feedback.md, professional-archive.docx",
     "hasImage": false,
-    "category": "workshop"
+    "category": "workshop",
+    "pullQuote": "Each of the AI prompts Izzy shared was directly applicable to the job search process. The session boosted my confidence in using AI."
   },
   {
     "name": "Maria Chami",
@@ -488,7 +533,8 @@
     "quote": "Izzy was kind and understanding while listening to my concerns. He provided valuable tips for me moving forward, and made really astute observations about my situation, reading between the lines in ways I never thought of. Would definitely recommend him!",
     "source": "clearcareer-ops/marketing/testimonials/README.md, coaching-quality.md, professional-archive.docx",
     "hasImage": false,
-    "category": "coaching-quality"
+    "category": "coaching-quality",
+    "pullQuote": "He made really astute observations about my situation, reading between the lines in ways I never thought of."
   },
   {
     "name": "Marina",
@@ -498,7 +544,8 @@
     "quote": "This talk really helped and motivated me to elevate my AI usage even more than I already do. Highly recommend.",
     "source": "Talkadot survey export, workshop-feedback.md",
     "hasImage": false,
-    "category": "workshop"
+    "category": "workshop",
+    "pullQuote": "This talk really helped and motivated me to elevate my AI usage even more than I already do. Highly recommend."
   },
   {
     "name": "Marsha Druker",
@@ -510,7 +557,8 @@
     "hasImage": true,
     "category": "career-outcome",
     "tagline": "$10K negotiated. Dream tech role.",
-    "sortPriority": 15
+    "sortPriority": 15,
+    "pullQuote": "$10K negotiated. Dream tech role."
   },
   {
     "name": "Marsha Malcolm",
@@ -520,7 +568,8 @@
     "quote": "I can't speak highly enough about Izzy's talent for coaching and his ability to provide actionable strategies for a successful job search. After just one session, I felt much better about my prospects and more confidence in myself as an applicant. Implementing Izzy's suggestions helped me successfully transition into a field that I had been interested in for a long time. Believe the hype, Izzy is the real deal!",
     "source": "clearcareer-ops/marketing/testimonials/README.md, coaching-quality.md, professional-archive.docx",
     "hasImage": false,
-    "category": "career-outcome"
+    "category": "career-outcome",
+    "pullQuote": "After just one session, I felt much better about my prospects. Implementing Izzy's suggestions helped me successfully transition into a field I'd been interested in for a long time."
   },
   {
     "name": "Mary Smith",
@@ -530,7 +579,8 @@
     "quote": "Very insightful and tools given were great. Love coming away from a webinar with tangible notes, things to do, and next steps.",
     "source": "Talkadot survey export, workshop-feedback.md",
     "hasImage": false,
-    "category": "workshop"
+    "category": "workshop",
+    "pullQuote": "Very insightful and tools given were great. Love coming away from a webinar with tangible notes, things to do, and next steps."
   },
   {
     "name": "Mayowa Awosiyan",
@@ -540,7 +590,8 @@
     "quote": "He goes over the basics of some useful AI tools that can help people land jobs and put themselves ahead of the competition. I personally had not heard of most of these tools despite using AI tools frequently.",
     "source": "Talkadot survey export, workshop-feedback.md",
     "hasImage": false,
-    "category": "workshop"
+    "category": "workshop",
+    "pullQuote": "I personally had not heard of most of these tools despite using AI tools frequently."
   },
   {
     "name": "Mazia Syed",
@@ -550,7 +601,8 @@
     "quote": "Izzy has always exceeded my expectations in our work together. It's clear that he genuinely cares about my success and I have noticed a renewed sense of energy since we started working together. He will absolutely bring out the best in you. Take the leap - you won't regret it.",
     "source": "clearcareer-ops/marketing/testimonials/README.md, coaching-quality.md, professional-archive.docx",
     "hasImage": true,
-    "category": "coaching-quality"
+    "category": "coaching-quality",
+    "pullQuote": "He will absolutely bring out the best in you. Take the leap, you won't regret it."
   },
   {
     "name": "Nabeel K Adeni",
@@ -560,7 +612,8 @@
     "quote": "Izzy is more than just a coach, he's a strategist - generous, patient, tech-savvy, and a mentor who gets the business of career growth. He lives the ethos of helping others succeed to find your own path to success. Izzy's approach is not just about coaching; it's a masterclass in career strategy. Izzy's positivity is infectious, possibly making him the sunniest person on the planet! He generously extended our initial 25min call to a substantial 75min brainstorm, dedicating time to truly understand and assist me for my interview. I'm also inspired by how Izzy has built ClearCareer. His blend of coaching prowess, listening skills, top-notch AI resources, and super-useful templates are nothing short of remarkable. He expertly guided me to refine my interview positioning, transforming my storytelling from vague narratives to impactful, Quentin Tarantino-esque hooks that grab attention. Also, his skill in discerning the essence of job descriptions speaks to his wisdom in seeing beyond the apparent. Thank you, Izzy, for being an exceptional mentor and an even more exceptional human being. Here's to your ongoing success!",
     "source": "clearcareer-ops/marketing/testimonials/README.md, coaching-quality.md, professional-archive.docx",
     "hasImage": false,
-    "category": "coaching-quality"
+    "category": "coaching-quality",
+    "pullQuote": "He extended our initial 25min call to a 75min brainstorm, transforming my storytelling from vague narratives to hooks that grab attention."
   },
   {
     "name": "Naomi Khumalo",
@@ -570,7 +623,8 @@
     "quote": "Definitely recommend. I feel like I got lost during the COVID era and fell behind in technology, even LinkedIn is limited. I am grateful for this session, got some serious work to do. Izzy is on the money, very well spoken, charismatic, and gets straight to the point with very useful information that many of us were not aware of.",
     "source": "Talkadot survey export, workshop-feedback.md",
     "hasImage": false,
-    "category": "workshop"
+    "category": "workshop",
+    "pullQuote": "Izzy is on the money, very well spoken, charismatic, and gets straight to the point with very useful information that many of us were not aware of."
   },
   {
     "name": "Natallia Miniuk",
@@ -580,7 +634,8 @@
     "quote": "I had the pleasure of attending Izzy's seminar focused on '10 AI Strategies to Level up Your Search'. What struck me right away was Izzy's presentation style. Information was organized and delivered in a clear and structured manner. AI can be confusing and intimidating to non-technical professionals. Izzy demonstrated several ChatGPT prompts, provided algorithms, and explained the context where they can be applied. Overall, it was an informative and valuable session!",
     "source": "clearcareer-ops/marketing/testimonials/README.md, workshop-feedback.md, professional-archive.docx",
     "hasImage": false,
-    "category": "workshop"
+    "category": "workshop",
+    "pullQuote": "AI can be confusing and intimidating to non-technical professionals. Izzy demonstrated prompts, provided algorithms, and explained the context where they can be applied."
   },
   {
     "name": "Nicole",
@@ -590,7 +645,8 @@
     "quote": "Izzy's talk was very informative, relevant, and actionable. He had great ideas and resources which he explained in simple terms. This information will benefit anyone and everyone!",
     "source": "Talkadot survey export, workshop-feedback.md",
     "hasImage": false,
-    "category": "workshop"
+    "category": "workshop",
+    "pullQuote": "Izzy's talk was very informative, relevant, and actionable. This information will benefit anyone and everyone!"
   },
   {
     "name": "Olivia Essen",
@@ -600,7 +656,8 @@
     "quote": "Working with Izzy has been an incredibly positive experience for me, as it has allowed me to grow both personally and professionally. There are plenty of reasons why you should work with Izzy: 1) He never stops learning. After almost every weekend he would tell me about a new skill/trick/something he learned. 2) He radiates positivity. Izzy makes it incredibly hard to have a bad day when you're around him. 3) He is very well connected. Every event I go to, I meet at least one person who not only remembers Izzy by name but was obviously happy to get to know him. 4) He is incredibly versatile and is knowledgeable about virtually anything you talk to him about.",
     "source": "clearcareer-ops/marketing/testimonials/README.md, coaching-quality.md, professional-archive.docx",
     "hasImage": false,
-    "category": "peer-endorsement"
+    "category": "peer-endorsement",
+    "pullQuote": "He radiates positivity. Izzy makes it incredibly hard to have a bad day when you're around him."
   },
   {
     "name": "Patrice Sadd",
@@ -610,7 +667,8 @@
     "quote": "Helpful tips to feel confident about trying AI in the job search. This was great and has given me something different to inject into my job search which has been frustrating.",
     "source": "Talkadot survey export, workshop-feedback.md",
     "hasImage": false,
-    "category": "workshop"
+    "category": "workshop",
+    "pullQuote": "This was great and has given me something different to inject into my job search which has been frustrating."
   },
   {
     "name": "Rae Birkett",
@@ -620,7 +678,8 @@
     "quote": "This was a fantastic presentation! Izzy kept me fully engaged and I felt like I learned a lot that I'm going to use for my job search in the future. I learned about new AI resources as well that I can't wait to check out.",
     "source": "Talkadot survey export, workshop-feedback.md",
     "hasImage": false,
-    "category": "workshop"
+    "category": "workshop",
+    "pullQuote": "Izzy kept me fully engaged and I felt like I learned a lot that I'm going to use for my job search in the future."
   },
   {
     "name": "Raunika Lamge",
@@ -633,7 +692,8 @@
     "category": "linkedin-review",
     "imagePath": "/images/testimonials/raunika-lamge.png",
     "tagline": "Doubted herself. Landed a Director role.",
-    "sortPriority": 13
+    "sortPriority": 13,
+    "pullQuote": "Doubted herself. Landed a Director role."
   },
   {
     "name": "Rebecca Meyer",
@@ -643,7 +703,8 @@
     "quote": "Izzy's AI strategies to help in the job search was incredibly thought out and presented. Wow! I especially liked learning about using AI to help me tailor my resumes to various job postings without spending too much time. His prompts are very creative and particularly informative. He's done the work for you! What a great resource!",
     "source": "clearcareer-ops/marketing/testimonials/README.md, workshop-feedback.md, professional-archive.docx",
     "hasImage": false,
-    "category": "workshop"
+    "category": "workshop",
+    "pullQuote": "I especially liked learning about using AI to help me tailor my resumes to various job postings without spending too much time. He's done the work for you!"
   },
   {
     "name": "Robert Heavill",
@@ -653,7 +714,8 @@
     "quote": "It's critical to get up to speed on this approach to finding a job. Not AI hype but very actionable info focusing on finding a job. Nice summary of the overall process and how to prepare for each step, not just 'the interview' part. Excellent coverage beyond the ChatGPT info we are used to.",
     "source": "Talkadot survey export, workshop-feedback.md",
     "hasImage": false,
-    "category": "workshop"
+    "category": "workshop",
+    "pullQuote": "Not AI hype but very actionable info focusing on finding a job. Excellent coverage beyond the ChatGPT info we are used to."
   },
   {
     "name": "Rose Wan",
@@ -663,7 +725,8 @@
     "quote": "Izzy is always the person in the room with the biggest smile! He had encouraged me to use GitHub and even gave me a tutorial of how to fork and make a pull request on his AI repo when I didn't even know what GitHub was! I like how in presentations, he keeps the atmosphere lively with his puns and stories. It truly marks his character of being so upbeat! Even after working together, he encouraged me to volunteer and to get the most out of life. Izzy is a true inspiration.",
     "source": "clearcareer-ops/marketing/testimonials/README.md, coaching-quality.md, professional-archive.docx",
     "hasImage": false,
-    "category": "peer-endorsement"
+    "category": "peer-endorsement",
+    "pullQuote": "He gave me a tutorial when I didn't even know what GitHub was! Even after working together, he encouraged me to volunteer and get the most out of life."
   },
   {
     "name": "Sandra D Gray",
@@ -673,7 +736,8 @@
     "quote": "I can honestly say that my perception of AI has turned 180 degrees. I have been exploring the various practical uses of AI and attempting to educate myself. I realize that adaptability is the key to survival. Without the aid of AI, I learned that throwing out industry buzz-words and vague imagery did not impress anyone. I had to learn who my audience included long before any meeting. Now, I will add AI to my skill sets in order to abbreviate my exposure time to impress whomever or whatever I need to in order to be the candidate for the position.",
     "source": "Talkadot survey export, workshop-feedback.md",
     "hasImage": false,
-    "category": "workshop"
+    "category": "workshop",
+    "pullQuote": "I can honestly say that my perception of AI has turned 180 degrees. Adaptability is the key to survival."
   },
   {
     "name": "Sarvesh Syal",
@@ -683,7 +747,8 @@
     "quote": "Just got off a call with a person I had an informational interview with. She was admiring the professionalism of my email. Just thought I'd give credit where credit is due. Thanks Izzy.",
     "source": "clearcareer-ops/marketing/testimonials/README.md, coaching-quality.md, professional-archive.docx",
     "hasImage": true,
-    "category": "coaching-quality"
+    "category": "coaching-quality",
+    "pullQuote": "Just got off a call with a person I had an informational interview with. She was admiring the professionalism of my email."
   },
   {
     "name": "Septembre Anderson",
@@ -695,7 +760,8 @@
     "hasImage": true,
     "category": "career-outcome",
     "tagline": "$10K above the offer. Impostor syndrome, gone.",
-    "sortPriority": 14
+    "sortPriority": 14,
+    "pullQuote": "$10K above the offer. Impostor syndrome, gone."
   },
   {
     "name": "Shaun Alphonso",
@@ -705,7 +771,8 @@
     "quote": "Izzy is a genuinely warm person and makes everyone feel at home in any situation. The most remarkable thing about Izzy is the pure dedication he gives to everything he does. His desire to learn is always inspiring. Izzy is a natural leader, student, and teacher, and one of the best people I know.",
     "source": "clearcareer-ops/marketing/testimonials/README.md, coaching-quality.md, professional-archive.docx",
     "hasImage": false,
-    "category": "peer-endorsement"
+    "category": "peer-endorsement",
+    "pullQuote": "Izzy is a natural leader, student, and teacher, and one of the best people I know."
   },
   {
     "name": "Sparsh Kalia",
@@ -718,7 +785,8 @@
     "category": "career-outcome",
     "imagePath": "/images/testimonials/sparsh-kalia.png",
     "tagline": "1+ year searching. Hired in 30 days.",
-    "sortPriority": 5
+    "sortPriority": 5,
+    "pullQuote": "1+ year searching. Hired in 30 days."
   },
   {
     "name": "Stephanie Heintzman-Scheidecker",
@@ -728,7 +796,8 @@
     "quote": "Izzy is smart, well-spoken, entrepreneurial, but what sets him apart is his attitude. As any great mentor and teacher, he is able to bring out the best in anyone. If you are lucky enough to engage his interest, he will pinpoint your strengths and provided endless encouragement. With dedication, he will help solve your problems, working hours on end until expectations are surpassed. With kindness like no other, his insights on the industry – both conceptual and technical – will be shared. Should you have questions for him, he will spend as much time as required to ensure you understand the answer. Izzy is surely one of those individuals to keep your eye on.",
     "source": "clearcareer-ops/marketing/testimonials/README.md, coaching-quality.md, professional-archive.docx",
     "hasImage": false,
-    "category": "peer-endorsement"
+    "category": "peer-endorsement",
+    "pullQuote": "What sets him apart is his attitude. He is able to bring out the best in anyone."
   },
   {
     "name": "Suellen Nelles",
@@ -738,7 +807,8 @@
     "quote": "With AI saturating our world, everyone needs to know how this works and how to apply it thoughtfully. This webinar did that and so much more. I truly appreciate the hands-on tools. I will be using them.",
     "source": "Talkadot survey export, workshop-feedback.md",
     "hasImage": false,
-    "category": "workshop"
+    "category": "workshop",
+    "pullQuote": "Everyone needs to know how this works and how to apply it thoughtfully. This webinar did that and so much more."
   },
   {
     "name": "Susan L Nelson",
@@ -748,7 +818,8 @@
     "quote": "Izzy's session was very informative with resources and ideas of how to use the resources that I didn't know before. His expertise is very impressive and his presentation style is engaging and fun!",
     "source": "Talkadot survey export, workshop-feedback.md",
     "hasImage": false,
-    "category": "workshop"
+    "category": "workshop",
+    "pullQuote": "Izzy's session was very informative with resources and ideas of how to use the resources that I didn't know before."
   },
   {
     "name": "Susanne",
@@ -758,7 +829,8 @@
     "quote": "Izzy's program gave me the tools, confidence, and community I needed to navigate the job market. The group's support was invaluable, and the strategies I learned were a game-changer.",
     "source": "case-studies.md",
     "hasImage": false,
-    "category": "career-outcome"
+    "category": "career-outcome",
+    "pullQuote": "Izzy's program gave me the tools, confidence, and community I needed to navigate the job market."
   },
   {
     "name": "Suzana Djurdjevic",
@@ -768,7 +840,8 @@
     "quote": "It was very useful. Applied the rules from the lecture and the AI tool gave a very interesting approach (faster, better selected). Did the exercise according to the lecturer's recommendations as preparation for the job fair.",
     "source": "Talkadot survey export, workshop-feedback.md",
     "hasImage": false,
-    "category": "workshop"
+    "category": "workshop",
+    "pullQuote": "Applied the rules from the lecture and the AI tool gave a very interesting approach: faster, better selected."
   },
   {
     "name": "Tamara Gordon",
@@ -781,7 +854,8 @@
     "category": "career-outcome",
     "imagePath": "/images/testimonials/tamara-gordon.png",
     "tagline": "$20K+ raise and a bonus. After getting zero interviews.",
-    "sortPriority": 7
+    "sortPriority": 7,
+    "pullQuote": "$20K+ raise and a bonus. After getting zero interviews."
   },
   {
     "name": "Traci Chier",
@@ -791,7 +865,8 @@
     "quote": "Great outline of AI tools to consider for your job search and interview prep. Clear ideas of which to use for what. Makes technology I have not yet used seem not too complicated and so clearly useful that I'll certainly embed into my job search starting now.",
     "source": "Talkadot survey export, workshop-feedback.md",
     "hasImage": false,
-    "category": "workshop"
+    "category": "workshop",
+    "pullQuote": "Makes technology I have not yet used seem not too complicated and so clearly useful that I'll certainly embed into my job search starting now."
   },
   {
     "name": "Veronica Amarante",
@@ -801,7 +876,8 @@
     "quote": "I'm so grateful to Izzy for reframing not just how I should approach my job search but also helped me discover how to articulate my skills, experience, and re-brand myself as I navigate today's job market. I would 100% recommend Izzy to anyone currently looking to land their dream job.",
     "source": "clearcareer-ops/marketing/testimonials/README.md, coaching-quality.md, professional-archive.docx",
     "hasImage": false,
-    "category": "coaching-quality"
+    "category": "coaching-quality",
+    "pullQuote": "I would 100% recommend Izzy to anyone currently looking to land their dream job."
   },
   {
     "name": "Victor Perez",
@@ -813,7 +889,8 @@
     "hasImage": true,
     "category": "career-outcome",
     "tagline": "500+ apps, 0 offers. Then: 3 interviews in 2 weeks.",
-    "sortPriority": 3
+    "sortPriority": 3,
+    "pullQuote": "500+ apps, 0 offers. Then: 3 interviews in 2 weeks."
   },
   {
     "name": "Victor Rivas",
@@ -823,7 +900,8 @@
     "quote": "Before taking this first session I could not see the full potential of my profile. Izzy was able to get all of the possible details from myself to make me feel more confident and turn my profile into a great looking one. I can now see a side of my professional career I was not able to before. Izzy is an awesome career coach, I feel great about my interview.",
     "source": "clearcareer-ops/marketing/testimonials/README.md, coaching-quality.md, professional-archive.docx",
     "hasImage": false,
-    "category": "coaching-quality"
+    "category": "coaching-quality",
+    "pullQuote": "I can now see a side of my professional career I was not able to before. Izzy is an awesome career coach."
   },
   {
     "name": "Wil Gerard",
@@ -835,7 +913,8 @@
     "hasImage": false,
     "category": "career-outcome",
     "tagline": "3 job offers. $10K raise. After unemployment.",
-    "sortPriority": 17
+    "sortPriority": 17,
+    "pullQuote": "3 job offers. $10K raise. After unemployment."
   },
   {
     "name": "Win Shi Wong",
@@ -845,6 +924,7 @@
     "quote": "Izzy truly cares about getting to know you, your skills and experiences, and what you're looking for in your next career. His thorough resume review was insightful and he provided actionable feedback. He is knowledgeable, resourceful, and tech-savvy. He even built tools using automation and AI to help candidates find jobs in a smarter way. After the call, he sent a detailed summary with action items to keep me accountable. I highly recommend Izzy as a career coach!",
     "source": "clearcareer-ops/marketing/testimonials/README.md, coaching-quality.md, professional-archive.docx",
     "hasImage": false,
-    "category": "coaching-quality"
+    "category": "coaching-quality",
+    "pullQuote": "He even built tools using automation and AI to help candidates find jobs in a smarter way. I highly recommend Izzy as a career coach!"
   }
 ]
