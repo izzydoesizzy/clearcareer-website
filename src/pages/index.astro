@@ -5,18 +5,23 @@ import StatsBar from "@components/StatsBar.astro";
 import TrustBar from "@components/TrustBar.astro";
 import DeliverableGrid from "@components/DeliverableGrid.astro";
 import TestimonialCard from "@components/TestimonialCard.astro";
+import TestimonialOutcomeCard from "@components/TestimonialOutcomeCard.astro";
+import TestimonialCarousel from "@components/TestimonialCarousel.astro";
+import TestimonialModal from "@components/TestimonialModal.astro";
 import PricingCard from "@components/PricingCard.astro";
 import CTASection from "@components/CTASection.astro";
 import { getCollection } from "astro:content";
 
+import IndustryStatCard from "@components/IndustryStatCard.astro";
+import SourceCitations from "@components/SourceCitations.astro";
 import deliverableData from "@data/deliverables.json";
 import allTestimonials from "@data/testimonials.json";
 
-// Sort by sortPriority to get top transformations first
+// Sort by sortPriority to get top transformations first (ones with taglines for outcome cards)
 const careerTestimonials = [...allTestimonials]
-  .filter((t) => t.category === "career-outcome")
+  .filter((t: any) => t.category === "career-outcome" && t.tagline)
   .sort((a: any, b: any) => (a.sortPriority ?? Infinity) - (b.sortPriority ?? Infinity))
-  .slice(0, 6);
+  .slice(0, 9);
 
 // Get latest blog posts for homepage
 const now = new Date();
@@ -63,7 +68,7 @@ const latestPosts = (await getCollection("blog", ({ data }) => {
 
       <div class="mx-auto mt-6 max-w-[720px] text-center">
         <p class="text-lg leading-relaxed text-text-muted">
-          You've tailored every resume. Optimized your LinkedIn. Applied to hundreds of roles. And still: silence. Or worse, automated rejections. The truth is, effort alone doesn't work in this market. You need a system, built by someone who's helped 200+ professionals break through the same wall you're hitting right now.
+          You've tailored every resume. Optimized your LinkedIn. Applied to hundreds of roles. And still: silence. You're not alone. The average job search now takes over 5 months, and only ~8.5% of applications get callbacks. The system is broken. You need a different approach, built by someone who's helped 200+ professionals break through the same wall you're hitting right now.
         </p>
       </div>
 
@@ -76,9 +81,9 @@ const latestPosts = (await getCollection("blog", ({ data }) => {
               <polyline points="12 6 12 12 16 14" />
             </svg>
           </div>
-          <h3 class="text-lg font-bold text-navy">Months of Searching</h3>
+          <h3 class="text-lg font-bold text-navy">5.5 Months on Average</h3>
           <p class="mt-2 text-sm leading-relaxed text-text-muted">
-            The average senior professional spends 6-12 months stuck. Every month costs $8,000+ in lost income.
+            The average job search takes 5.5 months (BLS, 2025). For senior roles, it stretches to 6-9 months (LinkedIn, 2024). Every month at $100K+ costs ~$8,300 in lost income.
           </p>
         </div>
 
@@ -91,9 +96,9 @@ const latestPosts = (await getCollection("blog", ({ data }) => {
               <line x1="9" y1="9" x2="15" y2="15" />
             </svg>
           </div>
-          <h3 class="text-lg font-bold text-navy">200+ Applications</h3>
+          <h3 class="text-lg font-bold text-navy">100-200+ Applications</h3>
           <p class="mt-2 text-sm leading-relaxed text-text-muted">
-            Mass-applying is a losing strategy. Quality targeting beats quantity every time.
+            The typical job seeker sends 100-200+ applications before landing. Only ~8.5% get callbacks (Indeed, 2024). Up to 40% of listings may be ghost jobs that were never real (Resume Builder, 2024).
           </p>
         </div>
 
@@ -106,12 +111,70 @@ const latestPosts = (await getCollection("blog", ({ data }) => {
               <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
             </svg>
           </div>
-          <h3 class="text-lg font-bold text-navy">Grinding Alone</h3>
+          <h3 class="text-lg font-bold text-navy">85% Through Networking</h3>
           <p class="mt-2 text-sm leading-relaxed text-text-muted">
-            Solo job searches drain your confidence and motivation. Accountability changes everything.
+            Up to 85% of jobs are filled through networking (LinkedIn, 2024). Referral candidates are hired at 10x the rate of applicants (Jobvite, 2024). Yet most job seekers spend their time applying, not connecting.
           </p>
         </div>
       </div>
+    </div>
+  </section>
+
+  {/* ── 4b. Industry Data Section ── */}
+  <section class="bg-gradient-to-br from-slate-50 to-blue-bg/50 py-16 md:py-24">
+    <div class="mx-auto max-w-[1080px] px-4 sm:px-6 lg:px-8">
+      <div class="text-center" data-animate="fade-up">
+        <p class="mb-4 text-sm font-semibold uppercase tracking-widest text-blue">The Data</p>
+        <h2 class="font-display text-[clamp(1.5rem,3vw,2.25rem)] leading-[1.15] text-navy">
+          The Numbers Behind the Struggle
+        </h2>
+        <p class="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-text-muted">
+          These aren't our numbers. This is what the research says about job searching in 2025.
+        </p>
+      </div>
+
+      <div class="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4" data-animate-stagger>
+        <IndustryStatCard
+          number="5.5 months"
+          label="Average job search"
+          detail="1 in 5 are unemployed for 27+ weeks"
+          source="BLS, 2025"
+          color="warning"
+        />
+        <IndustryStatCard
+          number="~8.5%"
+          label="Application callback rate"
+          detail="Most resumes never reach a human"
+          source="Indeed, 2024"
+          color="warning"
+        />
+        <IndustryStatCard
+          number="85%"
+          label="Jobs filled through networking"
+          detail="Referrals are hired at 10x the rate"
+          source="LinkedIn + Jobvite, 2024"
+          color="blue"
+        />
+        <IndustryStatCard
+          number="$750K+"
+          label="Cost of not negotiating"
+          detail="55% of workers never negotiate salary"
+          source="HBR + Pew Research"
+          color="warning"
+        />
+      </div>
+
+      <SourceCitations
+        variant="section"
+        sources={[
+          { source: "U.S. Bureau of Labor Statistics", year: 2025, url: "https://www.bls.gov/news.release/empsit.nr0.htm" },
+          { source: "Indeed Hiring Lab", year: 2024, url: "https://www.hiringlab.org/" },
+          { source: "LinkedIn Economic Graph", year: 2024, url: "https://economicgraph.linkedin.com/" },
+          { source: "Jobvite Recruiter Nation Report", year: 2024, url: "https://www.jobvite.com/lp/recruiter-nation/" },
+          { source: "Pew Research Center", year: 2023, url: "https://www.pewresearch.org/social-trends/2023/03/30/" },
+          { source: "Harvard Business Review", year: 2023, url: "https://hbr.org/2014/06/why-women-dont-negotiate-their-job-offers" },
+        ]}
+      />
     </div>
   </section>
 
@@ -216,19 +279,36 @@ const latestPosts = (await getCollection("blog", ({ data }) => {
         </h2>
       </div>
 
-      <div class="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3" data-animate-stagger>
-        {
-          careerTestimonials.map((testimonial: any) => (
-            <TestimonialCard
-              name={testimonial.name}
-              role={testimonial.role}
-              quote={testimonial.quote}
-              outcome={testimonial.outcome}
-              tagline={testimonial.tagline}
-              image={testimonial.imagePath}
-            />
-          ))
-        }
+      <div class="mt-12">
+        <TestimonialCarousel id="homepage-testimonials" visibleCount={3}>
+          {careerTestimonials.map((t: any, i: number) => {
+            const initials = t.name.split(" ").map((n: string) => n[0]).join("").toUpperCase().slice(0, 2);
+            return (
+              <div>
+                <TestimonialOutcomeCard
+                  name={t.name}
+                  role={t.role}
+                  quote={t.quote}
+                  tagline={t.tagline}
+                  outcome={t.outcome}
+                  image={t.imagePath}
+                  index={i}
+                  showReadMore={t.quote.length > 150}
+                />
+                <div
+                  class="hidden"
+                  data-testimonial-full={i}
+                  data-quote={t.quote}
+                  data-name={t.name}
+                  data-role={t.role}
+                  data-outcome={t.outcome || ''}
+                  data-image={t.imagePath || ''}
+                  data-initials={initials}
+                ></div>
+              </div>
+            );
+          })}
+        </TestimonialCarousel>
       </div>
 
       <div class="mt-10 text-center">
@@ -312,7 +392,7 @@ const latestPosts = (await getCollection("blog", ({ data }) => {
       <div class="mx-auto mt-12 grid max-w-[800px] grid-cols-1 gap-8 md:grid-cols-2">
         <PricingCard
           tier="Job Search Ignition System"
-          price="$2,997"
+          price="$2,497"
           features={[
             "20+ done-for-you assets",
             "3 private 1:1 sessions with Izzy",
@@ -324,7 +404,7 @@ const latestPosts = (await getCollection("blog", ({ data }) => {
           ctaText="Learn More"
           ctaHref="/programs/jsis"
           featured={true}
-          paymentPlan="Payment plans available"
+          paymentPlan="Or 3 payments of $833/mo"
         />
         <PricingCard
           tier="ClearCareer Community"
@@ -352,4 +432,6 @@ const latestPosts = (await getCollection("blog", ({ data }) => {
     secondaryCTA={{ text: "See the Program", href: "/programs/jsis" }}
     variant="gradient"
   />
+
+  <TestimonialModal />
 </PageLayout>

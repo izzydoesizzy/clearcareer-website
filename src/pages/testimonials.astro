@@ -3,6 +3,8 @@ import PageLayout from "@layouts/PageLayout.astro";
 import Hero from "@components/Hero.astro";
 import StatsBar from "@components/StatsBar.astro";
 import TestimonialCard from "@components/TestimonialCard.astro";
+import TestimonialModal from "@components/TestimonialModal.astro";
+import TestimonialMasonry from "@components/TestimonialMasonry.astro";
 import CTASection from "@components/CTASection.astro";
 
 import testimonials from "@data/testimonials.json";
@@ -57,7 +59,6 @@ const youtubeVideoId = "xyDUx1ji3io";
         </h2>
       </div>
       <div class="relative aspect-video overflow-hidden rounded-2xl shadow-xl" data-animate="scale-up">
-        {/* Click-to-load YouTube facade */}
         <div
           id="yt-facade"
           class="absolute inset-0 flex cursor-pointer items-center justify-center bg-navy"
@@ -69,7 +70,6 @@ const youtubeVideoId = "xyDUx1ji3io";
             class="h-full w-full object-cover opacity-80"
             loading="lazy"
           />
-          {/* Play button */}
           <div class="absolute flex h-16 w-16 items-center justify-center rounded-full bg-blue/90 shadow-lg shadow-blue/30 transition-transform hover:scale-110">
             <svg class="ml-1 h-6 w-6 text-white" fill="currentColor" viewBox="0 0 24 24">
               <path d="M8 5v14l11-7z" />
@@ -124,18 +124,17 @@ const youtubeVideoId = "xyDUx1ji3io";
               <div class="grid grid-cols-2 gap-4">
                 <div>
                   <p class="mb-2 text-center text-xs font-semibold uppercase tracking-wider text-text-muted">Before</p>
-                  <img src={pair.before} alt={`${pair.name} LinkedIn before`} class="w-full rounded-lg shadow-md" loading="lazy" />
+                  <img src={pair.before} alt={`${pair.name} LinkedIn before`} class="w-full rounded-lg shadow-md" loading="lazy" width="820" height="540" />
                 </div>
                 <div>
                   <p class="mb-2 text-center text-xs font-semibold uppercase tracking-wider text-success">After</p>
-                  <img src={pair.after} alt={`${pair.name} LinkedIn after`} class="w-full rounded-lg shadow-md" loading="lazy" />
+                  <img src={pair.after} alt={`${pair.name} LinkedIn after`} class="w-full rounded-lg shadow-md" loading="lazy" width="820" height="540" />
                 </div>
               </div>
               <p class="mt-3 text-center text-sm font-medium text-text-muted">{pair.name}'s transformation</p>
             </div>
           ))}
         </div>
-        {/* Navigation */}
         <div class="mt-6 flex items-center justify-center gap-4">
           <button id="carousel-prev" class="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-white text-text-muted shadow-sm transition-all hover:border-blue hover:text-blue hover:shadow-md" aria-label="Previous">
             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -158,7 +157,7 @@ const youtubeVideoId = "xyDUx1ji3io";
   </section>
 
   {/* Sticky Filter Bar */}
-  <section class="sticky top-0 z-30 border-b border-border bg-white/95 py-4 backdrop-blur-sm" id="filter-bar">
+  <section class="sticky z-30 border-b border-border bg-white/95 py-4 backdrop-blur-sm" id="filter-bar" style="top: 0;">
     <div class="mx-auto max-w-[1080px] px-4 sm:px-6 lg:px-8">
       <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
         {categories.map((cat, i) => (
@@ -180,25 +179,43 @@ const youtubeVideoId = "xyDUx1ji3io";
     </div>
   </section>
 
-  {/* Masonry Grid */}
+  {/* Testimonial Grid */}
   <section class="py-12 md:py-16">
     <div class="mx-auto max-w-[1080px] px-4 sm:px-6 lg:px-8">
-      <div class="columns-1 gap-6 md:columns-2 lg:columns-3">
-        {sorted.map((t: any) => (
-          <div data-category={t.category} class="mb-6 break-inside-avoid" data-animate="fade-up">
-            <TestimonialCard
-              name={t.name}
-              role={t.role}
-              quote={t.quote}
-              outcome={t.outcome}
-              tagline={t.tagline}
-              image={t.imagePath}
-            />
-          </div>
-        ))}
-      </div>
+      <TestimonialMasonry id="testimonial-grid">
+        {sorted.map((t: any, i: number) => {
+          const initials = t.name.split(" ").map((n: string) => n[0]).join("").toUpperCase().slice(0, 2);
+          return (
+            <div data-category={t.category} class="testimonial-item">
+              <TestimonialCard
+                name={t.name}
+                role={t.role}
+                quote={t.quote}
+                pullQuote={t.pullQuote || t.tagline || t.quote.slice(0, 150)}
+                outcome={t.outcome}
+                image={t.imagePath}
+                index={i}
+              />
+              {/* Hidden data for modal */}
+              <div
+                class="hidden"
+                data-testimonial-full={i}
+                data-quote={t.quote}
+                data-name={t.name}
+                data-role={t.role}
+                data-outcome={t.outcome || ''}
+                data-image={t.imagePath || ''}
+                data-initials={initials}
+              ></div>
+            </div>
+          );
+        })}
+      </TestimonialMasonry>
     </div>
   </section>
+
+  {/* Modal */}
+  <TestimonialModal />
 
   {/* CTA */}
   <CTASection
@@ -209,6 +226,17 @@ const youtubeVideoId = "xyDUx1ji3io";
 </PageLayout>
 
 <script>
+  // Set filter bar sticky offset to account for header height
+  function setFilterBarOffset() {
+    const header = document.getElementById('site-header');
+    const filterBar = document.getElementById('filter-bar');
+    if (header && filterBar) {
+      filterBar.style.top = header.offsetHeight + 'px';
+    }
+  }
+  setFilterBarOffset();
+  window.addEventListener('resize', setFilterBarOffset);
+
   // YouTube facade click handler
   document.getElementById('yt-facade')?.addEventListener('click', function() {
     const videoId = (this as HTMLElement).dataset.videoid;
@@ -216,9 +244,9 @@ const youtubeVideoId = "xyDUx1ji3io";
     this.parentElement.innerHTML = `<iframe class="absolute inset-0 h-full w-full" src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
   });
 
-  // Filter animation
+  // Filter logic
   const filterBtns = document.querySelectorAll('[data-filter]');
-  const cards = document.querySelectorAll('[data-category]');
+  const items = document.querySelectorAll('.testimonial-item');
 
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -242,16 +270,15 @@ const youtubeVideoId = "xyDUx1ji3io";
 
       const filter = (btn as HTMLElement).dataset.filter;
 
-      // Animated show/hide
-      cards.forEach(card => {
-        const el = card as HTMLElement;
+      // Show/hide with animation
+      items.forEach(item => {
+        const el = item as HTMLElement;
         const matches = filter === 'all' || el.dataset.category === filter;
 
         if (matches) {
+          el.style.display = '';
           el.style.opacity = '0';
           el.style.transform = 'scale(0.96)';
-          el.style.display = '';
-          el.removeAttribute('hidden');
           requestAnimationFrame(() => {
             requestAnimationFrame(() => {
               el.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
@@ -263,12 +290,19 @@ const youtubeVideoId = "xyDUx1ji3io";
           el.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
           el.style.opacity = '0';
           el.style.transform = 'scale(0.96)';
-          el.addEventListener('transitionend', function hide() {
+          setTimeout(() => {
             el.style.display = 'none';
-            el.removeEventListener('transitionend', hide);
-          }, { once: true });
+          }, 200);
         }
       });
+
+      // Scroll to filter bar so user sees filtered results (prevents layout-collapse jump)
+      const filterBar = document.getElementById('filter-bar');
+      if (filterBar) {
+        setTimeout(() => {
+          filterBar.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 50);
+      }
     });
   });
 

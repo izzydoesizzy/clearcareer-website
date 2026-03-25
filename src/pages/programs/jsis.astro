@@ -4,9 +4,13 @@ import Hero from "@components/Hero.astro";
 import StatsBar from "@components/StatsBar.astro";
 import TrustBar from "@components/TrustBar.astro";
 import TestimonialCard from "@components/TestimonialCard.astro";
+import TestimonialOutcomeCard from "@components/TestimonialOutcomeCard.astro";
+import TestimonialCarousel from "@components/TestimonialCarousel.astro";
+import TestimonialModal from "@components/TestimonialModal.astro";
 import PricingCard from "@components/PricingCard.astro";
 import FAQAccordion from "@components/FAQAccordion.astro";
 import CTASection from "@components/CTASection.astro";
+import SourceCitations from "@components/SourceCitations.astro";
 import deliverables from "@data/deliverables.json";
 import faqItems from "@data/faq-jsis.json";
 import allTestimonials from "@data/testimonials.json";
@@ -25,6 +29,32 @@ const selectedTestimonialNames = [
   "Annie Bell",
 ];
 const testimonialGrid = selectedTestimonialNames
+  .map((name) => allTestimonials.find((t) => t.name === name))
+  .filter(Boolean);
+
+// Section 9: Client achievement cards (all have taglines + images)
+const achievementNames = [
+  "Tamara Gordon",
+  "Kristin Davis",
+  "Blake McDermott",
+  "Sparsh Kalia",
+  "Laura Salamanca",
+  "Kira Howe",
+];
+const achievementCards = achievementNames
+  .map((name) => allTestimonials.find((t) => t.name === name))
+  .filter(Boolean);
+
+// Section 13: Fence-sitter / encouragement testimonials
+const fenceSitterNames = [
+  "Mazia Syed",
+  "Annie Bell",
+  "Kay Woods",
+  "Victor Perez",
+  "Septembre Anderson",
+  "Chris Chipman",
+];
+const fenceSitterCards = fenceSitterNames
   .map((name) => allTestimonials.find((t) => t.name === name))
   .filter(Boolean);
 ---
@@ -77,7 +107,7 @@ const testimonialGrid = selectedTestimonialNames
           </li>
           <li class="flex items-start gap-3">
             <span class="mt-0.5 flex-shrink-0">👉</span>
-            <span>The average senior professional in this market is unemployed for <strong>6-12+ months</strong>. That's up to <strong>$120K</strong> in foregone salary</span>
+            <span>The average job search takes <strong>5.5 months</strong> (BLS, 2025). For senior roles, <strong>6-9 months</strong> (LinkedIn, 2024). That's up to <strong>$50K-$75K</strong> in foregone salary</span>
           </li>
           <li class="flex items-start gap-3">
             <span class="mt-0.5 flex-shrink-0">👉</span>
@@ -93,6 +123,15 @@ const testimonialGrid = selectedTestimonialNames
           </li>
         </ul>
         <p class="pt-2 text-lg font-semibold text-navy">Welcome to the Job Search Ignition System.</p>
+
+        <SourceCitations
+          variant="section"
+          sources={[
+            { source: "U.S. Bureau of Labor Statistics", year: 2025, url: "https://www.bls.gov/news.release/empsit.nr0.htm" },
+            { source: "LinkedIn Economic Graph", year: 2024, url: "https://economicgraph.linkedin.com/" },
+            { source: "Indeed Hiring Lab", year: 2024, url: "https://www.hiringlab.org/" },
+          ]}
+        />
       </div>
     </div>
   </section>
@@ -240,14 +279,33 @@ const testimonialGrid = selectedTestimonialNames
       </div>
 
       <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {testimonialGrid.map((t) => (
-          <TestimonialCard
-            name={t.name}
-            role={t.role}
-            quote={t.quote}
-            outcome={t.outcome}
-          />
-        ))}
+        {testimonialGrid.map((t, i) => {
+          const initials = t.name.split(" ").map((n: string) => n[0]).join("").toUpperCase().slice(0, 2);
+          return (
+            <div>
+              <TestimonialOutcomeCard
+                name={t.name}
+                role={t.role}
+                quote={t.quote}
+                tagline={t.tagline || t.outcome || t.pullQuote?.slice(0, 60)}
+                outcome={t.outcome}
+                image={t.imagePath}
+                index={i}
+                showReadMore={t.quote.length > 150}
+              />
+              <div
+                class="hidden"
+                data-testimonial-full={i}
+                data-quote={t.quote}
+                data-name={t.name}
+                data-role={t.role}
+                data-outcome={t.outcome || ''}
+                data-image={t.imagePath || ''}
+                data-initials={initials}
+              ></div>
+            </div>
+          );
+        })}
       </div>
     </div>
   </section>
@@ -261,59 +319,34 @@ const testimonialGrid = selectedTestimonialNames
       </div>
 
       <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <!-- Tamara -->
-        <div class="rounded-xl border border-border bg-white p-6">
-          <span class="inline-flex rounded-full bg-success/10 px-3 py-1 text-sm font-semibold text-success">$20K salary increase + annual bonuses</span>
-          <p class="mt-4 font-semibold text-text">Tamara G.</p>
-          <p class="text-sm text-text-muted">AI Strategy Advisor</p>
-          <p class="mt-3 text-[1.0625rem] leading-[1.75] text-text">After months of rejection despite strong dedication, Tamara gained clarity, transformed her resume, and landed multiple interviews within weeks. She accepted a role with a $20,000 salary increase plus annual bonuses, giving her the financial stability she needed for her family.</p>
-          <p class="mt-3 text-[1.0625rem] italic leading-[1.75] text-text-muted">"Izzy is a game-changer!! 10/10, highly recommend!"</p>
-        </div>
-
-        <!-- Kristin -->
-        <div class="rounded-xl border border-border bg-white p-6">
-          <span class="inline-flex rounded-full bg-success/10 px-3 py-1 text-sm font-semibold text-success">1 year unemployed, hired in 3 weeks</span>
-          <p class="mt-4 font-semibold text-text">Kristin D.</p>
-          <p class="text-sm text-text-muted">Growth Marketing Manager & Partnerships Lead</p>
-          <p class="mt-3 text-[1.0625rem] leading-[1.75] text-text">Unemployed for an entire year and still stuck. After working with Izzy, she was employed in just three weeks. He helped her articulate her unique skill set and shifted her mindset to act like a consultant in her interview. She ended up writing her own job description.</p>
-          <p class="mt-3 text-[1.0625rem] italic leading-[1.75] text-text-muted">"That mindset shift changed everything."</p>
-        </div>
-
-        <!-- Blake -->
-        <div class="rounded-xl border border-border bg-white p-6">
-          <span class="inline-flex rounded-full bg-success/10 px-3 py-1 text-sm font-semibold text-success">200+ apps to multiple offers after 27 emails</span>
-          <p class="mt-4 font-semibold text-text">Blake M.</p>
-          <p class="text-sm text-text-muted">Software Developer</p>
-          <p class="mt-3 text-[1.0625rem] leading-[1.75] text-text">After applying to over 200 jobs and getting only 10 interviews and no offers, Blake tried the Izzy Method. He sent 27 targeted emails, got multiple responses, and landed a full-time role at a company that had previously rejected him. He also negotiated a $5,000 salary increase on the offer.</p>
-          <p class="mt-3 text-[1.0625rem] italic leading-[1.75] text-text-muted">"Everything changed."</p>
-        </div>
-
-        <!-- Sparsh -->
-        <div class="rounded-xl border border-border bg-white p-6">
-          <span class="inline-flex rounded-full bg-success/10 px-3 py-1 text-sm font-semibold text-success">600+ apps to hired in 30 days</span>
-          <p class="mt-4 font-semibold text-text">Sparsh K.</p>
-          <p class="text-sm text-text-muted">Operations & Process Improvement Professional</p>
-          <p class="mt-3 text-[1.0625rem] leading-[1.75] text-text">After over a year of frustration, Sparsh followed Izzy's advice exactly. Within 30 days, he had a job.</p>
-          <p class="mt-3 text-[1.0625rem] italic leading-[1.75] text-text-muted">"The weekly group sessions kept me motivated, and Izzy's personalized approach made all the difference. Trust his process and put in the effort, you won't regret it."</p>
-        </div>
-
-        <!-- Laura -->
-        <div class="rounded-xl border border-border bg-white p-6">
-          <span class="inline-flex rounded-full bg-success/10 px-3 py-1 text-sm font-semibold text-success">Dream job landed, $22K+ salary increase</span>
-          <p class="mt-4 font-semibold text-text">Laura S.</p>
-          <p class="text-sm text-text-muted">Reproductive Justice Advocate & Program Manager</p>
-          <p class="mt-3 text-[1.0625rem] leading-[1.75] text-text">She demonstrated her value, prepared for the interview, and sent an impactful follow-up email that sealed the role, at a 30%+ salary increase.</p>
-          <p class="mt-3 text-[1.0625rem] italic leading-[1.75] text-text-muted">"Izzy is a warm, caring, and impactful coach that really knows his stuff."</p>
-        </div>
-
-        <!-- Kira -->
-        <div class="rounded-xl border border-border bg-white p-6">
-          <span class="inline-flex rounded-full bg-success/10 px-3 py-1 text-sm font-semibold text-success">$127K salary, $5K above initial offer</span>
-          <p class="mt-4 font-semibold text-text">Kira H.</p>
-          <p class="text-sm text-text-muted">Staff Software Engineer</p>
-          <p class="mt-3 text-[1.0625rem] leading-[1.75] text-text">Transitioning from freelancing to full-time, Kira lacked confidence in self-promotion. Her lightbulb moment: seeing the job search from the employer's perspective. She negotiated a strong counteroffer, $127,000 USD starting salary, $5,000 more than the initial offer, plus 30 PTO days.</p>
-          <p class="mt-3 text-[1.0625rem] italic leading-[1.75] text-text-muted">"His invaluable support empowered me to negotiate."</p>
-        </div>
+        {achievementCards.map((t, i) => {
+          const idx = testimonialGrid.length + i;
+          const initials = t.name.split(" ").map((n: string) => n[0]).join("").toUpperCase().slice(0, 2);
+          return (
+            <div>
+              <TestimonialOutcomeCard
+                name={t.name}
+                role={t.role}
+                quote={t.quote}
+                tagline={t.tagline || t.outcome}
+                outcome={t.outcome}
+                image={t.imagePath}
+                index={idx}
+                showReadMore={t.quote.length > 150}
+              />
+              <div
+                class="hidden"
+                data-testimonial-full={idx}
+                data-quote={t.quote}
+                data-name={t.name}
+                data-role={t.role}
+                data-outcome={t.outcome || ''}
+                data-image={t.imagePath || ''}
+                data-initials={initials}
+              ></div>
+            </div>
+          );
+        })}
       </div>
     </div>
   </section>
@@ -480,8 +513,7 @@ const testimonialGrid = selectedTestimonialNames
       <div class="mt-12">
         <PricingCard
           tier="March 2026 Cohort · Founding Member"
-          price="$3,997"
-          originalPrice="$4,997"
+          price="$2,497"
           features={[
             "Professionally written resume with 15-20 quantified, CAR-formatted achievements",
             "LinkedIn rebuild: headline (3 versions), About Me section, custom banner",
@@ -498,7 +530,7 @@ const testimonialGrid = selectedTestimonialNames
           ctaText="Enroll as Founding Member"
           ctaHref="https://buy.stripe.com/8x25kD1RH3cp8KO1ZTbfO1i"
           featured={true}
-          paymentPlan="Payment plans available"
+          paymentPlan="Or 3 payments of $833/mo"
         />
 
         <div class="mt-6 text-center">
@@ -514,6 +546,21 @@ const testimonialGrid = selectedTestimonialNames
     </div>
   </section>
 
+  <!-- 12b. Guarantee -->
+  <section class="bg-blue-bg py-16 md:py-20">
+    <div class="mx-auto max-w-[640px] px-4 sm:px-6 lg:px-8 text-center">
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white shadow-card mb-6">
+        <svg class="h-8 w-8 text-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+        </svg>
+      </div>
+      <h2 class="font-display text-[clamp(1.25rem,2.5vw,1.75rem)] leading-[1.15] text-navy mb-4">The ClearCareer Guarantee</h2>
+      <p class="text-text leading-relaxed">
+        If you complete the full 8-week program and haven't landed interviews, I'll keep coaching you at no extra cost until you do. Weekly calls, async support, the full system. That's how confident I am in this process.
+      </p>
+    </div>
+  </section>
+
   <!-- 13. Take the Leap Testimonials -->
   <section class="bg-white py-16 md:py-24">
     <div class="mx-auto max-w-[1080px] px-4 sm:px-6 lg:px-8">
@@ -522,22 +569,20 @@ const testimonialGrid = selectedTestimonialNames
         <h2 class="font-display text-[clamp(1.5rem,3vw,2.25rem)] leading-[1.15] text-navy">Take the Leap</h2>
       </div>
 
-      <div class="mt-12 grid gap-6 md:grid-cols-3">
-        <TestimonialCard
-          name="Mazia Syed"
-          role="Software Developer"
-          quote="Izzy has always exceeded my expectations in our work together. He will absolutely bring out the best in you. Take the leap, you won't regret it."
-        />
-        <TestimonialCard
-          name="Annie Bell"
-          role="Marketing Manager"
-          quote="If you're on the fence, go for it. I pondered job search coaching after a LONG job search black hole. I joined Izzy's course and within weeks got 2 offers."
-        />
-        <TestimonialCard
-          name="Kay Woods"
-          role="Product Manager"
-          quote="Izzy is no hype. This man is a real life wizard of 'work', and he's sensitive with a big ole heart. He's leveraging technology in ways most coaches don't even know HOW TO use yet."
-        />
+      <div class="mt-12">
+        <TestimonialCarousel id="jsis-fence-sitters" visibleCount={1} autoPlay={true} autoPlayInterval={6000}>
+          {fenceSitterCards.map((t) => (
+            <TestimonialCard
+              name={t.name}
+              role={t.role}
+              quote={t.quote}
+              pullQuote={t.pullQuote || t.quote.slice(0, 150)}
+              outcome={t.outcome}
+              image={t.imagePath}
+              index={0}
+            />
+          ))}
+        </TestimonialCarousel>
       </div>
     </div>
   </section>
@@ -562,4 +607,5 @@ const testimonialGrid = selectedTestimonialNames
     variant="blue"
   />
 
+  <TestimonialModal />
 </PageLayout>

@@ -19,7 +19,8 @@ interface Props {
 }
 
 const { post } = Astro.props;
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
+const ogImage = post.data.image || `/open-graph/${post.id}.png`;
 ---
 
 <BlogLayout
@@ -27,7 +28,10 @@ const { Content } = await render(post);
   description={post.data.description}
   publishDate={post.data.publishDate}
   author={post.data.author}
-  image={post.data.image}
+  image={ogImage}
+  tags={post.data.tags}
+  type={post.data.type}
+  headings={headings}
 >
   <Content />
 </BlogLayout>
