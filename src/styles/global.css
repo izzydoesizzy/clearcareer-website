@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "@fontsource-variable/inter";
 @import "@fontsource/dm-serif-display";
+@plugin "@tailwindcss/typography";
 
 @theme {
   /* ClearCareer Brand Colors */
@@ -14,6 +15,9 @@
   --color-border: #e5e7eb;
   --color-success: #059669;
   --color-warning: #D97706;
+  --color-teal: #06b6d4;
+  --color-teal-bg: #ecfeff;
+  --color-amber-bg: #fffbeb;
 
   /* Shadows */
   --shadow-card: 0 4px 24px -4px rgba(1, 97, 239, 0.10);
@@ -23,6 +27,125 @@
   /* Typography */
   --font-sans: 'Inter Variable', 'Inter', system-ui, -apple-system, sans-serif;
   --font-display: 'DM Serif Display', Georgia, serif;
+}
+
+/* ── Blog Prose Overrides ── */
+
+.prose {
+  --tw-prose-body: #0f0f0f;
+  --tw-prose-headings: #030620;
+  --tw-prose-links: #0161EF;
+  --tw-prose-bold: #030620;
+  --tw-prose-counters: #6b7280;
+  --tw-prose-bullets: #0161EF;
+  --tw-prose-quotes: #030620;
+  --tw-prose-quote-borders: #0161EF;
+  --tw-prose-hr: #e5e7eb;
+}
+
+.prose h2 {
+  font-family: var(--font-display);
+  margin-top: 2.5em;
+  margin-bottom: 0.75em;
+}
+
+.prose h3 {
+  margin-top: 2em;
+  margin-bottom: 0.5em;
+}
+
+.prose a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.15s;
+}
+
+.prose a:hover {
+  color: #0450c8;
+}
+
+.prose blockquote {
+  border-left-color: #0161EF;
+  background: #EFF5FF;
+  padding: 1rem 1.25rem;
+  border-radius: 0.5rem;
+}
+
+.prose strong {
+  font-weight: 600;
+}
+
+.prose ol > li::marker,
+.prose ul > li::marker {
+  color: #0161EF;
+}
+
+/* ── Coaching Conversation Bubbles ── */
+
+.coach-bubble {
+  background: #EFF5FF;
+  border-left: 3px solid #0161EF;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  margin: 0.5rem 0;
+}
+
+.client-bubble {
+  background: #f9fafb;
+  border-left: 3px solid #d1d5db;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  margin: 0.5rem 0;
+}
+
+/* ── AI Prompt Block ── */
+
+.prompt-block {
+  background: linear-gradient(to bottom right, #EFF5FF, #f8faff);
+  border-left: 4px solid #0161EF;
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+}
+
+.prompt-block-content p {
+  margin: 0.5em 0;
+}
+
+.prompt-block-content p:first-child {
+  margin-top: 0;
+}
+
+.prompt-block-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* ── Masonry Grid ── */
+
+.masonry-grid {
+  column-count: 1;
+  column-gap: 1.25rem;
+}
+
+@media (min-width: 48rem) {
+  .masonry-grid { column-count: 2; }
+}
+
+@media (min-width: 64rem) {
+  .masonry-grid { column-count: 3; }
+}
+
+.masonry-grid--2col {
+  column-count: 1;
+}
+
+@media (min-width: 48rem) {
+  .masonry-grid--2col { column-count: 2; }
+}
+
+.masonry-grid > * {
+  break-inside: avoid;
+  margin-bottom: 1.25rem;
 }
 
 /* ── Scroll Animations ── */
