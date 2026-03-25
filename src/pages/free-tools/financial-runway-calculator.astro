@@ -1,0 +1,309 @@
+---
+import ToolLayout from "@layouts/ToolLayout.astro";
+import ToolInput from "@components/ToolInput.astro";
+---
+
+<ToolLayout
+  title="Financial Runway Calculator"
+  headline="Financial Runway Calculator"
+  description="Calculate how many months of runway you have before your savings run out. Factor in severance, unemployment, and side income."
+  category="Financial Planning"
+  icon="💰"
+  relatedTags={["job search strategy", "mindset"]}
+  slug="financial-runway-calculator"
+  lastUpdated="March 2026"
+  featureList={["Savings runway calculation", "Severance and unemployment offsets", "Monthly burn rate breakdown", "Start-searching date with safety buffer"]}
+  faqItems={[
+    { question: "What is financial runway?", answer: "Financial runway is the number of months you can cover your living expenses without a paycheck. It includes your savings, severance, unemployment benefits, and any side income, minus your monthly expenses." },
+    { question: "How much savings should I have before quitting my job?", answer: "Most career coaches recommend 6 months of expenses as a minimum. If you're in a specialized field or targeting senior roles, 9-12 months gives you the freedom to be selective instead of desperate." },
+    { question: "Should I include my partner's income in the calculation?", answer: "If your partner's income covers shared expenses, you can reduce your monthly burn rate by your share. Be conservative. Use the number you'd need if you were covering everything yourself, then adjust down." },
+    { question: "What if I get severance?", answer: "Severance extends your runway directly. Enter the total amount (weeks x weekly pay) into the calculator. Remember: severance is taxed as regular income, so your take-home will be less than the gross amount." },
+    { question: "How can I reduce my expenses during a job search?", answer: "Start with subscriptions and recurring charges. Pause what you don't need. Negotiate bills (internet, insurance, phone). Cook more. Cut discretionary spending by 20-30%. Small changes add months to your runway." },
+    { question: "When should I start worrying about my runway?", answer: "When you hit 3 months of expenses remaining, shift into urgent mode. That means accepting a wider range of roles, ramping up applications, and considering contract or freelance work as a bridge." },
+  ]}
+  relatedTools={[
+    { name: "Opportunity Cost Calculator", slug: "opportunity-cost-calculator", icon: "⏱️" },
+    { name: "Contract vs. Salary Calculator", slug: "contract-vs-salary-calculator", icon: "⚖️" },
+  ]}
+>
+  <!-- Intro -->
+  <div slot="intro">
+    <h2 class="text-xl font-bold text-navy">Why This Matters</h2>
+    <div class="mt-4 space-y-4 text-[1.0625rem] leading-[1.75] text-text">
+      <p>
+        Financial runway is the most important number in your job search. It shapes how selective you can be, how much risk you can take, and when urgency kicks in.
+      </p>
+      <p>
+        The average search takes 3-6 months. Senior roles take longer. Know your number, and you stop guessing and start making better decisions.
+      </p>
+    </div>
+  </div>
+  <form id="runway-form" class="space-y-6" novalidate>
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+      <ToolInput
+        id="savings"
+        label="Total savings"
+        type="number"
+        required={true}
+        prefix="$"
+        placeholder="50000"
+      />
+      <ToolInput
+        id="expenses"
+        label="Monthly expenses"
+        type="number"
+        required={true}
+        prefix="$"
+        placeholder="4000"
+      />
+    </div>
+
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+      <ToolInput
+        id="severance-weeks"
+        label="Severance weeks"
+        type="number"
+        min={0}
+        value="0"
+        tooltip="Number of weeks of severance pay"
+      />
+      <ToolInput
+        id="severance-pay"
+        label="Weekly severance pay"
+        type="number"
+        prefix="$"
+        value="0"
+      />
+    </div>
+
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+      <ToolInput
+        id="unemployment"
+        label="Monthly unemployment benefits"
+        type="number"
+        prefix="$"
+        value="0"
+      />
+      <ToolInput
+        id="side-income"
+        label="Monthly side income"
+        type="number"
+        prefix="$"
+        value="0"
+      />
+    </div>
+
+    <button
+      type="submit"
+      class="w-full rounded-lg bg-blue px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-blue-dark"
+    >
+      Calculate My Runway
+    </button>
+  </form>
+
+  <!-- Results (hidden until calculated) -->
+  <div id="results" class="mt-10 hidden" aria-live="polite">
+    <div class="rounded-xl border border-border bg-white p-8 text-center">
+      <p class="text-sm font-medium text-text-muted">Your financial runway</p>
+      <p id="runway-stat" class="mt-2 font-display text-[clamp(2.5rem,6vw,3.5rem)] leading-[1.1] text-navy"></p>
+
+      <!-- Progress bar -->
+      <div class="mx-auto mt-6 max-w-md">
+        <div class="h-3 w-full overflow-hidden rounded-full bg-gray-100">
+          <div id="runway-bar" class="h-full rounded-full transition-all duration-700" style="width: 0%"></div>
+        </div>
+        <div class="mt-2 flex justify-between text-xs text-text-muted">
+          <span>0 months</span>
+          <span>12+ months</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Date cards -->
+    <div class="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div class="rounded-xl border border-border bg-white p-6">
+        <p class="text-sm font-medium text-text-muted">Savings run out</p>
+        <p id="depletion-date" class="mt-1 font-display text-xl text-navy"></p>
+      </div>
+      <div class="rounded-xl border border-border bg-white p-6">
+        <p class="text-sm font-medium text-text-muted">Start your search sprint by</p>
+        <p id="worry-date" class="mt-1 font-display text-xl text-navy"></p>
+        <p class="mt-1 text-xs text-text-muted">70% mark, gives you a 30% buffer</p>
+      </div>
+    </div>
+
+    <!-- Monthly breakdown -->
+    <div class="mt-6 rounded-xl border border-border bg-white p-6">
+      <h3 class="text-sm font-semibold text-navy">Monthly Breakdown</h3>
+      <div class="mt-4 space-y-3">
+        <div class="flex items-center justify-between border-b border-border pb-3">
+          <span class="text-sm text-text-muted">Total funds (savings + severance)</span>
+          <span id="total-funds" class="font-semibold text-navy"></span>
+        </div>
+        <div class="flex items-center justify-between border-b border-border pb-3">
+          <span class="text-sm text-text-muted">Monthly expenses</span>
+          <span id="monthly-expenses" class="font-semibold text-navy"></span>
+        </div>
+        <div class="flex items-center justify-between border-b border-border pb-3">
+          <span class="text-sm text-text-muted">Monthly income (unemployment + side)</span>
+          <span id="monthly-income" class="font-semibold text-success"></span>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-sm font-semibold text-navy">Net monthly burn</span>
+          <span id="monthly-burn" class="font-semibold text-navy"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Methodology -->
+  <div slot="methodology">
+    <h2 class="text-xl font-bold text-navy">How We Calculate Your Runway</h2>
+    <div class="mt-4 space-y-4 text-[1.0625rem] leading-[1.75] text-text">
+      <p>
+        The formula: <strong>(Savings + Severance) / (Monthly Expenses - Unemployment - Side Income) = Months of Runway.</strong> Severance is treated as a lump sum added to savings, not monthly income, because that's how you'll actually spend it.
+      </p>
+      <p>
+        Unemployment and side income reduce your monthly burn. If you spend $4,200/month but receive $1,200 in unemployment, your net burn is $3,000/month. The "start searching seriously" date appears at 70% of your runway, giving you a 30% buffer for slow hiring, holidays, and ghosting.
+      </p>
+    </div>
+  </div>
+
+  <!-- Example -->
+  <div slot="example">
+    <h2 class="text-xl font-bold text-navy">Example</h2>
+    <div class="mt-4 space-y-4 text-[1.0625rem] leading-[1.75] text-text">
+      <p>
+        $45,000 savings + $7,200 severance (4 weeks at $1,800/week) = $52,200 total. Monthly expenses of $4,200 minus $1,200 unemployment = $3,000 net burn. That's <strong>17.4 months of runway</strong>, with a "start searching seriously" flag at month 12 (the 70% mark).
+      </p>
+    </div>
+  </div>
+
+  <!-- Tips section -->
+  <div slot="tips">
+    <h2 class="font-display text-2xl text-navy">What These Numbers Mean</h2>
+    <div class="mt-6 space-y-4 text-[1.0625rem] leading-[1.75] text-text-muted">
+      <p>
+        <strong class="text-navy">More than 6 months:</strong> Breathing room. Be selective, not passive. Target roles that actually fit.
+      </p>
+      <p>
+        <strong class="text-navy">3 to 6 months:</strong> Solid, but the clock is ticking. Treat your search like a part-time job.
+      </p>
+      <p>
+        <strong class="text-navy">Under 3 months:</strong> Full sprint. Focus on highest-probability leads and consider contract work to extend your runway.
+      </p>
+    </div>
+
+    <h3 class="mt-8 text-lg font-semibold text-navy">Quick Ways to Reduce Your Burn Rate</h3>
+    <ul class="mt-4 space-y-2 text-[1.0625rem] leading-[1.75] text-text-muted">
+      <li>Audit subscriptions. Most people find $100 to $300/month they forgot about.</li>
+      <li>Switch to a lower-cost health plan between jobs. Marketplace plans or COBRA alternatives can save hundreds.</li>
+      <li>Pick up freelance or contract work. Even 10-15 hours a week adds months to your timeline and fills a resume gap.</li>
+      <li>Talk to your partner about the numbers on day one. Make decisions together, not under stress at month 4.</li>
+    </ul>
+
+    <div class="mt-8 rounded-lg border border-border bg-white p-6">
+      <h3 class="text-lg font-semibold text-navy">Related Reading</h3>
+      <p class="mt-2 text-[1.0625rem] leading-[1.75] text-text-muted">
+        Just got laid off? Here's your step-by-step plan:
+        <a href="/blog/what-to-do-after-getting-laid-off" class="font-medium text-blue underline underline-offset-2 hover:text-blue-dark">
+          What to Do After Getting Laid Off
+        </a>
+      </p>
+    </div>
+  </div>
+</ToolLayout>
+
+<script>
+  const form = document.getElementById('runway-form') as HTMLFormElement;
+  const results = document.getElementById('results') as HTMLDivElement;
+
+  const fmt = (n: number) =>
+    n.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+
+  const formatDate = (date: Date) =>
+    date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+  function addMonths(date: Date, months: number): Date {
+    const d = new Date(date);
+    d.setMonth(d.getMonth() + Math.floor(months));
+    d.setDate(d.getDate() + Math.round((months % 1) * 30));
+    return d;
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const savings = parseFloat((document.getElementById('savings') as HTMLInputElement).value) || 0;
+    const expenses = parseFloat((document.getElementById('expenses') as HTMLInputElement).value) || 0;
+    const severanceWeeks = parseFloat((document.getElementById('severance-weeks') as HTMLInputElement).value) || 0;
+    const weeklySeverancePay = parseFloat((document.getElementById('severance-pay') as HTMLInputElement).value) || 0;
+    const unemployment = parseFloat((document.getElementById('unemployment') as HTMLInputElement).value) || 0;
+    const sideIncome = parseFloat((document.getElementById('side-income') as HTMLInputElement).value) || 0;
+
+    if (!savings || !expenses) {
+      return;
+    }
+
+    const totalSeverance = severanceWeeks * weeklySeverancePay;
+    const totalFunds = savings + totalSeverance;
+    const monthlyIncome = unemployment + sideIncome;
+    const monthlyBurn = expenses - monthlyIncome;
+
+    const today = new Date();
+    let runwayMonths: number;
+    let isInfinite = false;
+
+    if (monthlyBurn <= 0) {
+      isInfinite = true;
+      runwayMonths = Infinity;
+    } else {
+      runwayMonths = totalFunds / monthlyBurn;
+    }
+
+    // Update hero stat
+    const runwayStat = document.getElementById('runway-stat')!;
+    if (isInfinite) {
+      runwayStat.textContent = 'Your income covers your expenses!';
+    } else {
+      runwayStat.textContent = `${runwayMonths.toFixed(1)} months of runway`;
+    }
+
+    // Update progress bar
+    const bar = document.getElementById('runway-bar')!;
+    if (isInfinite) {
+      bar.style.width = '100%';
+      bar.className = 'h-full rounded-full transition-all duration-700 bg-success';
+    } else {
+      const pct = Math.min((runwayMonths / 12) * 100, 100);
+      bar.style.width = `${pct}%`;
+      if (runwayMonths > 6) {
+        bar.className = 'h-full rounded-full transition-all duration-700 bg-success';
+      } else if (runwayMonths >= 3) {
+        bar.className = 'h-full rounded-full transition-all duration-700 bg-warning';
+      } else {
+        bar.className = 'h-full rounded-full transition-all duration-700 bg-red-500';
+      }
+    }
+
+    // Update dates
+    const depletionEl = document.getElementById('depletion-date')!;
+    const worryEl = document.getElementById('worry-date')!;
+    if (isInfinite) {
+      depletionEl.textContent = 'N/A';
+      worryEl.textContent = 'No rush, but don\'t wait forever';
+    } else {
+      depletionEl.textContent = formatDate(addMonths(today, runwayMonths));
+      worryEl.textContent = formatDate(addMonths(today, runwayMonths * 0.7));
+    }
+
+    // Update breakdown
+    document.getElementById('total-funds')!.textContent = fmt(totalFunds);
+    document.getElementById('monthly-expenses')!.textContent = fmt(expenses);
+    document.getElementById('monthly-income')!.textContent = `+${fmt(monthlyIncome)}`;
+    document.getElementById('monthly-burn')!.textContent = fmt(monthlyBurn > 0 ? monthlyBurn : 0);
+
+    results.classList.remove('hidden');
+    results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+</script>
