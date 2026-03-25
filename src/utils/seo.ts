@@ -182,6 +182,37 @@ export function generateReviewSchema(params: {
   };
 }
 
+export function generateWebApplicationSchema(params: {
+  name: string;
+  description: string;
+  url: string;
+  category?: string;
+  featureList?: string[];
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: params.name,
+    description: params.description,
+    url: params.url,
+    applicationCategory: params.category || 'BusinessApplication',
+    operatingSystem: 'Any',
+    isAccessibleForFree: true,
+    browserRequirements: 'Requires JavaScript',
+    ...(params.featureList?.length && { featureList: params.featureList.join(', ') }),
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+    provider: {
+      '@type': 'Organization',
+      name: 'ClearCareer',
+      url: 'https://joinclearcareer.com',
+    },
+  };
+}
+
 export function generateBreadcrumbSchema(items: { name: string; url: string }[]) {
   return {
     '@context': 'https://schema.org',

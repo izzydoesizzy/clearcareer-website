@@ -11,6 +11,7 @@ const blog = defineCollection({
     image: z.string().optional(),
     tags: z.array(z.string()).default([]),
     category: z.enum(['job-search-strategy', 'resume-linkedin', 'interviews', 'salary-negotiation', 'ai-tools-mindset', 'announcement']).default('announcement'),
+    type: z.enum(['playbook', 'article']).default('article'),
     featured: z.boolean().default(false),
     draft: z.boolean().default(false),
   }),
