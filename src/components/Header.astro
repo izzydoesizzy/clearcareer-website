@@ -8,17 +8,19 @@ interface NavItem {
 const navItems: NavItem[] = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
-  {
-    label: "Programs",
-    href: "/programs",
-    children: [
-      { label: "Job Search Intensive Sprint", href: "/programs/jsis" },
-      { label: "Community", href: "/programs/community" },
-    ],
-  },
+  { label: "Program", href: "/programs/jsis" },
   { label: "Testimonials", href: "/testimonials" },
   { label: "Blog", href: "/blog" },
-  { label: "Resources", href: "/resources" },
+  {
+    label: "Resources",
+    href: "/resources",
+    children: [
+      { label: "Playbooks", href: "/playbooks" },
+      { label: "Free Tools", href: "/free-tools" },
+      { label: "Career Tools", href: "/tools" },
+      { label: "Guides & Templates", href: "/resources" },
+    ],
+  },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -27,7 +29,8 @@ const currentPath = Astro.url.pathname;
 
 <header
   id="site-header"
-  class="sticky top-0 z-50 w-full border-b border-border bg-white/95 backdrop-blur-sm transition-shadow"
+  class="sticky top-0 z-50 w-full border-b border-border bg-white/95 transition-shadow"
+  style="backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);"
 >
   <div class="mx-auto flex max-w-[1080px] items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
     <!-- Logo -->
@@ -203,15 +206,26 @@ const currentPath = Astro.url.pathname;
     });
   });
 
-  // Header shadow + enhanced blur on scroll
+  // Header shadow + enhanced blur on scroll (throttled, inline styles to avoid Tailwind HMR triggers)
   const header = document.getElementById("site-header");
+  let ticking = false;
   window.addEventListener("scroll", () => {
-    if (window.scrollY > 10) {
-      header?.classList.add("shadow-md", "backdrop-blur-md");
-      header?.classList.remove("backdrop-blur-sm");
-    } else {
-      header?.classList.remove("shadow-md", "backdrop-blur-md");
-      header?.classList.add("backdrop-blur-sm");
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(() => {
+        if (header) {
+          if (window.scrollY > 10) {
+            header.style.boxShadow = '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)';
+            header.style.backdropFilter = 'blur(12px)';
+            (header.style as any).webkitBackdropFilter = 'blur(12px)';
+          } else {
+            header.style.boxShadow = '';
+            header.style.backdropFilter = 'blur(4px)';
+            (header.style as any).webkitBackdropFilter = 'blur(4px)';
+          }
+        }
+        ticking = false;
+      });
     }
   });
 </script>

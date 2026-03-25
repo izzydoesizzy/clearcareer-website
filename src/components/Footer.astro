@@ -6,26 +6,31 @@ interface FooterColumn {
 
 const columns: FooterColumn[] = [
   {
-    title: "Programs",
+    title: "Program",
     links: [
-      { label: "Job Search Intensive Sprint", href: "/programs/jsis" },
-      { label: "Community", href: "/programs/community" },
+      { label: "Job Search Ignition System", href: "/programs/jsis" },
+      { label: "Outcomes Report", href: "/outcomes" },
+      { label: "Testimonials", href: "/testimonials" },
+      { label: "Book a Free Audit", href: "https://calendly.com/clearcareer/discovery-call" },
     ],
   },
   {
     title: "Resources",
     links: [
       { label: "Blog", href: "/blog" },
-      { label: "Free Resources", href: "/resources" },
-      { label: "Tools", href: "/resources/tools" },
+      { label: "Playbooks", href: "/playbooks" },
+      { label: "Free Tools", href: "/free-tools" },
+      { label: "Career Tools", href: "/tools" },
+      { label: "Guides & Templates", href: "/resources" },
     ],
   },
   {
     title: "Company",
     links: [
-      { label: "About", href: "/about" },
-      { label: "Testimonials", href: "/testimonials" },
+      { label: "About Izzy", href: "/about" },
       { label: "Contact", href: "/contact" },
+      { label: "Privacy Policy", href: "/privacy" },
+      { label: "Terms of Service", href: "/terms" },
     ],
   },
 ];
@@ -48,7 +53,7 @@ const currentYear = new Date().getFullYear();
         <!-- Social Links -->
         <div class="mt-6 flex gap-4">
           <a
-            href="https://linkedin.com/company/clearcareer"
+            href="https://linkedin.com/in/izzydoesizzy"
             target="_blank"
             rel="noopener noreferrer"
             class="flex h-10 w-10 items-center justify-center rounded-lg bg-white/10 text-gray-400 transition-colors hover:bg-blue hover:text-white"
@@ -105,7 +110,7 @@ const currentYear = new Date().getFullYear();
             Actionable job search strategies. No fluff.
           </p>
         </div>
-        <form class="flex w-full max-w-md gap-3" action="#" method="POST">
+        <form class="flex w-full max-w-md gap-3" id="footer-newsletter-form">
           <label for="footer-email" class="sr-only">Email address</label>
           <input
             id="footer-email"
@@ -133,3 +138,15 @@ const currentYear = new Date().getFullYear();
     </div>
   </div>
 </footer>
+
+<script>
+  document.getElementById('footer-newsletter-form')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const btn = (e.target as HTMLFormElement).querySelector('button[type="submit"]');
+    if (btn) {
+      btn.textContent = 'Coming soon!';
+      btn.setAttribute('disabled', 'true');
+      btn.classList.add('opacity-60', 'cursor-not-allowed');
+    }
+  });
+</script>
