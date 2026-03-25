@@ -10,6 +10,8 @@ const blog = defineCollection({
     author: z.string().default('Izzy Piyale-Sheard'),
     image: z.string().optional(),
     tags: z.array(z.string()).default([]),
+    category: z.enum(['job-search-strategy', 'resume-linkedin', 'interviews', 'salary-negotiation', 'ai-tools-mindset', 'announcement']).default('announcement'),
+    featured: z.boolean().default(false),
     draft: z.boolean().default(false),
   }),
 });
