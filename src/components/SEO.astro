@@ -1,0 +1,85 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  image?: string;
+  type?: "website" | "article";
+  publishDate?: string;
+  author?: string;
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  canonical,
+  image = "/images/og-default.png",
+  type = "website",
+  publishDate,
+  author,
+  noindex = false,
+} = Astro.props;
+
+const siteUrl = Astro.site?.toString().replace(/\/$/, "") ?? "https://joinclearcareer.com";
+const canonicalUrl = canonical ?? new URL(Astro.url.pathname, siteUrl).toString();
+const ogImageUrl = image.startsWith("http") ? image : `${siteUrl}${image}`;
+
+const jsonLd =
+  type === "article"
+    ? {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: title,
+        description,
+        image: ogImageUrl,
+        author: {
+          "@type": "Person",
+          name: author ?? "Izzy Georgieva",
+        },
+        publisher: {
+          "@type": "Organization",
+          name: "ClearCareer",
+          url: siteUrl,
+        },
+        datePublished: publishDate,
+        mainEntityOfPage: {
+          "@type": "WebPage",
+          "@id": canonicalUrl,
+        },
+      }
+    : {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        name: "ClearCareer",
+        url: siteUrl,
+        description,
+      };
+---
+
+<!-- Primary Meta -->
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalUrl} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+
+<!-- Open Graph -->
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:image" content={ogImageUrl} />
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content="ClearCareer" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImageUrl} />
+
+<!-- Article-specific -->
+{publishDate && <meta property="article:published_time" content={publishDate} />}
+{author && <meta property="article:author" content={author} />}
+
+<!-- JSON-LD -->
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

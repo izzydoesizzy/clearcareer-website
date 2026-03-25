@@ -1,0 +1,99 @@
+---
+import PageLayout from "@layouts/PageLayout.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  publishDate: string;
+  author?: string;
+  image?: string;
+  tags?: string[];
+}
+
+const {
+  title,
+  description,
+  publishDate,
+  author = "Izzy Piyale-Sheard",
+  image,
+  tags = [],
+} = Astro.props;
+
+const formattedDate = new Date(publishDate).toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+
+// Estimate reading time (roughly 200 words per minute)
+const content = await Astro.slots.render("default");
+const wordCount = content.split(/\s+/).length;
+const readingTime = Math.max(1, Math.ceil(wordCount / 200));
+
+const siteUrl = Astro.site?.toString().replace(/\/$/, "") ?? "https://joinclearcareer.com";
+const articleUrl = new URL(Astro.url.pathname, siteUrl).toString();
+const ogImage = image?.startsWith("http") ? image : image ? `${siteUrl}${image}` : undefined;
+---
+
+<PageLayout title={title} description={description} image={image}>
+  <!-- Article Schema.org JSON-LD -->
+  <script
+    type="application/ld+json"
+    slot="head"
+    set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: title,
+      description,
+      image: ogImage,
+      author: {
+        "@type": "Person",
+        name: author,
+      },
+      publisher: {
+        "@type": "Organization",
+        name: "ClearCareer",
+        url: siteUrl,
+      },
+      datePublished: publishDate,
+      mainEntityOfPage: {
+        "@type": "WebPage",
+        "@id": articleUrl,
+      },
+    })}
+  />
+
+  <article class="mx-auto max-w-[720px] px-4 py-12 sm:px-6 md:py-16">
+    <!-- Article Header -->
+    <header class="mb-10">
+      {
+        tags.length > 0 && (
+          <div class="mb-4 flex flex-wrap gap-2">
+            {tags.map((tag) => (
+              <span class="rounded-full bg-blue-bg px-3 py-1 text-xs font-medium text-blue">
+                {tag}
+              </span>
+            ))}
+          </div>
+        )
+      }
+
+      <h1 class="text-[clamp(2rem,5vw,3rem)] font-bold leading-[1.1] text-navy">
+        {title}
+      </h1>
+
+      <div class="mt-4 flex items-center gap-4 text-sm text-text-muted">
+        <span>{author}</span>
+        <span aria-hidden="true">&middot;</span>
+        <time datetime={publishDate}>{formattedDate}</time>
+        <span aria-hidden="true">&middot;</span>
+        <span>{readingTime} min read</span>
+      </div>
+    </header>
+
+    <!-- Article Content -->
+    <div class="prose prose-lg max-w-none text-[1.0625rem] leading-[1.75] text-text">
+      <slot />
+    </div>
+  </article>
+</PageLayout>

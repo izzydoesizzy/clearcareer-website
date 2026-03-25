@@ -1,0 +1,130 @@
+[
+  {
+    "name": "TealHQ",
+    "description": "Job search tracker — clients build resumes and track applications here",
+    "category": "Job Search Tools",
+    "linkType": "affiliate",
+    "link": null,
+    "recommended": true
+  },
+  {
+    "name": "Simplify.jobs",
+    "description": "AI job application tool recommended to clients",
+    "category": "Job Search Tools",
+    "linkType": "affiliate",
+    "link": null,
+    "recommended": true
+  },
+  {
+    "name": "Lavender",
+    "description": "AI email writing assistant for client outreach",
+    "category": "Job Search Tools",
+    "linkType": "affiliate",
+    "link": null,
+    "recommended": true
+  },
+  {
+    "name": "Yoodli",
+    "description": "AI speech and interview practice tool",
+    "category": "Job Search Tools",
+    "linkType": "affiliate",
+    "link": null,
+    "recommended": true
+  },
+  {
+    "name": "Uli AI",
+    "description": "Free AI mock interview tool (recommended at workshops)",
+    "category": "Job Search Tools",
+    "linkType": "affiliate",
+    "link": null,
+    "recommended": true
+  },
+  {
+    "name": "Boardy AI",
+    "description": "AI networking tool — connects people based on goals",
+    "category": "Job Search Tools",
+    "linkType": "affiliate",
+    "link": null,
+    "recommended": true
+  },
+  {
+    "name": "Hunter.io",
+    "description": "Email finder for locating hiring manager contact info",
+    "category": "Job Search Tools",
+    "linkType": "affiliate",
+    "link": null,
+    "recommended": true
+  },
+  {
+    "name": "Glassdoor",
+    "description": "Salary research data source",
+    "category": "Salary Research",
+    "linkType": "affiliate",
+    "link": null,
+    "recommended": true
+  },
+  {
+    "name": "Indeed",
+    "description": "Job search and salary research",
+    "category": "Salary Research",
+    "linkType": "affiliate",
+    "link": null,
+    "recommended": true
+  },
+  {
+    "name": "Payscale",
+    "description": "Salary data source used in toolkit output",
+    "category": "Salary Research",
+    "linkType": "affiliate",
+    "link": null,
+    "recommended": true
+  },
+  {
+    "name": "Levels.fyi",
+    "description": "Tech compensation data",
+    "category": "Salary Research",
+    "linkType": "affiliate",
+    "link": null,
+    "recommended": true
+  },
+  {
+    "name": "Crunchbase",
+    "description": "Startup data, funding, company size research",
+    "category": "Salary Research",
+    "linkType": "affiliate",
+    "link": null,
+    "recommended": false
+  },
+  {
+    "name": "Fathom",
+    "description": "Call recording and transcript export — 353+ transcripts, daily use",
+    "category": "Video Calls",
+    "linkType": "affiliate",
+    "link": null,
+    "recommended": true
+  },
+  {
+    "name": "Zoom",
+    "description": "Coaching sessions, discovery calls, workshops",
+    "category": "Video Calls",
+    "linkType": "referral",
+    "link": null,
+    "recommended": false
+  },
+  {
+    "name": "Calendly",
+    "description": "Strategy call and discovery call scheduling",
+    "category": "Scheduling",
+    "linkType": "affiliate",
+    "link": null,
+    "recommended": false
+  },
+  {
+    "name": "Skool",
+    "description": "Primary community — Monetize Your Magic (171+ members, top 5%), Toronto Mayor for IRL meetups",
+    "category": "Community",
+    "linkType": "affiliate",
+    "link": null,
+    "recommended": false
+  }
+]

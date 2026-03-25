@@ -1,0 +1,102 @@
+---
+import PageLayout from "@layouts/PageLayout.astro";
+import Hero from "@components/Hero.astro";
+import CTASection from "@components/CTASection.astro";
+import { getCollection } from "astro:content";
+
+const allPosts = await getCollection("blog", ({ data }) => !data.draft);
+const posts = allPosts.sort(
+  (a, b) =>
+    new Date(b.data.publishDate).getTime() -
+    new Date(a.data.publishDate).getTime()
+);
+---
+
+<PageLayout
+  title="Career Blog | ClearCareer"
+  description="Career advice, job search strategies, resume tips, and salary negotiation guides from ClearCareer."
+>
+  <Hero
+    variant="page"
+    eyebrow="Career Blog"
+    headline="Strategies That Actually Work"
+    subheadline="Practical career advice from the trenches. No fluff, no filler."
+  />
+
+  <section class="py-16 md:py-24">
+    <div class="mx-auto max-w-[1080px] px-4 sm:px-6 lg:px-8">
+      {
+        posts.length > 0 ? (
+          <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {posts.map((post) => (
+              <a
+                href={`/blog/${post.id}`}
+                class="group overflow-hidden rounded-xl border border-border bg-white shadow-sm transition-shadow hover:shadow-md"
+              >
+                {post.data.image ? (
+                  <div class="aspect-video overflow-hidden">
+                    <img
+                      src={post.data.image}
+                      alt={post.data.title}
+                      class="h-full w-full object-cover"
+                    />
+                  </div>
+                ) : (
+                  <div class="aspect-video bg-blue-bg" />
+                )}
+
+                <div class="p-6">
+                  {post.data.tags.length > 0 && (
+                    <div class="mb-3 flex flex-wrap gap-2">
+                      {post.data.tags.map((tag) => (
+                        <span class="rounded-full bg-blue-bg px-3 py-1 text-xs font-medium text-blue">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
+                  <h3 class="text-lg font-semibold text-navy group-hover:text-blue transition-colors">
+                    {post.data.title}
+                  </h3>
+
+                  <p class="mt-2 text-sm text-text-muted line-clamp-2">
+                    {post.data.description}
+                  </p>
+
+                  <p class="mt-4 text-xs text-text-muted">
+                    {new Date(post.data.publishDate).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}{" "}
+                    &middot; {post.data.author}
+                  </p>
+                </div>
+              </a>
+            ))}
+          </div>
+        ) : (
+          <div class="rounded-2xl bg-blue-bg p-12 text-center">
+            <h2 class="text-xl font-semibold text-navy">
+              Blog posts coming soon
+            </h2>
+            <p class="mx-auto mt-3 max-w-md text-text-muted">
+              We're working on practical career guides, job search strategies,
+              and interview tips. Check back soon.
+            </p>
+          </div>
+        )
+      }
+    </div>
+  </section>
+
+  <CTASection
+    heading="Want Personalized Career Advice?"
+    primaryCTA={{
+      text: "Book a Free Audit",
+      href: "https://calendly.com/clearcareer/discovery-call",
+    }}
+    variant="blue"
+  />
+</PageLayout>
