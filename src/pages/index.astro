@@ -389,36 +389,46 @@ const latestPosts = (await getCollection("blog", ({ data }) => {
         </h2>
       </div>
 
-      <div class="mx-auto mt-12 grid max-w-[800px] grid-cols-1 gap-8 md:grid-cols-2">
+      <div class="mx-auto mt-12 grid max-w-[1080px] grid-cols-1 gap-8 md:grid-cols-3">
         <PricingCard
-          tier="Job Search Ignition System"
+          tier="Profile Overhaul"
+          price="$1,997"
+          features={[
+            "Setup call with Izzy",
+            "Resume rewrite (15-20 CAR achievements)",
+            "Full LinkedIn rebuild",
+            "AI-enhanced professional headshot",
+          ]}
+          ctaText="Learn More"
+          ctaHref="/programs/jsis#pricing"
+        />
+        <PricingCard
+          tier="Group Coaching &middot; 8 Weeks"
           price="$2,497"
           features={[
-            "20+ done-for-you assets",
-            "3 private 1:1 sessions with Izzy",
-            "8 weeks of group accountability",
-            "AI-powered career toolkit",
-            "LinkedIn Content System",
+            "Everything in Profile Overhaul",
+            "50+ target companies + salary research",
+            "Full outreach + interview toolkit",
+            "8 weeks of group calls + community",
             "WhatsApp async support",
           ]}
           ctaText="Learn More"
-          ctaHref="/programs/jsis"
+          ctaHref="/programs/jsis#pricing"
           featured={true}
-          paymentPlan="Or 3 payments of $833/mo"
+          paymentPlan="Or 3 payments of $899/mo"
         />
         <PricingCard
-          tier="ClearCareer Community"
-          price="$49/mo"
+          tier="VIP 1:1"
+          price="$4,997"
           features={[
-            "Weekly group coaching calls",
-            "Job search templates & tools",
-            "Private community access",
-            "Monthly workshops",
-            "Resource library",
+            "Everything in Group Coaching",
+            "3 private 1:1 sessions with Izzy",
+            "Priority WhatsApp support",
+            "Interview coaching + negotiation scripts",
+            "LinkedIn posts written for you",
           ]}
-          ctaText="Join the Community"
-          ctaHref="/programs/community"
-          paymentPlan="Or $249 lifetime"
+          ctaText="Learn More"
+          ctaHref="/programs/jsis#pricing"
         />
       </div>
     </div>

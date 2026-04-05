@@ -504,44 +504,67 @@ const fenceSitterCards = fenceSitterNames
 
   <!-- 12. Pricing Section -->
   <section class="py-16 md:py-24" id="pricing">
-    <div class="mx-auto max-w-[600px] px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-[1080px] px-4 sm:px-6 lg:px-8">
       <div class="text-center">
         <p class="mb-4 text-sm font-semibold uppercase tracking-widest text-blue">Your Investment</p>
-        <h2 class="font-display text-[clamp(1.5rem,3vw,2.25rem)] leading-[1.15] text-navy">Founding Member Pricing</h2>
+        <h2 class="font-display text-[clamp(1.5rem,3vw,2.25rem)] leading-[1.15] text-navy">May 2026 Cohort &middot; Founding Member Pricing</h2>
+        <p class="mt-3 text-text-muted">Program launches May 4th. 13 spots available.</p>
       </div>
 
-      <div class="mt-12">
+      <div class="mx-auto mt-12 grid max-w-[1080px] grid-cols-1 gap-8 md:grid-cols-3">
         <PricingCard
-          tier="March 2026 Cohort · Founding Member"
+          tier="Profile Overhaul"
+          price="$1,997"
+          features={[
+            "Setup call with Izzy",
+            "Professionally written resume (15-20 CAR achievements)",
+            "LinkedIn rebuild: headline (3 versions), About Me, custom banner",
+            "AI-enhanced professional headshot",
+          ]}
+          ctaText="Book a Call"
+          ctaHref="https://calendly.com/clearcareer/discovery-call"
+        />
+        <PricingCard
+          tier="Group Coaching &middot; 8 Weeks"
           price="$2,497"
           features={[
-            "Professionally written resume with 15-20 quantified, CAR-formatted achievements",
-            "LinkedIn rebuild: headline (3 versions), About Me section, custom banner",
-            "AI-enhanced or created professional headshot",
-            "50+ target companies + alternative job titles + research-backed salary ranges",
-            "STAR story bank (10-12 stories) + 15-20 custom interview questions",
-            "Full outreach toolkit: cold email, DM, recruiter intro, follow-up + thank-you templates",
-            "Salary negotiation strategy + counteroffer scripts",
-            "3x private 1:1 sessions with Izzy (Kickoff, Mid-Program Review, Closing Strategy)",
-            "8 weeks of Monday check-ins + Wednesday group calls + WhatsApp async support",
-            "LinkedIn Content System: 1-2 story-based posts per week, written for you",
-            "Job search tracking system + full AI prompt library (30+ prompts)",
+            "Everything in Profile Overhaul",
+            "50+ target companies + alternative job titles + salary research",
+            "Full outreach toolkit: cold email, DM, recruiter intro, follow-up templates",
+            "STAR story bank (10-12 stories) + custom interview questions",
+            "Job search tracking system + AI prompt library (30+ prompts)",
+            "8 weeks of group coaching calls + WhatsApp async support",
+            "Community access",
           ]}
           ctaText="Enroll as Founding Member"
           ctaHref="https://buy.stripe.com/8x25kD1RH3cp8KO1ZTbfO1i"
           featured={true}
-          paymentPlan="Or 3 payments of $833/mo"
+          paymentPlan="Or 3 payments of $899/mo"
         />
+        <PricingCard
+          tier="VIP 1:1"
+          price="$4,997"
+          features={[
+            "Everything in Group Coaching",
+            "3 private 1:1 sessions with Izzy",
+            "Priority WhatsApp support",
+            "Custom interview coaching + mock interviews",
+            "Salary negotiation strategy + counteroffer scripts",
+            "LinkedIn Content System: posts written for you",
+          ]}
+          ctaText="Book a Call"
+          ctaHref="https://calendly.com/clearcareer/discovery-call"
+        />
+      </div>
 
-        <div class="mt-6 text-center">
-          <p class="text-sm text-text-muted">Not ready to enroll yet?</p>
-          <a
-            href="https://calendly.com/clearcareer/discovery-call"
-            class="mt-1 inline-block text-sm font-semibold text-blue hover:text-blue-dark"
-          >
-            Book a free 20-minute Job Search Audit &rarr;
-          </a>
-        </div>
+      <div class="mt-8 text-center">
+        <p class="text-sm text-text-muted">Not ready to enroll yet?</p>
+        <a
+          href="https://calendly.com/clearcareer/discovery-call"
+          class="mt-1 inline-block text-sm font-semibold text-blue hover:text-blue-dark"
+        >
+          Book a free 20-minute Job Search Audit &rarr;
+        </a>
       </div>
     </div>
   </section>
