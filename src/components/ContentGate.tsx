@@ -1,13 +1,13 @@
 import { useState, useEffect, type ReactNode } from 'react';
 
 interface ContentGateProps {
-  formId?: string;
+  source?: string;
   storageKey?: string;
   children: ReactNode;
 }
 
 export default function ContentGate({
-  formId = '',
+  source = 'make-it-count',
   storageKey = 'makeitcount_unlocked',
   children,
 }: ContentGateProps) {
@@ -31,18 +31,11 @@ export default function ContentGate({
 
     setStatus('loading');
 
-    // If no Kit form ID configured, just unlock (dev mode)
-    if (!formId || formId === 'YOUR_KIT_FORM_ID') {
-      localStorage.setItem(storageKey, 'true');
-      setUnlocked(true);
-      return;
-    }
-
     try {
-      const res = await fetch(`https://app.kit.com/forms/${formId}/subscriptions`, {
+      const res = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email_address: email }),
+        body: JSON.stringify({ email, source }),
       });
 
       if (res.ok) {
@@ -110,9 +103,9 @@ export default function ContentGate({
               When I coach people through achievement mining, I use five dimensions. These are five
               different lenses for finding numbers in any role...
             </p>
-            <h3>1. Volume — How Many?</h3>
+            <h3>1. Volume: How Many?</h3>
             <p>This is the most straightforward dimension. How many projects did you complete?...</p>
-            <h3>2. Time — How Fast? How Long?</h3>
+            <h3>2. Time: How Fast? How Long?</h3>
             <p>Time is money, and employers know it...</p>
           </div>
         </div>

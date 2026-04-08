@@ -136,10 +136,7 @@ const currentYear = new Date().getFullYear();
 </footer>
 
 <script>
-  // Kit (formerly ConvertKit) newsletter integration
-  // Replace FORM_ID with your actual Kit form ID from https://app.kit.com/forms
-  const KIT_FORM_ID = 'YOUR_KIT_FORM_ID';
-
+  // Brevo newsletter integration
   document.getElementById('footer-newsletter-form')?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
@@ -149,21 +146,14 @@ const currentYear = new Date().getFullYear();
 
     if (!email || !btn) return;
 
-    if (KIT_FORM_ID === 'YOUR_KIT_FORM_ID') {
-      btn.textContent = 'Setup needed';
-      btn.setAttribute('disabled', 'true');
-      btn.classList.add('opacity-60', 'cursor-not-allowed');
-      return;
-    }
-
     btn.textContent = 'Sending...';
     btn.setAttribute('disabled', 'true');
 
     try {
-      const res = await fetch(`https://app.kit.com/forms/${KIT_FORM_ID}/subscriptions`, {
+      const res = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email_address: email }),
+        body: JSON.stringify({ email, source: 'newsletter' }),
       });
 
       if (res.ok) {

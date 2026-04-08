@@ -44,10 +44,6 @@ These are the foundational pieces that support your programs and drive organic t
 
 These build trust and demonstrate results. Publish in Weeks 2-3.
 
-- [ ] **200 Applications Got Nowhere. Then 27 Emails Changed Everything.** (Article)
-  Supports the "27 Emails" lead magnet
-  `200-applications-got-nowhere-then-27-emails-changed-everything.mdx`
-
 - [ ] **Hired in 3 Weeks After a Year of Unemployment** (Article)
   Powerful social proof, specific timeline
   `hired-in-3-weeks-after-a-year-of-unemployment.mdx`
