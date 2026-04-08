@@ -21,12 +21,12 @@ const careerOutcomeTestimonials = allTestimonials.filter(
 
 // Pick 6 specific career-outcome testimonials for the grid
 const selectedTestimonialNames = [
-  "Septembre Anderson",
-  "Tamara Gordon",
-  "Julian Pedraza",
-  "Chris Chipman",
-  "Jorge Garboza",
-  "Annie Bell",
+  "Septembre A.",
+  "Tamara G.",
+  "Julian P.",
+  "Chris C.",
+  "Jorge G.",
+  "Annie B.",
 ];
 const testimonialGrid = selectedTestimonialNames
   .map((name) => allTestimonials.find((t) => t.name === name))
@@ -34,12 +34,12 @@ const testimonialGrid = selectedTestimonialNames
 
 // Section 9: Client achievement cards (all have taglines + images)
 const achievementNames = [
-  "Tamara Gordon",
-  "Kristin Davis",
-  "Blake McDermott",
-  "Sparsh Kalia",
-  "Laura Salamanca",
-  "Kira Howe",
+  "Tamara G.",
+  "Kristin D.",
+  "Blake M.",
+  "Sparsh K.",
+  "Laura S.",
+  "Kira H.",
 ];
 const achievementCards = achievementNames
   .map((name) => allTestimonials.find((t) => t.name === name))
@@ -47,12 +47,12 @@ const achievementCards = achievementNames
 
 // Section 13: Fence-sitter / encouragement testimonials
 const fenceSitterNames = [
-  "Mazia Syed",
-  "Annie Bell",
-  "Kay Woods",
-  "Victor Perez",
-  "Septembre Anderson",
-  "Chris Chipman",
+  "Mazia S.",
+  "Annie B.",
+  "Kay W.",
+  "Victor P.",
+  "Septembre A.",
+  "Chris C.",
 ];
 const fenceSitterCards = fenceSitterNames
   .map((name) => allTestimonials.find((t) => t.name === name))
@@ -507,7 +507,7 @@ const fenceSitterCards = fenceSitterNames
     <div class="mx-auto max-w-[1080px] px-4 sm:px-6 lg:px-8">
       <div class="text-center">
         <p class="mb-4 text-sm font-semibold uppercase tracking-widest text-blue">Your Investment</p>
-        <h2 class="font-display text-[clamp(1.5rem,3vw,2.25rem)] leading-[1.15] text-navy">May 2026 Cohort &middot; Founding Member Pricing</h2>
+        <h2 class="font-display text-[clamp(1.5rem,3vw,2.25rem)] leading-[1.15] text-navy">May 2026 Cohort</h2>
         <p class="mt-3 text-text-muted">Program launches May 4th. 13 spots available.</p>
       </div>
 
@@ -536,7 +536,7 @@ const fenceSitterCards = fenceSitterNames
             "8 weeks of group coaching calls + WhatsApp async support",
             "Community access",
           ]}
-          ctaText="Enroll as Founding Member"
+          ctaText="Apply Today"
           ctaHref="https://buy.stripe.com/8x25kD1RH3cp8KO1ZTbfO1i"
           featured={true}
           paymentPlan="Or 3 payments of $899/mo"
@@ -626,7 +626,7 @@ const fenceSitterCards = fenceSitterNames
     heading="Ready to stop grinding alone?"
     body="Book a free 20-minute Job Search Audit with Izzy. We'll diagnose what's broken and walk you through exactly what we'd build together."
     primaryCTA={{ text: "Book My Free Job Search Audit", href: "https://calendly.com/clearcareer/discovery-call" }}
-    secondaryCTA={{ text: "Enroll as Founding Member", href: "https://buy.stripe.com/8x25kD1RH3cp8KO1ZTbfO1i" }}
+    secondaryCTA={{ text: "Apply Today", href: "https://buy.stripe.com/8x25kD1RH3cp8KO1ZTbfO1i" }}
     variant="blue"
   />
 
