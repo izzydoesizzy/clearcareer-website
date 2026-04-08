@@ -1,5 +1,7 @@
 import type { APIRoute } from 'astro';
 
+export const prerender = false;
+
 const BREVO_API_KEY = import.meta.env.BREVO_API_KEY;
 
 const LIST_IDS: Record<string, number> = {
