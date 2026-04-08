@@ -1,9 +1,5 @@
 import type { Metadata } from "next";
 import { Inter, DM_Serif_Display } from "next/font/google";
-import Header from "@components/Header";
-import Footer from "@components/Footer";
-import ScrollAnimator from "@components/ScrollAnimator";
-import { generateWebsiteSchema } from "@lib/seo";
 import "@/styles/globals.css";
 
 const inter = Inter({
@@ -40,16 +36,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${dmSerif.variable}`}>
       <body className="min-h-screen bg-white font-sans text-text antialiased">
-        <Header />
-        <main>{children}</main>
-        <Footer />
-        <ScrollAnimator />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(generateWebsiteSchema()),
-          }}
-        />
+        {children}
       </body>
     </html>
   );
