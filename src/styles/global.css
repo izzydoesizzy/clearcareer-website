@@ -71,6 +71,11 @@
   border-radius: 0.5rem;
 }
 
+.prose blockquote p::before,
+.prose blockquote p::after {
+  content: none;
+}
+
 .prose strong {
   font-weight: 600;
 }
