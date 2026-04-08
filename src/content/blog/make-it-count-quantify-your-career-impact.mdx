@@ -98,7 +98,11 @@ Whatever you do at work, something depends on you doing it well. Find that thing
 
 ---
 
-<ContentGate client:load source="make-it-count" storageKey="makeitcount_unlocked">
+<style id="gate-style">{`.gated-content { display: none !important; } .gate-wall { display: block !important; }`}</style>
+
+<ContentGate client:load source="make-it-count" storageKey="makeitcount_unlocked" />
+
+<div class="gated-content">
 
 ## Find Your Numbers: The 5 Dimensions
 
@@ -641,4 +645,4 @@ Keep showing up.
 
 *Your friendly neighbourhood career coach*
 
-</ContentGate>
+</div>

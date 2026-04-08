@@ -1,29 +1,37 @@
-import { useState, useEffect, type ReactNode } from 'react';
+import { useState, useEffect } from 'react';
 
 interface ContentGateProps {
   source?: string;
   storageKey?: string;
-  children: ReactNode;
 }
 
 export default function ContentGate({
   source = 'make-it-count',
   storageKey = 'makeitcount_unlocked',
-  children,
 }: ContentGateProps) {
   const [unlocked, setUnlocked] = useState(false);
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && localStorage.getItem(storageKey) === 'true') {
-      setUnlocked(true);
+    if (typeof window !== 'undefined') {
+      if (localStorage.getItem(storageKey) === 'true') {
+        setUnlocked(true);
+      }
     }
   }, [storageKey]);
 
-  if (unlocked) {
-    return <>{children}</>;
-  }
+  // Inject a style tag to show/hide the gated content
+  useEffect(() => {
+    const style = document.getElementById('gate-style') as HTMLStyleElement | null;
+    if (style) {
+      style.textContent = unlocked
+        ? '.gated-content { display: block !important; } .gate-wall { display: none !important; }'
+        : '.gated-content { display: none !important; } .gate-wall { display: block !important; }';
+    }
+  }, [unlocked]);
+
+  if (unlocked) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -51,7 +59,7 @@ export default function ContentGate({
   };
 
   return (
-    <div className="my-12">
+    <div className="my-12 gate-wall">
       {/* Gate */}
       <div className="rounded-xl border-2 border-blue/30 bg-blue-bg p-8 text-center sm:p-10">
         <div className="mx-auto max-w-lg">
