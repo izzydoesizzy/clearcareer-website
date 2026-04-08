@@ -8,7 +8,7 @@ const pages: Record<string, { title: string; description: string }> = {
   // Default OG image for non-blog pages
   default: {
     title: "ClearCareer",
-    description: "Career coaching that gets results",
+    description: "200+ professionals coached · $1.2M+ in collective raises · 98% satisfaction",
   },
   // Blog post OG images
   ...Object.fromEntries(
