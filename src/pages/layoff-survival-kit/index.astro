@@ -1,12 +1,30 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
-import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import FAQAccordion from "@components/FAQAccordion.astro";
+import StatsBar from "@components/StatsBar.astro";
+import TrustBar from "@components/TrustBar.astro";
+import CTASection from "@components/CTASection.astro";
+import TestimonialCarousel from "@components/TestimonialCarousel.astro";
+import TestimonialCard from "@components/TestimonialCard.astro";
 import { SeveranceCalculator } from "@components/layoff-kit/SeveranceCalculator";
 import LayoffKitCheckout from "@components/layoff-kit/LayoffKitCheckout";
+import allTestimonials from "@data/testimonials.json";
 
 const publishableKey = import.meta.env.STRIPE_PUBLISHABLE_KEY || "";
+
+// Select career-outcome testimonials most relevant to layoff recovery
+const selectedNames = [
+  "Annie Bell",
+  "Andrew Cameron",
+  "Jorge Garboza",
+  "Blake McDermott",
+  "Septembre Anderson",
+  "Annie Hill",
+];
+const testimonials = selectedNames
+  .map((name) => allTestimonials.find((t) => t.name === name))
+  .filter(Boolean);
 
 const modules = [
   {
@@ -46,6 +64,16 @@ const modules = [
   },
 ];
 
+const valueStack = [
+  { item: "Severance negotiation playbook with scripts", saves: "Hours researching what to ask for" },
+  { item: "30+ vetted employment lawyers across Canada", saves: "Hours finding the right firm" },
+  { item: "Tax optimization strategies (RRSP transfers, timing)", saves: "An afternoon on Google, still unsure" },
+  { item: "LinkedIn rewrite templates + keyword guide", saves: "Trial and error, or a $200 service" },
+  { item: "Salary negotiation scripts (email + verbal)", saves: "Walking into that conversation cold" },
+  { item: "Financial runway worksheet + scenario modeling", saves: "Building a spreadsheet from scratch" },
+  { item: "Government support directory (EI, grants, retraining)", saves: "Missing money you're entitled to" },
+];
+
 const faqItems = [
   { question: "Is this legal advice?", answer: "No. This kit provides general educational information about Canadian employment law, tax strategies, and job search practices. It is not legal advice, tax advice, or financial advice. Every situation is different. We strongly recommend consulting an employment lawyer in your province before making decisions about your severance package, and a CPA before implementing any tax strategies." },
   { question: "What format is the kit?", answer: "You get a private web page with all the interactive tools (severance calculator, lawyer directory) plus all guides accessible from any device, anytime." },
@@ -55,12 +83,6 @@ const faqItems = [
   { question: "What's your refund policy?", answer: "30-day money-back guarantee, no questions asked. If the kit doesn't help, email us and we'll refund you immediately." },
   { question: "I was laid off months ago. Is it too late?", answer: "No. If you haven't signed your severance yet, the negotiation playbook can still help. If you already signed, the job search plan, LinkedIn guide, salary negotiation scripts, and government support directory are all still relevant." },
 ];
-
-const whyPoints = [
-  { heading: "Your employer has done this before. You haven't.", body: "Companies have HR teams and lawyers who negotiate severance packages regularly. This kit gives you the same level of preparation so you can have an informed conversation." },
-  { heading: "Knowing what to ask is half the battle.", body: "An employment lawyer can tell you what you may be eligible for. But first, you need to know the right questions. The guides walk you through what to consider before and during that conversation." },
-  { heading: "The first 72 hours set the tone.", body: "The decisions you make in the first few days, about signing, about EI, about your finances, can shape the months that follow. This kit gives you a structured plan so you're not making those decisions in a panic." },
-];
 ---
 
 <BaseLayout
@@ -68,7 +90,7 @@ const whyPoints = [
   description="Everything you need after a layoff: severance calculator, employment lawyer directory, negotiation scripts, tax strategies, and a step-by-step action plan. Built for Canadian professionals."
   type="website"
 >
-  <!-- Minimal top bar -->
+  <!-- 1. Minimal Header -->
   <header class="border-b border-border bg-white sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
       <a href="/" class="font-semibold text-navy text-sm">ClearCareer</a>
@@ -76,7 +98,7 @@ const whyPoints = [
     </div>
   </header>
 
-  <!-- HERO -->
+  <!-- 2. Hero -->
   <section class="bg-navy text-white py-16 md:py-24">
     <div class="max-w-4xl mx-auto px-4 text-center">
       <p class="text-blue-light text-sm font-semibold uppercase tracking-widest mb-4">For Canadian Professionals</p>
@@ -89,19 +111,30 @@ const whyPoints = [
         tax strategies, and 10 complete guides. Built specifically for Canadian
         professionals earning $80K+. One payment. Lifetime access.
       </p>
-      <a href="#pricing" class="inline-block bg-blue text-white font-semibold px-8 py-3.5 rounded-lg hover:bg-blue-dark transition-all text-lg">
-        Get the Kit — $67 CAD
-      </a>
-      <p class="mt-4 text-sm text-gray-500">30-day money-back guarantee. No subscription. Instant access.</p>
-      <a href="#calculator" class="inline-block mt-6 text-sm text-blue-light hover:text-white underline underline-offset-2">
-        Try the free severance calculator first &darr;
-      </a>
+      <div class="flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <a href="#pricing" class="inline-block bg-blue text-white font-semibold px-8 py-3.5 rounded-lg hover:bg-blue-dark transition-all text-lg">
+          Get the Kit — $67 CAD
+        </a>
+        <a href="#calculator" class="inline-flex items-center justify-center rounded-lg border-2 border-white/30 text-white px-8 py-3.5 font-semibold hover:bg-white/10 transition-colors text-lg">
+          Try the Free Calculator
+        </a>
+      </div>
+      <p class="mt-6 text-sm text-gray-500">30-day money-back guarantee. No subscription. Instant access.</p>
     </div>
   </section>
 
-  <!-- THE PROBLEM -->
+  <!-- 3. Stats Bar -->
+  <StatsBar stats={[
+    { number: "150K+", label: "Canadians Laid Off in 2024" },
+    { number: "30%", label: "Tax Withheld on Lump-Sum Severance" },
+    { number: "11", label: "Guides & Tools Included" },
+    { number: "$67", label: "One-Time Investment" },
+  ]} />
+
+  <!-- 4. Problem Section -->
   <section class="py-16 md:py-20 bg-white">
-    <div class="max-w-3xl mx-auto px-4">
+    <div class="max-w-[720px] mx-auto px-4">
+      <p class="mb-4 text-sm font-semibold uppercase tracking-widest text-blue text-center">The Problem</p>
       <h2 class="font-display text-3xl md:text-4xl font-bold text-navy mb-6 text-center">Most people get this wrong.</h2>
       <div class="space-y-4 text-text text-lg leading-relaxed">
         <p>Your employer just handed you a piece of paper. There's a number on it. They said it's your severance. They told you to sign by Friday.</p>
@@ -129,7 +162,7 @@ const whyPoints = [
     </div>
   </section>
 
-  <!-- SEVERANCE CALCULATOR -->
+  <!-- 5. Severance Calculator -->
   <section id="calculator" class="py-16 md:py-20 bg-blue-bg">
     <div class="max-w-4xl mx-auto px-4">
       <div class="text-center mb-10">
@@ -143,16 +176,49 @@ const whyPoints = [
     </div>
   </section>
 
-  <!-- WHAT YOU GET -->
+  <!-- 6. Izzy's Credibility -->
+  <section class="py-16 md:py-20 bg-white">
+    <div class="mx-auto max-w-[1080px] px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <p class="mb-4 text-sm font-semibold uppercase tracking-widest text-blue">Who Built This</p>
+        <h2 class="font-display text-[clamp(1.5rem,3vw,2.25rem)] leading-[1.15] text-navy">Built by Izzy Piyale-Sheard</h2>
+      </div>
+
+      <div class="mt-12 grid items-center gap-8 md:grid-cols-2">
+        <div class="relative aspect-square max-w-[400px] mx-auto overflow-hidden rounded-2xl shadow-xl" data-animate="slide-left">
+          <img src="/images/izzy-main.jpeg" alt="Izzy Piyale-Sheard" class="h-full w-full object-cover object-top" loading="lazy" />
+        </div>
+        <div class="space-y-5 text-[1.0625rem] leading-[1.75] text-text" data-animate="fade-up">
+          <p>Izzy Piyale-Sheard is a career coach who has helped <strong>200+ professionals</strong> navigate career transitions, negotiate better compensation, and land roles they actually want.</p>
+          <p>He's delivered career workshops for the <strong>University of Toronto, Toronto Metropolitan University, Humber College, Lighthouse Labs, CBC Radio</strong>, and the <strong>United Nations Association in Canada.</strong></p>
+          <p>After years of watching talented people accept lowball severance offers because they didn't know their options, he built the Layoff Survival Kit: everything he wishes someone had handed him the first time he got let go.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <TrustBar
+    label="Workshops delivered at"
+    items={[
+      { name: "University of Toronto" },
+      { name: "Toronto Metropolitan University" },
+      { name: "CBC Radio" },
+      { name: "Humber College" },
+      { name: "Lighthouse Labs" },
+    ]}
+  />
+
+  <!-- 7. What's Inside -->
   <section class="py-16 md:py-20 bg-white">
     <div class="max-w-5xl mx-auto px-4">
       <div class="text-center mb-12">
-        <h2 class="font-display text-3xl md:text-4xl font-bold text-navy mb-3">What's inside the kit</h2>
-        <p class="text-text-muted text-lg max-w-xl mx-auto">11 modules. No fluff. Every section is specific to Canada, with scripts, templates, and step-by-step instructions.</p>
+        <p class="mb-4 text-sm font-semibold uppercase tracking-widest text-blue">What's Inside</p>
+        <h2 class="font-display text-3xl md:text-4xl font-bold text-navy mb-3">11 modules. No fluff.</h2>
+        <p class="text-text-muted text-lg max-w-xl mx-auto">Every section is specific to Canada, with scripts, templates, and step-by-step instructions.</p>
       </div>
       <div class="space-y-10">
         {modules.map((group) => (
-          <div>
+          <div data-animate="fade-up">
             <span class={`inline-block text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full border mb-4 ${group.color}`}>{group.category}</span>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {group.items.map((item) => (
@@ -171,12 +237,85 @@ const whyPoints = [
     </div>
   </section>
 
-  <!-- WHO THIS IS FOR -->
+  <!-- 8. Value Stack -->
   <section class="py-16 md:py-20 bg-blue-bg">
-    <div class="max-w-4xl mx-auto px-4">
-      <h2 class="font-display text-3xl md:text-4xl font-bold text-navy mb-10 text-center">Is this for you?</h2>
+    <div class="max-w-2xl mx-auto px-4">
+      <!-- Part A: The stakes -->
+      <div class="text-center mb-10">
+        <p class="mb-4 text-sm font-semibold uppercase tracking-widest text-blue">The Real Cost</p>
+        <h2 class="font-display text-3xl md:text-4xl font-bold text-navy mb-4">Most people sign without knowing what they're entitled to</h2>
+        <p class="text-text-muted leading-relaxed max-w-xl mx-auto">
+          Missed negotiation leverage. Tax savings left on the table. EI benefits claimed too late. The cost of being unprepared is almost always more than $67.
+        </p>
+      </div>
+
+      <!-- Part B: What you get / What it saves you -->
+      <div class="bg-white rounded-2xl border border-border p-6 md:p-8 shadow-card">
+        <div class="flex items-center justify-between mb-4 pb-3 border-b border-border">
+          <span class="text-xs font-semibold uppercase tracking-wider text-text-muted">What you get</span>
+          <span class="text-xs font-semibold uppercase tracking-wider text-text-muted">What it saves you</span>
+        </div>
+        <ul class="space-y-4">
+          {valueStack.map((row) => (
+            <li class="flex items-start justify-between gap-4 text-sm">
+              <span class="text-text font-medium">{row.item}</span>
+              <span class="text-text-muted text-right shrink-0 max-w-[45%]">{row.saves}</span>
+            </li>
+          ))}
+        </ul>
+
+        <!-- Part C: Summary + price -->
+        <div class="border-t border-border mt-6 pt-6 text-center">
+          <p class="text-sm text-text-muted mb-4">10 guides. 2 interactive tools. Lifetime access. No subscription.</p>
+          <div class="rounded-xl bg-blue-bg border-2 border-blue p-5">
+            <p class="text-4xl font-bold text-navy">$67 <span class="text-base font-normal text-text-muted">CAD</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. Mid-Page CTA -->
+  <CTASection
+    heading="The first 72 hours matter."
+    body="The decisions you make right now about your severance, finances, and next move will shape the months ahead."
+    primaryCTA={{ text: "Get the Kit — $67 CAD", href: "#pricing" }}
+    variant="blue"
+  />
+
+  <!-- 10. Testimonials -->
+  <section class="py-16 md:py-20 bg-white">
+    <div class="mx-auto max-w-[1080px] px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-10">
+        <p class="mb-4 text-sm font-semibold uppercase tracking-widest text-blue">Client Results</p>
+        <h2 class="font-display text-[clamp(1.5rem,3vw,2.25rem)] leading-[1.15] text-navy">What ClearCareer clients say</h2>
+        <p class="mt-3 text-text-muted">Results from professionals who worked with Izzy on their career transitions.</p>
+      </div>
+      <TestimonialCarousel id="layoff-kit-testimonials" visibleCount={3} autoPlay={true} autoPlayInterval={6000}>
+        {testimonials.map((t, i) => (
+          <TestimonialCard
+            name={t.name}
+            role={t.role}
+            quote={t.quote}
+            pullQuote={t.pullQuote}
+            tagline={t.tagline}
+            outcome={t.outcome}
+            index={i}
+          />
+        ))}
+      </TestimonialCarousel>
+    </div>
+  </section>
+
+  <!-- 11. Who It's For / Not For -->
+  <section class="py-16 md:py-20 bg-blue-bg">
+    <div class="max-w-[1080px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-10">
+        <p class="mb-4 text-sm font-semibold uppercase tracking-widest text-blue">Is This Right for You?</p>
+        <h2 class="font-display text-[clamp(1.5rem,3vw,2.25rem)] leading-[1.15] text-navy">Who this is for</h2>
+      </div>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div class="bg-white rounded-xl p-6 border border-border">
+        <div class="bg-white rounded-xl p-6 border border-border border-l-4 border-l-success">
           <h3 class="font-semibold text-success mb-4 text-lg">This is for you if...</h3>
           <ul class="space-y-3 text-sm text-text">
             <li class="flex gap-2"><span class="text-success">&#10003;</span> You just got laid off (or you think it's coming)</li>
@@ -187,47 +326,33 @@ const whyPoints = [
             <li class="flex gap-2"><span class="text-success">&#10003;</span> You want to minimize the tax hit on your severance</li>
           </ul>
         </div>
-        <div class="bg-white rounded-xl p-6 border border-border">
+        <div class="bg-white rounded-xl p-6 border border-border border-l-4 border-l-red-400">
           <h3 class="font-semibold text-text-muted mb-4 text-lg">This probably isn't for you if...</h3>
           <ul class="space-y-3 text-sm text-text-muted">
             <li class="flex gap-2"><span>&times;</span> You work outside Canada (entirely Canada-specific)</li>
             <li class="flex gap-2"><span>&times;</span> You resigned voluntarily</li>
             <li class="flex gap-2"><span>&times;</span> You've already signed your severance and started a new role</li>
-            <li class="flex gap-2"><span>&times;</span> You want someone to do it all for you (check out our coaching program)</li>
+            <li class="flex gap-2"><span>&times;</span> You want someone to do it all for you (<a href="/programs/jsis" class="text-blue underline">check out our coaching program</a>)</li>
           </ul>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- WHY THIS EXISTS -->
-  <section class="py-16 md:py-20 bg-white">
-    <div class="max-w-4xl mx-auto px-4">
-      <h2 class="font-display text-3xl md:text-4xl font-bold text-navy mb-10 text-center">Why this exists</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {whyPoints.map((p) => (
-          <div class="border border-border rounded-xl p-6">
-            <h3 class="font-semibold text-text text-sm mb-3">{p.heading}</h3>
-            <p class="text-sm text-text-muted leading-relaxed">{p.body}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <FAQAccordion items={faqItems} />
-
-  <!-- PRICING -->
+  <!-- 12. Pricing + Checkout -->
   <section id="pricing" class="py-16 md:py-20 bg-white">
     <div class="max-w-lg mx-auto px-4">
+      <div class="text-center mb-8">
+        <p class="mb-4 text-sm font-semibold uppercase tracking-widest text-blue">Your Investment</p>
+      </div>
       <div class="border-2 border-blue rounded-2xl p-8 text-center">
         <h2 class="font-display text-2xl font-bold text-navy mb-2">The Layoff Survival Kit</h2>
         <p class="text-text-muted text-sm mb-6">Complete Edition for Canadian Professionals</p>
-        <div class="mb-6">
+        <div class="mb-2">
           <span class="text-5xl font-bold text-navy">$67</span>
           <span class="text-text-muted ml-1">CAD</span>
         </div>
+        <p class="text-sm text-text-muted mb-6"><s class="text-text-muted/60">$1,200+ value</s></p>
         <ul class="text-sm text-text space-y-2 text-left mb-8">
           <li class="flex gap-2"><span class="text-success">&#10003;</span> Interactive severance calculator (all provinces)</li>
           <li class="flex gap-2"><span class="text-success">&#10003;</span> Curated employment lawyer directory (30+ firms)</li>
@@ -251,30 +376,56 @@ const whyPoints = [
     </div>
   </section>
 
-  <!-- FINAL CTA -->
-  <section class="py-16 md:py-20 bg-navy text-white">
-    <div class="max-w-3xl mx-auto px-4 text-center">
-      <h2 class="font-display text-3xl md:text-4xl font-bold leading-tight mb-4">
-        You didn't choose to get laid off.<br>But you get to choose what happens next.
-      </h2>
-      <p class="text-gray-400 text-lg max-w-xl mx-auto mb-8">
-        The first 72 hours matter. The decisions you make right now, about your severance, your finances, your next move, will shape the months that follow. Don't wing it.
-      </p>
-      <a href="#pricing" class="inline-block bg-blue text-white font-semibold px-8 py-3.5 rounded-lg hover:bg-blue-dark transition-all text-lg">
-        Get the Kit — $67 CAD
-      </a>
-      <p class="mt-6 text-sm text-gray-500">
-        Questions? Email <a href="mailto:izzy@joinclearcareer.com" class="text-blue-light underline">izzy@joinclearcareer.com</a>
+  <!-- 13. Guarantee -->
+  <section class="py-16 md:py-20 bg-blue-bg">
+    <div class="max-w-[640px] mx-auto px-4 text-center" data-animate="fade-up">
+      <div class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-success/10">
+        <svg class="h-8 w-8 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+        </svg>
+      </div>
+      <h2 class="font-display text-2xl md:text-3xl font-bold text-navy mb-4">30-Day Money-Back Guarantee</h2>
+      <p class="text-text-muted text-lg leading-relaxed">
+        If the Layoff Survival Kit doesn't help you feel more prepared and confident about your next steps, email us within 30 days for a full refund. No questions asked. No hoops to jump through.
       </p>
     </div>
   </section>
 
-  <!-- DISCLAIMER -->
+  <!-- 14. FAQ -->
+  <section class="py-16 md:py-20">
+    <div class="mx-auto max-w-[1080px] px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-8">
+        <p class="mb-4 text-sm font-semibold uppercase tracking-widest text-blue">FAQ</p>
+        <h2 class="font-display text-[clamp(1.5rem,3vw,2.25rem)] leading-[1.15] text-navy">Frequently Asked Questions</h2>
+      </div>
+    </div>
+  </section>
+  <FAQAccordion items={faqItems} />
+
+  <!-- 15. Final CTA -->
+  <CTASection
+    heading="You didn't choose to get laid off.<br>But you get to choose what happens next."
+    body="The first 72 hours matter. Don't wing it."
+    primaryCTA={{ text: "Get the Kit — $67 CAD", href: "#pricing" }}
+    secondaryCTA={{ text: "Try the Free Calculator", href: "#calculator" }}
+    variant="gradient"
+  />
+
+  <!-- 16. Disclaimer -->
   <section class="py-8 bg-blue-bg border-t border-border">
     <div class="max-w-3xl mx-auto px-4">
       <p class="text-sm font-semibold text-text mb-2">Important Disclaimer</p>
       <p class="text-xs text-text-muted leading-relaxed">
         This product provides general educational information about Canadian employment law, tax strategies, and job search practices. <strong>It is not legal advice, tax advice, or financial advice.</strong> Every situation is unique and outcomes depend on individual circumstances. Before making any decisions about your severance package, consult an employment lawyer licensed in your province. Before implementing any tax strategies, consult a Certified Professional Accountant (CPA). The severance calculator provides estimates based on general legal precedent and should not be relied upon as a prediction of any specific outcome. ClearCareer is a career coaching company, not a law firm or accounting practice. Government program details, rates, and eligibility requirements change regularly. Verify all information with official government sources.
+      </p>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="py-8 bg-white border-t border-border">
+    <div class="max-w-3xl mx-auto px-4 text-center">
+      <p class="text-sm text-text-muted">
+        Questions? Email <a href="mailto:izzy@joinclearcareer.com" class="text-blue underline">izzy@joinclearcareer.com</a>
       </p>
     </div>
   </section>
