@@ -9,6 +9,7 @@ const LIST_IDS: Record<string, number> = {
   'make-it-count': 3,
   'achievement-worksheet': 4,
   'newsletter': 5,
+  'canadian-finance-companies': 3,
 };
 
 // Lead magnet delivery config: source → email details
@@ -17,6 +18,7 @@ const LEAD_MAGNETS: Record<string, {
   playbook: string;
   webUrl: string;
   pdfUrl?: string;
+  sheetUrl?: string;
 }> = {
   'make-it-count': {
     subject: "Here's your Make It Count playbook",
@@ -47,12 +49,20 @@ const LEAD_MAGNETS: Record<string, {
     playbook: "30+ LinkedIn Post Ideas for Job Seekers",
     webUrl: `${SITE_URL}/blog/linkedin-post-ideas-for-job-seekers`,
   },
+  'canadian-finance-companies': {
+    subject: "Here's your list of 76 Canadian Banking & Fintech companies",
+    playbook: "76 Companies Hiring in Canadian Banking & Fintech",
+    webUrl: `${SITE_URL}/lead-magnets/canadian-banking-fintech-companies`,
+    sheetUrl: 'https://docs.google.com/spreadsheets/d/1GNyVSBTVlmkMEBDRp7f3D4XzNVsjX1gpNL3XsLhGBAY/copy',
+  },
 };
 
-function buildDeliveryEmail(playbook: string, webUrl: string, pdfUrl?: string): string {
-  const pdfSection = pdfUrl
+function buildDeliveryEmail(playbook: string, webUrl: string, pdfUrl?: string, sheetUrl?: string): string {
+  const downloadSection = pdfUrl
     ? `<tr><td style="padding:12px 0 0"><a href="${pdfUrl}" style="display:inline-block;padding:12px 24px;background:#030620;color:#ffffff;text-decoration:none;border-radius:8px;font-weight:600;font-size:14px">Download PDF Version</a></td></tr>`
-    : '';
+    : sheetUrl
+      ? `<tr><td style="padding:12px 0 0"><a href="${sheetUrl}" style="display:inline-block;padding:12px 24px;background:#030620;color:#ffffff;text-decoration:none;border-radius:8px;font-weight:600;font-size:14px">Copy Spreadsheet to Google Drive</a></td></tr>`
+      : '';
 
   return `<!DOCTYPE html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
@@ -73,7 +83,7 @@ function buildDeliveryEmail(playbook: string, webUrl: string, pdfUrl?: string): 
 
 <table cellpadding="0" cellspacing="0">
 <tr><td><a href="${webUrl}" style="display:inline-block;padding:14px 28px;background:#0161EF;color:#ffffff;text-decoration:none;border-radius:8px;font-weight:600;font-size:16px">Read the Full Playbook</a></td></tr>
-${pdfSection}
+${downloadSection}
 </table>
 
 <p style="margin:24px 0 0;color:#64748B;font-size:14px;line-height:1.6">The link above will always work. Bookmark it if you want to come back later.</p>
@@ -101,7 +111,7 @@ async function sendDeliveryEmail(email: string, source: string): Promise<void> {
   const magnet = LEAD_MAGNETS[source];
   if (!magnet) return; // No delivery email for newsletter signups, etc.
 
-  const html = buildDeliveryEmail(magnet.playbook, magnet.webUrl, magnet.pdfUrl);
+  const html = buildDeliveryEmail(magnet.playbook, magnet.webUrl, magnet.pdfUrl, magnet.sheetUrl);
 
   await fetch('https://api.brevo.com/v3/smtp/email', {
     method: 'POST',

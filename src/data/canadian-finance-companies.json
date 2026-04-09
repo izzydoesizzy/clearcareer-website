@@ -1,0 +1,686 @@
+[
+  {
+    "name": "FreshBooks",
+    "website": "https://www.freshbooks.com/",
+    "category": "Fintech",
+    "subcategory": "Accounting",
+    "description": "Cloud-based accounting software for small businesses and freelancers.",
+    "linkedin": "https://www.linkedin.com/company/freshbooks/",
+    "linkedinPosts": "https://www.linkedin.com/company/freshbooks/posts/?feedView=all"
+  },
+  {
+    "name": "Wave",
+    "website": "https://www.waveapps.com/",
+    "category": "Fintech",
+    "subcategory": "Accounting",
+    "description": "Free accounting and invoicing software for small businesses.",
+    "linkedin": "https://www.linkedin.com/company/wave-hq",
+    "linkedinPosts": "https://www.linkedin.com/company/wave-hq/posts/?feedView=all"
+  },
+  {
+    "name": "Xero",
+    "website": "https://www.xero.com/",
+    "category": "Fintech",
+    "subcategory": "Accounting",
+    "description": "Cloud accounting platform for small and medium businesses.",
+    "linkedin": "https://www.linkedin.com/company/xero/",
+    "linkedinPosts": "https://www.linkedin.com/company/xero/posts/?feedView=all"
+  },
+  {
+    "name": "Coast Capital Savings",
+    "website": "https://www.coastcapitalsavings.com",
+    "category": "Banks",
+    "subcategory": "Credit Unions",
+    "description": "Member-owned financial cooperative in Canada.",
+    "linkedin": "https://www.linkedin.com/company/coast-capital-savings/",
+    "linkedinPosts": "https://www.linkedin.com/company/coast-capital-savings/posts/?feedView=all"
+  },
+  {
+    "name": "Desjardins Group",
+    "website": "https://www.desjardins.com",
+    "category": "Banks",
+    "subcategory": "Credit Unions",
+    "description": "Leading Canadian cooperative financial group.",
+    "linkedin": "https://www.linkedin.com/company/desjardins/",
+    "linkedinPosts": "https://www.linkedin.com/company/desjardins/posts/?feedView=all"
+  },
+  {
+    "name": "Meridian Credit Union",
+    "website": "https://www.meridiancu.ca",
+    "category": "Banks",
+    "subcategory": "Credit Unions",
+    "description": "Prominent Canadian credit union with innovative fintech solutions.",
+    "linkedin": "https://www.linkedin.com/company/meridian-credit-union/",
+    "linkedinPosts": "https://www.linkedin.com/company/meridian-credit-union/posts/?feedView=all"
+  },
+  {
+    "name": "Servus Credit Union",
+    "website": "https://www.servus.ca",
+    "category": "Banks",
+    "subcategory": "Credit Unions",
+    "description": "Alberta-based member-owned financial institution.",
+    "linkedin": "https://www.linkedin.com/company/servus-credit-union/",
+    "linkedinPosts": "https://www.linkedin.com/company/servus-credit-union/posts/?feedView=all"
+  },
+  {
+    "name": "Vancity",
+    "website": "https://www.vancity.com",
+    "category": "Banks",
+    "subcategory": "Credit Unions",
+    "description": "Member-owned cooperative focused on social and environmental sustainability.",
+    "linkedin": "https://www.linkedin.com/company/vancity/",
+    "linkedinPosts": "https://www.linkedin.com/company/vancity/posts/?feedView=all"
+  },
+  {
+    "name": "Bitbuy",
+    "website": "https://bitbuy.ca/",
+    "category": "Fintech",
+    "subcategory": "Cryptocurrency and Blockchain",
+    "description": "Canadian cryptocurrency exchange platform.",
+    "linkedin": "https://www.linkedin.com/company/bitbuyca/",
+    "linkedinPosts": "https://www.linkedin.com/company/bitbuyca/posts/?feedView=all"
+  },
+  {
+    "name": "Blockstream",
+    "website": "https://blockstream.com/",
+    "category": "Fintech",
+    "subcategory": "Cryptocurrency and Blockchain",
+    "description": "Leading blockchain technology solutions provider.",
+    "linkedin": "https://www.linkedin.com/company/blockstream/",
+    "linkedinPosts": "https://www.linkedin.com/company/blockstream/posts/?feedView=all"
+  },
+  {
+    "name": "Coinsquare",
+    "website": "https://coinsquare.com/",
+    "category": "Fintech",
+    "subcategory": "Cryptocurrency and Blockchain",
+    "description": "Canadian cryptocurrency trading platform.",
+    "linkedin": "https://www.linkedin.com/company/coinsquare/",
+    "linkedinPosts": "https://www.linkedin.com/company/coinsquare/posts/?feedView=all"
+  },
+  {
+    "name": "N26",
+    "website": "https://n26.com",
+    "category": "Fintech",
+    "subcategory": "Cryptocurrency and Blockchain",
+    "description": "German neobank with fully digital banking experience.",
+    "linkedin": "https://www.linkedin.com/company/n26/",
+    "linkedinPosts": "https://www.linkedin.com/company/n26/posts/?feedView=all"
+  },
+  {
+    "name": "Revolut",
+    "website": "https://www.revolut.com",
+    "category": "Fintech",
+    "subcategory": "Cryptocurrency and Blockchain",
+    "description": "Global fintech platform for payments, crypto, and banking.",
+    "linkedin": "https://www.linkedin.com/company/revolut/",
+    "linkedinPosts": "https://www.linkedin.com/company/revolut/posts/?feedView=all"
+  },
+  {
+    "name": "EQ Bank",
+    "website": "http://www.eqbank.ca",
+    "category": "Banks",
+    "subcategory": "Digital Banks and Neobanks",
+    "description": "Canadian digital bank with high-interest savings and no monthly fees.",
+    "linkedin": "https://www.linkedin.com/company/equitablebank/",
+    "linkedinPosts": "https://www.linkedin.com/company/equitablebank/posts/?feedView=all"
+  },
+  {
+    "name": "KOHO",
+    "website": "https://www.koho.ca",
+    "category": "Banks",
+    "subcategory": "Digital Banks and Neobanks",
+    "description": "Canadian fintech with no-fee spending, savings, and cashback.",
+    "linkedin": "https://www.linkedin.com/company/koho-financial/",
+    "linkedinPosts": "https://www.linkedin.com/company/koho-financial/posts/?feedView=all"
+  },
+  {
+    "name": "Motive Financial",
+    "website": "https://www.motivefinancial.com",
+    "category": "Banks",
+    "subcategory": "Digital Banks and Neobanks",
+    "description": "Digital banking platform with competitive interest rates.",
+    "linkedin": "https://www.linkedin.com/company/motivefinancial/",
+    "linkedinPosts": "https://www.linkedin.com/company/motivefinancial/posts/?feedView=all"
+  },
+  {
+    "name": "Motusbank",
+    "website": "https://www.motusbank.ca",
+    "category": "Banks",
+    "subcategory": "Digital Banks and Neobanks",
+    "description": "Digital banking with savings, mortgages, and personal loans.",
+    "linkedin": "https://www.linkedin.com/company/motusbank/",
+    "linkedinPosts": "https://www.linkedin.com/company/motusbank/posts/?feedView=all"
+  },
+  {
+    "name": "Neo Financial",
+    "website": "https://www.neofinancial.com",
+    "category": "Banks",
+    "subcategory": "Digital Banks and Neobanks",
+    "description": "Canadian fintech with no-fee credit cards and high-interest savings.",
+    "linkedin": "https://www.linkedin.com/company/neo-financial/",
+    "linkedinPosts": "https://www.linkedin.com/company/neo-financial/posts/?feedView=all"
+  },
+  {
+    "name": "Nubank",
+    "website": "https://www.nubank.com.br",
+    "category": "Fintech",
+    "subcategory": "Digital Banks and Neobanks",
+    "description": "Brazilian digital bank with no-fee credit cards and loans.",
+    "linkedin": "https://www.linkedin.com/company/nubank/",
+    "linkedinPosts": "https://www.linkedin.com/company/nubank/posts/?feedView=all"
+  },
+  {
+    "name": "Simplii Financial",
+    "website": "https://www.simplii.com",
+    "category": "Banks",
+    "subcategory": "Digital Banks and Neobanks",
+    "description": "Canadian direct bank with no-fee chequing and savings.",
+    "linkedin": "https://www.linkedin.com/company/banksimplii/",
+    "linkedinPosts": "https://www.linkedin.com/company/banksimplii/posts/?feedView=all"
+  },
+  {
+    "name": "Tangerine",
+    "website": "http://www.tangerine.ca",
+    "category": "Banks",
+    "subcategory": "Digital Banks and Neobanks",
+    "description": "Canadian direct bank with no-fee accounts and mobile banking.",
+    "linkedin": "https://www.linkedin.com/company/tangerine-bank/",
+    "linkedinPosts": "https://www.linkedin.com/company/tangerine-bank/posts/?feedView=all"
+  },
+  {
+    "name": "Ant Financial",
+    "website": "https://www.antgroup.com",
+    "category": "Fintech",
+    "subcategory": "Financial Management",
+    "description": "Chinese fintech giant behind Alipay.",
+    "linkedin": "https://www.linkedin.com/company/antgroup/",
+    "linkedinPosts": "https://www.linkedin.com/company/antgroup/posts/?feedView=all"
+  },
+  {
+    "name": "Bench",
+    "website": "https://bench.co/",
+    "category": "Fintech",
+    "subcategory": "Financial Management",
+    "description": "Bookkeeping and financial management for small businesses.",
+    "linkedin": "https://www.linkedin.com/company/benchaccounting/",
+    "linkedinPosts": "https://www.linkedin.com/company/benchaccounting/posts/?feedView=all"
+  },
+  {
+    "name": "Bolt",
+    "website": "https://boltlabs.io/",
+    "category": "Fintech",
+    "subcategory": "Financial Management",
+    "description": "Privacy-focused financial technology platform.",
+    "linkedin": "https://www.linkedin.com/company/bolt-labs-inc/",
+    "linkedinPosts": "https://www.linkedin.com/company/bolt-labs-inc/posts/?feedView=all"
+  },
+  {
+    "name": "Brim Financial",
+    "website": "https://brimfinancial.com/",
+    "category": "Fintech",
+    "subcategory": "Financial Management",
+    "description": "Innovative credit card solutions and financial services.",
+    "linkedin": "https://www.linkedin.com/company/brimfinancial/",
+    "linkedinPosts": "https://www.linkedin.com/company/brimfinancial/posts/?feedView=all"
+  },
+  {
+    "name": "Plaid",
+    "website": "https://plaid.com",
+    "category": "Fintech",
+    "subcategory": "Financial Management",
+    "description": "Data network connecting apps to users' bank accounts.",
+    "linkedin": "https://www.linkedin.com/company/plaid/",
+    "linkedinPosts": "https://www.linkedin.com/company/plaid/posts/?feedView=all"
+  },
+  {
+    "name": "Plooto",
+    "website": "https://www.plooto.com/",
+    "category": "Fintech",
+    "subcategory": "Financial Management",
+    "description": "Accounts payable and receivable automation platform.",
+    "linkedin": "https://www.linkedin.com/company/plooto/",
+    "linkedinPosts": "https://www.linkedin.com/company/plooto/posts/?feedView=all"
+  },
+  {
+    "name": "Sensibill",
+    "website": "https://getsensibill.com/",
+    "category": "Fintech",
+    "subcategory": "Financial Management",
+    "description": "AI-powered receipt and expense management for banks.",
+    "linkedin": "https://www.linkedin.com/company/sensibill-inc-/",
+    "linkedinPosts": "https://www.linkedin.com/company/sensibill-inc-/posts/?feedView=all"
+  },
+  {
+    "name": "Manulife Bank",
+    "website": "https://www.manulifebank.ca",
+    "category": "Financial Services",
+    "subcategory": "Insurance",
+    "description": "Canadian bank integrating banking with wealth management.",
+    "linkedin": "https://www.linkedin.com/company/manulife-financial/",
+    "linkedinPosts": "https://www.linkedin.com/company/manulife-financial/posts/?feedView=all"
+  },
+  {
+    "name": "Sun Life",
+    "website": "https://www.sunlife.ca/",
+    "category": "Financial Services",
+    "subcategory": "Insurance",
+    "description": "Insurance, wealth management, and investment solutions.",
+    "linkedin": "https://www.linkedin.com/company/sun-life-financial/",
+    "linkedinPosts": "https://www.linkedin.com/company/sun-life-financial/posts/?feedView=all"
+  },
+  {
+    "name": "Questrade",
+    "website": "https://www.questrade.com/",
+    "category": "Fintech",
+    "subcategory": "Investment Platforms",
+    "description": "Canadian online brokerage with low-cost trading.",
+    "linkedin": "https://www.linkedin.com/company/questrade/",
+    "linkedinPosts": "https://www.linkedin.com/company/questrade/posts/?feedView=all"
+  },
+  {
+    "name": "Robinhood",
+    "website": "https://www.robinhood.com",
+    "category": "Fintech",
+    "subcategory": "Investment Platforms",
+    "description": "Commission-free trading of stocks, ETFs, and crypto.",
+    "linkedin": "https://www.linkedin.com/company/robinhood/",
+    "linkedinPosts": "https://www.linkedin.com/company/robinhood/posts/?feedView=all"
+  },
+  {
+    "name": "SoFi",
+    "website": "https://www.sofi.com",
+    "category": "Fintech",
+    "subcategory": "Investment Platforms",
+    "description": "Digital finance platform for loans, investing, and banking.",
+    "linkedin": "https://www.linkedin.com/company/sofi/",
+    "linkedinPosts": "https://www.linkedin.com/company/sofi/posts/?feedView=all"
+  },
+  {
+    "name": "Wealthsimple",
+    "website": "https://www.wealthsimple.com/en-ca/",
+    "category": "Fintech",
+    "subcategory": "Investment Platforms",
+    "description": "Canadian automated investing and commission-free trading.",
+    "linkedin": "https://www.linkedin.com/company/wealthsimple/",
+    "linkedinPosts": "https://www.linkedin.com/company/wealthsimple/posts/?feedView=all"
+  },
+  {
+    "name": "Affirm",
+    "website": "https://www.affirm.com",
+    "category": "Fintech",
+    "subcategory": "Lending and Credit Services",
+    "description": "Buy now, pay later with transparent installment loans.",
+    "linkedin": "https://www.linkedin.com/company/affirm/",
+    "linkedinPosts": "https://www.linkedin.com/company/affirm/posts/?feedView=all"
+  },
+  {
+    "name": "Borrowell",
+    "website": "https://www.borrowell.com/",
+    "category": "Fintech",
+    "subcategory": "Lending and Credit Services",
+    "description": "Free credit scores and financial product recommendations.",
+    "linkedin": "https://www.linkedin.com/company/borrowell/",
+    "linkedinPosts": "https://www.linkedin.com/company/borrowell/posts/?feedView=all"
+  },
+  {
+    "name": "Brex",
+    "website": "https://www.brex.com",
+    "category": "Fintech",
+    "subcategory": "Lending and Credit Services",
+    "description": "Business credit cards and cash management for startups.",
+    "linkedin": "https://www.linkedin.com/company/brexhq/",
+    "linkedinPosts": "https://www.linkedin.com/company/brexhq/posts/?feedView=all"
+  },
+  {
+    "name": "Chime",
+    "website": "https://www.chime.com",
+    "category": "Fintech",
+    "subcategory": "Lending and Credit Services",
+    "description": "No-fee online banking with early direct deposit.",
+    "linkedin": "https://www.linkedin.com/company/chime-card/",
+    "linkedinPosts": "https://www.linkedin.com/company/chime-card/posts/?feedView=all"
+  },
+  {
+    "name": "Clearco",
+    "website": "https://clear.co/",
+    "category": "Fintech",
+    "subcategory": "Lending and Credit Services",
+    "description": "Revenue-based financing for e-commerce businesses.",
+    "linkedin": "https://www.linkedin.com/company/clearco/",
+    "linkedinPosts": "https://www.linkedin.com/company/clearco/posts/?feedView=all"
+  },
+  {
+    "name": "Financeit",
+    "website": "https://www.financeit.io/",
+    "category": "Fintech",
+    "subcategory": "Lending and Credit Services",
+    "description": "Point-of-sale financing solutions for businesses.",
+    "linkedin": "https://www.linkedin.com/company/financeit/",
+    "linkedinPosts": "https://www.linkedin.com/company/financeit/posts/?feedView=all"
+  },
+  {
+    "name": "Flexiti Financial",
+    "website": "https://www.flexitifinancial.com/",
+    "category": "Fintech",
+    "subcategory": "Lending and Credit Services",
+    "description": "Flexible point-of-sale financing for retailers and consumers.",
+    "linkedin": "https://www.linkedin.com/company/flexiti-financial/",
+    "linkedinPosts": "https://www.linkedin.com/company/flexiti-financial/posts/?feedView=all"
+  },
+  {
+    "name": "FundThrough",
+    "website": "https://www.fundthrough.com/",
+    "category": "Fintech",
+    "subcategory": "Lending and Credit Services",
+    "description": "Invoice financing to improve business cash flow.",
+    "linkedin": "https://www.linkedin.com/company/fundthrough/",
+    "linkedinPosts": "https://www.linkedin.com/company/fundthrough/posts/?feedView=all"
+  },
+  {
+    "name": "Klarna",
+    "website": "https://www.klarna.com",
+    "category": "Fintech",
+    "subcategory": "Lending and Credit Services",
+    "description": "Buy now, pay later shopping and payment solutions.",
+    "linkedin": "https://www.linkedin.com/company/klarna/",
+    "linkedinPosts": "https://www.linkedin.com/company/klarna/posts/?feedView=all"
+  },
+  {
+    "name": "Mogo",
+    "website": "https://www.mogo.ca/",
+    "category": "Fintech",
+    "subcategory": "Lending and Credit Services",
+    "description": "Canadian fintech with personal loans and credit tools.",
+    "linkedin": "https://www.linkedin.com/company/mogo",
+    "linkedinPosts": "https://www.linkedin.com/company/mogo/posts/?feedView=all"
+  },
+  {
+    "name": "Alipay",
+    "website": "https://intl.alipay.com",
+    "category": "Fintech",
+    "subcategory": "Money Transfer",
+    "description": "Leading digital payment platform from China.",
+    "linkedin": "https://www.linkedin.com/company/alipay/",
+    "linkedinPosts": "https://www.linkedin.com/company/alipay/posts/?feedView=all"
+  },
+  {
+    "name": "Payoneer",
+    "website": "https://www.payoneer.com",
+    "category": "Fintech",
+    "subcategory": "Money Transfer",
+    "description": "Global cross-border payment services.",
+    "linkedin": "https://www.linkedin.com/company/payoneer/",
+    "linkedinPosts": "https://www.linkedin.com/company/payoneer/posts/?feedView=all"
+  },
+  {
+    "name": "Paytm",
+    "website": "https://paytm.com",
+    "category": "Fintech",
+    "subcategory": "Money Transfer",
+    "description": "Indian digital payment and financial services platform.",
+    "linkedin": "https://www.linkedin.com/company/paytm/",
+    "linkedinPosts": "https://www.linkedin.com/company/paytm/posts/?feedView=all"
+  },
+  {
+    "name": "Remitly",
+    "website": "https://www.remitly.com",
+    "category": "Fintech",
+    "subcategory": "Money Transfer",
+    "description": "Fast and secure international money transfers.",
+    "linkedin": "https://www.linkedin.com/company/remitly/",
+    "linkedinPosts": "https://www.linkedin.com/company/remitly/posts/?feedView=all"
+  },
+  {
+    "name": "TransferWise (Wise)",
+    "website": "https://wise.com",
+    "category": "Fintech",
+    "subcategory": "Money Transfer",
+    "description": "Low-cost international money transfers.",
+    "linkedin": "https://www.linkedin.com/company/wise/",
+    "linkedinPosts": "https://www.linkedin.com/company/wise/posts/?feedView=all"
+  },
+  {
+    "name": "Versapay",
+    "website": "https://www.versapay.com/",
+    "category": "Fintech",
+    "subcategory": "Money Transfer",
+    "description": "Accounts receivable automation and payment solutions.",
+    "linkedin": "https://www.linkedin.com/company/versapay/",
+    "linkedinPosts": "https://www.linkedin.com/company/versapay/posts/?feedView=all"
+  },
+  {
+    "name": "Adyen",
+    "website": "https://www.adyen.com",
+    "category": "Fintech",
+    "subcategory": "Payment Processors",
+    "description": "Global payment platform for online, mobile, and in-store.",
+    "linkedin": "https://www.linkedin.com/company/adyen/",
+    "linkedinPosts": "https://www.linkedin.com/company/adyen/posts/?feedView=all"
+  },
+  {
+    "name": "Interac",
+    "website": "https://www.interac.ca/en/",
+    "category": "Fintech",
+    "subcategory": "Payment Processors",
+    "description": "Canadian interbank network for electronic payments.",
+    "linkedin": "https://www.linkedin.com/company/interac/",
+    "linkedinPosts": "https://www.linkedin.com/company/interac/posts/?feedView=all"
+  },
+  {
+    "name": "Mastercard",
+    "website": "https://www.mastercard.ca/",
+    "category": "Fintech",
+    "subcategory": "Payment Processors",
+    "description": "Global payment network and financial technology.",
+    "linkedin": "https://www.linkedin.com/company/mastercard/",
+    "linkedinPosts": "https://www.linkedin.com/company/mastercard/posts/?feedView=all"
+  },
+  {
+    "name": "Moneris",
+    "website": "http://www.moneris.com",
+    "category": "Fintech",
+    "subcategory": "Payment Processors",
+    "description": "Canadian payment processing and POS solutions.",
+    "linkedin": "https://www.linkedin.com/company/moneris-solutions/",
+    "linkedinPosts": "https://www.linkedin.com/company/moneris-solutions/posts/?feedView=all"
+  },
+  {
+    "name": "Nuvei",
+    "website": "https://www.nuvei.com/",
+    "category": "Fintech",
+    "subcategory": "Payment Processors",
+    "description": "Payment technology for global commerce.",
+    "linkedin": "https://www.linkedin.com/company/nuvei/",
+    "linkedinPosts": "https://www.linkedin.com/company/nuvei/posts/?feedView=all"
+  },
+  {
+    "name": "PayPal",
+    "website": "https://www.paypal.com/",
+    "category": "Fintech",
+    "subcategory": "Payment Processors",
+    "description": "Global digital payments platform.",
+    "linkedin": "https://www.linkedin.com/company/paypal/",
+    "linkedinPosts": "https://www.linkedin.com/company/paypal/posts/?feedView=all"
+  },
+  {
+    "name": "Payments Canada",
+    "website": "https://www.payments.ca/",
+    "category": "Fintech",
+    "subcategory": "Payment Processors",
+    "description": "Operates and modernizes Canada's national payment systems.",
+    "linkedin": "https://www.linkedin.com/company/payments-canada/",
+    "linkedinPosts": "https://www.linkedin.com/company/payments-canada/posts/?feedView=all"
+  },
+  {
+    "name": "Square",
+    "website": "https://squareup.com",
+    "category": "Fintech",
+    "subcategory": "Payment Processors",
+    "description": "Payment processing and business management tools.",
+    "linkedin": "https://www.linkedin.com/company/square/",
+    "linkedinPosts": "https://www.linkedin.com/company/square/posts/?feedView=all"
+  },
+  {
+    "name": "Stripe",
+    "website": "https://stripe.com",
+    "category": "Fintech",
+    "subcategory": "Payment Processors",
+    "description": "Internet payment infrastructure for businesses.",
+    "linkedin": "https://www.linkedin.com/company/stripe/",
+    "linkedinPosts": "https://www.linkedin.com/company/stripe/posts/?feedView=all"
+  },
+  {
+    "name": "AMEX Bank of Canada",
+    "website": "https://www.americanexpress.com/ca",
+    "category": "Banks",
+    "subcategory": "Traditional Banks",
+    "description": "American Express subsidiary in Canada.",
+    "linkedin": "https://www.linkedin.com/company/american-express/",
+    "linkedinPosts": "https://www.linkedin.com/company/american-express/posts/?feedView=all"
+  },
+  {
+    "name": "ATB Financial",
+    "website": "https://www.atb.com",
+    "category": "Banks",
+    "subcategory": "Traditional Banks",
+    "description": "Alberta-based financial institution.",
+    "linkedin": "https://www.linkedin.com/company/atbfinancial/",
+    "linkedinPosts": "https://www.linkedin.com/company/atbfinancial/posts/?feedView=all"
+  },
+  {
+    "name": "Alterna Bank",
+    "website": "https://www.alternabank.ca",
+    "category": "Banks",
+    "subcategory": "Traditional Banks",
+    "description": "Canadian digital bank owned by Alterna Savings.",
+    "linkedin": "https://www.linkedin.com/company/alternasavings/",
+    "linkedinPosts": "https://www.linkedin.com/company/alternasavings/posts/?feedView=all"
+  },
+  {
+    "name": "BMO",
+    "website": "https://www.bmo.com",
+    "category": "Banks",
+    "subcategory": "Traditional Banks",
+    "description": "Bank of Montreal, one of Canada's Big 5.",
+    "linkedin": "https://www.linkedin.com/company/bank-of-montreal/",
+    "linkedinPosts": "https://www.linkedin.com/company/bank-of-montreal/posts/?feedView=all"
+  },
+  {
+    "name": "CIBC",
+    "website": "https://www.cibc.com",
+    "category": "Banks",
+    "subcategory": "Traditional Banks",
+    "description": "Canadian Imperial Bank of Commerce, Big 5 bank.",
+    "linkedin": "https://www.linkedin.com/company/cibc/",
+    "linkedinPosts": "https://www.linkedin.com/company/cibc/posts/?feedView=all"
+  },
+  {
+    "name": "Canadian Western Bank",
+    "website": "https://www.cwbank.com",
+    "category": "Banks",
+    "subcategory": "Traditional Banks",
+    "description": "Western Canadian commercial and business bank.",
+    "linkedin": "https://www.linkedin.com/company/canadian-western-bank/",
+    "linkedinPosts": "https://www.linkedin.com/company/canadian-western-bank/posts/?feedView=all"
+  },
+  {
+    "name": "Citibank Canada",
+    "website": "https://www.citibank.ca",
+    "category": "Banks",
+    "subcategory": "Traditional Banks",
+    "description": "Citigroup's Canadian banking subsidiary.",
+    "linkedin": "https://www.linkedin.com/company/citi/",
+    "linkedinPosts": "https://www.linkedin.com/company/citi/posts/?feedView=all"
+  },
+  {
+    "name": "Concentra Bank",
+    "website": "https://www.concentra.ca",
+    "category": "Banks",
+    "subcategory": "Traditional Banks",
+    "description": "Canadian wholesale bank serving credit unions.",
+    "linkedin": "https://www.linkedin.com/company/concentra/",
+    "linkedinPosts": "https://www.linkedin.com/company/concentra/posts/?feedView=all"
+  },
+  {
+    "name": "First Nations Bank of Canada",
+    "website": "https://www.fnbc.ca",
+    "category": "Banks",
+    "subcategory": "Traditional Banks",
+    "description": "Indigenous-owned bank serving First Nations communities.",
+    "linkedin": "https://www.linkedin.com/company/first-nations-bank-of-canada/",
+    "linkedinPosts": "https://www.linkedin.com/company/first-nations-bank-of-canada/posts/?feedView=all"
+  },
+  {
+    "name": "JP Morgan Bank Canada",
+    "website": "https://www.jpmorgan.com",
+    "category": "Banks",
+    "subcategory": "Traditional Banks",
+    "description": "JP Morgan's Canadian banking operations.",
+    "linkedin": "https://www.linkedin.com/company/jpmorganchase/",
+    "linkedinPosts": "https://www.linkedin.com/company/jpmorganchase/posts/?feedView=all"
+  },
+  {
+    "name": "Laurentian Bank of Canada",
+    "website": "https://www.laurentianbank.ca",
+    "category": "Banks",
+    "subcategory": "Traditional Banks",
+    "description": "Canadian bank focused on personal and commercial banking.",
+    "linkedin": "https://www.linkedin.com/company/laurentian-bank/",
+    "linkedinPosts": "https://www.linkedin.com/company/laurentian-bank/posts/?feedView=all"
+  },
+  {
+    "name": "National Bank",
+    "website": "https://www.nbc.ca",
+    "category": "Banks",
+    "subcategory": "Traditional Banks",
+    "description": "Canada's 6th largest bank, headquartered in Montreal.",
+    "linkedin": "https://www.linkedin.com/company/national-bank-of-canada/",
+    "linkedinPosts": "https://www.linkedin.com/company/national-bank-of-canada/posts/?feedView=all"
+  },
+  {
+    "name": "RBC",
+    "website": "https://www.rbc.com",
+    "category": "Banks",
+    "subcategory": "Traditional Banks",
+    "description": "Royal Bank of Canada, Canada's largest bank.",
+    "linkedin": "https://www.linkedin.com/company/rbc/",
+    "linkedinPosts": "https://www.linkedin.com/company/rbc/posts/?feedView=all"
+  },
+  {
+    "name": "Scotiabank",
+    "website": "https://www.scotiabank.com",
+    "category": "Banks",
+    "subcategory": "Traditional Banks",
+    "description": "Major Canadian multinational bank.",
+    "linkedin": "https://www.linkedin.com/company/scotiabank/",
+    "linkedinPosts": "https://www.linkedin.com/company/scotiabank/posts/?feedView=all"
+  },
+  {
+    "name": "Shinhan Bank Canada",
+    "website": "https://www.shinhan.ca",
+    "category": "Banks",
+    "subcategory": "Traditional Banks",
+    "description": "South Korean bank's Canadian subsidiary.",
+    "linkedin": "https://www.linkedin.com/company/shinhan-bank-canada/",
+    "linkedinPosts": "https://www.linkedin.com/company/shinhan-bank-canada/posts/?feedView=all"
+  },
+  {
+    "name": "TD Bank",
+    "website": "https://www.td.com",
+    "category": "Banks",
+    "subcategory": "Traditional Banks",
+    "description": "Toronto-Dominion Bank, one of Canada's Big 5.",
+    "linkedin": "https://www.linkedin.com/company/td/",
+    "linkedinPosts": "https://www.linkedin.com/company/td/posts/?feedView=all"
+  },
+  {
+    "name": "Wealth One Bank of Canada",
+    "website": "https://www.wealthonebankofcanada.com",
+    "category": "Banks",
+    "subcategory": "Traditional Banks",
+    "description": "Digital bank serving the Chinese-Canadian community.",
+    "linkedin": "https://www.linkedin.com/company/wealthonebankofcanada/",
+    "linkedinPosts": "https://www.linkedin.com/company/wealthonebankofcanada/posts/?feedView=all"
+  }
+]
