@@ -22,6 +22,25 @@ const LEAD_MAGNETS: Record<string, {
     subject: "Here's your Make It Count playbook",
     playbook: "Make It Count: The Complete Guide to Quantifying Your Career Impact",
     webUrl: `${SITE_URL}/blog/make-it-count-quantify-your-career-impact`,
+    pdfUrl: `${SITE_URL}/downloads/make-it-count.pdf`,
+  },
+  'resume-is-an-ad': {
+    subject: "Here's your Resume playbook",
+    playbook: "Your Resume Is an Ad, Not a Biography",
+    webUrl: `${SITE_URL}/blog/resume-is-an-ad-not-a-biography`,
+    pdfUrl: `${SITE_URL}/downloads/resume-is-an-ad.pdf`,
+  },
+  'achievement-mining': {
+    subject: "Here's your Achievement Mining playbook",
+    playbook: "Achievement Mining: How to Quantify Your Resume Bullets",
+    webUrl: `${SITE_URL}/blog/achievement-mining-how-to-quantify-your-resume-bullets`,
+    pdfUrl: `${SITE_URL}/downloads/achievement-mining.pdf`,
+  },
+  'linkedin-profile-optimization': {
+    subject: "Here's your LinkedIn Optimization playbook",
+    playbook: "LinkedIn Profile Optimization: The Full Audit",
+    webUrl: `${SITE_URL}/blog/linkedin-profile-optimization-the-full-audit`,
+    pdfUrl: `${SITE_URL}/downloads/linkedin-profile-optimization.pdf`,
   },
   'linkedin-post-ideas': {
     subject: "Here's your LinkedIn Post Ideas guide",
