@@ -60,7 +60,7 @@ const { source = 'make-it-count', storageKey = 'makeitcount_unlocked' } = Astro.
 </div>
 
 <script is:inline>
-  (function() {
+  document.addEventListener('DOMContentLoaded', function() {
     var gate = document.getElementById('content-gate');
     var form = document.getElementById('gate-form');
     var btn = document.getElementById('gate-btn');
@@ -110,5 +110,5 @@ const { source = 'make-it-count', storageKey = 'makeitcount_unlocked' } = Astro.
         });
       });
     }
-  })();
+  });
 </script>
