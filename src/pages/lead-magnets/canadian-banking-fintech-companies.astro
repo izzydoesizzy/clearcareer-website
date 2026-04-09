@@ -2,38 +2,74 @@
 import LeadMagnetLayout from "@layouts/LeadMagnetLayout.astro";
 import companies from "@data/canadian-finance-companies.json";
 
-// Group by subcategory
+// Group by subcategory, exclude shut-down from preview
+const activeCompanies = companies.filter((c) => c.status !== "Shut Down");
 const subcategories = [...new Set(companies.map((c) => c.subcategory))];
 const grouped = subcategories.map((sub) => ({
   name: sub,
   companies: companies.filter((c) => c.subcategory === sub),
+  activeCount: companies.filter((c) => c.subcategory === sub && c.status !== "Shut Down").length,
 }));
 
-// Preview: first 12 companies (Traditional Banks)
-const previewCompanies = companies.filter((c) => c.subcategory === "Traditional Banks").slice(0, 12);
+// Preview: first 10 active companies (Traditional Banks)
+const previewCompanies = activeCompanies.filter((c) => c.subcategory === "Traditional Banks").slice(0, 10);
 
 const SHEET_COPY_URL = "https://docs.google.com/spreadsheets/d/1GNyVSBTVlmkMEBDRp7f3D4XzNVsjX1gpNL3XsLhGBAY/copy";
+const totalActive = activeCompanies.length;
 ---
 
 <LeadMagnetLayout
-  title="76 Companies Hiring in Canadian Banking & Fintech | ClearCareer"
-  description="Stop limiting your job search to the Big 5. Here are 76 banks, fintechs, neobanks, and financial services companies hiring in Canada."
-  headline="76 Companies Hiring in Canadian Banking & Fintech"
-  subheadline="Most people stop at RBC, TD, and BMO. Here are 76 companies you should actually be looking at."
+  title="86 Companies Hiring in Canadian Banking & Fintech | ClearCareer"
+  description="Stop limiting your job search to the Big 5. Here are 86 banks, fintechs, neobanks, and financial services companies hiring in Canada, with direct LinkedIn links."
+  headline="86 Companies Hiring in Canadian Banking & Fintech"
+  subheadline="Most people stop at RBC, TD, and BMO. Here are 86 companies you should actually be looking at, with direct links to their LinkedIn pages and recent job posts."
   bullets={[
-    "76 companies across 11 categories (banks, fintech, neobanks, payments, crypto, and more)",
+    "86 companies across 12 categories (banks, fintech, neobanks, payments, crypto, regtech, and more)",
     "Direct links to every company's LinkedIn page and recent job posts",
-    "Organized by sector so you can target the right companies for your skills",
-    "Google Sheet you can copy and customize for your own job search",
+    "HQ location and operational status for each company",
+    "Google Sheet you can copy to your Drive and customize for your job search",
   ]}
   source="canadian-finance-companies"
   storageKey="canadian_finance_unlocked"
   ctaText="Get the Full List"
 >
+  <!-- Spreadsheet Preview Image + Sheet CTA -->
+  <Fragment slot="hero-image">
+    <section class="pb-4">
+      <div class="mx-auto max-w-[720px] px-4">
+        <!-- Preview Image -->
+        <div class="overflow-hidden rounded-xl border border-border shadow-lg">
+          <img
+            src="/images/lead-magnets/canadian-finance-spreadsheet.png"
+            alt="Preview of the 86 Canadian Banking & Fintech companies spreadsheet"
+            class="w-full"
+            loading="eager"
+          />
+        </div>
+
+        <!-- Sheet Copy CTA -->
+        <div class="mt-4 text-center">
+          <a
+            href={SHEET_COPY_URL}
+            target="_blank"
+            rel="noopener"
+            class="inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-emerald-700"
+          >
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            Copy to Google Sheets
+          </a>
+          <p class="mt-2 text-xs text-text-muted">Opens in Google Sheets. Make a copy to your Drive.</p>
+        </div>
+      </div>
+    </section>
+  </Fragment>
+
   <!-- Preview Slot -->
   <Fragment slot="preview">
     <h2 class="mb-2 text-lg font-bold text-navy">Preview: Traditional Banks</h2>
-    <p class="mb-6 text-sm text-text-muted">Here's a taste. The full list has 76 companies across 11 categories.</p>
+    <p class="mb-6 text-sm text-text-muted">Here's a taste. The full list has {companies.length} companies across {subcategories.length} categories.</p>
 
     <div class="overflow-x-auto rounded-xl border border-border">
       <table class="w-full text-sm">
@@ -41,6 +77,7 @@ const SHEET_COPY_URL = "https://docs.google.com/spreadsheets/d/1GNyVSBTVlmkMEBDR
           <tr class="bg-navy text-white">
             <th class="px-4 py-3 text-left font-semibold">Company</th>
             <th class="px-4 py-3 text-left font-semibold hidden sm:table-cell">Description</th>
+            <th class="px-4 py-3 text-center font-semibold hidden md:table-cell">HQ</th>
             <th class="px-4 py-3 text-center font-semibold">LinkedIn</th>
           </tr>
         </thead>
@@ -50,7 +87,8 @@ const SHEET_COPY_URL = "https://docs.google.com/spreadsheets/d/1GNyVSBTVlmkMEBDR
               <td class="px-4 py-3 font-medium text-navy">
                 <a href={c.website} target="_blank" rel="noopener" class="hover:text-blue">{c.name}</a>
               </td>
-              <td class="px-4 py-3 text-text-muted hidden sm:table-cell">{c.description}</td>
+              <td class="px-4 py-3 text-text-muted hidden sm:table-cell">{c.description.slice(0, 80)}{c.description.length > 80 ? '...' : ''}</td>
+              <td class="px-4 py-3 text-center text-text-muted text-xs hidden md:table-cell">{c.hq}</td>
               <td class="px-4 py-3 text-center">
                 <a href={c.linkedin} target="_blank" rel="noopener" class="text-blue hover:text-blue-dark text-xs font-semibold">View</a>
               </td>
@@ -61,14 +99,15 @@ const SHEET_COPY_URL = "https://docs.google.com/spreadsheets/d/1GNyVSBTVlmkMEBDR
     </div>
 
     <!-- Blurred tease -->
-    <div class="relative mt-0 overflow-hidden" style="max-height: 120px;">
+    <div class="relative mt-0 overflow-hidden" style="max-height: 100px;">
       <div class="pointer-events-none select-none blur-sm opacity-40" aria-hidden="true">
         <table class="w-full text-sm">
           <tbody>
-            {[1,2,3,4].map((i) => (
+            {[1,2,3].map((i) => (
               <tr class:list={[i % 2 === 0 ? "bg-white" : "bg-blue-bg/30"]}>
-                <td class="px-4 py-3 font-medium text-navy">Company Name Here</td>
-                <td class="px-4 py-3 text-text-muted">Description of the company and what they do.</td>
+                <td class="px-4 py-3 font-medium text-navy">Company Name</td>
+                <td class="px-4 py-3 text-text-muted">Description of the company and services.</td>
+                <td class="px-4 py-3 text-center text-xs">Canada</td>
                 <td class="px-4 py-3 text-center text-blue text-xs">View</td>
               </tr>
             ))}
@@ -79,7 +118,7 @@ const SHEET_COPY_URL = "https://docs.google.com/spreadsheets/d/1GNyVSBTVlmkMEBDR
     </div>
 
     <p class="mt-4 text-center text-sm text-text-muted">
-      + 64 more companies across fintech, neobanks, payments, crypto, and more...
+      + {companies.length - previewCompanies.length} more companies across fintech, neobanks, payments, crypto, regtech, and more...
     </p>
   </Fragment>
 
@@ -106,7 +145,7 @@ const SHEET_COPY_URL = "https://docs.google.com/spreadsheets/d/1GNyVSBTVlmkMEBDR
     {grouped.map((group) => (
       <div class="mb-10">
         <h2 class="mb-1 text-xl font-bold text-navy">{group.name}</h2>
-        <p class="mb-4 text-sm text-text-muted">{group.companies.length} companies</p>
+        <p class="mb-4 text-sm text-text-muted">{group.companies.length} companies · {group.activeCount} active</p>
 
         <div class="overflow-x-auto rounded-xl border border-border">
           <table class="w-full text-sm">
@@ -114,26 +153,34 @@ const SHEET_COPY_URL = "https://docs.google.com/spreadsheets/d/1GNyVSBTVlmkMEBDR
               <tr class="bg-navy text-white">
                 <th class="px-4 py-3 text-left font-semibold">Company</th>
                 <th class="px-4 py-3 text-left font-semibold hidden sm:table-cell">Description</th>
+                <th class="px-4 py-3 text-center font-semibold hidden md:table-cell">HQ</th>
                 <th class="px-4 py-3 text-center font-semibold">LinkedIn</th>
                 <th class="px-4 py-3 text-center font-semibold hidden md:table-cell">Posts</th>
               </tr>
             </thead>
             <tbody>
               {group.companies.map((c, i) => (
-                <tr class:list={[i % 2 === 0 ? "bg-white" : "bg-blue-bg/30", "hover:bg-blue-bg/50 transition-colors"]}>
+                <tr class:list={[
+                  i % 2 === 0 ? "bg-white" : "bg-blue-bg/30",
+                  "hover:bg-blue-bg/50 transition-colors",
+                  c.status === "Shut Down" ? "opacity-50" : "",
+                ]}>
                   <td class="px-4 py-3">
                     <a href={c.website} target="_blank" rel="noopener" class="font-medium text-navy hover:text-blue">{c.name}</a>
+                    {c.status === "Shut Down" && (
+                      <span class="ml-2 inline-block rounded bg-red-100 px-2 py-0.5 text-[10px] font-semibold text-red-600">Shut Down</span>
+                    )}
+                    {c.notes && c.notes.includes("NEW") && (
+                      <span class="ml-2 inline-block rounded bg-emerald-100 px-2 py-0.5 text-[10px] font-semibold text-emerald-700">New</span>
+                    )}
                   </td>
-                  <td class="px-4 py-3 text-text-muted hidden sm:table-cell">{c.description}</td>
+                  <td class="px-4 py-3 text-text-muted hidden sm:table-cell">{c.description.slice(0, 100)}{c.description.length > 100 ? '...' : ''}</td>
+                  <td class="px-4 py-3 text-center text-text-muted text-xs hidden md:table-cell">{c.hq}</td>
                   <td class="px-4 py-3 text-center">
-                    <a href={c.linkedin} target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-blue hover:text-blue-dark text-xs font-semibold">
-                      Profile
-                    </a>
+                    <a href={c.linkedin} target="_blank" rel="noopener" class="text-blue hover:text-blue-dark text-xs font-semibold">Profile</a>
                   </td>
                   <td class="px-4 py-3 text-center hidden md:table-cell">
-                    <a href={c.linkedinPosts} target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-blue hover:text-blue-dark text-xs font-semibold">
-                      Recent
-                    </a>
+                    <a href={c.linkedinPosts} target="_blank" rel="noopener" class="text-blue hover:text-blue-dark text-xs font-semibold">Recent</a>
                   </td>
                 </tr>
               ))}
@@ -153,7 +200,7 @@ const SHEET_COPY_URL = "https://docs.google.com/spreadsheets/d/1GNyVSBTVlmkMEBDR
           <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue text-xs font-bold text-white">1</span>
           <div>
             <p class="font-semibold text-navy">Pick 10-15 companies that match your skills</p>
-            <p class="text-sm text-text-muted">Don't try to target all 76. Focus on the sectors where your experience fits best.</p>
+            <p class="text-sm text-text-muted">Don't try to target all {totalActive}. Focus on the sectors where your experience fits best.</p>
           </div>
         </li>
         <li class="flex items-start gap-3">
