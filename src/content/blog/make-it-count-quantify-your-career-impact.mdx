@@ -12,7 +12,7 @@ draft: false
 import Coach from '@components/blog/Coach.astro'
 import Client from '@components/blog/Client.astro'
 import PromptBlock from '@components/blog/PromptBlock.astro'
-import ContentGate from '@components/ContentGate.tsx'
+import ContentGate from '@components/ContentGate.astro'
 
 Your resume is lying about you.
 
@@ -98,11 +98,9 @@ Whatever you do at work, something depends on you doing it well. Find that thing
 
 ---
 
-<style id="gate-style">{`.gated-content { display: none !important; } .gate-wall { display: block !important; }`}</style>
+<ContentGate source="make-it-count" storageKey="makeitcount_unlocked" />
 
-<ContentGate client:load source="make-it-count" storageKey="makeitcount_unlocked" />
-
-<div class="gated-content">
+<div class="gated-content" style="display: none;">
 
 ## Find Your Numbers: The 5 Dimensions
 
