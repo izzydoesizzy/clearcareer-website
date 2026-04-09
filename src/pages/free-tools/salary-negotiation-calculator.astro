@@ -1,245 +1,247 @@
 ---
-import ToolLayout from "@layouts/ToolLayout.astro";
-import ToolInput from "@components/ToolInput.astro";
+import PageLayout from "@layouts/PageLayout.astro";
+import CTASection from "@components/CTASection.astro";
+import SalaryNegotiationCalculator from "@components/tools/SalaryNegotiationCalculator";
+import { generateWebApplicationSchema, generateBreadcrumbSchema, generateFAQSchema } from "@utils/seo";
+
+const title = "Salary Negotiation Impact Calculator";
+const description = "See how much one negotiation is worth over 1, 5, and 10 years. The compounding math that makes every negotiation worth it.";
+const siteUrl = Astro.site?.toString().replace(/\/$/, "") ?? "https://joinclearcareer.com";
+const toolUrl = `${siteUrl}/free-tools/salary-negotiation-calculator`;
+
+const faqItems = [
+  { question: "Will negotiating get my offer rescinded?", answer: "In my experience coaching 200+ negotiations: zero rescinded offers. Companies expect negotiation. They budget for it. A professional, research-backed counter-offer signals confidence, not greed." },
+  { question: "How much should I counter-offer?", answer: "10-20% above their initial offer is standard for most professional roles. Back it up with market data from Glassdoor, Levels.fyi, or Payscale. The number should be ambitious but defensible." },
+  { question: "What if the company says 'the offer is final'?", answer: "Ask about other forms of compensation: signing bonus, extra PTO, remote work days, professional development budget, equity, or an earlier performance review (3 months instead of 12). Total compensation is more than base salary." },
+  { question: "Should I negotiate base salary or total compensation?", answer: "Base salary first. Everything else compounds on your base: raises, bonuses (often a percentage of base), 401(k) match, and future offers. A higher base is the single most valuable thing you can negotiate." },
+  { question: "When is the right time to negotiate?", answer: "After you have the written offer and before you sign. Never negotiate during interviews. Never negotiate verbally, always in writing (email). And never give your number first. Let them make the opening offer." },
+];
 ---
 
-<ToolLayout
-  title="Salary Negotiation Impact Calculator"
-  headline="Salary Negotiation Impact Calculator"
-  description="See how much one negotiation is worth over 1, 5, and 10 years. The compounding math that makes every negotiation worth it."
-  category="Financial Planning"
-  icon="📈"
-  relatedTags={["salary negotiation", "career advice"]}
-  slug="salary-negotiation-calculator"
-  lastUpdated="March 2026"
-  featureList={["Compound salary growth modeling", "1, 5, and 10 year projections", "Cumulative earnings difference", "Annual raise impact analysis"]}
-  faqItems={[
-    { question: "Will negotiating get my offer rescinded?", answer: "In my experience coaching 200+ negotiations: zero rescinded offers. Companies expect negotiation. They budget for it. A professional, research-backed counter-offer signals confidence, not greed." },
-    { question: "How much should I counter-offer?", answer: "10-20% above their initial offer is standard for most professional roles. Back it up with market data from Glassdoor, Levels.fyi, or Payscale. The number should be ambitious but defensible." },
-    { question: "What if the company says 'the offer is final'?", answer: "Ask about other forms of compensation: signing bonus, extra PTO, remote work days, professional development budget, equity, or an earlier performance review (3 months instead of 12). Total compensation is more than base salary." },
-    { question: "Should I negotiate base salary or total compensation?", answer: "Base salary first. Everything else compounds on your base: raises, bonuses (often a percentage of base), 401(k) match, and future offers. A higher base is the single most valuable thing you can negotiate." },
-    { question: "When is the right time to negotiate?", answer: "After you have the written offer and before you sign. Never negotiate during interviews. Never negotiate verbally, always in writing (email). And never give your number first. Let them make the opening offer." },
-  ]}
-  relatedTools={[
-    { name: "Contract vs. Salary Calculator", slug: "contract-vs-salary-calculator", icon: "⚖️" },
-    { name: "Opportunity Cost Calculator", slug: "opportunity-cost-calculator", icon: "⏱️" },
-  ]}
->
-  <!-- Intro -->
-  <div slot="intro">
-    <h2 class="text-xl font-bold text-navy">Why This Matters</h2>
-    <div class="mt-4 space-y-4 text-[1.0625rem] leading-[1.75] text-text">
-      <p>
-        200+ coached negotiations. Zero rescinded offers. Average increase: $5,000-$15,000. A $10,000 bump isn't a $10,000 win. It compounds through every raise, bonus, and future offer. One conversation, six figures over a career.
-      </p>
-      <p>
-        Plug in your numbers and watch the gap widen year after year. Then decide if 15 minutes is worth $100,000+.
-      </p>
-    </div>
-  </div>
-  <form id="negotiation-form" class="space-y-6" novalidate>
-    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-      <ToolInput
-        id="current-offer"
-        label="Current offer"
-        type="number"
-        required={true}
-        prefix="$"
-        placeholder="110000"
-      />
-      <ToolInput
-        id="negotiated-amount"
-        label="Negotiated amount"
-        type="number"
-        required={true}
-        prefix="$"
-        placeholder="120000"
-      />
-    </div>
+<PageLayout title={`${title} | ClearCareer`} description={description}>
+  <!-- Structured Data -->
+  <script
+    type="application/ld+json"
+    slot="head"
+    set:html={JSON.stringify(
+      generateWebApplicationSchema({
+        name: title,
+        description,
+        url: toolUrl,
+        category: "FinanceApplication",
+        featureList: ["Compound salary growth modeling", "1, 5, and 10 year projections", "Cumulative earnings difference", "Annual raise impact analysis"],
+      })
+    )}
+  />
+  <script
+    type="application/ld+json"
+    slot="head"
+    set:html={JSON.stringify(
+      generateBreadcrumbSchema([
+        { name: "Home", url: siteUrl },
+        { name: "Free Tools", url: `${siteUrl}/free-tools` },
+        { name: title, url: toolUrl },
+      ])
+    )}
+  />
+  <script
+    type="application/ld+json"
+    slot="head"
+    set:html={JSON.stringify(generateFAQSchema(faqItems))}
+  />
 
-    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-      <ToolInput
-        id="annual-raise"
-        label="Average annual raise"
-        type="number"
-        suffix="%"
-        value="3"
-        min={0}
-        max={20}
-        step={0.5}
-      />
+  <!-- Hero (navy gradient) -->
+  <section class="relative overflow-hidden bg-navy py-12 md:py-16">
+    <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+      <div class="absolute -right-20 -top-20 h-[300px] w-[300px] rounded-full bg-blue/10 blur-[80px]"></div>
+      <div class="absolute -bottom-20 -left-20 h-[200px] w-[200px] rounded-full bg-blue/5 blur-[60px]"></div>
     </div>
+    <div class="relative mx-auto max-w-[640px] px-4 sm:px-6">
+      <!-- Breadcrumbs -->
+      <nav aria-label="Breadcrumb" class="mb-6 text-sm text-white/50">
+        <ol class="flex items-center gap-2">
+          <li><a href="/" class="hover:text-white/80 transition-colors">Home</a></li>
+          <li aria-hidden="true">/</li>
+          <li><a href="/free-tools" class="hover:text-white/80 transition-colors">Free Tools</a></li>
+          <li aria-hidden="true">/</li>
+          <li class="truncate text-white/70" aria-current="page">Salary Negotiation</li>
+        </ol>
+      </nav>
 
-    <button
-      type="submit"
-      class="w-full rounded-lg bg-blue px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-blue-dark"
-    >
-      Show Me the Impact
-    </button>
-  </form>
-
-  <!-- Results (hidden until calculated) -->
-  <div id="results" class="mt-10 hidden" aria-live="polite">
-    <!-- KPI stat cards -->
-    <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
-      <div class="rounded-xl border-2 border-success bg-success/5 p-5 text-center">
-        <p class="text-xs font-medium uppercase tracking-wide text-text-muted">5-Year Gain</p>
-        <p id="stat-5yr" class="mt-1 font-display text-2xl md:text-3xl text-success"></p>
+      <div class="flex items-center gap-3 mb-4">
+        <span class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white/80">
+          Financial Planning
+        </span>
+        <span class="text-xs text-white/40">Updated April 2026</span>
       </div>
-      <div class="rounded-xl border-2 border-blue bg-blue-bg p-5 text-center">
-        <p class="text-xs font-medium uppercase tracking-wide text-text-muted">Monthly Raise</p>
-        <p id="stat-monthly" class="mt-1 font-display text-2xl md:text-3xl text-blue"></p>
-      </div>
-      <div class="rounded-xl border-2 border-navy bg-navy/5 p-5 text-center">
-        <p class="text-xs font-medium uppercase tracking-wide text-text-muted">10-Year Gain</p>
-        <p id="stat-10yr" class="mt-1 font-display text-2xl md:text-3xl text-navy"></p>
+
+      <h1 class="font-display text-[clamp(1.75rem,5vw,2.75rem)] leading-[1.1] text-white">
+        Salary Negotiation Impact Calculator
+      </h1>
+      <p class="mt-3 text-[1.0625rem] leading-[1.6] text-white/60">
+        See how much one negotiation is worth over 1, 5, and 10 years. The compounding math that makes every negotiation worth it.
+      </p>
+
+      <!-- Izzy attribution -->
+      <div class="mt-5 flex items-center gap-3">
+        <img
+          src="/images/izzy-coaching.jpg"
+          alt="Izzy Piyale-Sheard"
+          class="w-9 h-9 rounded-full object-cover border-2 border-white/20"
+          loading="eager"
+        />
+        <div>
+          <p class="text-sm font-medium text-white/90">Izzy Piyale-Sheard</p>
+          <p class="text-xs text-white/50">Career Coach, ClearCareer</p>
+        </div>
       </div>
     </div>
+  </section>
 
-    <!-- Comparison table -->
-    <div class="mt-6 overflow-hidden rounded-xl border border-border bg-white">
-      <table class="w-full">
-        <thead>
-          <tr class="border-b border-border bg-blue-bg">
-            <th class="px-4 py-3 text-left text-sm font-semibold text-navy">Timeframe</th>
-            <th class="px-4 py-3 text-right text-sm font-semibold text-navy">Without Negotiation</th>
-            <th class="px-4 py-3 text-right text-sm font-semibold text-navy">With Negotiation</th>
-            <th class="px-4 py-3 text-right text-sm font-semibold text-success">You Gain</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="border-b border-border">
-            <td class="px-4 py-3 text-sm font-medium text-navy">Year 1</td>
-            <td id="orig-1" class="px-4 py-3 text-right text-sm text-text-muted"></td>
-            <td id="neg-1" class="px-4 py-3 text-right text-sm text-text-muted"></td>
-            <td id="diff-1" class="px-4 py-3 text-right text-sm font-semibold text-success"></td>
-          </tr>
-          <tr class="border-b border-border">
-            <td class="px-4 py-3 text-sm font-medium text-navy">Year 3</td>
-            <td id="orig-3" class="px-4 py-3 text-right text-sm text-text-muted"></td>
-            <td id="neg-3" class="px-4 py-3 text-right text-sm text-text-muted"></td>
-            <td id="diff-3" class="px-4 py-3 text-right text-sm font-semibold text-success"></td>
-          </tr>
-          <tr class="border-b border-border">
-            <td class="px-4 py-3 text-sm font-bold text-navy">Year 5</td>
-            <td id="orig-5" class="px-4 py-3 text-right text-sm font-semibold text-text-muted"></td>
-            <td id="neg-5" class="px-4 py-3 text-right text-sm font-semibold text-text-muted"></td>
-            <td id="diff-5" class="px-4 py-3 text-right text-sm font-bold text-success"></td>
-          </tr>
-          <tr>
-            <td class="px-4 py-3 text-sm font-bold text-navy">Year 10</td>
-            <td id="orig-10" class="px-4 py-3 text-right text-sm font-semibold text-text-muted"></td>
-            <td id="neg-10" class="px-4 py-3 text-right text-sm font-semibold text-text-muted"></td>
-            <td id="diff-10" class="px-4 py-3 text-right text-sm font-bold text-success"></td>
-          </tr>
-        </tbody>
-      </table>
+  <!-- Coach Block 1: Why This Matters -->
+  <section class="py-8 md:py-10">
+    <div class="mx-auto max-w-[640px] px-4 sm:px-6">
+      <div class="rounded-xl border-l-4 border-blue bg-blue-bg p-5 sm:p-6">
+        <div class="flex gap-3 sm:gap-4 items-start">
+          <img
+            src="/images/izzy-coaching.jpg"
+            alt="Izzy, Career Coach"
+            class="w-8 h-8 rounded-full object-cover flex-shrink-0 mt-0.5"
+            loading="lazy"
+          />
+          <div class="text-[0.9375rem] sm:text-[1rem] leading-[1.7] text-text space-y-3">
+            <p>
+              <strong class="text-navy">Here's what I tell every client before we start.</strong> 200+ coached negotiations. Zero rescinded offers. Average increase: $5,000 to $15,000. But a $10,000 bump isn't a $10,000 win. It compounds through every raise, bonus, and future offer. One conversation, six figures over a career.
+            </p>
+            <p>
+              Plug in your numbers below and watch the gap widen year after year. Then decide if 15 minutes is worth $100,000+.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
 
-  <!-- Methodology -->
-  <div slot="methodology">
-    <h2 class="text-xl font-bold text-navy">How Compound Growth Works</h2>
-    <div class="mt-4 space-y-4 text-[1.0625rem] leading-[1.75] text-text">
-      <p>
-        The formula: <strong>Future Salary = Current Salary x (1 + annual raise rate)^years.</strong> Negotiate $110,000 vs. $100,000 with 3% raises, and after year 1 you're at $113,300 vs. $103,000. The gap widens every year because the 3% applies to a bigger number each time.
-      </p>
-      <p>
-        After 5 years: $56,000+ more in cumulative income. After 10 years: $131,000+. And this doesn't include bonuses, 401(k) matches, or future offers that anchor to your current salary. The real lifetime value is even higher.
-      </p>
+  <!-- Calculator (React Island) -->
+  <section class="pb-8 md:pb-10">
+    <div class="mx-auto max-w-[640px] px-4 sm:px-6">
+      <SalaryNegotiationCalculator client:visible />
     </div>
-  </div>
+  </section>
 
-  <!-- Example -->
-  <div slot="example">
-    <h2 class="text-xl font-bold text-navy">Example: $10K Negotiation, 3% Raises</h2>
-    <div class="mt-4 space-y-4 text-[1.0625rem] leading-[1.75] text-text">
-      <p>
-        Negotiate $110,000 up to $120,000 with 3% annual raises. <strong>Year 1:</strong> $10,000 ($833/month more). <strong>Year 5:</strong> $53,000 cumulative. <strong>Year 10:</strong> $131,000 from one 15-minute conversation. Even a $5,000 bump is worth $65,000+ over 10 years.
-      </p>
+  <!-- Coach Block 3: The Negotiation Playbook (Tips) -->
+  <section class="py-8 md:py-10 border-t border-border">
+    <div class="mx-auto max-w-[640px] px-4 sm:px-6">
+      <h2 class="font-display text-[clamp(1.5rem,3vw,2rem)] leading-[1.15] text-navy">
+        The Negotiation Playbook
+      </h2>
+
+      <div class="mt-6 space-y-5">
+        <div class="rounded-xl border-l-4 border-blue bg-blue-bg p-5 sm:p-6">
+          <div class="flex gap-3 sm:gap-4 items-start">
+            <img
+              src="/images/izzy-coaching.jpg"
+              alt="Izzy, Career Coach"
+              class="w-8 h-8 rounded-full object-cover flex-shrink-0 mt-0.5"
+              loading="lazy"
+            />
+            <div class="text-[0.9375rem] sm:text-[1rem] leading-[1.7] text-text space-y-4">
+              <p>
+                <strong class="text-navy">Zero clients have had offers rescinded.</strong> Not one. Companies expect it. The only risk is leaving money on the table by not asking.
+              </p>
+              <p>
+                <strong class="text-navy">Do your research first.</strong> Pull salary data from Glassdoor, Levels.fyi, and Payscale. Know the range for your role, level, and location before you counter.
+              </p>
+              <p>
+                <strong class="text-navy">Always negotiate in writing.</strong> Email gives you time to craft your words and creates a paper trail.
+              </p>
+              <p>
+                <strong class="text-navy">If base salary is "final," negotiate everything else.</strong> Signing bonus, extra PTO, remote flexibility, equity, or an accelerated review at 3 months instead of 12.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-lg border border-border bg-white p-5">
+          <h3 class="text-base font-semibold text-navy">Related Reading</h3>
+          <p class="mt-2 text-[0.9375rem] leading-[1.7] text-text-muted">
+            Learn the full framework for negotiating any offer:
+            <a href="/blog/always-negotiate-the-first-offer-is-never-the-final-offer" class="font-medium text-blue underline underline-offset-2 hover:text-blue-dark transition-colors">
+              Always Negotiate: The First Offer Is Never the Final Offer
+            </a>
+          </p>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
 
-  <!-- Tips section -->
-  <div slot="tips">
-    <h2 class="font-display text-2xl text-navy">The Negotiation Playbook</h2>
-    <div class="mt-6 space-y-4 text-[1.0625rem] leading-[1.75] text-text-muted">
-      <p>
-        <strong class="text-navy">Zero clients have had offers rescinded.</strong> Not one. Companies expect it. The only risk is leaving money on the table by not asking.
-      </p>
-      <p>
-        <strong class="text-navy">Do your research first.</strong> Pull salary data from Glassdoor, Levels.fyi, and Payscale. Know the range for your role, level, and location before you counter.
-      </p>
-      <p>
-        <strong class="text-navy">Always negotiate in writing.</strong> Email gives you time to craft your words and creates a paper trail.
-      </p>
-      <p>
-        <strong class="text-navy">If base salary is "final," negotiate everything else.</strong> Signing bonus, extra PTO, remote flexibility, equity, or an accelerated review at 3 months instead of 12.
-      </p>
+  <!-- FAQ -->
+  <section class="border-t border-border py-12 md:py-16">
+    <div class="mx-auto max-w-[640px] px-4 sm:px-6">
+      <h2 class="font-display text-[clamp(1.5rem,3vw,2rem)] leading-[1.15] text-navy">
+        Frequently Asked Questions
+      </h2>
+      <div class="mt-8 space-y-4">
+        {faqItems.map((item) => (
+          <details class="group rounded-xl border border-border bg-white p-5 transition-shadow hover:shadow-sm">
+            <summary class="cursor-pointer list-none text-base font-semibold text-navy [&::-webkit-details-marker]:hidden">
+              <div class="flex items-center justify-between gap-4">
+                <span>{item.question}</span>
+                <svg
+                  class="h-5 w-5 flex-shrink-0 text-blue transition-transform group-open:rotate-180"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+            </summary>
+            <p class="mt-4 text-[0.9375rem] leading-[1.75] text-text-muted">
+              {item.answer}
+            </p>
+          </details>
+        ))}
+      </div>
     </div>
+  </section>
 
-    <div class="mt-8 rounded-lg border border-border bg-white p-6">
-      <h3 class="text-lg font-semibold text-navy">Related Reading</h3>
-      <p class="mt-2 text-[1.0625rem] leading-[1.75] text-text-muted">
-        Learn the full framework for negotiating any offer:
-        <a href="/blog/always-negotiate-the-first-offer-is-never-the-final-offer" class="font-medium text-blue underline underline-offset-2 hover:text-blue-dark">
-          Always Negotiate: The First Offer Is Never the Final Offer
+  <!-- Related Tools -->
+  <section class="bg-blue-bg py-12 md:py-16">
+    <div class="mx-auto max-w-[640px] px-4 sm:px-6">
+      <h2 class="text-lg font-bold text-navy">Related Tools</h2>
+      <div class="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <a
+          href="/free-tools/contract-vs-salary-calculator"
+          class="group flex items-center gap-4 rounded-xl border border-border bg-white p-5 transition-all hover:border-blue/30 hover:shadow-md"
+        >
+          <span class="text-2xl">&#9878;&#65039;</span>
+          <span class="text-sm font-semibold text-navy group-hover:text-blue transition-colors">Contract vs. Salary Calculator</span>
         </a>
-      </p>
+        <a
+          href="/free-tools/opportunity-cost-calculator"
+          class="group flex items-center gap-4 rounded-xl border border-border bg-white p-5 transition-all hover:border-blue/30 hover:shadow-md"
+        >
+          <span class="text-2xl">&#9201;&#65039;</span>
+          <span class="text-sm font-semibold text-navy group-hover:text-blue transition-colors">Opportunity Cost Calculator</span>
+        </a>
+      </div>
     </div>
-  </div>
-</ToolLayout>
+  </section>
 
-<script>
-  const form = document.getElementById('negotiation-form') as HTMLFormElement;
-  const results = document.getElementById('results') as HTMLDivElement;
-
-  const fmt = (n: number) =>
-    n.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
-
-  function cumulativeEarnings(base: number, raisePercent: number, years: number): number {
-    let total = 0;
-    let current = base;
-    for (let i = 0; i < years; i++) {
-      total += current;
-      current *= (1 + raisePercent / 100);
-    }
-    return total;
-  }
-
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    const offer = parseFloat((document.getElementById('current-offer') as HTMLInputElement).value) || 0;
-    const negotiated = parseFloat((document.getElementById('negotiated-amount') as HTMLInputElement).value) || 0;
-    const raise = parseFloat((document.getElementById('annual-raise') as HTMLInputElement).value) || 0;
-
-    if (!offer || !negotiated) {
-      return;
-    }
-
-    const milestones = [1, 3, 5, 10];
-
-    milestones.forEach((years) => {
-      const originalTotal = cumulativeEarnings(offer, raise, years);
-      const negotiatedTotal = cumulativeEarnings(negotiated, raise, years);
-      const difference = negotiatedTotal - originalTotal;
-
-      document.getElementById(`orig-${years}`)!.textContent = fmt(originalTotal);
-      document.getElementById(`neg-${years}`)!.textContent = fmt(negotiatedTotal);
-      document.getElementById(`diff-${years}`)!.textContent = `+${fmt(difference)}`;
-    });
-
-    // KPI stat cards
-    const diff5 = cumulativeEarnings(negotiated, raise, 5) - cumulativeEarnings(offer, raise, 5);
-    const diff10 = cumulativeEarnings(negotiated, raise, 10) - cumulativeEarnings(offer, raise, 10);
-    const monthlyRaise = (negotiated - offer) / 12;
-
-    document.getElementById('stat-5yr')!.textContent = `+${fmt(diff5)}`;
-    document.getElementById('stat-monthly')!.textContent = `+${fmt(monthlyRaise)}/mo`;
-    document.getElementById('stat-10yr')!.textContent = `+${fmt(diff10)}`;
-
-    results.classList.remove('hidden');
-    results.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
-</script>
+  <!-- CTA -->
+  <CTASection
+    heading="Want a Personalized Strategy for Your Job Search?"
+    body="You've seen what one negotiation is worth. Imagine what a complete strategy could do."
+    primaryCTA={{
+      text: "Book a Free Audit",
+      href: "https://calendly.com/clearcareer/discovery-call",
+    }}
+    secondaryCTA={{
+      text: "Explore the Program",
+      href: "/jsis",
+    }}
+    variant="gradient"
+  />
+</PageLayout>
