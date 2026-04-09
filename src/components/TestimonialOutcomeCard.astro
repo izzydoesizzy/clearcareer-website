@@ -1,4 +1,6 @@
 ---
+import { formatName } from "@utils/format-name";
+
 interface Props {
   name: string;
   role: string;
@@ -49,7 +51,7 @@ const shortOutcome = tagline.split('.')[0].trim();
       {initials}
     </div>
     <div class="min-w-0">
-      <p class="text-sm font-bold text-navy truncate">{name}</p>
+      <p class="text-sm font-bold text-navy truncate">{formatName(name)}</p>
       <p class="text-xs text-text-muted truncate">{role}</p>
     </div>
   </div>

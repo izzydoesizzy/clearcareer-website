@@ -13,6 +13,7 @@ import CTASection from "@components/CTASection.astro";
 import SourceCitations from "@components/SourceCitations.astro";
 import deliverables from "@data/deliverables.json";
 import faqItems from "@data/faq-jsis.json";
+import { formatName } from "@utils/format-name";
 import allTestimonials from "@data/testimonials.json";
 
 const careerOutcomeTestimonials = allTestimonials.filter(
@@ -297,7 +298,7 @@ const fenceSitterCards = fenceSitterNames
                 class="hidden"
                 data-testimonial-full={i}
                 data-quote={t.quote}
-                data-name={t.name}
+                data-name={formatName(t.name)}
                 data-role={t.role}
                 data-outcome={t.outcome || ''}
                 data-image={t.imagePath || ''}
@@ -338,7 +339,7 @@ const fenceSitterCards = fenceSitterNames
                 class="hidden"
                 data-testimonial-full={idx}
                 data-quote={t.quote}
-                data-name={t.name}
+                data-name={formatName(t.name)}
                 data-role={t.role}
                 data-outcome={t.outcome || ''}
                 data-image={t.imagePath || ''}

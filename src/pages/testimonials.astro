@@ -8,6 +8,7 @@ import TestimonialMasonry from "@components/TestimonialMasonry.astro";
 import CTASection from "@components/CTASection.astro";
 
 import testimonials from "@data/testimonials.json";
+import { formatName } from "@utils/format-name";
 
 // Sort by sortPriority (lowest first), entries without it go to the end
 const sorted = [...testimonials].sort((a: any, b: any) => {
@@ -201,7 +202,7 @@ const youtubeVideoId = "xyDUx1ji3io";
                 class="hidden"
                 data-testimonial-full={i}
                 data-quote={t.quote}
-                data-name={t.name}
+                data-name={formatName(t.name)}
                 data-role={t.role}
                 data-outcome={t.outcome || ''}
                 data-image={t.imagePath || ''}

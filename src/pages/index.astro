@@ -13,6 +13,7 @@ import CTASection from "@components/CTASection.astro";
 import { getCollection } from "astro:content";
 
 import IndustryStatCard from "@components/IndustryStatCard.astro";
+import { formatName } from "@utils/format-name";
 import SourceCitations from "@components/SourceCitations.astro";
 import deliverableData from "@data/deliverables.json";
 import allTestimonials from "@data/testimonials.json";
@@ -299,7 +300,7 @@ const latestPosts = (await getCollection("blog", ({ data }) => {
                   class="hidden"
                   data-testimonial-full={i}
                   data-quote={t.quote}
-                  data-name={t.name}
+                  data-name={formatName(t.name)}
                   data-role={t.role}
                   data-outcome={t.outcome || ''}
                   data-image={t.imagePath || ''}
