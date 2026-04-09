@@ -14,6 +14,11 @@ const LIST_IDS: Record<string, number> = {
   'linkedin-banners': 3,
   'linkedin-headshot': 3,
   'email-templates': 3,
+  'salary-guide-2026': 3,
+  'hidden-job-titles': 3,
+  'linkedin-boolean': 3,
+  'layoff-survival-kit': 3,
+  'canadian-remote-companies': 3,
 };
 
 // Lead magnet delivery config: source → email details
@@ -82,6 +87,31 @@ const LEAD_MAGNETS: Record<string, {
     subject: "Here are your 7 Job Search Email Templates",
     playbook: "7 Email Templates Every Job Seeker Needs",
     webUrl: `${SITE_URL}/lead-magnets/email-templates`,
+  },
+  'salary-guide-2026': {
+    subject: "Here's your 2026 Canadian Salary Guide",
+    playbook: "The 2026 Salary Guide: 50 In-Demand Roles in Canada",
+    webUrl: `${SITE_URL}/lead-magnets/2026-salary-guide`,
+  },
+  'hidden-job-titles': {
+    subject: "Here are 40 Job Titles That Pay $100K+ in Canada",
+    playbook: "40 Job Titles You've Never Heard Of That Pay $100K+",
+    webUrl: `${SITE_URL}/lead-magnets/hidden-job-titles`,
+  },
+  'linkedin-boolean': {
+    subject: "Here's your LinkedIn Boolean Search Cheat Sheet",
+    playbook: "The LinkedIn Recruiter Cheat Sheet: 30 Boolean Search Strings",
+    webUrl: `${SITE_URL}/lead-magnets/linkedin-boolean-search`,
+  },
+  'layoff-survival-kit': {
+    subject: "Here's your Layoff Survival Kit",
+    playbook: "The Layoff Survival Kit: 25 Steps For the First 72 Hours",
+    webUrl: `${SITE_URL}/lead-magnets/layoff-survival-kit`,
+  },
+  'canadian-remote-companies': {
+    subject: "Here's your list of 194 Canadian Remote & Hybrid Companies",
+    playbook: "194+ Companies in Canada Hiring Remote & Hybrid Roles",
+    webUrl: `${SITE_URL}/lead-magnets/canadian-remote-companies`,
   },
 };
 

@@ -94,8 +94,8 @@ const currentYear = new Date().getFullYear();
     <!-- Hero Image (optional, e.g. spreadsheet screenshot) -->
     <slot name="hero-image" />
 
-    <!-- Preview Content (visible before gate) -->
-    <section class="py-8 md:py-12">
+    <!-- Preview Content (visible before gate, hidden after unlock) -->
+    <section class="py-8 md:py-12" id="lead-magnet-preview">
       <div class="mx-auto max-w-[720px] px-4">
         <slot name="preview" />
       </div>
@@ -160,6 +160,7 @@ const currentYear = new Date().getFullYear();
   <script is:inline define:vars={{ source, storageKey }}>
     document.addEventListener('DOMContentLoaded', function() {
       var gate = document.getElementById('lead-magnet-gate');
+      var preview = document.getElementById('lead-magnet-preview');
       var formTop = document.getElementById('lead-magnet-form-top');
       var formBottom = document.getElementById('lead-magnet-form-bottom');
       var btnTop = document.getElementById('lm-btn-top');
@@ -170,6 +171,7 @@ const currentYear = new Date().getFullYear();
 
       function unlock() {
         if (gate) gate.style.display = 'none';
+        if (preview) preview.style.display = 'none';
         gatedSections.forEach(function(el) { el.style.display = ''; });
       }
 
