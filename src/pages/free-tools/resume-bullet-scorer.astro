@@ -1,286 +1,120 @@
 ---
-import ToolLayout from "@layouts/ToolLayout.astro";
-import ToolInput from "@components/ToolInput.astro";
+import PageLayout from "@layouts/PageLayout.astro";
+import CTASection from "@components/CTASection.astro";
+import BulletScorerCoaching from "@components/tools/BulletScorerCoaching";
+import { generateWebApplicationSchema, generateBreadcrumbSchema, generateFAQSchema } from "@utils/seo";
+
+const title = "Resume Bullet Point Scorer";
+const description = "Paste a resume bullet point and get a score out of 5. Checks for action verbs, metrics, impact, length, and weak language.";
+const siteUrl = Astro.site?.toString().replace(/\/$/, "") ?? "https://joinclearcareer.com";
+const toolUrl = `${siteUrl}/free-tools/resume-bullet-scorer`;
+
+const faqItems = [
+  { question: "What makes a strong resume bullet point?", answer: "Five things: starts with an action verb, includes at least one number, shows impact (not just activity), is 10-30 words long, and uses no passive or weak language. Hit all 5 and your bullet is in the top 10% of what recruiters see." },
+  { question: "How many bullet points should I have per job?", answer: "3-5 bullets for your most recent 2 roles, 2-3 for older roles. Total resume bullets should be 12-18. More than that and you're diluting your strongest points." },
+  { question: "What are the best action verbs for resumes?", answer: "The strongest verbs show leadership and results: Led, Built, Launched, Delivered, Generated, Reduced, Increased, Negotiated, Designed, Implemented. Avoid: Helped, Assisted, Contributed, Participated, Responsible for." },
+  { question: "How do I add metrics if my work wasn't measured?", answer: "Estimate. 'Roughly 20%' is better than nothing. Think about: How many people did you work with? How much time did you save? How many projects did you complete? What was the dollar value? If you truly can't quantify, describe the scope: 'for a team of 40' or 'across 3 departments.'" },
+  { question: "Should resume bullets be full sentences or fragments?", answer: "Fragments. No 'I' at the start. No period at the end. Start with the action verb: 'Led 8-person team...' not 'I led an 8-person team.' This is a universal resume convention." },
+];
 ---
 
-<ToolLayout
-  title="Resume Bullet Point Scorer"
-  headline="Resume Bullet Point Scorer"
-  description="Paste a resume bullet point and get a score out of 5. Checks for action verbs, metrics, impact, length, and weak language."
-  category="Interview & Resume"
-  icon="✅"
-  relatedTags={["resume", "career advice"]}
-  slug="resume-bullet-scorer"
-  lastUpdated="March 2026"
-  featureList={["5-point scoring system", "Action verb detection", "Metrics and impact analysis", "Weak language flagging", "Word count optimization"]}
-  faqItems={[
-    { question: "What makes a strong resume bullet point?", answer: "Five things: starts with an action verb, includes at least one number, shows impact (not just activity), is 10-30 words long, and uses no passive or weak language. Hit all 5 and your bullet is in the top 10% of what recruiters see." },
-    { question: "How many bullet points should I have per job?", answer: "3-5 bullets for your most recent 2 roles, 2-3 for older roles. Total resume bullets should be 12-18. More than that and you're diluting your strongest points." },
-    { question: "What are the best action verbs for resumes?", answer: "The strongest verbs show leadership and results: Led, Built, Launched, Delivered, Generated, Reduced, Increased, Negotiated, Designed, Implemented. Avoid: Helped, Assisted, Contributed, Participated, Responsible for." },
-    { question: "How do I add metrics if my work wasn't measured?", answer: "Estimate. 'Roughly 20%' is better than nothing. Think about: How many people did you work with? How much time did you save? How many projects did you complete? What was the dollar value? If you truly can't quantify, describe the scope: 'for a team of 40' or 'across 3 departments.'" },
-    { question: "Should resume bullets be full sentences or fragments?", answer: "Fragments. No 'I' at the start. No period at the end. Start with the action verb: 'Led 8-person team...' not 'I led an 8-person team.' This is a universal resume convention." },
-  ]}
-  relatedTools={[
-    { name: "STAR Story Builder", slug: "star-story-builder", icon: "⭐" },
-    { name: "LinkedIn Recruiter X-Ray Search", slug: "linkedin-xray-search", icon: "🔍" },
-  ]}
->
-  <!-- Intro -->
-  <div slot="intro">
-    <h2 class="text-xl font-bold text-navy">Why This Matters</h2>
-    <div class="mt-4 space-y-4 text-[1.0625rem] leading-[1.75] text-text">
-      <p>Recruiters spend 6-7 seconds scanning your resume. Most bullets fail because they describe duties instead of impact. "Responsible for managing the marketing team" tells a recruiter nothing. "Led 8-person marketing team to 23% conversion increase, generating $1.2M in annual revenue" tells them everything.</p>
-      <p>This scorer checks the 5 things strong bullets share: action verb, a number, clear impact, right length (10-30 words), and no weak language. Paste your bullet and rewrite until you hit 5/5.</p>
+<PageLayout title={`${title} | ClearCareer`} description={description}>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(generateWebApplicationSchema({ name: title, description, url: toolUrl, category: "BusinessApplication", featureList: ["5-point scoring system", "Action verb detection", "Metrics and impact analysis", "Weak language flagging", "Word count optimization"] }))} />
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(generateBreadcrumbSchema([{ name: "Home", url: siteUrl }, { name: "Free Tools", url: `${siteUrl}/free-tools` }, { name: title, url: toolUrl }]))} />
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(generateFAQSchema(faqItems))} />
+
+  <!-- Hero -->
+  <section class="relative overflow-hidden bg-navy py-12 md:py-16">
+    <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+      <div class="absolute -right-20 -top-20 h-[300px] w-[300px] rounded-full bg-blue/10 blur-[80px]"></div>
     </div>
-  </div>
-  <form id="scorer-form" class="space-y-6" novalidate>
-    <ToolInput
-      id="bullet"
-      label="Your resume bullet point"
-      type="textarea"
-      rows={3}
-      required={true}
-      placeholder="Led cross-functional team of 8 to redesign checkout flow, increasing conversion rate by 23% and generating $1.2M in additional annual revenue."
-    />
+    <div class="relative mx-auto max-w-[640px] px-4 sm:px-6">
+      <nav aria-label="Breadcrumb" class="mb-6 text-sm text-white/50">
+        <ol class="flex items-center gap-2">
+          <li><a href="/" class="hover:text-white/80 transition-colors">Home</a></li>
+          <li aria-hidden="true">/</li>
+          <li><a href="/free-tools" class="hover:text-white/80 transition-colors">Free Tools</a></li>
+          <li aria-hidden="true">/</li>
+          <li class="truncate text-white/70" aria-current="page">Bullet Scorer</li>
+        </ol>
+      </nav>
 
-    <button
-      type="submit"
-      class="w-full rounded-lg bg-blue px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-blue-dark"
-    >
-      Score This Bullet
-    </button>
-  </form>
-
-  <!-- Results (hidden until scored) -->
-  <div id="results" class="mt-10 hidden" aria-live="polite">
-    <!-- Score display -->
-    <div class="rounded-xl border border-border bg-white p-8 text-center">
-      <p id="score-number" class="font-display text-[clamp(2.5rem,6vw,3.5rem)] leading-[1.1]"></p>
-      <div id="score-dots" class="mt-4 flex items-center justify-center gap-2"></div>
-      <p id="score-message" class="mt-3 text-sm font-medium"></p>
-    </div>
-
-    <!-- Check details -->
-    <div id="checks-list" class="mt-6 rounded-xl border border-border bg-white divide-y divide-border"></div>
-  </div>
-
-  <!-- Methodology -->
-  <div slot="methodology">
-    <h2 class="text-xl font-bold text-navy">How We Score Your Bullet</h2>
-    <div class="mt-4 space-y-4 text-[1.0625rem] leading-[1.75] text-text">
-      <p>Five checks, each worth 1 point: <strong class="text-navy">(1) Starts with an action verb</strong> like "Led," "Built," or "Reduced," not "Responsible for." <strong class="text-navy">(2) Contains a number or metric:</strong> percentages, dollar amounts, headcounts, or timeframes. <strong class="text-navy">(3) Shows impact, not just activity.</strong> "Created weekly reports" vs. "Created weekly reports that identified $340K in cost savings."</p>
-      <p><strong class="text-navy">(4) Right length (10-30 words).</strong> Too short and you're missing context. Too long and the recruiter skips it. <strong class="text-navy">(5) No weak language.</strong> Flags passive constructions ("was responsible for"), hedging ("helped," "assisted"), and filler ("various," "multiple").</p>
-    </div>
-  </div>
-
-  <!-- Example -->
-  <div slot="example">
-    <h2 class="text-xl font-bold text-navy">Example: Before and After</h2>
-    <div class="mt-4 space-y-4 text-[1.0625rem] leading-[1.75] text-text">
-      <p><strong class="text-navy">Before (1/5):</strong> "Responsible for managing the marketing team and overseeing various campaigns for multiple clients." No action verb, no metrics, no impact, weak language throughout.</p>
-      <p><strong class="text-navy">After (5/5):</strong> "Led 8-person marketing team to 23% conversion increase across 12 client campaigns, generating $1.2M in annual revenue." Action verb, 4 numbers, clear impact, 22 words, zero weak language. A 30-second rewrite that changes everything.</p>
-    </div>
-  </div>
-
-  <!-- Tips section -->
-  <div slot="tips">
-    <h2 class="font-display text-2xl text-navy">Writing Bullets That Land</h2>
-    <div class="mt-6 space-y-4 text-[1.0625rem] leading-[1.75] text-text-muted">
-      <div class="rounded-lg border border-border p-5">
-        <p class="text-xs font-semibold uppercase tracking-wider text-warning">Before</p>
-        <p class="mt-1 text-text">"Responsible for managing the company's social media accounts and creating content."</p>
-        <p class="mt-3 text-xs font-semibold uppercase tracking-wider text-success">After</p>
-        <p class="mt-1 text-text">"Grew Instagram following from 2,400 to 18,000 in 8 months by launching a weekly video series, driving a 42% increase in website traffic from social."</p>
+      <div class="flex items-center gap-3 mb-4">
+        <span class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white/80">
+          Interview & Resume
+        </span>
       </div>
-      <p>
-        Your resume is an ad, not a biography:
-        <a href="/blog/resume-is-an-ad-not-a-biography" class="text-blue hover:underline">Your resume is an ad, not a biography</a>.
+
+      <h1 class="font-display text-[clamp(1.75rem,5vw,2.75rem)] leading-[1.1] text-white">
+        Resume Bullet Point Scorer
+      </h1>
+      <p class="mt-3 text-[1.0625rem] leading-[1.6] text-white/60">
+        Paste a bullet point and get an instant score out of 5. Real-time feedback on action verbs, metrics, impact, length, and weak language.
       </p>
-      <p>
-        <strong class="text-navy">Run every bullet through this scorer.</strong> If your average is below 3/5, your resume needs a rewrite.
-      </p>
-      <p>
-        <strong class="text-navy">Put your strongest bullets first.</strong> Recruiters read the first 2 bullets closely and skim the rest.
-      </p>
+
+      <div class="mt-5 flex items-center gap-3">
+        <img src="/images/izzy-coaching.jpg" alt="Izzy" class="w-9 h-9 rounded-full object-cover border-2 border-white/20" loading="eager" />
+        <div>
+          <p class="text-sm font-medium text-white/90">Izzy Piyale-Sheard</p>
+          <p class="text-xs text-white/50">Career Coach, ClearCareer</p>
+        </div>
+      </div>
     </div>
-  </div>
-</ToolLayout>
+  </section>
 
-<script>
-  const form = document.getElementById('scorer-form') as HTMLFormElement;
-  const results = document.getElementById('results') as HTMLDivElement;
+  <!-- Calculator -->
+  <section class="py-8 md:py-10">
+    <div class="mx-auto max-w-[640px] px-4 sm:px-6">
+      <BulletScorerCoaching client:visible />
+    </div>
+  </section>
 
-  const actionVerbs = [
-    "accelerated", "achieved", "administered", "advanced", "analyzed",
-    "architected", "automated", "boosted", "built", "captured",
-    "championed", "closed", "coached", "collaborated", "completed",
-    "consolidated", "converted", "coordinated", "created", "cut",
-    "decreased", "delivered", "deployed", "designed", "developed",
-    "directed", "drove", "earned", "eliminated", "enabled",
-    "engineered", "established", "exceeded", "executed", "expanded",
-    "facilitated", "formalized", "founded", "generated", "grew",
-    "guided", "headed", "identified", "implemented", "improved",
-    "increased", "influenced", "initiated", "integrated", "introduced",
-    "launched", "led", "leveraged", "managed", "maximized",
-    "mentored", "migrated", "mobilized", "modernized", "negotiated",
-    "onboarded", "optimized", "orchestrated", "organized", "outperformed",
-    "overhauled", "partnered", "piloted", "pioneered", "planned",
-    "produced", "programmed", "propelled", "published", "raised",
-    "ranked", "rebuilt", "reduced", "redesigned", "refactored",
-    "reformed", "remodeled", "reorganized", "replaced", "rescued",
-    "resolved", "restructured", "revamped", "reversed", "scaled",
-    "secured", "simplified", "slashed", "sold", "spearheaded",
-    "stabilized", "standardized", "steered", "streamlined", "strengthened",
-    "surpassed", "sustained", "trained", "transformed", "tripled",
-    "uncovered", "unified", "upgraded", "utilized", "won"
-  ];
+  <!-- FAQ -->
+  <section class="border-t border-border py-12 md:py-16">
+    <div class="mx-auto max-w-[640px] px-4 sm:px-6">
+      <h2 class="font-display text-[clamp(1.5rem,3vw,2rem)] leading-[1.15] text-navy">
+        Frequently Asked Questions
+      </h2>
+      <div class="mt-8 space-y-4">
+        {faqItems.map((item) => (
+          <details class="group rounded-xl border border-border bg-white p-5 transition-shadow hover:shadow-sm">
+            <summary class="cursor-pointer list-none text-base font-semibold text-navy [&::-webkit-details-marker]:hidden">
+              <div class="flex items-center justify-between gap-4">
+                <span>{item.question}</span>
+                <svg class="h-5 w-5 flex-shrink-0 text-blue transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+            </summary>
+            <p class="mt-4 text-[0.9375rem] leading-[1.75] text-text-muted">{item.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
 
-  const weakPhrases = [
-    "helped", "assisted", "was responsible for", "participated in",
-    "involved in", "contributed to", "worked on", "supported",
-    "duties included", "tasked with", "handled", "dealt with",
-    "was in charge of", "was part of", "played a role"
-  ];
+  <!-- Related Tools -->
+  <section class="bg-blue-bg py-12 md:py-16">
+    <div class="mx-auto max-w-[640px] px-4 sm:px-6">
+      <h2 class="text-lg font-bold text-navy">Related Tools</h2>
+      <div class="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <a href="/free-tools/star-story-builder" class="group flex items-center gap-4 rounded-xl border border-border bg-white p-5 transition-all hover:border-blue/30 hover:shadow-md">
+          <span class="text-2xl">⭐</span>
+          <span class="text-sm font-semibold text-navy group-hover:text-blue transition-colors">STAR Story Builder</span>
+        </a>
+        <a href="/free-tools/linkedin-xray-search" class="group flex items-center gap-4 rounded-xl border border-border bg-white p-5 transition-all hover:border-blue/30 hover:shadow-md">
+          <span class="text-2xl">🔍</span>
+          <span class="text-sm font-semibold text-navy group-hover:text-blue transition-colors">LinkedIn X-Ray Search</span>
+        </a>
+      </div>
+    </div>
+  </section>
 
-  interface Check {
-    name: string;
-    pass: boolean;
-    suggestion: string;
-  }
-
-  function scoreText(text: string): Check[] {
-    const checks: Check[] = [];
-
-    // 1. Starts with a strong action verb
-    const firstWord = text.trim().split(/\s+/)[0].toLowerCase().replace(/[^a-z]/g, '');
-    checks.push({
-      name: 'Starts with a strong action verb',
-      pass: actionVerbs.includes(firstWord),
-      suggestion: "Start with a strong action verb like 'Led', 'Built', 'Increased', or 'Delivered'."
-    });
-
-    // 2. Contains numbers or metrics
-    const hasNumbers = /\d/.test(text) || /\b(percent|percentage|million|billion|thousand|hundred|dozen|triple|double|half)\b/i.test(text);
-    checks.push({
-      name: 'Contains numbers or metrics',
-      pass: hasNumbers,
-      suggestion: 'Add specific numbers: revenue, users, percentage improvements, team size, or timeline.'
-    });
-
-    // 3. Shows impact or result
-    const hasImpact = /(result|impact|led to|which|saving|increasing|reducing|improving|generating|achieving|enabling|driving|delivering|producing|contributing|yielding|netting|securing|earning|growing|boosting|cutting|lowering|raising|adding|creating|preventing|eliminating)/i.test(text);
-    checks.push({
-      name: 'Shows impact or result',
-      pass: hasImpact,
-      suggestion: "Show what happened because of your work. Use 'resulting in...', 'which led to...', or 'saving...'."
-    });
-
-    // 4. Appropriate length (10-30 words)
-    const words = text.trim().split(/\s+/).length;
-    const lengthPass = words >= 10 && words <= 30;
-    let lengthSuggestion = '';
-    if (words < 10) {
-      lengthSuggestion = 'Too short. Add more detail about what you did and the result.';
-    } else if (words > 30) {
-      lengthSuggestion = 'Too long. Aim for 10-30 words. Cut filler and keep the strongest details.';
-    }
-    checks.push({
-      name: 'Appropriate length (10-30 words)',
-      pass: lengthPass,
-      suggestion: lengthSuggestion
-    });
-
-    // 5. No weak language
-    const lowerText = text.toLowerCase();
-    const hasWeakLanguage = weakPhrases.some(w => lowerText.includes(w));
-    checks.push({
-      name: 'No weak language',
-      pass: !hasWeakLanguage,
-      suggestion: "Replace weak words ('helped', 'assisted', 'responsible for') with specific action verbs that show what YOU did."
-    });
-
-    return checks;
-  }
-
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    const bullet = (document.getElementById('bullet') as HTMLTextAreaElement).value;
-    if (!bullet.trim()) return;
-
-    const checks = scoreText(bullet);
-    const score = checks.filter(c => c.pass).length;
-
-    // Update score display
-    const scoreNumber = document.getElementById('score-number')!;
-    const scoreMessage = document.getElementById('score-message')!;
-    let scoreColor: string;
-    let message: string;
-
-    if (score === 5) {
-      scoreColor = 'text-success';
-      message = 'This bullet is strong.';
-    } else if (score >= 3) {
-      scoreColor = 'text-blue';
-      message = 'Good start. A few tweaks will make it stronger.';
-    } else {
-      scoreColor = 'text-warning';
-      message = 'This needs work. Check the suggestions below.';
-    }
-
-    scoreNumber.textContent = `${score}/5`;
-    scoreNumber.className = `font-display text-[clamp(2.5rem,6vw,3.5rem)] leading-[1.1] ${scoreColor}`;
-    scoreMessage.textContent = message;
-    scoreMessage.className = `mt-3 text-sm font-medium ${scoreColor}`;
-
-    // Update score dots
-    const dotsContainer = document.getElementById('score-dots')!;
-    dotsContainer.innerHTML = '';
-    for (let i = 0; i < 5; i++) {
-      const dot = document.createElement('span');
-      if (i < score) {
-        dot.className = 'h-3 w-3 rounded-full bg-success';
-      } else {
-        dot.className = 'h-3 w-3 rounded-full bg-gray-200';
-      }
-      dotsContainer.appendChild(dot);
-    }
-
-    // Update checks list
-    const checksList = document.getElementById('checks-list')!;
-    checksList.innerHTML = '';
-    checks.forEach((check) => {
-      const row = document.createElement('div');
-      row.className = 'flex items-start gap-3 p-4';
-
-      const icon = document.createElement('span');
-      if (check.pass) {
-        icon.textContent = '✓';
-        icon.className = 'mt-0.5 text-success font-bold text-sm flex-shrink-0';
-      } else {
-        icon.textContent = '✗';
-        icon.className = 'mt-0.5 text-warning font-bold text-sm flex-shrink-0';
-      }
-
-      const content = document.createElement('div');
-      const name = document.createElement('p');
-      name.textContent = check.name;
-      name.className = 'text-sm font-semibold text-navy';
-      content.appendChild(name);
-
-      if (!check.pass && check.suggestion) {
-        const suggestion = document.createElement('p');
-        suggestion.textContent = check.suggestion;
-        suggestion.className = 'mt-1 text-sm text-text-muted';
-        content.appendChild(suggestion);
-      }
-
-      row.appendChild(icon);
-      row.appendChild(content);
-      checksList.appendChild(row);
-    });
-
-    results.classList.remove('hidden');
-    results.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
-</script>
+  <CTASection
+    heading="Want Your Entire Resume Rewritten by a Pro?"
+    body="The scorer checks one bullet. Our program builds your complete resume with 15-20 quantified achievements."
+    primaryCTA={{ text: "Book a Free Audit", href: "https://calendly.com/clearcareer/discovery-call" }}
+    secondaryCTA={{ text: "Explore the Program", href: "/programs/jsis" }}
+    variant="gradient"
+  />
+</PageLayout>
