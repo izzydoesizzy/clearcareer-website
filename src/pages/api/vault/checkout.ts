@@ -3,7 +3,7 @@ import Stripe from "stripe";
 
 export const prerender = false;
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ url }) => {
   const stripeKey = import.meta.env.STRIPE_SECRET_KEY;
   if (!stripeKey) {
     return new Response(JSON.stringify({ error: "Stripe is not configured" }), {
@@ -14,27 +14,21 @@ export const POST: APIRoute = async ({ request }) => {
 
   try {
     const stripe = new Stripe(stripeKey);
-    const baseUrl = import.meta.env.SITE || "http://localhost:4321";
+    const baseUrl = url.origin;
+
+    const priceId = import.meta.env.STRIPE_VAULT_PRICE_ID;
+    if (!priceId) {
+      return new Response(JSON.stringify({ error: "Vault price is not configured" }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
 
     const session = await stripe.checkout.sessions.create({
       ui_mode: "embedded_page",
       mode: "payment",
       payment_method_types: ["card"],
-      line_items: [
-        {
-          price_data: {
-            currency: "usd",
-            product_data: {
-              name: "The Career Prompt Vault",
-              description:
-                "50 AI career frameworks + setup guide + 3 bonus resources. Lifetime access.",
-            },
-            unit_amount: 900,
-            tax_behavior: "exclusive" as const,
-          },
-          quantity: 1,
-        },
-      ],
+      line_items: [{ price: priceId, quantity: 1 }],
       metadata: { product: "vault" },
       return_url: `${baseUrl}/tools/career-prompt-vault/access?session_id={CHECKOUT_SESSION_ID}`,
     });
