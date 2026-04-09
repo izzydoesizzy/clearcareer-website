@@ -12,6 +12,7 @@ const LIST_IDS: Record<string, number> = {
   'canadian-finance-companies': 3,
   'quantified-achievements': 3,
   'linkedin-banners': 3,
+  'linkedin-headshot': 3,
 };
 
 // Lead magnet delivery config: source → email details
@@ -69,6 +70,12 @@ const LEAD_MAGNETS: Record<string, {
     subject: "Here's your LinkedIn Banner Pack",
     playbook: "33 Free LinkedIn Banners for Job Seekers",
     webUrl: `${SITE_URL}/lead-magnets/linkedin-banners`,
+  },
+  'linkedin-headshot': {
+    subject: "Here's your DIY LinkedIn Headshot Guide",
+    playbook: "DIY LinkedIn Headshot Guide",
+    webUrl: `${SITE_URL}/lead-magnets/linkedin-headshot-guide`,
+    pdfUrl: `${SITE_URL}/downloads/diy-linkedin-headshot-guide.pdf`,
   },
 };
 
