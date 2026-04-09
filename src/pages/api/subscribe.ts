@@ -1,10 +1,10 @@
 import type { APIRoute } from 'astro';
+import { buildBoldConversion, SITE_URL, DISCOVERY_CALL_URL } from '../../lib/email/index.js';
+import type { EmailData } from '../../lib/email/types.js';
 
 export const prerender = false;
 
 const BREVO_API_KEY = import.meta.env.BREVO_API_KEY;
-const SITE_URL = 'https://joinclearcareer.com';
-const DISCOVERY_CALL_URL = 'https://calendly.com/clearcareer/discovery-call';
 
 const LIST_IDS: Record<string, number> = {
   'make-it-count': 3,
@@ -22,22 +22,41 @@ const LIST_IDS: Record<string, number> = {
   'canadian-remote-companies': 3,
 };
 
-// ── CTA Group System ───────────────────────────────────────────────────────
+// ── Testimonial Pool (rotated per lead magnet) ───────────────────────────
 
-type CtaGroup = 'resume' | 'linkedin' | 'strategy' | 'company-lists' | 'layoff';
+const TESTIMONIALS: { quote: string; name: string; outcome: string }[] = [
+  { quote: '200+ failed apps. 27 targeted emails. 13 replies. 1 offer.', name: 'Blake McDermott', outcome: '$5K salary increase after rewriting resume with ClearCareer' },
+  { quote: 'Stuck in a job search black hole. 2 offers in weeks.', name: 'Annie Bell', outcome: '2 offers within weeks, 200% salary increase' },
+  { quote: 'From freelancer to $127K + 30 PTO days negotiated.', name: 'Kira Howe', outcome: '$127K salary with negotiated PTO' },
+  { quote: '1 year unemployed. Employed in 3 weeks.', name: 'Kristin Davis', outcome: 'Hired in 3 weeks after joining ClearCareer' },
+  { quote: '1+ year searching. Hired in 30 days.', name: 'Sparsh Kalia', outcome: 'Hired in 30 days after joining ClearCareer' },
+  { quote: '$20K+ raise and a bonus. After getting zero interviews.', name: 'Tamara Gordon', outcome: '$20K+ salary increase after ClearCareer coaching' },
+  { quote: '$22,000/year salary bump. Landed my dream role.', name: 'Laura Salamanca', outcome: '30%+ salary increase' },
+  { quote: 'Landed Associate Director role. $25K salary increase.', name: 'Chris Chipman', outcome: '$25K salary increase' },
+  { quote: '2 offers in 1 week. 30% salary increase.', name: 'Henrique Perez', outcome: '2 offers in 1 week, 30% salary increase' },
+  { quote: '3 interviews in 2 weeks after 11 months and 500+ applications.', name: 'Victor Perez', outcome: '3 interviews in 2 weeks' },
+  { quote: 'Hundreds of applications with no results to responses in the first week.', name: 'Andrew Cameron', outcome: 'Employer responses in first week' },
+  { quote: '3 job offers + $10K negotiated raise.', name: 'Wil Gerard', outcome: '3 offers + $10K raise' },
+  { quote: '$10K negotiated bump. Landed my dream tech marketing role.', name: 'Marsha Druker', outcome: '$10K negotiated bump' },
+  { quote: '$10K above initial offer. Overcame impostor syndrome.', name: 'Septembre Anderson', outcome: '$10K above initial offer' },
+  { quote: '12 months searching. Got an offer + $6K negotiated increase.', name: 'Jorge Garboza', outcome: 'Offer + $6K negotiated increase' },
+];
 
-interface CtaBlock {
+// ── Upsell Blocks (no Community — ever) ──────────────────────────────────
+
+type UpsellGroup = 'vault' | 'jsis' | 'layoff-kit';
+
+interface UpsellBlock {
   quickWinTip: string;
   headline: string;
   description: string;
   bullets: string[];
   buttonText: string;
   buttonUrl: string;
-  testimonial: { quote: string; name: string; outcome: string };
 }
 
-const CTA_BLOCKS: Record<CtaGroup, CtaBlock> = {
-  resume: {
+const UPSELL_BLOCKS: Record<UpsellGroup, UpsellBlock> = {
+  vault: {
     quickWinTip: 'Start with your 3 most recent roles. That\'s where recruiters spend 80% of their time. If you can quantify one achievement per role with a real number, you\'re already ahead of 90% of applicants.',
     headline: 'Want AI to help you write stronger bullets?',
     description: 'The Career Prompt Vault has 50 AI frameworks you can copy, paste, and use right now. 7 of them are built specifically for resumes.',
@@ -48,30 +67,8 @@ const CTA_BLOCKS: Record<CtaGroup, CtaBlock> = {
     ],
     buttonText: 'Get the Vault for $9',
     buttonUrl: `${SITE_URL}/tools/career-prompt-vault`,
-    testimonial: {
-      quote: '200+ failed apps. 27 targeted emails. 13 replies. 1 offer.',
-      name: 'Blake McDermott',
-      outcome: '$5K salary increase after rewriting resume with ClearCareer',
-    },
   },
-  linkedin: {
-    quickWinTip: 'Your headline is the most-read line on your entire profile. It shows up in search results, connection requests, and comments. Make it about the value you deliver, not just your job title.',
-    headline: 'Want weekly feedback on your LinkedIn?',
-    description: 'ClearCareer Community members get live coaching every week, plus templates, tools, and a private network of job seekers helping each other.',
-    bullets: [
-      'Weekly group coaching calls with Izzy',
-      'LinkedIn profile reviews and post feedback',
-      'Job search templates, tools, and AI prompts',
-    ],
-    buttonText: 'Join the Community',
-    buttonUrl: `${SITE_URL}/programs/community`,
-    testimonial: {
-      quote: 'Izzy\'s system completely transformed my job search from hundreds of applications with no results to receiving responses within the first week.',
-      name: 'Andrew Cameron',
-      outcome: 'Employer responses in first week',
-    },
-  },
-  strategy: {
+  jsis: {
     quickWinTip: 'Most job seekers apply to 50+ roles and hear back from 2. The ones who land interviews fast do the opposite: they pick 10-15 companies, research the decision makers, and reach out directly.',
     headline: 'Want all 21 career assets built for you?',
     description: 'The Job Search Ignition System builds your complete job search toolkit in 8 weeks. Resume, LinkedIn, outreach templates, interview prep, salary negotiation scripts, and more.',
@@ -82,30 +79,8 @@ const CTA_BLOCKS: Record<CtaGroup, CtaBlock> = {
     ],
     buttonText: 'Learn About the Program',
     buttonUrl: `${SITE_URL}/programs/jsis`,
-    testimonial: {
-      quote: 'Stuck in a job search black hole. 2 offers in weeks.',
-      name: 'Annie Bell',
-      outcome: '2 offers within weeks of joining the program',
-    },
   },
-  'company-lists': {
-    quickWinTip: 'Don\'t just save this list. Pick your top 10, find 2-3 people at each company on LinkedIn, and send a connection request with a note. That single action beats 100 cold applications.',
-    headline: 'Want coaching and accountability while you search?',
-    description: 'ClearCareer Community members get weekly coaching, job search templates, and a private network of professionals doing the same thing you are.',
-    bullets: [
-      'Weekly group coaching calls with Izzy',
-      'Outreach templates and LinkedIn scripts',
-      'A community of job seekers who actually share leads',
-    ],
-    buttonText: 'Join the Community',
-    buttonUrl: `${SITE_URL}/programs/community`,
-    testimonial: {
-      quote: '1 year unemployed. Employed in 3 weeks.',
-      name: 'Kristin Davis',
-      outcome: 'Hired in 3 weeks after joining ClearCareer',
-    },
-  },
-  layoff: {
+  'layoff-kit': {
     quickWinTip: 'The first 72 hours matter most. Before you update LinkedIn or start applying, read the severance section. Most people leave thousands of dollars on the table by accepting the first offer.',
     headline: 'Need the full toolkit?',
     description: 'The free guide covers the first 72 hours. The full Layoff Survival Kit gives you everything else: a severance calculator, lawyer directory, tax strategies, and 10 complete guides.',
@@ -116,12 +91,16 @@ const CTA_BLOCKS: Record<CtaGroup, CtaBlock> = {
     ],
     buttonText: 'Get the Full Kit for $67',
     buttonUrl: `${SITE_URL}/layoff-survival-kit`,
-    testimonial: {
-      quote: 'From freelancer to $127K + 30 PTO days negotiated.',
-      name: 'Kira Howe',
-      outcome: '$127K salary with negotiated PTO after career transition',
-    },
   },
+};
+
+// Map old ctaGroup values to new upsell groups
+const CTA_TO_UPSELL: Record<string, UpsellGroup> = {
+  'resume': 'vault',
+  'linkedin': 'vault',
+  'strategy': 'jsis',
+  'company-lists': 'jsis',
+  'layoff': 'layoff-kit',
 };
 
 // ── Lead Magnet Config ─────────────────────────────────────────────────────
@@ -130,7 +109,7 @@ const LEAD_MAGNETS: Record<string, {
   subject: string;
   playbook: string;
   webUrl: string;
-  ctaGroup: CtaGroup;
+  ctaGroup: string;
   pdfUrl?: string;
   sheetUrl?: string;
   imageUrl?: string;
@@ -235,139 +214,55 @@ const LEAD_MAGNETS: Record<string, {
   },
 };
 
-// ── Email Builder ──────────────────────────────────────────────────────────
-
-function buildDeliveryEmail(
-  playbook: string,
-  webUrl: string,
-  ctaGroup: CtaGroup,
-  pdfUrl?: string,
-  sheetUrl?: string,
-  imageUrl?: string,
-): string {
-  const cta = CTA_BLOCKS[ctaGroup];
-
-  const imageSection = imageUrl
-    ? `<tr><td style="padding:0 0 24px"><img src="${imageUrl}" alt="${playbook}" style="width:100%;border-radius:8px;border:1px solid #e5e7eb" /></td></tr>`
-    : '';
-
-  const downloadButton = pdfUrl
-    ? `<tr><td style="padding:12px 0 0"><a href="${pdfUrl}" style="display:inline-block;padding:12px 24px;background:#030620;color:#ffffff;text-decoration:none;border-radius:8px;font-weight:600;font-size:14px">Download PDF Version</a></td></tr>`
-    : sheetUrl
-      ? `<tr><td style="padding:12px 0 0"><a href="${sheetUrl}" style="display:inline-block;padding:14px 28px;background:#059669;color:#ffffff;text-decoration:none;border-radius:8px;font-weight:600;font-size:16px">Copy Spreadsheet to Google Drive</a></td></tr>`
-      : '';
-
-  const bulletHtml = cta.bullets
-    .map((b) => `<li style="color:#4b5563;font-size:14px;line-height:1.6;padding:2px 0">${b}</li>`)
-    .join('\n');
-
-  return `<!DOCTYPE html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
-<body style="margin:0;padding:0;background:#f8fafc;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">
-<table width="100%" cellpadding="0" cellspacing="0" style="background:#f8fafc;padding:40px 20px">
-<tr><td align="center">
-<table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.06)">
-
-<!-- Header -->
-<tr><td style="background:#0161EF;padding:32px 40px;text-align:center">
-<h1 style="margin:0;color:#ffffff;font-size:20px;font-weight:700;letter-spacing:0.5px">CLEARCAREER</h1>
-</td></tr>
-
-<!-- Resource Delivery -->
-<tr><td style="padding:40px 40px 0">
-<h2 style="margin:0 0 16px;color:#1B2A4A;font-size:24px;font-weight:700;line-height:1.3">Your playbook is ready</h2>
-<p style="margin:0 0 24px;color:#64748B;font-size:16px;line-height:1.6">Thanks for grabbing <strong style="color:#1B2A4A">${playbook}</strong>. Click below to access it right now.</p>
-
-<table cellpadding="0" cellspacing="0" width="100%">
-${imageSection}
-</table>
-
-<table cellpadding="0" cellspacing="0">
-<tr><td><a href="${webUrl}" style="display:inline-block;padding:14px 28px;background:#0161EF;color:#ffffff;text-decoration:none;border-radius:8px;font-weight:600;font-size:16px">Read the Full Playbook</a></td></tr>
-${downloadButton}
-</table>
-
-<p style="margin:24px 0 0;color:#64748B;font-size:14px;line-height:1.6">The link above will always work. Bookmark it if you want to come back later.</p>
-</td></tr>
-
-<!-- Quick Win Tip -->
-<tr><td style="padding:24px 40px 0">
-<table width="100%" cellpadding="0" cellspacing="0" style="background:#f0f7ff;border-radius:8px;border-left:4px solid #0161EF">
-<tr><td style="padding:16px 20px">
-<p style="margin:0 0 4px;color:#0161EF;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px">Quick tip</p>
-<p style="margin:0;color:#1B2A4A;font-size:14px;line-height:1.6">${cta.quickWinTip}</p>
-</td></tr>
-</table>
-</td></tr>
-
-<!-- Divider -->
-<tr><td style="padding:32px 40px 0"><hr style="margin:0;border:none;border-top:1px solid #e5e7eb"></td></tr>
-
-<!-- Secondary CTA -->
-<tr><td style="padding:24px 40px 0">
-<h3 style="margin:0 0 8px;color:#1B2A4A;font-size:18px;font-weight:700;line-height:1.3">${cta.headline}</h3>
-<p style="margin:0 0 16px;color:#64748B;font-size:14px;line-height:1.6">${cta.description}</p>
-<table cellpadding="0" cellspacing="0" width="100%">
-<tr><td>
-<ul style="margin:0 0 20px;padding-left:20px">
-${bulletHtml}
-</ul>
-</td></tr>
-<tr><td>
-<a href="${cta.buttonUrl}" style="display:inline-block;padding:12px 24px;background:#030620;color:#ffffff;text-decoration:none;border-radius:8px;font-weight:600;font-size:14px">${cta.buttonText}</a>
-</td></tr>
-</table>
-</td></tr>
-
-<!-- Divider -->
-<tr><td style="padding:28px 40px 0"><hr style="margin:0;border:none;border-top:1px solid #e5e7eb"></td></tr>
-
-<!-- Social Proof -->
-<tr><td style="padding:24px 40px 0">
-<table width="100%" cellpadding="0" cellspacing="0" style="background:#fafafa;border-radius:8px">
-<tr><td style="padding:20px 24px">
-<p style="margin:0 0 8px;color:#1B2A4A;font-size:15px;font-weight:600;font-style:italic;line-height:1.5">"${cta.testimonial.quote}"</p>
-<p style="margin:0;color:#64748B;font-size:13px"><strong style="color:#1B2A4A">${cta.testimonial.name}</strong> &middot; ${cta.testimonial.outcome}</p>
-</td></tr>
-</table>
-</td></tr>
-
-<!-- Discovery Call CTA -->
-<tr><td style="padding:28px 40px 0;text-align:center">
-<p style="margin:0 0 8px;color:#1B2A4A;font-size:14px;font-weight:600">Want to talk through your job search?</p>
-<p style="margin:0"><a href="${DISCOVERY_CALL_URL}" style="color:#0161EF;text-decoration:none;font-size:14px;font-weight:600">Book a free discovery call &rarr;</a></p>
-</td></tr>
-
-<!-- Footer -->
-<tr><td style="padding:32px 40px 0">
-<table width="100%" cellpadding="0" cellspacing="0" style="background:#f8fafc;border-radius:0 0 12px 12px">
-<tr><td style="padding:24px 40px;text-align:center">
-<p style="margin:0 0 4px;color:#64748B;font-size:13px">Izzy Piyale-Sheard | <a href="${SITE_URL}" style="color:#0161EF;text-decoration:none">ClearCareer</a></p>
-<p style="margin:0;color:#94a3b8;font-size:12px">You're getting this because you downloaded a free resource. <a href="{{unsubscribe}}" style="color:#94a3b8">Unsubscribe</a></p>
-</td></tr>
-</table>
-</td></tr>
-
-</table>
-</td></tr>
-</table>
-</body></html>`;
-}
-
 // ── Email Sending ──────────────────────────────────────────────────────────
+
+function buildEmailData(magnet: typeof LEAD_MAGNETS[string], index: number): EmailData {
+  const upsellGroup = CTA_TO_UPSELL[magnet.ctaGroup] || 'vault';
+  const upsell = UPSELL_BLOCKS[upsellGroup];
+  const testimonial = TESTIMONIALS[index % TESTIMONIALS.length];
+
+  return {
+    productName: magnet.playbook,
+    primaryCta: {
+      text: 'Read the Full Playbook',
+      url: magnet.webUrl,
+    },
+    downloadCta: magnet.pdfUrl
+      ? { text: 'Download PDF Version', url: magnet.pdfUrl, variant: 'pdf' as const }
+      : magnet.sheetUrl
+        ? { text: 'Copy Spreadsheet to Google Drive', url: magnet.sheetUrl, variant: 'sheet' as const }
+        : undefined,
+    image: magnet.imageUrl
+      ? { url: magnet.imageUrl, alt: magnet.playbook }
+      : undefined,
+    quickTip: {
+      label: 'Quick tip',
+      text: upsell.quickWinTip,
+    },
+    upsell: {
+      headline: upsell.headline,
+      description: upsell.description,
+      bullets: upsell.bullets,
+      buttonText: upsell.buttonText,
+      buttonUrl: upsell.buttonUrl,
+    },
+    testimonial,
+    discoveryCall: {
+      text: 'Want to talk through your job search?',
+      url: DISCOVERY_CALL_URL,
+    },
+    unsubscribeUrl: '{{unsubscribe}}',
+  };
+}
 
 async function sendDeliveryEmail(email: string, source: string): Promise<void> {
   const magnet = LEAD_MAGNETS[source];
-  if (!magnet) return; // No delivery email for newsletter signups, etc.
+  if (!magnet) return;
 
-  const html = buildDeliveryEmail(
-    magnet.playbook,
-    magnet.webUrl,
-    magnet.ctaGroup,
-    magnet.pdfUrl,
-    magnet.sheetUrl,
-    magnet.imageUrl,
-  );
+  const magnetKeys = Object.keys(LEAD_MAGNETS);
+  const index = magnetKeys.indexOf(source);
+  const emailData = buildEmailData(magnet, index >= 0 ? index : 0);
+  const html = buildBoldConversion(emailData);
 
   await fetch('https://api.brevo.com/v3/smtp/email', {
     method: 'POST',

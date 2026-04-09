@@ -1,16 +1,13 @@
 export const SITE_URL = 'https://joinclearcareer.com';
 export const DISCOVERY_CALL_URL = 'https://calendly.com/clearcareer/discovery-call';
 
-// Brand logos — SVGs from official brand kit (github.com/izzydoesizzy/clearcareer-brand)
+// Brand logos — served via GitHub Pages CDN (always available, no deploy needed)
+const BRAND_CDN = 'https://izzydoesizzy.github.io/clearcareer-brand/assets/logo';
 export const LOGO = {
-  /** Blue wordmark "ClearCareer" on transparent — for light backgrounds */
-  wordmarkBlue: `${SITE_URL}/images/logo/clearcareer-wordmark-blue.svg`,
-  /** White wordmark "ClearCareer" on transparent — for dark/blue backgrounds */
-  wordmarkWhite: `${SITE_URL}/images/logo/clearcareer-wordmark-white.svg`,
-  /** Blue "C" icon (rounded square) — for small/compact use on light backgrounds */
-  iconBlue: `${SITE_URL}/images/logo/clearcareer-icon-blue.svg`,
-  /** White "C" icon on transparent — for dark/blue backgrounds */
-  iconWhite: `${SITE_URL}/images/logo/clearcareer-icon-white.svg`,
+  wordmarkBlue: `${BRAND_CDN}/clearcareer-wordmark-blue.svg`,
+  wordmarkWhite: `${BRAND_CDN}/clearcareer-wordmark-white.svg`,
+  iconBlue: `${BRAND_CDN}/clearcareer-icon-blue.svg`,
+  iconWhite: `${BRAND_CDN}/clearcareer-icon-white.svg`,
 };
 
 export const SOCIAL = {
@@ -19,7 +16,7 @@ export const SOCIAL = {
     label: 'LinkedIn',
   },
   youtube: {
-    url: 'https://youtube.com/@clearcareer',
+    url: 'https://www.youtube.com/@joinclearcareer',
     label: 'YouTube',
   },
 };

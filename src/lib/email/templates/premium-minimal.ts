@@ -7,6 +7,7 @@ import {
   wrapDocument,
   outerTable,
   ctaButton,
+  buttonRow,
   tipBox,
   testimonialBlock,
   footer,
@@ -27,15 +28,12 @@ export const buildEmail: BuildEmailFn = (data) => {
 </td></tr>`
     : '';
 
-  const downloadSection = data.downloadCta
-    ? `<tr><td style="padding:12px 0 0;">
-${ctaButton(data.downloadCta.text, data.downloadCta.url, {
-  bgColor: data.downloadCta.variant === 'sheet' ? COLORS.green : COLORS.navy,
-  fontSize: '16px',
-  padding: '14px 28px',
-})}
-</td></tr>`
-    : '';
+  const buttonsSection = data.downloadCta
+    ? buttonRow(
+        { text: data.primaryCta.text, url: data.primaryCta.url },
+        { text: data.downloadCta.text, url: data.downloadCta.url, bgColor: data.downloadCta.variant === 'sheet' ? COLORS.green : COLORS.navy },
+      )
+    : ctaButton(data.primaryCta.text, data.primaryCta.url, { align: 'left' });
 
   const extraContent = data.extraContent
     ? `<tr><td style="padding:24px 40px 0;" class="email-padding">${data.extraContent}</td></tr>`
@@ -72,11 +70,7 @@ ${wordmark('blue', 180, 'margin:0 auto;')}
 ${imageSection}
 </table>
 
-${ctaButton(data.primaryCta.text, data.primaryCta.url, { align: 'left' })}
-
-<table role="presentation" cellpadding="0" cellspacing="0" width="100%">
-${downloadSection}
-</table>
+${buttonsSection}
 
 <p style="margin:32px 0 0;color:${COLORS.grey400};font-size:13px;line-height:1.6;" class="email-text-muted">The link above will always work. Bookmark it if you want to come back later.</p>
 </td></tr>

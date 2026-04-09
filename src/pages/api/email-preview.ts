@@ -16,6 +16,9 @@ const directionLabels: Record<TemplateDirection, string> = {
   'premium-minimal': 'A: Premium Minimal',
   'warm-branded': 'B: Warm & Branded',
   'bold-conversion': 'C: Bold & Conversion',
+  'editorial': 'D: Editorial',
+  'dark-native': 'E: Dark Native',
+  'split-hero': 'F: Split Hero',
 };
 
 export const POST: APIRoute = async ({ request }) => {
@@ -55,7 +58,7 @@ export const POST: APIRoute = async ({ request }) => {
 
   try {
     await resend.emails.send({
-      from: 'Izzy from ClearCareer <hello@joinclearcareer.com>',
+      from: 'Izzy from ClearCareer <izzy@joinclearcareer.com>',
       to: email,
       subject: `[TEST] ${directionLabels[direction]} — ${sampleData.productName}`,
       html,

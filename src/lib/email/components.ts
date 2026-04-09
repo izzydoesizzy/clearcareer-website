@@ -53,8 +53,9 @@ export function wrapDocument(bodyContent: string, bgColor = COLORS.offWhite): st
   @media only screen and (max-width: 480px) {
     .email-container { width: 100% !important; }
     .email-padding { padding-left: 20px !important; padding-right: 20px !important; }
-    .email-btn { display: block !important; width: 100% !important; text-align: center !important; }
+    .email-btn { display: block !important; width: 100% !important; text-align: center !important; box-sizing: border-box !important; }
     .email-stack { display: block !important; width: 100% !important; }
+    .email-btn-cell { display: block !important; width: 100% !important; padding-right: 0 !important; padding-bottom: 10px !important; }
   }
 </style>
 </head>
@@ -277,6 +278,32 @@ export function wordmark(variant: 'blue' | 'white' = 'blue', width = 180, style 
 export function icon(variant: 'blue' | 'white' = 'blue', width = 48, style = ''): string {
   const src = variant === 'white' ? LOGO.iconWhite : LOGO.iconBlue;
   return `<img src="${src}" alt="ClearCareer" width="${width}" height="${width}" style="display:block;${style}" />`;
+}
+
+/**
+ * Two buttons side by side. Stacks vertically on mobile via email-stack class.
+ */
+export function buttonRow(
+  primary: { text: string; url: string; bgColor?: string },
+  secondary: { text: string; url: string; bgColor?: string },
+): string {
+  const pBg = primary.bgColor || COLORS.blue;
+  const sBg = secondary.bgColor || COLORS.navy;
+  const btnStyle = (bg: string) =>
+    `display:inline-block;padding:14px 28px;background-color:${bg};color:${COLORS.white};text-decoration:none;border-radius:8px;font-weight:600;font-size:16px;font-family:${FONTS.body};mso-padding-alt:0;`;
+
+  return `<table role="presentation" cellpadding="0" cellspacing="0" width="100%"><tr>
+<td class="email-btn-cell" style="padding-right:12px;">
+<!--[if mso]><i style="letter-spacing:10px;mso-font-width:-100%;mso-text-raise:20pt">&nbsp;</i><![endif]-->
+<a href="${primary.url}" target="_blank" style="${btnStyle(pBg)}" class="email-btn">${primary.text}</a>
+<!--[if mso]><i style="letter-spacing:10px;mso-font-width:-100%">&nbsp;</i><![endif]-->
+</td>
+<td class="email-btn-cell">
+<!--[if mso]><i style="letter-spacing:10px;mso-font-width:-100%;mso-text-raise:20pt">&nbsp;</i><![endif]-->
+<a href="${secondary.url}" target="_blank" style="${btnStyle(sBg)}" class="email-btn">${secondary.text}</a>
+<!--[if mso]><i style="letter-spacing:10px;mso-font-width:-100%">&nbsp;</i><![endif]-->
+</td>
+</tr></table>`;
 }
 
 /**

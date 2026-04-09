@@ -7,6 +7,7 @@ import {
   wrapDocument,
   outerTable,
   ctaButton,
+  buttonRow,
   tipBox,
   testimonialBlock,
   footer,
@@ -28,15 +29,12 @@ export const buildEmail: BuildEmailFn = (data) => {
 </td></tr>`
     : '';
 
-  const downloadSection = data.downloadCta
-    ? `<tr><td style="padding:12px 0 0;">
-${ctaButton(data.downloadCta.text, data.downloadCta.url, {
-  bgColor: data.downloadCta.variant === 'sheet' ? COLORS.green : COLORS.navy,
-  fontSize: '16px',
-  padding: '14px 28px',
-})}
-</td></tr>`
-    : '';
+  const buttonsSection = data.downloadCta
+    ? buttonRow(
+        { text: data.primaryCta.text, url: data.primaryCta.url },
+        { text: data.downloadCta.text, url: data.downloadCta.url, bgColor: data.downloadCta.variant === 'sheet' ? COLORS.green : COLORS.navy },
+      )
+    : ctaButton(data.primaryCta.text, data.primaryCta.url, { borderRadius: '10px', padding: '14px 32px' });
 
   const extraContent = data.extraContent
     ? `<tr><td style="padding:24px 0 0;">${data.extraContent}</td></tr>`
@@ -82,14 +80,7 @@ ${data.subtitle ? `<p style="margin:8px 0 0;color:rgba(255,255,255,0.85);font-si
 ${imageSection}
 </table>
 
-${ctaButton(data.primaryCta.text, data.primaryCta.url, {
-  borderRadius: '10px',
-  padding: '14px 32px',
-})}
-
-<table role="presentation" cellpadding="0" cellspacing="0" width="100%">
-${downloadSection}
-</table>
+${buttonsSection}
 </td></tr>
 
 ${spacer('28px')}

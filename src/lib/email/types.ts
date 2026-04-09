@@ -35,6 +35,6 @@ export interface EmailData {
   extraContent?: string;
 }
 
-export type TemplateDirection = 'premium-minimal' | 'warm-branded' | 'bold-conversion';
+export type TemplateDirection = 'premium-minimal' | 'warm-branded' | 'bold-conversion' | 'editorial' | 'dark-native' | 'split-hero';
 
 export type BuildEmailFn = (data: EmailData) => string;

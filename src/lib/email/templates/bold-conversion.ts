@@ -7,6 +7,7 @@ import {
   wrapDocument,
   outerTable,
   ctaButton,
+  buttonRow,
   tipBox,
   testimonialBlock,
   footer,
@@ -27,14 +28,11 @@ export const buildEmail: BuildEmailFn = (data) => {
 </td></tr>`
     : '';
 
-  const downloadSection = data.downloadCta
-    ? `<tr><td style="padding:12px 0 0;">
-${ctaButton(data.downloadCta.text, data.downloadCta.url, {
-  bgColor: data.downloadCta.variant === 'sheet' ? COLORS.green : COLORS.navy,
-  fontSize: '16px',
-  padding: '14px 28px',
-})}
-</td></tr>`
+  const downloadButton = data.downloadCta
+    ? buttonRow(
+        { text: data.primaryCta.text, url: data.primaryCta.url },
+        { text: data.downloadCta.text, url: data.downloadCta.url, bgColor: data.downloadCta.variant === 'sheet' ? COLORS.green : COLORS.navy },
+      )
     : '';
 
   const extraContent = data.extraContent
@@ -57,7 +55,7 @@ ${ctaButton(data.downloadCta.text, data.downloadCta.url, {
 <!-- Hero Banner -->
 <tr><td style="background-color:${COLORS.blue};padding:48px 40px;text-align:center;" class="email-padding">
 <!--[if mso]><v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:600px;"><v:fill type="tile" color="${COLORS.blue}"/><v:textbox style="mso-fit-shape-to-text:true" inset="48px 40px 48px 40px"><![endif]-->
-${icon('white', 44, 'margin:0 auto 20px;border-radius:10px;')}
+<h2 style="margin:0 0 20px;color:${COLORS.white};font-size:18px;font-weight:700;letter-spacing:1.5px;font-family:${FONTS.body};">CLEARCAREER</h2>
 <h1 style="margin:0 0 8px;color:${COLORS.white};font-size:28px;font-weight:700;line-height:1.2;font-family:${FONTS.heading};">${data.productName}</h1>
 ${data.subtitle ? `<p style="margin:0 0 24px;color:rgba(255,255,255,0.8);font-size:16px;line-height:1.5;">${data.subtitle}</p>` : `<div style="height:24px;"></div>`}
 ${ctaButton(data.primaryCta.text, data.primaryCta.url, {
@@ -77,8 +75,8 @@ ${ctaButton(data.primaryCta.text, data.primaryCta.url, {
 
 <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
 ${imageSection}
-${downloadSection}
 </table>
+${downloadButton}
 </td></tr>
 
 ${extraContent ? `<tr><td style="padding:0 40px;" class="email-padding">${extraContent}</td></tr>` : ''}
