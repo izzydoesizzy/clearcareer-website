@@ -9,8 +9,9 @@ featured: true
 draft: false
 type: "playbook"
 ---
-import Coach from '@components/blog/Coach.astro'
-import Client from '@components/blog/Client.astro'
+import CoachBubble from '@components/blog/CoachBubble.astro'
+import ClientBubble from '@components/blog/ClientBubble.astro'
+import ChatNarration from '@components/blog/ChatNarration.astro'
 
 You've spent hours on your resume. Every role listed. Every responsibility documented. Education, certifications, volunteer work, the summer internship from 2014. It's thorough, detailed, and complete.
 
@@ -136,23 +137,23 @@ Every single one is a claim without evidence. Hiring managers have seen them so 
 
 I had a client tell me he was "detail-oriented." Great.
 
-<Coach>What makes you detail-oriented?</Coach>
+<CoachBubble>What makes you detail-oriented?</CoachBubble>
 
-<Client>I'm great with spreadsheets.</Client>
+<ClientBubble>I'm great with spreadsheets.</ClientBubble>
 
-<Coach>How so?</Coach>
+<CoachBubble>How so?</CoachBubble>
 
-<Client>Well, sometimes I catch things that are the wrong price and save money.</Client>
+<ClientBubble>Well, sometimes I catch things that are the wrong price and save money.</ClientBubble>
 
-<Coach>What was the most noteworthy example?</Coach>
+<CoachBubble>What was the most noteworthy example?</CoachBubble>
 
-<Client>Last year I caught something listed as $4.00 instead of $0.40.</Client>
+<ClientBubble>Last year I caught something listed as $4.00 instead of $0.40.</ClientBubble>
 
-<Coach>What was the impact?</Coach>
+<CoachBubble>What was the impact?</CoachBubble>
 
-<Client>Probably about $150K over the course of the year. That was just for one product.</Client>
+<ClientBubble>Probably about $150K over the course of the year. That was just for one product.</ClientBubble>
 
-That $150K turned into $1.5M across 350+ SKUs over 2 years.
+<ChatNarration>That $150K turned into $1.5M across 350+ SKUs over 2 years.</ChatNarration>
 
 So instead of "detail-oriented," his resume now says: **"Achieved $1.5M in cost savings over 2 years by identifying and correcting price discrepancies across 350+ SKUs."**
 

@@ -9,8 +9,9 @@ featured: false
 draft: false
 type: "playbook"
 ---
-import Coach from '@components/blog/Coach.astro'
-import Client from '@components/blog/Client.astro'
+import CoachBubble from '@components/blog/CoachBubble.astro'
+import ClientBubble from '@components/blog/ClientBubble.astro'
+import ChatNarration from '@components/blog/ChatNarration.astro'
 
 You know you're good at your job. You've done real work. Solved real problems. Made real things happen.
 
@@ -149,25 +150,25 @@ Here's the narrowing technique I use in every coaching session:
 
 **Start wide, then eliminate the extremes.**
 
-<Coach>How many projects did you work on per month?</Coach>
+<CoachBubble>How many projects did you work on per month?</CoachBubble>
 
-<Client>I don't know, it varied a lot.</Client>
+<ClientBubble>I don't know, it varied a lot.</ClientBubble>
 
-<Coach>Okay. Was it more than 20?</Coach>
+<CoachBubble>Okay. Was it more than 20?</CoachBubble>
 
-<Client>No, definitely not 20.</Client>
+<ClientBubble>No, definitely not 20.</ClientBubble>
 
-<Coach>Was it more than 2?</Coach>
+<CoachBubble>Was it more than 2?</CoachBubble>
 
-<Client>Oh yes, way more than 2.</Client>
+<ClientBubble>Oh yes, way more than 2.</ClientBubble>
 
-<Coach>So somewhere between 3 and 19. Was it closer to 5 or closer to 15?</Coach>
+<CoachBubble>So somewhere between 3 and 19. Was it closer to 5 or closer to 15?</CoachBubble>
 
-<Client>Probably around 8 to 12.</Client>
+<ClientBubble>Probably around 8 to 12.</ClientBubble>
 
-<Coach>If you had to pick one number, is 10 reasonable?</Coach>
+<CoachBubble>If you had to pick one number, is 10 reasonable?</CoachBubble>
 
-<Client>Yeah, 10 sounds right.</Client>
+<ClientBubble>Yeah, 10 sounds right.</ClientBubble>
 
 That took 30 seconds. And now instead of "worked on various projects," they can write "managed approximately 10 concurrent projects per month."
 
@@ -185,27 +186,27 @@ Fine. But it's missing all the good stuff.
 
 I started digging:
 
-<Coach>What does 30% mean in actual numbers?</Coach>
+<CoachBubble>What does 30% mean in actual numbers?</CoachBubble>
 
-<Client>The baseline was around 400,000 units. The increase brought it to roughly 600,000 units.</Client>
+<ClientBubble>The baseline was around 400,000 units. The increase brought it to roughly 600,000 units.</ClientBubble>
 
-I did the math on the spot.
+<ChatNarration>I did the math on the spot.</ChatNarration>
 
-<Coach>That's not 30%. That's 50%. 200,000 is half of 400,000. Do you know roughly how much they retailed for?</Coach>
+<CoachBubble>That's not 30%. That's 50%. 200,000 is half of 400,000. Do you know roughly how much they retailed for?</CoachBubble>
 
-<Client>About $14 for a pack of four. Each box had 24 packs.</Client>
+<ClientBubble>About $14 for a pack of four. Each box had 24 packs.</ClientBubble>
 
-So: 24 packs times $14 times 200,000 additional units = **$67 million in additional revenue.**
+<ChatNarration>So: 24 packs times $14 times 200,000 additional units = **$67 million in additional revenue.**
 
-David was stunned. He had no idea the number was that big.
+David was stunned. He had no idea the number was that big.</ChatNarration>
 
-<Coach>How did you achieve this?</Coach>
+<CoachBubble>How did you achieve this?</CoachBubble>
 
-<Client>Guerrilla sampling campaigns in Toronto and Montreal. Pop-up events.</Client>
+<ClientBubble>Guerrilla sampling campaigns in Toronto and Montreal. Pop-up events.</ClientBubble>
 
-<Coach>How many events?</Coach>
+<CoachBubble>How many events?</CoachBubble>
 
-<Client>62 in Toronto, plus 12 in Montreal. So 74.</Client>
+<ClientBubble>62 in Toronto, plus 12 in Montreal. So 74.</ClientBubble>
 
 The final bullet: **"Boosted Listerine Go Tab sales by 50%, driving $67 million in additional revenue and 200K units sold, through a guerrilla sampling campaign across 74 events in Toronto and Montreal."**
 
@@ -238,29 +239,29 @@ Linh felt like her work was too "soft" to quantify. She'd organized company soci
 
 By asking the right questions.
 
-<Coach>How often did you run the company socials?</Coach>
+<CoachBubble>How often did you run the company socials?</CoachBubble>
 
-<Client>Monthly.</Client>
+<ClientBubble>Monthly.</ClientBubble>
 
-<Coach>How many people attended?</Coach>
+<CoachBubble>How many people attended?</CoachBubble>
 
-<Client>About 30.</Client>
+<ClientBubble>About 30.</ClientBubble>
 
-<Coach>What was the attendance rate?</Coach>
+<CoachBubble>What was the attendance rate?</CoachBubble>
 
-<Client>80%.</Client>
+<ClientBubble>80%.</ClientBubble>
 
-<Coach>What was the budget?</Coach>
+<CoachBubble>What was the budget?</CoachBubble>
 
-<Client>$50 per person.</Client>
+<ClientBubble>$50 per person.</ClientBubble>
 
-<Coach>When did you launch them?</Coach>
+<CoachBubble>When did you launch them?</CoachBubble>
 
-<Client>Within the first four weeks on the job.</Client>
+<ClientBubble>Within the first four weeks on the job.</ClientBubble>
 
-<Coach>What broader impact did they have?</Coach>
+<CoachBubble>What broader impact did they have?</CoachBubble>
 
-<Client>They contributed to the success of the company's hybrid work model.</Client>
+<ClientBubble>They contributed to the success of the company's hybrid work model.</ClientBubble>
 
 **Final bullet:** "Contributed to the success of a new hybrid work model by launching monthly company socials within the first four weeks on the job, achieving 80% attendance with approximately 30 attendees per session."
 
