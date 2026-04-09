@@ -1,6 +1,7 @@
 ---
 import "@/styles/global.css";
 import SEO from "@components/SEO.astro";
+import Analytics from "@vercel/analytics/astro";
 
 interface BreadcrumbItem {
   name: string;
@@ -62,10 +63,9 @@ const siteUrl = Astro.site?.toString().replace(/\/$/, "") ?? "https://joinclearc
     <slot />
 
     <!-- Vercel Analytics + Speed Insights -->
+    <Analytics />
     <script>
-      import { inject } from "@vercel/analytics";
       import { injectSpeedInsights } from "@vercel/speed-insights";
-      inject();
       injectSpeedInsights();
     </script>
 
