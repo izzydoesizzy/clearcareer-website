@@ -4,6 +4,7 @@ export type BlogCategory =
   | "interviews"
   | "salary-negotiation"
   | "ai-tools-mindset"
+  | "financial-planning"
   | "announcement";
 
 interface CategoryMeta {
@@ -42,6 +43,12 @@ export const categoryMeta: Record<BlogCategory, CategoryMeta> = {
     // Sparkle icon
     iconPath:
       "M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8L12 2zm0 5.2L10.8 11 7.2 12l3.6 1L12 16.8 13.2 13l3.6-1-3.6-1L12 7.2z",
+  },
+  "financial-planning": {
+    label: "Financial Planning",
+    // Wallet/money icon
+    iconPath:
+      "M21 18v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v1h-9a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9zm-9-2h10V8H12v8zm4-2.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z",
   },
   announcement: {
     label: "News",

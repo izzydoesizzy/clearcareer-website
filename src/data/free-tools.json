@@ -141,5 +141,25 @@
       { "name": "LinkedIn Recruiter X-Ray Search", "slug": "linkedin-xray-search", "icon": "\uD83D\uDD0D" },
       { "name": "STAR Story Builder", "slug": "star-story-builder", "icon": "\u2B50" }
     ]
+  },
+  {
+    "name": "Canadian Parental Leave Calculator",
+    "slug": "parental-leave-calculator",
+    "description": "Calculate your family's EI or QPIP benefits during parental leave. Standard and extended plans, employer top-ups, sharing bonus, and week allocation.",
+    "category": "Financial Planning",
+    "icon": "\uD83D\uDC76",
+    "relatedTags": ["career advice", "financial planning"],
+    "featureList": [
+      "EI and QPIP benefit calculations for all provinces",
+      "Standard and extended leave comparison",
+      "Employer top-up configuration per parent",
+      "Sharing bonus eligibility and optimization",
+      "Visual timeline of leave phases",
+      "Personalized financial recommendations"
+    ],
+    "relatedTools": [
+      { "name": "Financial Runway Calculator", "slug": "financial-runway-calculator", "icon": "\uD83D\uDCB0" },
+      { "name": "Canadian Severance Calculator", "slug": "severance-calculator", "icon": "\uD83E\uDDEE" }
+    ]
   }
 ]
