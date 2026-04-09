@@ -15,6 +15,7 @@ const grouped = subcategories.map((sub) => ({
 const previewCompanies = activeCompanies.filter((c) => c.subcategory === "Traditional Banks").slice(0, 10);
 
 const SHEET_COPY_URL = "https://docs.google.com/spreadsheets/d/1GNyVSBTVlmkMEBDRp7f3D4XzNVsjX1gpNL3XsLhGBAY/copy";
+// Note: hero-image copy button uses hardcoded URL with gated-content class
 const totalActive = activeCompanies.length;
 ---
 
@@ -47,10 +48,10 @@ const totalActive = activeCompanies.length;
           />
         </div>
 
-        <!-- Sheet Copy CTA -->
-        <div class="mt-4 text-center">
+        <!-- Sheet Copy CTA (only visible after gate unlocked) -->
+        <div class="mt-4 text-center gated-content" style="display: none;">
           <a
-            href={SHEET_COPY_URL}
+            href="https://docs.google.com/spreadsheets/d/1GNyVSBTVlmkMEBDRp7f3D4XzNVsjX1gpNL3XsLhGBAY/copy"
             target="_blank"
             rel="noopener"
             class="inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-emerald-700"
@@ -68,57 +69,50 @@ const totalActive = activeCompanies.length;
 
   <!-- Preview Slot -->
   <Fragment slot="preview">
-    <h2 class="mb-2 text-lg font-bold text-navy">Preview: Traditional Banks</h2>
-    <p class="mb-6 text-sm text-text-muted">Here's a taste. The full list has {companies.length} companies across {subcategories.length} categories.</p>
-
     <div class="overflow-x-auto rounded-xl border border-border">
       <table class="w-full text-sm">
         <thead>
           <tr class="bg-navy text-white">
             <th class="px-4 py-3 text-left font-semibold">Company</th>
-            <th class="px-4 py-3 text-left font-semibold hidden sm:table-cell">Description</th>
-            <th class="px-4 py-3 text-center font-semibold hidden md:table-cell">HQ</th>
+            <th class="px-4 py-3 text-left font-semibold hidden sm:table-cell">Category</th>
+            <th class="px-4 py-3 text-left font-semibold hidden md:table-cell">Description</th>
             <th class="px-4 py-3 text-center font-semibold">LinkedIn</th>
           </tr>
         </thead>
         <tbody>
-          {previewCompanies.map((c, i) => (
+          {activeCompanies.slice(0, 6).map((c, i) => (
             <tr class:list={[i % 2 === 0 ? "bg-white" : "bg-blue-bg/30"]}>
-              <td class="px-4 py-3 font-medium text-navy">
-                <a href={c.website} target="_blank" rel="noopener" class="hover:text-blue">{c.name}</a>
-              </td>
-              <td class="px-4 py-3 text-text-muted hidden sm:table-cell">{c.description.slice(0, 80)}{c.description.length > 80 ? '...' : ''}</td>
-              <td class="px-4 py-3 text-center text-text-muted text-xs hidden md:table-cell">{c.hq}</td>
-              <td class="px-4 py-3 text-center">
-                <a href={c.linkedin} target="_blank" rel="noopener" class="text-blue hover:text-blue-dark text-xs font-semibold">View</a>
-              </td>
+              <td class="px-4 py-3 font-medium text-navy">{c.name}</td>
+              <td class="px-4 py-3 text-xs text-text-muted hidden sm:table-cell">{c.subcategory}</td>
+              <td class="px-4 py-3 text-text-muted text-xs hidden md:table-cell">{c.description.slice(0, 60)}...</td>
+              <td class="px-4 py-3 text-center text-blue text-xs font-semibold">View</td>
             </tr>
           ))}
         </tbody>
       </table>
     </div>
 
-    <!-- Blurred tease -->
-    <div class="relative mt-0 overflow-hidden" style="max-height: 100px;">
-      <div class="pointer-events-none select-none blur-sm opacity-40" aria-hidden="true">
-        <table class="w-full text-sm">
+    <!-- Blurred rows -->
+    <div class="relative -mt-1 overflow-hidden" style="max-height: 180px;">
+      <div class="pointer-events-none select-none blur-[6px] opacity-50" aria-hidden="true">
+        <table class="w-full text-sm border-x border-border">
           <tbody>
-            {[1,2,3].map((i) => (
+            {activeCompanies.slice(6, 18).map((c, i) => (
               <tr class:list={[i % 2 === 0 ? "bg-white" : "bg-blue-bg/30"]}>
-                <td class="px-4 py-3 font-medium text-navy">Company Name</td>
-                <td class="px-4 py-3 text-text-muted">Description of the company and services.</td>
-                <td class="px-4 py-3 text-center text-xs">Canada</td>
+                <td class="px-4 py-3 font-medium text-navy">{c.name}</td>
+                <td class="px-4 py-3 text-xs text-text-muted">{c.subcategory}</td>
+                <td class="px-4 py-3 text-text-muted text-xs">{c.description.slice(0, 60)}...</td>
                 <td class="px-4 py-3 text-center text-blue text-xs">View</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      <div class="absolute inset-0 bg-gradient-to-b from-transparent via-white/80 to-white"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-transparent via-white/70 to-white"></div>
     </div>
 
-    <p class="mt-4 text-center text-sm text-text-muted">
-      + {companies.length - previewCompanies.length} more companies across fintech, neobanks, payments, crypto, regtech, and more...
+    <p class="mt-6 text-center text-sm font-medium text-text-muted">
+      + {companies.length - 6} more companies hiding behind that blur...
     </p>
   </Fragment>
 

@@ -10,6 +10,7 @@ const LIST_IDS: Record<string, number> = {
   'achievement-worksheet': 4,
   'newsletter': 5,
   'canadian-finance-companies': 3,
+  'quantified-achievements': 3,
 };
 
 // Lead magnet delivery config: source → email details
@@ -50,10 +51,16 @@ const LEAD_MAGNETS: Record<string, {
     webUrl: `${SITE_URL}/blog/linkedin-post-ideas-for-job-seekers`,
   },
   'canadian-finance-companies': {
-    subject: "Here's your list of 76 Canadian Banking & Fintech companies",
-    playbook: "76 Companies Hiring in Canadian Banking & Fintech",
+    subject: "Here's your list of 86 Canadian Banking & Fintech companies",
+    playbook: "86 Companies Hiring in Canadian Banking & Fintech",
     webUrl: `${SITE_URL}/lead-magnets/canadian-banking-fintech-companies`,
     sheetUrl: 'https://docs.google.com/spreadsheets/d/1GNyVSBTVlmkMEBDRp7f3D4XzNVsjX1gpNL3XsLhGBAY/copy',
+  },
+  'quantified-achievements': {
+    subject: "Here's your 1,600+ Quantified Achievement Bullets",
+    playbook: "1,600+ Quantified Resume Achievements for 80+ Job Titles",
+    webUrl: `${SITE_URL}/lead-magnets/quantified-achievements`,
+    sheetUrl: 'https://docs.google.com/spreadsheets/d/10coFJPjCTFB5Bheob6uPGUucVi7GOTgeWnL3Y-e5h2c/copy',
   },
 };
 
