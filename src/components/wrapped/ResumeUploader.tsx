@@ -175,6 +175,8 @@ export default function ResumeUploader({ tool, toolLabel }: Props) {
               <p className="text-sm text-red-600">{error}</p>
             )}
 
+            <p className="text-xs text-[#9ca3af]">Plus weekly career tips from ClearCareer. Unsubscribe anytime.</p>
+
             <button
               onClick={handleSubmit}
               className="w-full rounded-lg bg-[#0161EF] px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-[#0450c8] cursor-pointer"

@@ -13,6 +13,7 @@ const LIST_IDS: Record<string, number> = {
   'quantified-achievements': 3,
   'linkedin-banners': 3,
   'linkedin-headshot': 3,
+  'email-templates': 3,
 };
 
 // Lead magnet delivery config: source → email details
@@ -76,6 +77,11 @@ const LEAD_MAGNETS: Record<string, {
     playbook: "DIY LinkedIn Headshot Guide",
     webUrl: `${SITE_URL}/lead-magnets/linkedin-headshot-guide`,
     pdfUrl: `${SITE_URL}/downloads/diy-linkedin-headshot-guide.pdf`,
+  },
+  'email-templates': {
+    subject: "Here are your 7 Job Search Email Templates",
+    playbook: "7 Email Templates Every Job Seeker Needs",
+    webUrl: `${SITE_URL}/lead-magnets/email-templates`,
   },
 };
 
