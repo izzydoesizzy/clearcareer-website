@@ -128,13 +128,16 @@ const previewSteps = steps.slice(0, 3);
     </div>
 
     <!-- Phase 1 -->
-    <div class="mb-10">
-      <div class="mb-6 flex items-center gap-3">
+    <div class="mb-10 rounded-xl border-l-4 border-red-400 pl-4">
+      <div class="mb-4 flex items-center gap-3">
         <span class="text-3xl">🔴</span>
         <div>
           <h2 class="text-xl font-bold text-navy">Phase 1: The First 4 Hours</h2>
           <p class="text-sm text-text-muted">Get information, protect yourself</p>
         </div>
+      </div>
+      <div class="mb-6 rounded-lg bg-red-50 p-4">
+        <p class="text-sm text-red-800">Your adrenaline is still going. Use it. Get the information you need and protect yourself before you lose access to anything. Every minute counts right now.</p>
       </div>
       <div class="space-y-4">
         {steps.filter((s) => s.phase === 1).map((step) => (
@@ -152,13 +155,16 @@ const previewSteps = steps.slice(0, 3);
     </div>
 
     <!-- Phase 2 -->
-    <div class="mb-10">
-      <div class="mb-6 flex items-center gap-3">
+    <div class="mb-10 rounded-xl border-l-4 border-amber-400 pl-4">
+      <div class="mb-4 flex items-center gap-3">
         <span class="text-3xl">🟡</span>
         <div>
           <h2 class="text-xl font-bold text-navy">Phase 2: The First 24 Hours</h2>
           <p class="text-sm text-text-muted">Set up safety nets, get financial clarity</p>
         </div>
+      </div>
+      <div class="mb-6 rounded-lg bg-amber-50 p-4">
+        <p class="text-sm text-amber-800">The adrenaline has faded. Now it's time to get your financial picture clear, set up the safety nets, and start making moves that protect your future.</p>
       </div>
       <div class="space-y-4">
         {steps.filter((s) => s.phase === 2).map((step) => (
@@ -176,13 +182,16 @@ const previewSteps = steps.slice(0, 3);
     </div>
 
     <!-- Phase 3 -->
-    <div class="mb-10">
-      <div class="mb-6 flex items-center gap-3">
+    <div class="mb-10 rounded-xl border-l-4 border-emerald-400 pl-4">
+      <div class="mb-4 flex items-center gap-3">
         <span class="text-3xl">🟢</span>
         <div>
           <h2 class="text-xl font-bold text-navy">Phase 3: The First 72 Hours</h2>
           <p class="text-sm text-text-muted">Position yourself for a strong job search</p>
         </div>
+      </div>
+      <div class="mb-6 rounded-lg bg-emerald-50 p-4">
+        <p class="text-sm text-emerald-800">You've handled the urgent stuff. Now it's time to set yourself up for a strong search, not a desperate one. The decisions you make this week shape the next few months.</p>
       </div>
       <div class="space-y-4">
         {steps.filter((s) => s.phase === 3).map((step) => (

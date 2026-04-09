@@ -3,10 +3,16 @@ import LeadMagnetLayout from "@layouts/LeadMagnetLayout.astro";
 import companies from "@data/canadian-remote-companies.json";
 
 const categories = [...new Set(companies.map((c) => c.category))];
-const grouped = categories.map((cat) => ({
-  name: cat,
-  companies: companies.filter((c) => c.category === cat),
-}));
+const isRemote = (p: string) => p.toLowerCase().includes("remote-first") || p.toLowerCase().includes("fully remote") || p.toLowerCase().includes("digital by default");
+const grouped = categories.map((cat) => {
+  const cos = companies.filter((c) => c.category === cat);
+  return {
+    name: cat,
+    companies: cos,
+    remoteCount: cos.filter((c) => isRemote(c.remotePolicy)).length,
+    hybridCount: cos.filter((c) => !isRemote(c.remotePolicy)).length,
+  };
+});
 
 // Stats
 const total = companies.length;
@@ -112,6 +118,11 @@ const previewCompanies = companies.filter((c) => c.category === "Tech & SaaS").s
 
   <!-- Full Content Slot (gated) -->
   <Fragment slot="full">
+    <!-- Intro -->
+    <div class="mb-8">
+      <p class="text-base leading-relaxed text-text">You don't have to go back to the office 5 days a week. While some companies are pulling people back, hundreds of others are staying flexible. We researched every company individually to verify their current remote policy. Use the filters below to find the ones that fit.</p>
+    </div>
+
     <!-- Key Trends -->
     <div class="mb-6 rounded-xl bg-blue-bg p-6">
       <h2 class="text-lg font-bold text-navy">Remote Work in Canada: Key Trends (2026)</h2>
@@ -157,7 +168,15 @@ const previewCompanies = companies.filter((c) => c.category === "Tech & SaaS").s
     {grouped.map((group) => (
       <div class="mb-10 remote-sector" data-sector={group.name}>
         <h2 class="mb-1 text-xl font-bold text-navy">{group.name}</h2>
-        <p class="mb-4 text-sm text-text-muted sector-count">{group.companies.length} companies</p>
+        <div class="mb-4 flex flex-wrap items-center gap-2">
+          <span class="text-sm text-text-muted">{group.companies.length} companies</span>
+          {group.remoteCount > 0 && (
+            <span class="rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-semibold text-emerald-700">{group.remoteCount} remote-first</span>
+          )}
+          {group.hybridCount > 0 && (
+            <span class="rounded-full bg-blue-bg px-2 py-0.5 text-[10px] font-semibold text-blue">{group.hybridCount} hybrid</span>
+          )}
+        </div>
 
         <div class="overflow-x-auto rounded-xl border border-border">
           <table class="w-full text-sm">

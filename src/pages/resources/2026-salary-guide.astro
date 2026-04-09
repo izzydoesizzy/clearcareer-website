@@ -13,6 +13,16 @@ const grouped = categories.map((cat) => ({
   }),
 }));
 
+const categoryNarrative: Record<string, string> = {
+  "Tech & Data": "Tech and data roles command the highest premiums in Canada right now, especially in Vancouver and Toronto. AI/ML skills add 15-25% to any role, and cloud certifications remain the single biggest salary accelerator.",
+  "Finance & Business": "Bay Street drives Toronto premiums. Calgary pays above-average for energy-adjacent finance roles. The MBB vs Big 4 gap in consulting is massive. CFA and CPA designations still move the needle more than almost any other credential.",
+  "Marketing & Creative": "Marketing salaries are climbing as companies compete for growth talent. The biggest jumps are in product marketing and growth marketing, where SaaS experience commands a real premium. Design roles are catching up to engineering in top-tier companies.",
+  "HR & People": "People analytics and total rewards are the highest-growth areas in HR. Pay transparency legislation is creating demand for compensation specialists who can defend salary bands with data.",
+  "Operations & Supply Chain": "Supply chain disruptions elevated operations roles from back-office to boardroom. Vancouver's port hub means operations managers there earn as much as Toronto. Six Sigma certification still commands a premium.",
+  "Healthcare & Life Sciences": "Pharma and biotech roles are booming as new drug approvals hit record levels. Clinical research, biostatistics, and regulatory affairs all pay well and have strong job security.",
+  "Emerging & High-Growth": "These roles didn't exist five years ago. AI ethics, privacy, sustainability assurance, conversation design. If you're looking for where the market is heading, this is it.",
+};
+
 // Preview: 6 interesting roles at senior level
 const previewRoles = roles.filter((r) =>
   ["Software Engineer", "Machine Learning Engineer", "Cloud Architect", "FP&A Manager", "Growth Marketing Manager", "Data Scientist"].includes(r.role)
@@ -99,6 +109,17 @@ const previewRoles = roles.filter((r) =>
 
   <!-- Full Content Slot (gated) -->
   <Fragment slot="full">
+    <!-- Intro Narrative -->
+    <div class="mb-8">
+      <p class="text-base leading-relaxed text-text">Whether you're negotiating a raise, evaluating an offer, or just curious where you stand, this guide gives you the numbers. We cross-referenced 10+ salary databases so you don't have to guess.</p>
+    </div>
+
+    <!-- Key Insight -->
+    <div class="mb-8 rounded-xl border-l-4 border-blue bg-blue-bg/30 p-5">
+      <p class="text-sm font-semibold text-navy">City-by-City Quick Guide</p>
+      <p class="mt-1 text-sm text-text-muted"><strong>Toronto</strong> pays highest for finance (Bay Street). <strong>Vancouver</strong> matches or beats for tech. <strong>Calgary</strong> has energy-sector premiums. <strong>Montreal</strong> runs 10-20% lower but bilingual candidates earn more. <strong>Ottawa</strong> is competitive for government-adjacent roles.</p>
+    </div>
+
     <!-- Methodology Note -->
     <div class="mb-6 rounded-xl bg-blue-bg p-6">
       <h2 class="text-lg font-bold text-navy">How to Read This Guide</h2>
@@ -128,6 +149,11 @@ const previewRoles = roles.filter((r) =>
       <div class="mb-10 salary-category" data-category={group.name}>
         <h2 class="mb-1 text-xl font-bold text-navy">{group.name}</h2>
         <p class="mb-4 text-sm text-text-muted">{group.roles.length} roles</p>
+        {categoryNarrative[group.name] && (
+          <div class="mb-6 rounded-lg border-l-4 border-blue bg-blue-bg/30 p-4">
+            <p class="text-sm text-text">{categoryNarrative[group.name]}</p>
+          </div>
+        )}
 
         {group.roles.map((role) => (
           <div class="mb-6 salary-role" data-role={role.role.toLowerCase()}>

@@ -62,56 +62,56 @@ const LEAD_MAGNETS: Record<string, {
   'canadian-finance-companies': {
     subject: "Here's your list of 86 Canadian Banking & Fintech companies",
     playbook: "86 Companies Hiring in Canadian Banking & Fintech",
-    webUrl: `${SITE_URL}/lead-magnets/canadian-banking-fintech-companies`,
+    webUrl: `${SITE_URL}/resources/canadian-banking-fintech-companies`,
     sheetUrl: 'https://docs.google.com/spreadsheets/d/1GNyVSBTVlmkMEBDRp7f3D4XzNVsjX1gpNL3XsLhGBAY/copy',
-    imageUrl: `${SITE_URL}/images/lead-magnets/canadian-finance-spreadsheet-email.jpg`,
+    imageUrl: `${SITE_URL}/images/resources/canadian-finance-spreadsheet-email.jpg`,
   },
   'quantified-achievements': {
     subject: "Here's your 1,600+ Quantified Achievement Bullets",
     playbook: "1,600+ Quantified Resume Achievements for 80+ Job Titles",
-    webUrl: `${SITE_URL}/lead-magnets/quantified-achievements`,
+    webUrl: `${SITE_URL}/resources/quantified-achievements`,
     sheetUrl: 'https://docs.google.com/spreadsheets/d/10coFJPjCTFB5Bheob6uPGUucVi7GOTgeWnL3Y-e5h2c/copy',
   },
   'linkedin-banners': {
     subject: "Here's your LinkedIn Banner Pack",
     playbook: "33 Free LinkedIn Banners for Job Seekers",
-    webUrl: `${SITE_URL}/lead-magnets/linkedin-banners`,
+    webUrl: `${SITE_URL}/resources/linkedin-banners`,
   },
   'linkedin-headshot': {
     subject: "Here's your DIY LinkedIn Headshot Guide",
     playbook: "DIY LinkedIn Headshot Guide",
-    webUrl: `${SITE_URL}/lead-magnets/linkedin-headshot-guide`,
+    webUrl: `${SITE_URL}/resources/linkedin-headshot-guide`,
     pdfUrl: `${SITE_URL}/downloads/diy-linkedin-headshot-guide.pdf`,
   },
   'email-templates': {
     subject: "Here are your 7 Job Search Email Templates",
     playbook: "7 Email Templates Every Job Seeker Needs",
-    webUrl: `${SITE_URL}/lead-magnets/email-templates`,
+    webUrl: `${SITE_URL}/resources/email-templates`,
   },
   'salary-guide-2026': {
     subject: "Here's your 2026 Canadian Salary Guide",
     playbook: "The 2026 Salary Guide: 50 In-Demand Roles in Canada",
-    webUrl: `${SITE_URL}/lead-magnets/2026-salary-guide`,
+    webUrl: `${SITE_URL}/resources/2026-salary-guide`,
   },
   'hidden-job-titles': {
     subject: "Here are 40 Job Titles That Pay $100K+ in Canada",
     playbook: "40 Job Titles You've Never Heard Of That Pay $100K+",
-    webUrl: `${SITE_URL}/lead-magnets/hidden-job-titles`,
+    webUrl: `${SITE_URL}/resources/hidden-job-titles`,
   },
   'linkedin-boolean': {
     subject: "Here's your LinkedIn Boolean Search Cheat Sheet",
     playbook: "The LinkedIn Recruiter Cheat Sheet: 30 Boolean Search Strings",
-    webUrl: `${SITE_URL}/lead-magnets/linkedin-boolean-search`,
+    webUrl: `${SITE_URL}/resources/linkedin-boolean-search`,
   },
   'layoff-survival-kit': {
     subject: "Here's your Layoff Survival Kit",
     playbook: "The Layoff Survival Kit: 25 Steps For the First 72 Hours",
-    webUrl: `${SITE_URL}/lead-magnets/layoff-survival-kit`,
+    webUrl: `${SITE_URL}/resources/layoff-survival-kit`,
   },
   'canadian-remote-companies': {
     subject: "Here's your list of 194 Canadian Remote & Hybrid Companies",
     playbook: "194+ Companies in Canada Hiring Remote & Hybrid Roles",
-    webUrl: `${SITE_URL}/lead-magnets/canadian-remote-companies`,
+    webUrl: `${SITE_URL}/resources/canadian-remote-companies`,
   },
 };
 
