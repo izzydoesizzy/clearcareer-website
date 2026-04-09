@@ -56,6 +56,15 @@ const siteUrl = Astro.site?.toString().replace(/\/$/, "") ?? "https://joinclearc
   </head>
   <body class="min-h-screen bg-white font-sans text-text antialiased">
     <slot />
+
+    <!-- Vercel Analytics + Speed Insights -->
+    <script>
+      import { inject } from "@vercel/analytics";
+      import { injectSpeedInsights } from "@vercel/speed-insights";
+      inject();
+      injectSpeedInsights();
+    </script>
+
     <script>
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
