@@ -11,6 +11,7 @@ const LIST_IDS: Record<string, number> = {
   'newsletter': 5,
   'canadian-finance-companies': 3,
   'quantified-achievements': 3,
+  'linkedin-banners': 3,
 };
 
 // Lead magnet delivery config: source → email details
@@ -20,6 +21,7 @@ const LEAD_MAGNETS: Record<string, {
   webUrl: string;
   pdfUrl?: string;
   sheetUrl?: string;
+  imageUrl?: string;
 }> = {
   'make-it-count': {
     subject: "Here's your Make It Count playbook",
@@ -55,6 +57,7 @@ const LEAD_MAGNETS: Record<string, {
     playbook: "86 Companies Hiring in Canadian Banking & Fintech",
     webUrl: `${SITE_URL}/lead-magnets/canadian-banking-fintech-companies`,
     sheetUrl: 'https://docs.google.com/spreadsheets/d/1GNyVSBTVlmkMEBDRp7f3D4XzNVsjX1gpNL3XsLhGBAY/copy',
+    imageUrl: `${SITE_URL}/images/lead-magnets/canadian-finance-spreadsheet-email.jpg`,
   },
   'quantified-achievements': {
     subject: "Here's your 1,600+ Quantified Achievement Bullets",
@@ -62,13 +65,22 @@ const LEAD_MAGNETS: Record<string, {
     webUrl: `${SITE_URL}/lead-magnets/quantified-achievements`,
     sheetUrl: 'https://docs.google.com/spreadsheets/d/10coFJPjCTFB5Bheob6uPGUucVi7GOTgeWnL3Y-e5h2c/copy',
   },
+  'linkedin-banners': {
+    subject: "Here's your LinkedIn Banner Pack",
+    playbook: "33 Free LinkedIn Banners for Job Seekers",
+    webUrl: `${SITE_URL}/lead-magnets/linkedin-banners`,
+  },
 };
 
-function buildDeliveryEmail(playbook: string, webUrl: string, pdfUrl?: string, sheetUrl?: string): string {
+function buildDeliveryEmail(playbook: string, webUrl: string, pdfUrl?: string, sheetUrl?: string, imageUrl?: string): string {
+  const imageSection = imageUrl
+    ? `<tr><td style="padding:0 0 24px"><img src="${imageUrl}" alt="${playbook}" style="width:100%;border-radius:8px;border:1px solid #e5e7eb" /></td></tr>`
+    : '';
+
   const downloadSection = pdfUrl
     ? `<tr><td style="padding:12px 0 0"><a href="${pdfUrl}" style="display:inline-block;padding:12px 24px;background:#030620;color:#ffffff;text-decoration:none;border-radius:8px;font-weight:600;font-size:14px">Download PDF Version</a></td></tr>`
     : sheetUrl
-      ? `<tr><td style="padding:12px 0 0"><a href="${sheetUrl}" style="display:inline-block;padding:12px 24px;background:#030620;color:#ffffff;text-decoration:none;border-radius:8px;font-weight:600;font-size:14px">Copy Spreadsheet to Google Drive</a></td></tr>`
+      ? `<tr><td style="padding:12px 0 0"><a href="${sheetUrl}" style="display:inline-block;padding:14px 28px;background:#059669;color:#ffffff;text-decoration:none;border-radius:8px;font-weight:600;font-size:16px">Copy Spreadsheet to Google Drive</a></td></tr>`
       : '';
 
   return `<!DOCTYPE html>
@@ -86,7 +98,11 @@ function buildDeliveryEmail(playbook: string, webUrl: string, pdfUrl?: string, s
 <!-- Body -->
 <tr><td style="padding:40px">
 <h2 style="margin:0 0 16px;color:#1B2A4A;font-size:24px;font-weight:700;line-height:1.3">Your playbook is ready</h2>
-<p style="margin:0 0 24px;color:#64748B;font-size:16px;line-height:1.6">Thanks for grabbing <strong style="color:#1B2A4A">${playbook}</strong>. Click below to read it right now.</p>
+<p style="margin:0 0 24px;color:#64748B;font-size:16px;line-height:1.6">Thanks for grabbing <strong style="color:#1B2A4A">${playbook}</strong>. Click below to access it right now.</p>
+
+<table cellpadding="0" cellspacing="0" width="100%">
+${imageSection}
+</table>
 
 <table cellpadding="0" cellspacing="0">
 <tr><td><a href="${webUrl}" style="display:inline-block;padding:14px 28px;background:#0161EF;color:#ffffff;text-decoration:none;border-radius:8px;font-weight:600;font-size:16px">Read the Full Playbook</a></td></tr>
@@ -118,7 +134,7 @@ async function sendDeliveryEmail(email: string, source: string): Promise<void> {
   const magnet = LEAD_MAGNETS[source];
   if (!magnet) return; // No delivery email for newsletter signups, etc.
 
-  const html = buildDeliveryEmail(magnet.playbook, magnet.webUrl, magnet.pdfUrl, magnet.sheetUrl);
+  const html = buildDeliveryEmail(magnet.playbook, magnet.webUrl, magnet.pdfUrl, magnet.sheetUrl, magnet.imageUrl);
 
   await fetch('https://api.brevo.com/v3/smtp/email', {
     method: 'POST',
