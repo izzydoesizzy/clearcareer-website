@@ -8,7 +8,20 @@ const pages: Record<string, { title: string; description: string }> = {
   // Default OG image for non-blog pages
   default: {
     title: "ClearCareer",
-    description: "200+ professionals coached · $1.2M+ in collective raises · 98% satisfaction",
+    description: "Career coaching that gets results. 200+ professionals coached. $1.2M+ in collective raises.",
+  },
+  // Per-section OG images
+  about: {
+    title: "Meet Izzy Piyale-Sheard",
+    description: "Career coach, community builder, and the person behind ClearCareer.",
+  },
+  "programs-jsis": {
+    title: "Job Search Ignition System",
+    description: "8-week done-with-you career accelerator for $100K+ professionals.",
+  },
+  "free-tools": {
+    title: "Free Career Tools",
+    description: "Calculators, builders, and planners to power your job search.",
   },
   // Blog post OG images
   ...Object.fromEntries(
@@ -28,6 +41,10 @@ export const { getStaticPaths, GET } = await OGImageRoute({
   getImageOptions: (_path, page) => ({
     title: page.title,
     description: page.description,
+    logo: {
+      path: "./public/images/logo/clearcareer-logo.png",
+      size: [80],
+    },
     fonts: [
       "./public/fonts/Inter-Regular.ttf",
       "./public/fonts/Inter-Bold.ttf",

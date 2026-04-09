@@ -1,5 +1,6 @@
 ---
 import PageLayout from "@layouts/PageLayout.astro";
+import { generateCourseSchema } from "@utils/seo";
 import Hero from "@components/Hero.astro";
 import StatsBar from "@components/StatsBar.astro";
 import TrustBar from "@components/TrustBar.astro";
@@ -63,7 +64,15 @@ const fenceSitterCards = fenceSitterNames
 <PageLayout
   title="Job Search Ignition System | 8-Week Career Accelerator | ClearCareer"
   description="An 8-week done-with-you job search accelerator for senior professionals targeting $100K+ roles. 20+ career assets built for you. 3 private sessions. Group accountability. Book a free audit."
+  image="/open-graph/programs-jsis.png"
+  breadcrumbs={[
+    { name: "Home", url: "/" },
+    { name: "Programs", url: "/programs/jsis" },
+    { name: "Job Search Ignition System", url: "/programs/jsis" },
+  ]}
 >
+  <!-- Course Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify(generateCourseSchema())} />
 
   <!-- 1. Hero -->
   <Hero

@@ -2,6 +2,11 @@
 import "@/styles/global.css";
 import SEO from "@components/SEO.astro";
 
+interface BreadcrumbItem {
+  name: string;
+  url: string;
+}
+
 interface Props {
   title: string;
   description: string;
@@ -11,15 +16,16 @@ interface Props {
   publishDate?: string;
   author?: string;
   noindex?: boolean;
+  breadcrumbs?: BreadcrumbItem[];
 }
 
-const { title, description, image, canonical, type, publishDate, author, noindex } = Astro.props;
+const { title, description, image, canonical, type, publishDate, author, noindex, breadcrumbs } = Astro.props;
 
 const siteUrl = Astro.site?.toString().replace(/\/$/, "") ?? "https://joinclearcareer.com";
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en-CA">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -29,6 +35,10 @@ const siteUrl = Astro.site?.toString().replace(/\/$/, "") ?? "https://joinclearc
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Preconnect -->
+    <link rel="preconnect" href="https://calendly.com" />
 
     <!-- Theme -->
     <meta name="theme-color" content="#0161EF" />
@@ -44,15 +54,9 @@ const siteUrl = Astro.site?.toString().replace(/\/$/, "") ?? "https://joinclearc
       publishDate={publishDate}
       author={author}
       noindex={noindex}
+      breadcrumbs={breadcrumbs}
     />
 
-    <!-- Schema.org WebSite (global) -->
-    <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "ClearCareer",
-      "url": siteUrl,
-    })} />
   </head>
   <body class="min-h-screen bg-white font-sans text-text antialiased">
     <slot />

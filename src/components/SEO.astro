@@ -66,7 +66,7 @@ const jsonLd =
 // Organization schema (included on every page)
 const orgSchema = {
   "@context": "https://schema.org",
-  "@type": "Organization",
+  "@type": ["Organization", "LocalBusiness"],
   name: "ClearCareer",
   url: siteUrl,
   logo: `${siteUrl}/images/logo/clearcareer-logo.png`,
@@ -77,9 +77,21 @@ const orgSchema = {
     jobTitle: "Career Coach",
     url: siteUrl,
   },
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Toronto",
+    addressRegion: "ON",
+    addressCountry: "CA",
+  },
+  areaServed: {
+    "@type": "Country",
+    name: "Canada",
+  },
+  priceRange: "$$",
   sameAs: [
-    "https://linkedin.com/in/izzydoesizzy",
+    "https://www.linkedin.com/in/izzydoesizzy",
     "https://www.youtube.com/@joinclearcareer",
+    "https://twitter.com/joinclearcareer",
   ],
 };
 
@@ -107,14 +119,24 @@ const breadcrumbSchema = breadcrumbs && breadcrumbs.length > 0 ? {
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonicalUrl} />
 <meta property="og:image" content={ogImageUrl} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={title} />
 <meta property="og:type" content={type} />
 <meta property="og:site_name" content="ClearCareer" />
+<meta property="og:locale" content="en_CA" />
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@joinclearcareer" />
+<meta name="twitter:creator" content="@joinclearcareer" />
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={ogImageUrl} />
+
+<!-- GEO -->
+<meta name="geo.region" content="CA-ON" />
+<meta name="geo.placename" content="Toronto" />
 
 <!-- Article-specific -->
 {publishDate && <meta property="article:published_time" content={publishDate} />}

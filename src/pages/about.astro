@@ -2,6 +2,7 @@
 import PageLayout from "@layouts/PageLayout.astro";
 import Hero from "@components/Hero.astro";
 import CTASection from "@components/CTASection.astro";
+import { generatePersonSchema } from "@utils/seo";
 
 import stats from "@data/stats.json";
 ---
@@ -9,7 +10,15 @@ import stats from "@data/stats.json";
 <PageLayout
   title="About Izzy | ClearCareer"
   description="Meet Izzy Piyale-Sheard: career coach, community builder, and the person behind ClearCareer. 200+ professionals coached, $1.2M+ in collective raises, featured on CBC, Global News, and Newsweek."
+  image="/open-graph/about.png"
+  breadcrumbs={[
+    { name: "Home", url: "/" },
+    { name: "About", url: "/about" },
+  ]}
 >
+  <!-- Person Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify(generatePersonSchema())} />
+
   <!-- Hero -->
   <Hero
     variant="page"

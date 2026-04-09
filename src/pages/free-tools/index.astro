@@ -27,6 +27,11 @@ const siteUrl = Astro.site?.toString().replace(/\/$/, "") ?? "https://joinclearc
 <PageLayout
   title="Free Career Tools | ClearCareer"
   description="Free calculators, search builders, and career tools to power your job search. Financial runway, salary negotiation, LinkedIn search, resume scoring, and more."
+  image="/open-graph/free-tools.png"
+  breadcrumbs={[
+    { name: "Home", url: "/" },
+    { name: "Free Tools", url: "/free-tools" },
+  ]}
 >
   <script
     type="application/ld+json"
