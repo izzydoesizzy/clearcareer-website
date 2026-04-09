@@ -1,5 +1,18 @@
 [
   {
+    "name": "Canadian Severance Calculator",
+    "slug": "severance-calculator",
+    "description": "Estimate your severance under Canadian employment law. ESA statutory minimums and common-law Bardal factor estimates for all provinces.",
+    "category": "Financial Planning",
+    "icon": "🧮",
+    "relatedTags": ["job search strategy", "salary negotiation"],
+    "featureList": ["ESA statutory minimum calculation", "Common-law Bardal factor estimates", "Province-specific rules for all Canadian provinces", "Age, tenure, and role-level weighting"],
+    "relatedTools": [
+      { "name": "Financial Runway Calculator", "slug": "financial-runway-calculator", "icon": "💰" },
+      { "name": "Salary Negotiation Impact Calculator", "slug": "salary-negotiation-calculator", "icon": "📈" }
+    ]
+  },
+  {
     "name": "Financial Runway Calculator",
     "slug": "financial-runway-calculator",
     "description": "Calculate how many months of runway you have before your savings run out. Factor in severance, unemployment, and side income.",
