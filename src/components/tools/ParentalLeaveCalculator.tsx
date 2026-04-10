@@ -161,6 +161,7 @@ export default function ParentalLeaveCalculator() {
             incomeGap: Math.round(result.incomeGap),
             avgWeekly: Math.round(result.avgWeekly),
             totalWeeks: result.totalWeeks,
+            leavePeriodWeeks: result.leavePeriodWeeks,
             sharingBonusTriggered: result.sharingBonusTriggered,
             sharingBonusWeeks: result.sharingBonusWeeks,
             recommendations: recs.map((r) => ({ type: r.type, title: r.title, body: r.body })),

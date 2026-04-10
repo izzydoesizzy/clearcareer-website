@@ -483,9 +483,38 @@ function buildResult(
   const opResult = sumParent(opPhases);
   const familyTotal = bpResult.grandTotal + opResult.grandTotal;
   const totalWeeks = bpResult.totalWeeks + opResult.totalWeeks;
+
+  // The leave period is the calendar duration from start to when the last
+  // parent returns to work (both parents start at week 0, matching the chart).
+  const leavePeriodWeeks = Math.max(bpResult.totalWeeks, opResult.totalWeeks);
+
+  // Build per-week benefit arrays to compute true family income during leave,
+  // mirroring the approach used in IncomeChart.tsx.
+  const bpWeekly: number[] = [];
+  for (const phase of bpPhases) {
+    for (let i = 0; i < phase.weeks; i++) {
+      bpWeekly.push(phase.weeklyBenefit + phase.weeklyTopUp);
+    }
+  }
+  const opWeekly: number[] = [];
+  for (const phase of opPhases) {
+    for (let i = 0; i < phase.weeks; i++) {
+      opWeekly.push(phase.weeklyBenefit + phase.weeklyTopUp);
+    }
+  }
+
+  // For each week in the leave period, a parent who is NOT on leave earns
+  // their regular salary instead of benefits.
+  let totalFamilyIncome = 0;
+  for (let w = 0; w < leavePeriodWeeks; w++) {
+    const bpIncome = w < bpWeekly.length ? bpWeekly[w] : bpSalary / 52;
+    const opIncome = w < opWeekly.length ? opWeekly[w] : opSalary / 52;
+    totalFamilyIncome += bpIncome + opIncome;
+  }
+
   const weeklyFullIncome = (bpSalary + opSalary) / 52;
-  const incomeGap = weeklyFullIncome * totalWeeks - familyTotal;
-  const avgWeekly = totalWeeks > 0 ? familyTotal / totalWeeks : 0;
+  const avgWeekly = leavePeriodWeeks > 0 ? totalFamilyIncome / leavePeriodWeeks : 0;
+  const incomeGap = weeklyFullIncome * leavePeriodWeeks - totalFamilyIncome;
 
   return {
     birthingParent: bpResult,
@@ -494,6 +523,7 @@ function buildResult(
     incomeGap: Math.max(0, incomeGap),
     avgWeekly,
     totalWeeks,
+    leavePeriodWeeks,
     sharingBonusTriggered: bonus.triggered,
     sharingBonusWeeks: bonus.weeks,
   };
