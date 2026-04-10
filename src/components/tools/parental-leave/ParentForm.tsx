@@ -45,13 +45,18 @@ export default function ParentForm({ label, config, onChange, leaveType, isQuebe
             inputMode="numeric"
             min={0}
             step={1000}
-            placeholder="75,000"
+            placeholder="75000"
             value={config.salary || ""}
             onChange={(e) => update({ salary: e.target.value ? Number(e.target.value) : 0 })}
             aria-label={`${label} annual salary`}
             className="w-full border-0 border-b-2 border-border bg-transparent py-3 pl-6 text-xl text-navy placeholder:text-text-muted/40 focus:border-blue focus:outline-none focus:ring-0 transition-colors"
           />
         </div>
+        {config.salary > 0 && config.salary < 1000 && (
+          <p className="mt-1.5 text-xs text-amber-600">
+            Did you mean <button type="button" className="font-semibold underline" onClick={() => update({ salary: config.salary * 1000 })}>${(config.salary * 1000).toLocaleString()}</button>? Enter your full annual salary (e.g. 75000).
+          </p>
+        )}
       </div>
 
       {/* Province */}
