@@ -15,6 +15,7 @@ export default function ResumeUploader({ tool, toolLabel }: Props) {
   const [email, setEmail] = useState("");
   const [location, setLocation] = useState("");
   const [currentSalary, setCurrentSalary] = useState("");
+  const [honeypot, setHoneypot] = useState("");
   const [error, setError] = useState("");
   const [inputMode, setInputMode] = useState<"upload" | "paste">("upload");
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -74,6 +75,7 @@ export default function ResumeUploader({ tool, toolLabel }: Props) {
       const body: Record<string, string> = { tool, resumeText, email };
       if (location) body.location = location;
       if (currentSalary) body.currentSalary = currentSalary;
+      if (honeypot) body.website = honeypot;
 
       const res = await fetch("/wrapped/api/analyze", {
         method: "POST",
@@ -170,6 +172,11 @@ export default function ResumeUploader({ tool, toolLabel }: Props) {
               />
               <p className="text-xs text-[#9ca3af] mt-1">We'll send you a link to revisit your results</p>
             </div>
+
+            {/* Honeypot */}
+            <input type="text" name="website" value={honeypot} onChange={(e) => setHoneypot(e.target.value)}
+              autoComplete="off" tabIndex={-1}
+              style={{ position: "absolute", left: "-9999px", opacity: 0, height: 0, width: 0, overflow: "hidden" }} />
 
             {error && (
               <p className="text-sm text-red-600">{error}</p>

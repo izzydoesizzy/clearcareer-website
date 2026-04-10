@@ -28,6 +28,9 @@ const { source = 'make-it-count', storageKey = 'makeitcount_unlocked' } = Astro.
           required
           class="flex-1 rounded-lg border border-border bg-white px-4 py-3 text-text placeholder:text-text-muted focus:border-blue focus:outline-none focus:ring-2 focus:ring-blue/20"
         />
+        <!-- Honeypot: hidden from real users, bots auto-fill it -->
+        <input type="text" name="website" id="gate-hp" autocomplete="off" tabindex="-1"
+          style="position:absolute;left:-9999px;opacity:0;height:0;width:0;overflow:hidden;" />
         <button
           type="submit"
           id="gate-btn"
@@ -89,10 +92,13 @@ const { source = 'make-it-count', storageKey = 'makeitcount_unlocked' } = Astro.
         btn.textContent = 'Sending...';
         btn.setAttribute('disabled', 'true');
 
+        var hp = document.getElementById('gate-hp');
+        var hpVal = hp ? hp.value : '';
+
         fetch('/api/subscribe', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: email, source: source }),
+          body: JSON.stringify({ email: email, source: source, website: hpVal }),
         })
         .then(function(res) {
           if (res.ok) {

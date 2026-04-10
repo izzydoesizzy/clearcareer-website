@@ -165,6 +165,7 @@ export default function RunwayStory() {
   const [subscribe, setSubscribe] = useState(true);
   const [emailSending, setEmailSending] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
+  const [honeypot, setHoneypot] = useState("");
   const revealRef = useRef<HTMLDivElement>(null);
 
   const savingsNum = parseFloat(savings) || 0;
@@ -244,6 +245,7 @@ export default function RunwayStory() {
         body: JSON.stringify({
           email,
           subscribe,
+          ...(honeypot && { website: honeypot }),
           reportData: {
             runwayMonths: isInfinite ? 999 : Math.round(runwayMonths * 10) / 10,
             isInfinite,
@@ -557,6 +559,9 @@ export default function RunwayStory() {
                         {emailSending ? "Sending..." : "Email Report"}
                       </button>
                     </div>
+                    <input type="text" name="website" value={honeypot} onChange={(e) => setHoneypot(e.target.value)}
+                      autoComplete="off" tabIndex={-1}
+                      style={{ position: "absolute", left: "-9999px", opacity: 0, height: 0, width: 0, overflow: "hidden" }} />
                     <label className="flex items-start gap-2 cursor-pointer">
                       <input type="checkbox" checked={subscribe} onChange={(e) => setSubscribe(e.target.checked)}
                         className="mt-0.5 accent-blue" />

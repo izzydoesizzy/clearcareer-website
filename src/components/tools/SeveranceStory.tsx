@@ -46,6 +46,7 @@ export default function SeveranceStory() {
   const [subscribe, setSubscribe] = useState(true);
   const [emailSending, setEmailSending] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
+  const [honeypot, setHoneypot] = useState("");
   const [showDisclaimer, setShowDisclaimer] = useState(false);
   const revealRef = useRef<HTMLDivElement>(null);
   const disclaimerRef = useRef<HTMLDivElement>(null);
@@ -133,6 +134,7 @@ export default function SeveranceStory() {
         body: JSON.stringify({
           email,
           subscribe,
+          ...(honeypot && { website: honeypot }),
           reportData: {
             province: PROVINCES.find(p => p.code === province)?.name || province,
             esaTotalWeeks: result.esa.totalWeeks,
@@ -454,6 +456,9 @@ export default function SeveranceStory() {
                         {emailSending ? "Sending..." : "Email Report"}
                       </button>
                     </div>
+                    <input type="text" name="website" value={honeypot} onChange={(e) => setHoneypot(e.target.value)}
+                      autoComplete="off" tabIndex={-1}
+                      style={{ position: "absolute", left: "-9999px", opacity: 0, height: 0, width: 0, overflow: "hidden" }} />
                     <label className="flex items-start gap-2 cursor-pointer">
                       <input type="checkbox" checked={subscribe} onChange={(e) => setSubscribe(e.target.checked)} className="mt-0.5 accent-blue" />
                       <span className="text-[11px] text-white/40 leading-relaxed">Send me career tips and job search strategies from ClearCareer. Unsubscribe anytime.</span>

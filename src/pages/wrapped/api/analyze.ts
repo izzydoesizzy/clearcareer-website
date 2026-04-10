@@ -35,7 +35,12 @@ function truncateText(text: string): string {
 export const POST: APIRoute = async ({ request }) => {
   try {
     const body = await request.json();
-    const { tool, resumeText, email, location, currentSalary } = body;
+    const { tool, resumeText, email, location, currentSalary, website: honeypot } = body;
+
+    // Honeypot: bots fill this hidden field, real users don't
+    if (honeypot) {
+      return Response.json({ id: "ok", tool, result: {} }, { status: 200 });
+    }
 
     if (!VALID_TOOLS.includes(tool)) {
       return Response.json({ error: "Invalid tool type." }, { status: 400 });

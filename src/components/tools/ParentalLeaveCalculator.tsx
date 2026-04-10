@@ -62,6 +62,7 @@ export default function ParentalLeaveCalculator() {
   const [subscribe, setSubscribe] = useState(true);
   const [emailSending, setEmailSending] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
+  const [honeypot, setHoneypot] = useState("");
   const hasEmail = email.includes("@");
 
   // Derived
@@ -123,6 +124,7 @@ export default function ParentalLeaveCalculator() {
         body: JSON.stringify({
           email,
           subscribe,
+          ...(honeypot && { website: honeypot }),
           reportData: {
             leaveType,
             isQuebec,
@@ -401,6 +403,9 @@ export default function ParentalLeaveCalculator() {
                       {emailSending ? "Sending..." : "Email Report"}
                     </button>
                   </div>
+                  <input type="text" name="website" value={honeypot} onChange={(e) => setHoneypot(e.target.value)}
+                    autoComplete="off" tabIndex={-1}
+                    style={{ position: "absolute", left: "-9999px", opacity: 0, height: 0, width: 0, overflow: "hidden" }} />
                   <label className="flex items-start gap-2 cursor-pointer">
                     <input
                       type="checkbox"

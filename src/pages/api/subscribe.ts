@@ -283,7 +283,15 @@ async function sendDeliveryEmail(email: string, source: string): Promise<void> {
 export const POST: APIRoute = async ({ request }) => {
   try {
     const body = await request.json();
-    const { email, source } = body;
+    const { email, source, website: honeypot } = body;
+
+    // Honeypot: bots fill this hidden field, real users don't
+    if (honeypot) {
+      return new Response(JSON.stringify({ success: true }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
 
     if (!email || !email.includes('@')) {
       return new Response(JSON.stringify({ error: 'Valid email required' }), {
