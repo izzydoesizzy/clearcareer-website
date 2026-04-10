@@ -10,10 +10,10 @@ export const EI = {
   maxExt: 437,
   matRate: 0.55,
   matWk: 15,
-  stdTotal: 40,
+  stdTotal: 35,
   stdMax1: 35,
   stdBonus: 5,
-  extTotal: 69,
+  extTotal: 61,
   extMax1: 61,
   extBonus: 8,
 } as const;
