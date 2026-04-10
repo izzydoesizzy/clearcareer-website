@@ -51,6 +51,7 @@ export interface CalcResult {
   incomeGap: number;
   avgWeekly: number;
   totalWeeks: number;
+  leavePeriodWeeks: number;
   sharingBonusTriggered: boolean;
   sharingBonusWeeks: number;
 }

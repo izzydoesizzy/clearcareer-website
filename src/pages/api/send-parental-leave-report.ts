@@ -50,6 +50,7 @@ interface ReportData {
   incomeGap: number;
   avgWeekly: number;
   totalWeeks: number;
+  leavePeriodWeeks: number;
   sharingBonusTriggered: boolean;
   sharingBonusWeeks: number;
   recommendations: RecData[];
@@ -148,7 +149,7 @@ function buildReportEmail(data: ReportData): string {
         <tr><td style="padding:16px 32px; background:${COLORS.amberBg}; border-bottom:1px solid ${COLORS.grey200};">
           <div style="font-size:14px; font-weight:600; color:#92400e;">Income Gap: ${fmtCAD(data.incomeGap)}</div>
           <div style="font-size:13px; color:#92400e; margin-top:4px;">
-            The difference between your normal family income and leave benefits over ${data.totalWeeks} weeks.
+            The difference between your normal family income and leave income over ${data.leavePeriodWeeks} weeks.
           </div>
         </td></tr>
         ` : ''}
