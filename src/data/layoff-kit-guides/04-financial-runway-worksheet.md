@@ -1,181 +1,175 @@
 # Financial Runway Worksheet
 
-**How to calculate exactly how much time you have, and make informed decisions about spending, saving, and drawing down.**
+**Figure out exactly how many months your money will last, so you can job search strategically instead of panicking.**
 
-> **Important:** This guide provides general educational information about financial planning during a career transition. It is not financial advice. Consider consulting a financial advisor for guidance specific to your situation. Government benefit amounts and rules (including EI) are as of April 2026 and are subject to change.
+> **Disclaimer:** General educational information, not financial advice. Government benefit amounts (including EI) are as of April 2026 and may change. Consult a financial advisor for your specific situation.
 
-The worst feeling after a layoff isn't the layoff itself. It's the financial uncertainty. Not knowing how long your money will last turns every decision into a crisis. This worksheet replaces that uncertainty with a number.
+You don't need to do everything today. Work through this at your own pace.
+
+**Time:** About 45 minutes. **What you'll need:** Your bank statements, latest pay stub, severance letter, and a calculator.
+
+**Top 3 actions from this guide:**
+1. Calculate your monthly burn rate by reviewing last month's bank statement line by line.
+2. Calculate your runway: divide your savings plus severance by your monthly burn.
+3. Cancel unused subscriptions, pause RRSP contributions, and cut non-essential spending today.
 
 ---
 
-## Step 1: The Snapshot
+## Step 1: Add Up Your Income Sources
 
 Fill in every line. Be honest. Round to the nearest dollar.
 
-### Income Sources
-
 | Source | Monthly Amount |
 |--------|---------------|
-| Severance (divide total by expected months) | $ |
-| EI benefits (max $729/week = $3,159/mo in 2026) | $ |
+| Severance (total divided by expected months) | $ |
+| EI benefits (max $729/week = $3,159/mo in 2026; verify the current maximum at canada.ca/ei as the rate changes annually) | $ |
 | Partner/spouse income | $ |
 | Side income (freelance, consulting, gig work) | $ |
 | Investment income (dividends, interest) | $ |
 | Rental income | $ |
 | **Total Monthly Income** | **$** |
 
-### Accessible Savings
+**Action:** Log into your bank and add these up right now. Don't estimate from memory.
+
+---
+
+## Step 2: Add Up Your Accessible Savings
 
 | Account | Balance |
 |---------|---------|
 | Checking account | $ |
 | Savings account | $ |
-| TFSA (accessible without tax) | $ |
-| Non-registered investment account | $ |
+| TFSA (accessible without tax hit) | $ |
+| Non-registered investments | $ |
 | Emergency fund | $ |
 | **Total Accessible Savings** | **$** |
 
-**Do not include:** RRSP (taxable on withdrawal), locked-in pension, home equity (not liquid), retirement accounts you shouldn't touch.
+**Do not include:** RRSP (taxable on withdrawal), locked-in pension, home equity, or retirement accounts. These exist as a safety net of last resort. You almost certainly won't need them. We exclude them so you plan conservatively.
+
+**Action:** Check your actual balances, not what you think they are.
 
 ---
 
-## Step 2: Monthly Expenses
+## Step 3: Track Your Monthly Expenses
 
-### Essential Expenses (cannot be reduced to zero)
+### Essential (can't be reduced to zero)
 
-| Category | Current Monthly | Can Reduce To |
-|----------|----------------|---------------|
+| Category | Current | Can Reduce To |
+|----------|---------|---------------|
 | Rent / Mortgage | $ | $ |
 | Utilities (hydro, gas, water, internet) | $ | $ |
 | Groceries | $ | $ |
-| Transportation (car payment, insurance, gas, transit) | $ | $ |
+| Transportation (car, insurance, gas, transit) | $ | $ |
 | Insurance (home/tenant, auto) | $ | $ |
 | Health costs (prescriptions, ongoing care) | $ | $ |
-| Minimum debt payments (credit cards, student loans, LOC) | $ | $ |
+| Minimum debt payments | $ | $ |
 | Childcare / Education | $ | $ |
 | Phone | $ | $ |
 | **Total Essential** | **$** | **$** |
 
-### Non-Essential Expenses (can be paused or reduced)
+### Non-Essential (can be paused or cut)
 
-| Category | Current Monthly | Can Reduce To |
-|----------|----------------|---------------|
+| Category | Current | Can Reduce To |
+|----------|---------|---------------|
 | Dining out / takeout | $ | $ |
-| Subscriptions (streaming, gym, apps, SaaS) | $ | $ |
+| Subscriptions (streaming, gym, apps) | $ | $ |
 | Entertainment | $ | $ |
-| Shopping (clothes, household, personal) | $ | $ |
+| Shopping (clothes, personal) | $ | $ |
 | Travel / vacations | $ | $ |
-| Gifts | $ | $ |
-| Hobbies | $ | $ |
+| Gifts and hobbies | $ | $ |
 | **Total Non-Essential** | **$** | **$** |
 
----
-
-## Step 3: Calculate Your Runway
-
-### Current Spending Mode
-
-```
-Monthly Burn Rate = Essential + Non-Essential
-Runway (months) = (Total Accessible Savings + Severance) / Monthly Burn Rate
-```
-
-### Reduced Spending Mode
-
-```
-Reduced Burn Rate = Essential (reduced) + Non-Essential (reduced)
-Extended Runway = (Total Accessible Savings + Severance) / Reduced Burn Rate
-```
-
-### With EI Added
-
-```
-Monthly Gap = Reduced Burn Rate - EI Benefits
-Extended Runway with EI = (Total Accessible Savings + Severance) / Monthly Gap
-```
+**Action:** Review last month's bank statement line by line. The "Can Reduce To" column is your reduced budget.
 
 ---
 
-## Step 4: Scenario Planning
+## Step 4: Calculate Your Runway
 
-Run three scenarios:
+Three formulas. Plug in your numbers:
 
-### Scenario A: Quick Landing (3 months)
-- Draw from: Severance + EI only
-- No savings drawdown needed
-- Keep current spending with minor adjustments
+**Current spending:**
+```
+Monthly Burn = Essential + Non-Essential
+Runway = (Savings + Severance) / Monthly Burn
+```
 
-### Scenario B: Average Search (6 months)
-- Draw from: Severance + EI + some savings
-- Cut non-essential spending by 50%
-- Total cost: 6 x Reduced Burn Rate
+**Reduced spending:**
+```
+Reduced Burn = Essential (reduced) + Non-Essential (reduced)
+Extended Runway = (Savings + Severance) / Reduced Burn
+```
 
-### Scenario C: Extended Search (12 months)
-- Draw from: Severance + EI + significant savings
-- Cut non-essential spending by 75%
-- Total cost: 12 x Minimum Burn Rate
-- Action trigger: If you hit month 9 with no offers, reassess strategy
+**With EI:**
+```
+Monthly Gap = Reduced Burn - EI Benefits
+Runway with EI = (Savings + Severance) / Monthly Gap
+```
+
+Note: EI typically lasts 14-45 weeks depending on your region. After EI ends, revert to the "Reduced spending" calculation.
+
+**Action:** Calculate all three. Write the numbers down. This is your runway.
 
 ---
 
-## Step 5: The Decision Framework
+## Step 5: Run Three Scenarios
 
-### When to tap each source:
+**Scenario A: Quick Landing (3 months)**
+Draw from severance + EI only. No savings needed. Keep current spending with minor cuts.
 
-| Order | Source | When to Use |
-|-------|--------|------------|
-| 1st | Severance | First. This is your runway money. |
+**Scenario B: Average Search (6 months)**
+Severance + EI + some savings. Cut non-essential spending by 50%. Total cost: 6 x Reduced Burn.
+
+**Scenario C: Extended Search (12 months)**
+Severance + EI + significant savings. Cut non-essential by 75%. If you hit month 9 with no offers, revisit your target roles, salary expectations, and approach. The Job Search Launch Plan has guidance on pivoting.
+
+**Action:** Which scenario does your runway support? Plan for Scenario B, prepare for C.
+
+---
+
+## Step 6: Know Which Money to Tap First
+
+| Order | Source | Notes |
+|-------|--------|-------|
+| 1st | Severance | This is your runway money. Use it first. |
 | 2nd | EI benefits | Apply immediately. Use alongside severance. |
-| 3rd | TFSA | Tax-free withdrawals. No penalty. Contribution room returns next January. |
+| 3rd | TFSA | Tax-free withdrawals. Contribution room returns next January. |
 | 4th | Non-registered investments | May trigger capital gains tax, but accessible. |
-| 5th | Line of credit | Only if interest rate is reasonable (<8%). Last resort before RRSP. |
-| **Avoid** | RRSP | Taxable on withdrawal. Loses contribution room permanently. Absolute last resort. |
-| **Avoid** | Credit card debt | 20%+ interest. Never use credit cards to fund a job search. |
+| 5th | Line of credit | Only if the rate is manageable and you have a clear repayment plan. Last resort before RRSP. |
+| **Avoid** | RRSP | Taxable on withdrawal. Loses contribution room permanently. |
+| **Avoid** | Credit card debt | 20%+ interest. Never fund a job search with credit cards. |
 
 ---
 
-## Step 6: Immediate Cost Cuts (Low Pain, High Impact)
+## Step 7: Cut Costs Now (Low Pain, High Impact)
 
-These won't change your quality of life but will extend your runway:
+These extend your runway without changing your quality of life:
 
-1. **Cancel unused subscriptions.** Log into your bank and review every recurring charge. Most people find $50-$150/month in forgotten subscriptions.
-2. **Switch to a cheaper phone plan.** $25-$35 plans from Koodo, Public Mobile, or Lucky Mobile cover most needs.
-3. **Pause gym membership.** Walk, run, or do home workouts for now.
-4. **Reduce dining out by 70%.** Cook at home. Meal prep on Sundays.
-5. **Negotiate insurance.** Call your auto and home insurance provider and ask for a rate review. Mention you're shopping around.
-6. **Pause RRSP contributions.** If you had automatic contributions, pause them until you're employed again.
-7. **Review streaming services.** Keep one. Pause the rest.
+1. **Cancel unused subscriptions.** Review every recurring charge. Most people find $50-$150/month they forgot about.
+2. **Switch phone plan.** Discount carriers (Koodo, Public Mobile, Fizz, or similar) offer plans in the $25-$40 range that cover most needs.
+3. **Pause gym membership.** Walk, run, or do home workouts.
+4. **Cut dining out by 70%.** Cook at home. Meal prep on Sundays.
+5. **Negotiate insurance.** Call your auto and home insurance and ask for a rate review.
+6. **Pause RRSP contributions.** If automatic, stop them until you're working again.
+7. **Keep one streaming service.** Pause the rest.
 
----
-
-## Step 7: Side Income Options
-
-While job searching, consider generating supplementary income:
-
-| Option | Expected Monthly | Time Investment | Ramp-Up |
-|--------|-----------------|----------------|---------|
-| Freelance consulting (in your field) | $2,000-$8,000 | 10-20 hrs/week | 2-4 weeks |
-| Contract/project work | $3,000-$10,000 | 20-40 hrs/week | 1-2 weeks |
-| Tutoring/coaching | $500-$2,000 | 5-10 hrs/week | 1 week |
-| Part-time retail/service | $1,500-$2,500 | 15-25 hrs/week | Immediate |
-
-**Important:** If you're collecting EI, you must report all earnings. You can earn up to 25% of your weekly EI benefit (or $50, whichever is higher) before deductions apply. Above that threshold, EI is reduced $0.50 for every $1 you earn.
+**Action:** Do steps 1, 2, and 6 today. They take 15 minutes total.
 
 ---
 
-## Step 8: The 30-Day Financial Checkpoint
+## Step 8: Set a 30-Day Checkpoint
 
-Put a reminder on your calendar for 30 days from today. Review:
+Put a reminder on your calendar for 30 days from today. Review these questions:
 
-- [ ] How much have I spent vs. my reduced budget?
-- [ ] Is my EI flowing?
-- [ ] Have I reduced non-essential spending as planned?
-- [ ] Is my runway still on track for Scenario B (6 months)?
-- [ ] Do I need to accelerate my job search strategy?
-- [ ] Should I start freelancing or consulting?
+- How much have I spent vs. my reduced budget?
+- Is my EI flowing?
+- Have I cut non-essential spending as planned?
+- Is my runway still on track for Scenario B?
+- Should I start freelancing or consulting?
+
+**EI and side income:** You can earn up to 25% of your weekly EI benefit (or $50, whichever is higher) before deductions. Above that, EI is reduced $0.50 for every $1 earned. Verify current EI earnings rules at canada.ca/ei, as thresholds are updated periodically.
 
 ---
 
 ## Key Takeaway
 
-Knowing your number changes everything. When you know you have 8 months of runway, you can be strategic about your job search instead of desperate. When you know you have 4 months, you can make informed decisions about where to cut. The worst position is not knowing. Run the numbers today.
+Knowing your number changes everything. With 8 months of runway, you can be strategic. With 4 months, you can make informed cuts. The worst position is not knowing. Run the numbers today.

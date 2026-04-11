@@ -67,6 +67,7 @@ export const PROVINCES: ProvinceRules[] = [
       { minYears: 0, weeks: 0 },
       { minYears: 0.25, weeks: 1 },
       { minYears: 2, weeks: 2 },
+      { minYears: 3, weeks: 3 },
       { minYears: 4, weeks: 4 },
       { minYears: 6, weeks: 5 },
       { minYears: 8, weeks: 6 },
@@ -176,11 +177,11 @@ export const PROVINCES: ProvinceRules[] = [
     severancePay: {
       eligible: true,
       minYears: 1,
-      weeksPer: 0.4, // 2 days per year = ~0.4 weeks
+      weeksPer: 1.0, // 5 days per year = 1 week per year of service
       maxWeeks: 52, // no explicit cap, but practically limited
     },
     notes:
-      "Federal employees (banks, telecoms, airlines, railways, etc.) get 2 weeks notice + 2 days/year severance. Different rules than provincial.",
+      "Federal employees (banks, telecoms, airlines, railways, etc.) get 2 weeks notice + 5 days/year severance (1 week/year). Different rules than provincial.",
   },
 ];
 

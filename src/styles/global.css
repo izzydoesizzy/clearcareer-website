@@ -281,6 +281,16 @@
   50% { opacity: 0.5; }
 }
 
+/* ── Scrollbar Hide (for horizontal tab bars) ── */
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 /* ── Print Styles ── */
 
 @media print {

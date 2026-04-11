@@ -16,6 +16,7 @@ const ID_TO_FILE: Record<string, string> = {
   "08-reference-strategy": "08-reference-strategy-guide.md",
   "09-non-compete-audit": "09-non-compete-audit-checklist.md",
   "10-job-search-plan": "10-job-search-launch-plan.md",
+  "11-mental-health": "11-mental-health-resilience-guide.md",
 };
 
 export const GET: APIRoute = async ({ params }) => {
