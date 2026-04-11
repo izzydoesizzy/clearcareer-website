@@ -28,6 +28,7 @@ export const POST: APIRoute = async ({ url }) => {
       ui_mode: "embedded_page",
       mode: "payment",
       payment_method_types: ["card"],
+      allow_promotion_codes: true,
       line_items: [{ price: priceId, quantity: 1 }],
       metadata: { product: "layoff-survival-kit" },
       return_url: `${baseUrl}/layoff-survival-kit/access/success?session_id={CHECKOUT_SESSION_ID}`,

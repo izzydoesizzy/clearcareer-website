@@ -1,0 +1,74 @@
+---
+import PageLayout from "@layouts/PageLayout.astro";
+
+const products = [
+  {
+    name: "Layoff Survival Kit",
+    price: "$67 CAD",
+    description:
+      "Everything you need in the first 72 hours after a layoff. Severance negotiation scripts, financial runway worksheets, employment lawyer directory, and a 30/60/90-day action plan.",
+    href: "/layoff-survival-kit",
+    cta: "Learn More",
+    badge: "Most Popular",
+  },
+  {
+    name: "Career Prompt Vault",
+    price: "$9 CAD",
+    description:
+      "50 ready-to-use AI prompt frameworks for your job search. Resume bullets, LinkedIn rewrites, interview prep, salary negotiation scripts. Works with ChatGPT, Claude, Gemini, and more.",
+    href: "/tools/career-prompt-vault",
+    cta: "Learn More",
+    badge: null,
+  },
+];
+---
+
+<PageLayout
+  title="Shop | ClearCareer"
+  description="Digital career tools to accelerate your job search. From layoff recovery kits to AI prompt frameworks."
+>
+  <section class="py-20">
+    <div class="mx-auto max-w-[1080px] px-4 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-2xl text-center">
+        <h1 class="text-4xl font-bold tracking-tight text-text sm:text-5xl">
+          Digital Career Tools
+        </h1>
+        <p class="mt-4 text-lg text-text-muted">
+          Practical resources to give your job search an edge.
+        </p>
+      </div>
+
+      <div class="mt-16 grid gap-8 md:grid-cols-2">
+        {
+          products.map((product) => (
+            <a
+              href={product.href}
+              class="group relative flex flex-col rounded-2xl border border-border bg-white p-8 transition-shadow hover:shadow-lg"
+            >
+              {product.badge && (
+                <span class="absolute -top-3 left-6 rounded-full bg-blue px-3 py-1 text-xs font-semibold text-white">
+                  {product.badge}
+                </span>
+              )}
+              <h2 class="text-2xl font-bold text-text group-hover:text-blue">
+                {product.name}
+              </h2>
+              <p class="mt-1 text-2xl font-semibold text-blue">
+                {product.price}
+              </p>
+              <p class="mt-4 flex-1 text-sm leading-relaxed text-text-muted">
+                {product.description}
+              </p>
+              <div class="mt-6">
+                <span class="inline-flex items-center rounded-lg bg-blue px-5 py-2.5 text-sm font-semibold text-white transition-colors group-hover:bg-blue-dark">
+                  {product.cta}
+                  <span class="ml-2">&rarr;</span>
+                </span>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</PageLayout>

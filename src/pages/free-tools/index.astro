@@ -4,13 +4,16 @@ import Hero from "@components/Hero.astro";
 import CTASection from "@components/CTASection.astro";
 import ToolCard from "@components/ToolCard.astro";
 
-import toolsData from "@data/free-tools.json";
+import allToolsData from "@data/free-tools.json";
 
+const toolsData = allToolsData.filter((t) => !t.hidden);
 const categories = ["Financial Planning", "Job Search", "Interview & Resume"];
-const toolsByCategory = categories.map((cat) => ({
-  name: cat,
-  tools: toolsData.filter((t) => t.category === cat),
-}));
+const toolsByCategory = categories
+  .map((cat) => ({
+    name: cat,
+    tools: toolsData.filter((t) => t.category === cat),
+  }))
+  .filter((cat) => cat.tools.length > 0);
 
 const categoryDescriptions: Record<string, string> = {
   "Financial Planning":
