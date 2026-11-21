@@ -1,0 +1,1168 @@
+/*
+ * Land and Level Up: page-scoped styles. See /design.md.
+ * Plain CSS on purpose (no @apply, no theme()), unlayered so it wins over Tailwind's layers.
+ * Every class is prefixed llu- and only used inside the .llu root.
+ *
+ * Each band sets a small set of colour variables. Components read the variables,
+ * so the same card or quote works on paper, white, navy or blue.
+ */
+
+html:has(.llu),
+body:has(> .llu) {
+  background: #030620;
+  color: #2b3040;
+}
+
+.llu {
+  --llu-paper: #f7f6f2;
+  --llu-white: #ffffff;
+  --llu-ink: #030620;
+  --llu-blue: #0161ef;
+  --llu-body: #2b3040;
+  --llu-caption: #565c6b;
+  --llu-hairline: #e2dfd6;
+  --llu-panel: #0b1030;
+  --llu-panel-border: #262c52;
+
+  --llu-serif: "DM Serif Display", Georgia, serif;
+  --llu-sans: "Inter Variable", "Inter", system-ui, -apple-system, sans-serif;
+
+  /* Phone values. Desktop values are set at 768px. */
+  --llu-fs-display: 52px;
+  --llu-fs-h2: 34px;
+  --llu-fs-h3: 34px;
+  --llu-fs-lead: 20px;
+  --llu-fs-body: 17px;
+  --llu-fs-cap: 15px;
+  --llu-lh-h2: 1.1;
+  --llu-pad: 56px;
+  --llu-card-pad: 24px;
+  --llu-gap: 24px;
+  --llu-row-gap: 48px;
+
+  --llu-shadow: 0 1px 2px rgb(3 6 32 / 0.06);
+
+  font-family: var(--llu-sans);
+  font-size: var(--llu-fs-body);
+  line-height: 1.55;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (min-width: 768px) {
+  .llu {
+    --llu-fs-display: 76px;
+    --llu-fs-h2: 52px;
+    --llu-fs-cap: 14px;
+    --llu-lh-h2: 1.06;
+    --llu-pad: 96px;
+    --llu-card-pad: 32px;
+    --llu-gap: 32px;
+    --llu-row-gap: 72px;
+  }
+}
+
+/* ── Bands ──────────────────────────────────────────────────────────────── */
+.llu-band,
+.llu-card {
+  /* light scheme (paper band, white band, and any white card on a dark band) */
+  --fg-strong: var(--llu-ink);
+  --fg: var(--llu-body);
+  --fg-muted: var(--llu-caption);
+  --fg-accent: var(--llu-blue);
+  --rule: var(--llu-hairline);
+  --surface: var(--llu-white);
+  --surface-border: var(--llu-hairline);
+  --surface-shadow: var(--llu-shadow);
+  --chip-bg: var(--llu-paper);
+  --mark-color: var(--llu-blue);
+  --mark-line: transparent;
+  --btn-hover-bg: var(--llu-ink);
+  --btn-hover-fg: var(--llu-white);
+  --focus: var(--llu-blue);
+  color: var(--fg);
+}
+.llu-band {
+  padding: var(--llu-pad) 0;
+  scroll-margin-top: 72px;
+  background: var(--llu-paper);
+}
+.llu-band--white {
+  background: var(--llu-white);
+  --surface: var(--llu-paper);
+  --chip-bg: var(--llu-white);
+}
+.llu-band--navy {
+  background: var(--llu-ink);
+  --fg-strong: var(--llu-white);
+  --fg: var(--llu-paper);
+  --fg-muted: var(--llu-hairline);
+  --fg-accent: var(--llu-hairline);
+  --rule: var(--llu-panel-border);
+  --surface: var(--llu-panel);
+  --surface-border: var(--llu-panel-border);
+  --surface-shadow: none;
+  --chip-bg: var(--llu-ink);
+  --mark-color: var(--llu-white);
+  --mark-line: var(--llu-blue);
+  --btn-hover-bg: var(--llu-white);
+  --btn-hover-fg: var(--llu-ink);
+  --focus: var(--llu-white);
+}
+.llu-band--blue {
+  background: var(--llu-blue);
+  --fg-strong: var(--llu-white);
+  --fg: var(--llu-white);
+  --fg-muted: var(--llu-white);
+  --fg-accent: var(--llu-white);
+  --rule: var(--llu-white);
+  --surface: var(--llu-white);
+  --surface-border: var(--llu-white);
+  --surface-shadow: none;
+  --focus: var(--llu-white);
+}
+.llu-band--tight {
+  padding: 48px 0;
+}
+.llu-band--join {
+  padding-top: 0;
+}
+
+/* ── Layout ─────────────────────────────────────────────────────────────── */
+.llu-wrap {
+  width: 100%;
+  max-width: 1168px; /* 1120 content + 24 gutters */
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.llu-stack > * + * {
+  margin-top: 16px;
+}
+.llu-measure {
+  max-width: 600px;
+}
+.llu-mt-8 { margin-top: 8px; }
+.llu-mt-16 { margin-top: 16px; }
+.llu-mt-24 { margin-top: 24px; }
+.llu-mt-32 { margin-top: 32px; }
+.llu-mt-48 { margin-top: 48px; }
+.llu-mt-72 { margin-top: 72px; }
+.llu-block { display: block; }
+
+/* Section header: centred from 768px, left-aligned on phones */
+.llu-head {
+  max-width: 800px;
+}
+.llu-head > * + * {
+  margin-top: 16px;
+}
+@media (min-width: 768px) {
+  .llu-head {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+  .llu-center {
+    text-align: center;
+  }
+  .llu-center-row {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.llu-grid {
+  display: grid;
+  gap: var(--llu-gap);
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 768px) {
+  .llu-grid--2,
+  .llu-grid--4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .llu-grid--3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1024px) {
+  .llu-grid--4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* Two-column row: words on one side, one visual on the other */
+.llu-row {
+  display: grid;
+  gap: var(--llu-row-gap) 72px;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+}
+.llu-row + .llu-row {
+  margin-top: var(--llu-pad);
+}
+@media (min-width: 1024px) {
+  .llu-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .llu-row--flip > :first-child {
+    order: 2;
+  }
+  .llu-row--top {
+    align-items: start;
+  }
+}
+
+/* ── Type ───────────────────────────────────────────────────────────────── */
+.llu-display,
+.llu-h2,
+.llu-h3 {
+  font-family: var(--llu-serif);
+  font-weight: 400;
+  font-synthesis: none;
+  color: var(--fg-strong);
+  text-wrap: balance;
+}
+.llu-display {
+  font-size: var(--llu-fs-display);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+}
+.llu-h2 {
+  font-size: var(--llu-fs-h2);
+  line-height: var(--llu-lh-h2);
+  letter-spacing: -0.01em;
+}
+.llu-h3 {
+  font-size: var(--llu-fs-h3);
+  line-height: 1.1;
+}
+.llu-lead {
+  font-size: var(--llu-fs-lead);
+  line-height: 1.5;
+}
+.llu-title {
+  font-size: var(--llu-fs-lead);
+  line-height: 1.3;
+  font-weight: 600;
+  color: var(--fg-strong);
+}
+.llu-cap {
+  font-size: var(--llu-fs-cap);
+  line-height: 1.5;
+  color: var(--fg-muted);
+}
+.llu-eyebrow {
+  font-size: var(--llu-fs-cap);
+  line-height: 1.5;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-accent);
+}
+.llu-strong {
+  font-weight: 600;
+  color: var(--fg-strong);
+}
+.llu-num {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+.llu-mark {
+  background: none;
+  color: var(--mark-color);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--mark-line);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+/* ── Button and links ───────────────────────────────────────────────────── */
+.llu-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 56px;
+  padding: 0 32px;
+  border-radius: 999px;
+  border: 1px solid var(--llu-blue);
+  background: var(--llu-blue);
+  color: var(--llu-white);
+  font-size: var(--llu-fs-body);
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 120ms, border-color 120ms;
+}
+@media (min-width: 768px) {
+  .llu-btn {
+    width: auto;
+  }
+  .llu-btn--wide {
+    width: 100%;
+  }
+}
+.llu-btn:hover {
+  background: var(--btn-hover-bg);
+  border-color: var(--btn-hover-bg);
+  color: var(--btn-hover-fg);
+}
+.llu-btn:focus-visible,
+.llu-link:focus-visible,
+.llu-navlink:focus-visible,
+.llu-details summary:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.llu-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--fg-accent);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+.llu-band--navy .llu-link,
+.llu-band--blue .llu-link {
+  color: var(--llu-white);
+}
+.llu-card .llu-link {
+  color: var(--llu-blue);
+}
+.llu-link:hover {
+  text-decoration-thickness: 2px;
+}
+.llu-link--cap {
+  font-size: var(--llu-fs-cap);
+}
+/* A link inside a sentence: padding widens the hit area to 44px without moving the line. */
+.llu-link--inline {
+  display: inline;
+  min-height: 0;
+  padding: 16px 0;
+}
+
+/* ── Nav ────────────────────────────────────────────────────────────────── */
+.llu-nav {
+  --fg-strong: var(--llu-white);
+  --fg-muted: var(--llu-hairline);
+  --btn-hover-bg: var(--llu-white);
+  --btn-hover-fg: var(--llu-ink);
+  --focus: var(--llu-white);
+  background: var(--llu-ink);
+  border-bottom: 1px solid var(--llu-panel-border);
+  color: var(--llu-paper);
+}
+.llu-nav__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 24px;
+  min-height: 72px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+.llu-nav__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 44px;
+  white-space: nowrap;
+  color: var(--llu-white);
+  text-decoration: none;
+}
+.llu-nav__logo {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+}
+.llu-nav__mark {
+  display: block;
+  font-family: var(--llu-serif);
+  font-synthesis: none;
+  font-size: 20px;
+  line-height: 1.1;
+}
+.llu-nav__sub {
+  display: block;
+  font-size: var(--llu-fs-cap);
+  line-height: 1.4;
+  color: var(--llu-hairline);
+}
+.llu-nav__links {
+  display: none;
+}
+.llu-navlink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  white-space: nowrap;
+  font-size: var(--llu-fs-cap);
+  font-weight: 600;
+  color: var(--llu-paper);
+  text-decoration: underline;
+  text-decoration-color: var(--llu-ink);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: text-decoration-color 120ms;
+}
+.llu-navlink:hover {
+  text-decoration-color: var(--llu-white);
+}
+.llu-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--llu-fs-cap);
+  line-height: 1.5;
+  font-weight: 600;
+  color: var(--llu-white);
+}
+.llu-dot {
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--llu-blue);
+  animation: llu-dot-pulse 3.5s ease-in-out infinite;
+}
+@keyframes llu-dot-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .llu-dot {
+    animation: none;
+  }
+}
+.llu-nav__cta {
+  display: none;
+}
+@media (min-width: 1024px) {
+  .llu-nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .llu-nav__row {
+    flex-wrap: nowrap;
+  }
+  .llu-nav__right {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    white-space: nowrap;
+  }
+  .llu-nav__cta {
+    display: inline-flex;
+  }
+}
+@media (min-width: 1280px) {
+  .llu-nav__links {
+    display: flex;
+    gap: 24px;
+  }
+}
+
+/* ── Surfaces ───────────────────────────────────────────────────────────── */
+/* .llu-card is always white. .llu-surface follows its band. */
+.llu-card {
+  background: var(--llu-white);
+  border: 1px solid var(--llu-hairline);
+  border-radius: 20px;
+  box-shadow: var(--llu-shadow);
+  padding: var(--llu-card-pad);
+}
+.llu-surface {
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  border-radius: 20px;
+  padding: var(--llu-card-pad);
+}
+.llu-rule {
+  border: 0;
+  border-top: 1px solid var(--rule);
+}
+.llu-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  border: 1px solid var(--rule);
+}
+.llu-img--photo {
+  border-radius: 20px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+.llu-img--square {
+  aspect-ratio: 1;
+}
+.llu-img--portrait {
+  max-width: 440px;
+}
+
+/* ── Pills and chips ────────────────────────────────────────────────────── */
+.llu-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 4px 16px;
+  border-radius: 16px;
+  border: 1px solid var(--rule);
+  font-size: var(--llu-fs-cap);
+  line-height: 1.5;
+  font-weight: 600;
+  color: var(--fg-strong);
+}
+.llu-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid var(--rule);
+  background: var(--chip-bg);
+  font-size: var(--llu-fs-cap);
+  line-height: 1.5;
+  font-weight: 600;
+  color: var(--fg-strong);
+}
+.llu-chip--solid {
+  background: var(--llu-ink);
+  border-color: var(--llu-ink);
+  color: var(--llu-white);
+}
+.llu-chip--lg {
+  min-height: 48px;
+  padding: 8px 24px;
+  border-radius: 24px;
+  font-size: var(--llu-fs-body);
+  line-height: 1.3;
+}
+.llu-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+@media (min-width: 768px) {
+  .llu-chips--center {
+    justify-content: center;
+  }
+}
+/* question chips on the blue band */
+.llu-band--blue .llu-chip {
+  background: var(--llu-white);
+  border-color: var(--llu-white);
+  color: var(--llu-ink);
+}
+.llu-band--blue .llu-chip--alt {
+  background: var(--llu-paper);
+  border-color: var(--llu-paper);
+}
+
+/* ── People row ─────────────────────────────────────────────────────────── */
+.llu-people {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 768px) {
+  .llu-people {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1024px) {
+  .llu-people {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+.llu-person {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 24px 8px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--surface-border);
+  background: var(--surface);
+}
+.llu-face {
+  flex: none;
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  object-fit: cover;
+  border: 1px solid var(--rule);
+}
+.llu-face--sm {
+  width: 48px;
+  height: 48px;
+}
+.llu-face--lg {
+  width: 72px;
+  height: 72px;
+}
+.llu-face--initial {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--llu-paper);
+  color: var(--llu-ink);
+  font-family: var(--llu-serif);
+  font-synthesis: none;
+  font-size: 20px;
+  line-height: 1;
+}
+.llu-who {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.llu-who__name {
+  display: block;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--fg-strong);
+}
+
+/* ── Quote card ─────────────────────────────────────────────────────────── */
+.llu-quote {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.llu-quote__text {
+  color: var(--fg-strong);
+}
+.llu-quote--big .llu-quote__text {
+  font-family: var(--llu-serif);
+  font-synthesis: none;
+  font-size: var(--llu-fs-h3);
+  line-height: 1.1;
+}
+.llu-quote--big .llu-mark {
+  font-weight: 400;
+}
+
+/* Untouched LinkedIn screenshot: desktop only, where its text is readable */
+.llu-shot {
+  display: none;
+}
+@media (min-width: 960px) {
+  .llu-shot {
+    display: block;
+    max-width: 880px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .llu-shot img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    border: 1px solid var(--rule);
+  }
+  .llu-shot-fallback {
+    display: none;
+  }
+}
+
+/* ── Stats ──────────────────────────────────────────────────────────────── */
+.llu-stat__fig {
+  font-size: var(--llu-fs-h3);
+  line-height: 1.1;
+  font-weight: 600;
+  color: var(--fg-strong);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+.llu-stat__fig--xl {
+  font-size: var(--llu-fs-h2);
+  line-height: 1.04;
+}
+.llu-stat__label {
+  margin-top: 8px;
+  color: var(--fg);
+}
+/* three or four figures on a ruled row */
+.llu-ruled {
+  display: grid;
+  gap: 24px 32px;
+  grid-template-columns: minmax(0, 1fr);
+}
+.llu-ruled > * {
+  padding-top: 24px;
+  border-top: 1px solid var(--rule);
+}
+@media (min-width: 768px) {
+  .llu-ruled--3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .llu-ruled--4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1024px) {
+  .llu-ruled--4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* ── Hero ───────────────────────────────────────────────────────────────── */
+.llu-hero {
+  padding: 56px 0;
+}
+.llu-hero__inner > * + * {
+  margin-top: 24px;
+}
+.llu-hero__sub {
+  max-width: 720px;
+}
+.llu-hero__stats {
+  margin-top: 48px;
+}
+@media (min-width: 768px) {
+  .llu-hero {
+    padding: 72px 0;
+  }
+  .llu-hero__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .llu-hero__inner .llu-display {
+    max-width: 960px;
+  }
+  .llu-hero__stats {
+    width: 100%;
+    max-width: 880px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+}
+
+/* ── Chart (static, single series) ──────────────────────────────────────── */
+.llu-bars {
+  display: grid;
+  gap: 8px;
+}
+.llu-bars__row {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr) 32px;
+  align-items: center;
+  gap: 16px;
+  min-height: 32px;
+}
+.llu-bars__label {
+  font-size: var(--llu-fs-cap);
+  line-height: 1.3;
+  color: var(--llu-ink);
+}
+.llu-bars__track {
+  display: block;
+  height: 16px;
+  border-left: 1px solid var(--llu-ink);
+}
+.llu-bars__bar {
+  display: block;
+  height: 100%;
+  min-width: 4px;
+  background: var(--llu-blue);
+  border-radius: 0 4px 4px 0;
+}
+.llu-bars__bar--before {
+  background: var(--llu-caption);
+}
+.llu-bars__val {
+  font-size: var(--llu-fs-cap);
+  line-height: 1.3;
+  font-weight: 600;
+  color: var(--llu-ink);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* ── Interface views ────────────────────────────────────────────────────── */
+.llu-ui {
+  padding: 0;
+  overflow: hidden;
+  border-radius: 24px;
+}
+.llu-ui__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  padding: 16px var(--llu-card-pad);
+  border-bottom: 1px solid var(--llu-hairline);
+  background: var(--llu-paper);
+}
+.llu-ui__body {
+  padding: var(--llu-card-pad);
+}
+.llu-ui__foot {
+  padding: 0 var(--llu-card-pad) var(--llu-card-pad);
+}
+.llu-ui__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 0;
+  border-top: 1px solid var(--llu-hairline);
+}
+.llu-ui__row:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+.llu-ui__row:last-child {
+  padding-bottom: 0;
+}
+.llu-ui__day {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  min-height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--llu-hairline);
+  font-size: var(--llu-fs-cap);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--llu-ink);
+}
+.llu-ui__day--on {
+  background: var(--llu-blue);
+  border-color: var(--llu-blue);
+  color: var(--llu-white);
+}
+.llu-ui__grow {
+  flex: 1;
+  min-width: 0;
+}
+.llu-bubble {
+  max-width: 85%;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid var(--llu-hairline);
+  background: var(--llu-paper);
+  color: var(--llu-ink);
+}
+.llu-bubble--you {
+  margin-left: auto;
+  background: var(--llu-white);
+}
+.llu-bubble--out {
+  max-width: 100%;
+  background: var(--llu-ink);
+  border-color: var(--llu-ink);
+  color: var(--llu-white);
+}
+.llu-bubble--out .llu-cap {
+  color: var(--llu-hairline);
+}
+.llu-list {
+  display: grid;
+  gap: 8px;
+}
+.llu-list li {
+  position: relative;
+  padding-left: 24px;
+}
+.llu-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--llu-blue);
+}
+.llu-list--no li::before {
+  width: 12px;
+  height: 2px;
+  top: 0.75em;
+  border-radius: 0;
+  background: var(--fg-muted);
+}
+/* list separated by top rules (used beside the Concierge view) */
+.llu-lines > * {
+  padding: 16px 0;
+  border-top: 1px solid var(--rule);
+}
+.llu-lines > :last-child {
+  border-bottom: 1px solid var(--rule);
+}
+
+/* Before and after pair */
+.llu-pair {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 768px) {
+  .llu-pair--side {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.llu-pair__label {
+  margin-bottom: 8px;
+}
+
+/* ── Wall of quotes ─────────────────────────────────────────────────────── */
+.llu-wall {
+  column-gap: var(--llu-gap);
+  columns: 1;
+}
+.llu-wall > * {
+  break-inside: avoid;
+  margin-bottom: var(--llu-gap);
+}
+@media (min-width: 768px) {
+  .llu-wall {
+    columns: 2;
+  }
+}
+@media (min-width: 1024px) {
+  .llu-wall {
+    columns: 3;
+  }
+}
+.llu-video {
+  display: block;
+  padding: 0;
+  overflow: hidden;
+  text-decoration: none;
+  transition: border-color 120ms;
+}
+.llu-video:hover {
+  border-color: var(--llu-blue);
+}
+.llu-video img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.llu-video__body {
+  display: block;
+  padding: 24px;
+}
+
+/* ── Pricing ────────────────────────────────────────────────────────────── */
+.llu-tier {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.llu-tier--lead {
+  border-color: var(--llu-white);
+}
+.llu-tier__price {
+  font-size: var(--llu-fs-h2);
+  line-height: 1.04;
+  font-weight: 600;
+  color: var(--fg-strong);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+.llu-tier__for {
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid var(--surface-border);
+  background: var(--llu-ink);
+}
+.llu-tier__grow {
+  flex: 1;
+}
+
+/* ── Objections ─────────────────────────────────────────────────────────── */
+.llu-details {
+  border-top: 1px solid var(--rule);
+}
+.llu-details:last-child {
+  border-bottom: 1px solid var(--rule);
+}
+.llu-details summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 72px;
+  padding: 16px 0;
+  cursor: pointer;
+  list-style: none;
+  font-size: var(--llu-fs-lead);
+  line-height: 1.3;
+  font-weight: 600;
+  color: var(--fg-strong);
+}
+.llu-details summary::-webkit-details-marker {
+  display: none;
+}
+.llu-details summary::after {
+  content: "+";
+  flex: none;
+  width: 24px;
+  text-align: center;
+  font-size: 20px;
+  line-height: 1;
+  font-weight: 400;
+  color: var(--llu-blue);
+}
+.llu-details[open] summary::after {
+  content: "\2212";
+}
+.llu-details summary:hover {
+  color: var(--llu-blue);
+}
+.llu-details__body {
+  padding: 0 0 32px;
+  max-width: 600px;
+}
+.llu-details__proof {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule);
+  color: var(--fg-strong);
+}
+
+/* ── Footer ─────────────────────────────────────────────────────────────── */
+.llu-footer {
+  padding-top: 48px;
+  margin-top: var(--llu-pad);
+  border-top: 1px solid var(--rule);
+}
+.llu-footer__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 24px;
+}
+.llu-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 24px;
+}
+
+/* Regular price, struck through beside the Black Friday price */
+.llu-strike {
+  margin-left: 8px;
+  font-size: var(--llu-fs-lead);
+  font-weight: 400;
+  color: var(--fg-muted);
+  text-decoration: line-through;
+}
+
+/* ── Black Friday bar: sticky, blue, always visible ─────────────────────── */
+.llu-dealbar {
+  /* The one deliberate exception to the single-accent rule: a warm brick red so the
+     sale reads as urgent. White on this red is 5.37:1. Used on this bar only. */
+  --llu-sale: #c2392b;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--llu-sale);
+  color: var(--llu-white);
+}
+.llu-dealbar__row {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0 16px;
+  min-height: 44px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.llu-dealbar__text {
+  flex: 0 1 auto;
+  min-width: 0;
+  font-size: var(--llu-fs-cap);
+  font-weight: 600;
+  line-height: 1.4;
+  text-align: left;
+}
+.llu-dealbar__label {
+  display: block;
+  margin-right: 0;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.llu-dealbar__short {
+  display: inline;
+}
+.llu-dealbar__long {
+  display: none;
+}
+.llu-dealbar__link {
+  flex: none;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: var(--llu-fs-cap);
+  font-weight: 600;
+  color: var(--llu-white);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+.llu-dealbar__link:hover {
+  text-decoration-thickness: 2px;
+}
+.llu-dealbar__link:focus-visible {
+  outline: 2px solid var(--llu-white);
+  outline-offset: 2px;
+}
+@media (min-width: 768px) {
+  .llu-dealbar__label {
+    display: inline;
+    margin-right: 8px;
+  }
+  .llu-dealbar__long {
+    display: inline;
+  }
+  .llu-dealbar__short {
+    display: none;
+  }
+}
+/* The nav sticks under the bar from 1024px, and anchors clear both */
+@media (min-width: 1024px) {
+  .llu-nav {
+    top: 44px;
+  }
+  .llu-band {
+    scroll-margin-top: 117px;
+  }
+}
+/* Label for the Black Friday price, beside the price and in the cost row */
+.llu-bf {
+  display: block;
+  font-size: var(--llu-fs-cap);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}

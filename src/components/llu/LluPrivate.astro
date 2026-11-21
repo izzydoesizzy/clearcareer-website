@@ -1,0 +1,45 @@
+---
+import { offer } from "@/data/llu";
+import LluImg from "./LluImg.astro";
+import { izzy } from "./images";
+
+const items = [
+  { t: "2 to 3 hours, one on one", d: "Just you and me, working through your resume and LinkedIn." },
+  { t: "Your story, with numbers", d: "We find the wins you've been leaving out and put them up front." },
+  { t: "Everything in the group cohort", d: "The room, the Wednesday call, the workshop and the AI interviewer." },
+];
+---
+
+<section class="llu-band" id="private">
+  <div class="llu-wrap">
+    <div class="llu-row llu-row--flip">
+      <div>
+        <p class="llu-eyebrow">The private rebuild</p>
+        <h2 class="llu-h2 llu-mt-16">Want me to rebuild it with you, 1:1?</h2>
+        <p class="llu-lead llu-measure llu-mt-24">
+          {offer.private.seatsTotal} seats include a private resume and LinkedIn rebuild with me.
+        </p>
+        <ul class="llu-lines llu-mt-32">
+          {
+            items.map((i) => (
+              <li>
+                <p class="llu-strong">{i.t}</p>
+                <p>{i.d}</p>
+              </li>
+            ))
+          }
+        </ul>
+        <a class="llu-link llu-mt-16" href="#pricing">Compare the two options</a>
+      </div>
+      <figure>
+        <LluImg
+          class="llu-img llu-img--square llu-img--portrait"
+          img={izzy.headshot}
+          alt="Izzy Piyale-Sheard, founder of ClearCareer"
+          sizes="(min-width: 1024px) 440px, calc(100vw - 48px)"
+        />
+        <figcaption class="llu-cap llu-mt-16">Izzy Piyale-Sheard. I do every private rebuild myself.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>

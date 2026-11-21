@@ -1,0 +1,40 @@
+---
+import { offer, survey, SURVEY_SOURCE, NEW_PROGRAM_NOTE } from "@/data/llu";
+import LluButton from "./LluButton.astro";
+---
+
+<section class="llu-band llu-band--navy llu-hero" id="top">
+  <div class="llu-wrap">
+    <div class="llu-hero__inner">
+      <p class="llu-pill">For experienced professionals between roles</p>
+      <h1 class="llu-display">You shouldn't have to job search alone.</h1>
+      <p class="llu-lead llu-hero__sub">
+        A small paid room for professionals between roles. We rebuild your resume and LinkedIn together, then work your
+        search live every Wednesday.
+      </p>
+      <LluButton />
+      <p class="llu-cap">
+        Black Friday pricing ends {offer.dealEndsLong}. We start {offer.startDateShort}.
+        <span class="llu-num">{offer.seatsTotal}</span> seats.
+      </p>
+    </div>
+
+    <div class="llu-hero__stats">
+      <dl class="llu-ruled llu-ruled--3">
+        <div>
+          <dt class="llu-stat__fig llu-stat__fig--xl">{survey.landed} of {survey.n}</dt>
+          <dd class="llu-stat__label">past members landed a role</dd>
+        </div>
+        <div>
+          <dt class="llu-stat__fig llu-stat__fig--xl">{survey.withinOneMonth} of {survey.landed}</dt>
+          <dd class="llu-stat__label">of those landed within a month</dd>
+        </div>
+        <div>
+          <dt class="llu-stat__fig llu-stat__fig--xl">8 of 8</dt>
+          <dd class="llu-stat__label">LinkedIn reviews are 5.0 stars</dd>
+        </div>
+      </dl>
+      <p class="llu-cap llu-mt-24">{SURVEY_SOURCE} {NEW_PROGRAM_NOTE} Results vary.</p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,49 @@
+---
+import { offer, SURVEY_SOURCE, NEW_PROGRAM_NOTE, RESULTS_VARY } from "@/data/llu";
+import LluButton from "./LluButton.astro";
+import LluImg from "./LluImg.astro";
+import { izzy, logo } from "./images";
+---
+
+<section class="llu-band llu-band--navy" id="join">
+  <div class="llu-wrap">
+    <div class="llu-head">
+      <p class="llu-eyebrow">
+        <span class="llu-num">{offer.seatsLeft} of {offer.seatsTotal}</span> founding seats left
+      </p>
+      <h2 class="llu-h2">You've done this alone for long enough.</h2>
+      <p class="llu-lead">
+        We start {offer.startDateLong}. Black Friday pricing ends {offer.dealEndsLong}.
+      </p>
+    </div>
+    <div class="llu-center-row llu-mt-32">
+      <LluButton />
+    </div>
+    <div class="llu-center-row llu-mt-48">
+      <div class="llu-who">
+        <LluImg class="llu-face llu-face--lg" img={izzy.faceYellow} alt="Izzy Piyale-Sheard" size={72} />
+        <p>
+          <span class="llu-who__name">I can't promise you a job. Nobody honest can.</span>
+          <span class="llu-cap llu-block">I can promise you won't be guessing alone. Izzy</span>
+        </p>
+      </div>
+    </div>
+
+    <footer class="llu-footer">
+      <div class="llu-footer__row">
+        <div class="llu-who">
+          <LluImg class="llu-nav__logo" img={logo} alt="" size={32} />
+          <p class="llu-cap">© 2026 ClearCareer. joinclearcareer.com</p>
+        </div>
+        <div class="llu-footer__links">
+          <a class="llu-link llu-link--cap" href="/privacy">Privacy</a>
+          <a class="llu-link llu-link--cap" href="/terms">Terms</a>
+        </div>
+      </div>
+      <p class="llu-cap llu-mt-24">
+        {RESULTS_VARY} {NEW_PROGRAM_NOTE} {SURVEY_SOURCE} Client reviews are public on LinkedIn. Other quotes are from
+        ClearCareer clients, shared with first name and last initial.
+      </p>
+    </footer>
+  </div>
+</section>

@@ -1,0 +1,28 @@
+---
+import { offer, navLinks } from "@/data/llu";
+import LluButton from "./LluButton.astro";
+import LluImg from "./LluImg.astro";
+import { logo } from "./images";
+---
+
+<header class="llu-nav">
+  <div class="llu-wrap llu-nav__row">
+    <a class="llu-nav__brand" href="#top" aria-label="ClearCareer, Land and Level Up">
+      <LluImg class="llu-nav__logo" img={logo} alt="" size={32} eager />
+      <span>
+        <span class="llu-nav__mark">ClearCareer</span>
+        <span class="llu-nav__sub">Land and Level Up</span>
+      </span>
+    </a>
+    <nav class="llu-nav__links" aria-label="Sections">
+      {navLinks.map((l) => <a class="llu-navlink" href={l.href}>{l.label}</a>)}
+    </nav>
+    <div class="llu-nav__right">
+      <p class="llu-status">
+        <span class="llu-dot" aria-hidden="true"></span>
+        <span>Founding group open, <span class="llu-num">{offer.seatsLeft} of {offer.seatsTotal}</span> seats left</span>
+      </p>
+      <LluButton class="llu-nav__cta" />
+    </div>
+  </div>
+</header>

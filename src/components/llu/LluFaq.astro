@@ -1,0 +1,36 @@
+---
+import { objections, objectionsForSchema, quotes } from "@/data/llu";
+import { generateFAQSchema } from "@utils/seo";
+import LluReviewCard from "./LluReviewCard.astro";
+
+const schema = generateFAQSchema(objectionsForSchema);
+---
+
+<section class="llu-band llu-band--white" id="questions">
+  <div class="llu-wrap">
+    <div class="llu-row llu-row--top">
+      <div>
+        <p class="llu-eyebrow">Your doubts</p>
+        <h2 class="llu-h2 llu-mt-16">The questions I'd ask too.</h2>
+        <p class="llu-lead llu-measure llu-mt-24">You've been burned before. Here are honest answers.</p>
+        <LluReviewCard class="llu-mt-32" variant="plain" item={quotes.surveyLayoff} />
+      </div>
+      <div>
+        {
+          objections.map((o, i) => (
+            <details class="llu-details" open={i === 0}>
+              <summary>{o.q}</summary>
+              <div class="llu-details__body llu-stack">
+                {o.a.map((p) => (
+                  <p>{p}</p>
+                ))}
+                <p class="llu-details__proof">{o.proof}</p>
+              </div>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />
+</section>

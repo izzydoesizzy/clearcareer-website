@@ -1,0 +1,33 @@
+---
+import { offer } from "@/data/llu";
+import LluButton from "./LluButton.astro";
+
+const steps = [
+  { when: "Today", body: `You claim one of ${offer.seatsTotal} founding seats.` },
+  { when: "Mon, Dec 7", body: "The room opens. You get the community and the AI Achievement Interviewer." },
+  { when: "Wed, Dec 9", body: "Our first live call. One hour. Bring one thing that's stuck." },
+  { when: "First weeks", body: "We rebuild your resume and LinkedIn in the workshop, or 1:1 if you chose that." },
+];
+---
+
+<section class="llu-band llu-band--white" id="first-week">
+  <div class="llu-wrap">
+    <div class="llu-head">
+      <p class="llu-eyebrow">What happens first</p>
+      <h2 class="llu-h2">Your first week.</h2>
+    </div>
+    <ol class="llu-ruled llu-ruled--4 llu-mt-72">
+      {
+        steps.map((s) => (
+          <li>
+            <p class="llu-stat__fig">{s.when}</p>
+            <p class="llu-stat__label">{s.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+    <div class="llu-center-row llu-mt-72">
+      <LluButton />
+    </div>
+  </div>
+</section>

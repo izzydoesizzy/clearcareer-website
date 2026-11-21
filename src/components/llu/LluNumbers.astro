@@ -1,0 +1,80 @@
+---
+import { survey, SURVEY_SOURCE } from "@/data/llu";
+
+const max = Math.max(...survey.timeToLand.map((t) => t.count));
+const tiles = [
+  { fig: `${survey.landed} of ${survey.n}`, label: "had landed a role" },
+  { fig: `${survey.withinOneMonth} of ${survey.landed}`, label: "of those, within a month" },
+  { fig: `${survey.withinTwoMonths} of ${survey.landed}`, label: "of those, within two months" },
+  { fig: `${survey.fiveStar} of ${survey.n}`, label: "rated the program 5 out of 5" },
+  { fig: `${survey.fiveOrFewerInterviewsBefore} of ${survey.n}`, label: "had 5 or fewer interviews before" },
+  { fig: `${survey.searching7PlusMonthsBefore} of ${survey.n}`, label: "had searched 7 months or more" },
+];
+---
+
+<section class="llu-band" id="numbers">
+  <div class="llu-wrap">
+    <div class="llu-head">
+      <p class="llu-eyebrow">By the numbers</p>
+      <h2 class="llu-h2">I asked 58 past members what happened.</h2>
+      <p class="llu-lead">Including the {survey.stillSearching} who were still searching.</p>
+    </div>
+
+    <dl class="llu-grid llu-grid--3 llu-mt-72">
+      {
+        tiles.map((t) => (
+          <div class="llu-card">
+            <dt class="llu-stat__fig">{t.fig}</dt>
+            <dd class="llu-stat__label">{t.label}</dd>
+          </div>
+        ))
+      }
+    </dl>
+
+    <div class="llu-grid llu-grid--2 llu-mt-32">
+      <figure class="llu-card">
+        <figcaption class="llu-title">How long it took the {survey.landed} who landed</figcaption>
+        <div class="llu-bars llu-mt-24" role="list">
+          {
+            survey.timeToLand.map((t) => (
+              <div class="llu-bars__row" role="listitem" aria-label={`${t.label}: ${t.count} members`}>
+                <span class="llu-bars__label">{t.label}</span>
+                <span class="llu-bars__track">
+                  <span class="llu-bars__bar" style={`width:${(t.count / max) * 100}%`} />
+                </span>
+                <span class="llu-bars__val">{t.count}</span>
+              </div>
+            ))
+          }
+        </div>
+      </figure>
+
+      <figure class="llu-card">
+        <figcaption class="llu-title">Confidence in their search, out of 5</figcaption>
+        <div class="llu-bars llu-mt-24" role="list">
+          <div class="llu-bars__row" role="listitem" aria-label={`Before joining: ${survey.confidenceBefore.toFixed(2)} out of 5`}>
+            <span class="llu-bars__label">Before joining</span>
+            <span class="llu-bars__track">
+              <span class="llu-bars__bar llu-bars__bar--before" style={`width:${(survey.confidenceBefore / 5) * 100}%`} />
+            </span>
+            <span class="llu-bars__val">{survey.confidenceBefore.toFixed(2)}</span>
+          </div>
+          <div class="llu-bars__row" role="listitem" aria-label={`After: ${survey.confidenceAfter.toFixed(2)} out of 5`}>
+            <span class="llu-bars__label">After</span>
+            <span class="llu-bars__track">
+              <span class="llu-bars__bar" style={`width:${(survey.confidenceAfter / 5) * 100}%`} />
+            </span>
+            <span class="llu-bars__val">{survey.confidenceAfter.toFixed(2)}</span>
+          </div>
+        </div>
+        <p class="llu-mt-32">
+          Past members also rated my resume support
+          <span class="llu-strong llu-num">{survey.resumeSupportRating.toFixed(2)}</span> and my weekly calls
+          <span class="llu-strong llu-num">{survey.weeklyCallsRating.toFixed(2)}</span> out of 5.
+        </p>
+      </figure>
+    </div>
+
+    <p class="llu-cap llu-center llu-mt-32">{SURVEY_SOURCE} Land and Level Up is new, so these come from my earlier programs.</p>
+  </div>
+</section>

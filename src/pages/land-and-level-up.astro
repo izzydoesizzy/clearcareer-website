@@ -1,0 +1,58 @@
+---
+/**
+ * Land and Level Up: founding-group sales page.
+ * Visual system: /design.md. Every number and quote: src/data/llu.ts.
+ * No client JavaScript. No data-animate. One primary action.
+ *
+ * LAUNCH CHECKLIST: remove `noindex` here, remove the sitemap filter in astro.config.mjs,
+ * and paste the live Stripe links into src/data/llu.ts.
+ */
+import BaseLayout from "@layouts/BaseLayout.astro";
+import "@/styles/llu.css";
+
+import LluDealBar from "@components/llu/LluDealBar.astro";
+import LluNav from "@components/llu/LluNav.astro";
+import LluHero from "@components/llu/LluHero.astro";
+import LluPeople from "@components/llu/LluPeople.astro";
+import LluWhy from "@components/llu/LluWhy.astro";
+import LluQuestions from "@components/llu/LluQuestions.astro";
+import LluInside from "@components/llu/LluInside.astro";
+import LluPrivate from "@components/llu/LluPrivate.astro";
+import LluFirstWeek from "@components/llu/LluFirstWeek.astro";
+import LluResults from "@components/llu/LluResults.astro";
+import LluProfiles from "@components/llu/LluProfiles.astro";
+import LluWho from "@components/llu/LluWho.astro";
+import LluNumbers from "@components/llu/LluNumbers.astro";
+import LluPricing from "@components/llu/LluPricing.astro";
+import LluHost from "@components/llu/LluHost.astro";
+import LluFaq from "@components/llu/LluFaq.astro";
+import LluClose from "@components/llu/LluClose.astro";
+
+const title = "Land and Level Up | A job search community by ClearCareer";
+const description =
+  "A small, paid room for experienced professionals between roles. Rebuild your resume and LinkedIn with Izzy and a group, plus a live call every Wednesday. 16 founding seats. Starts December 7, 2026.";
+---
+
+<BaseLayout title={title} description={description} image="/open-graph/land-and-level-up.png" noindex>
+  <div class="llu">
+    <LluDealBar />
+    <LluNav />
+    <main id="main-content">
+      <LluHero />
+      <LluPeople />
+      <LluWhy />
+      <LluQuestions />
+      <LluInside />
+      <LluPrivate />
+      <LluFirstWeek />
+      <LluResults />
+      <LluProfiles />
+      <LluWho />
+      <LluNumbers />
+      <LluPricing />
+      <LluHost />
+      <LluFaq />
+      <LluClose />
+    </main>
+  </div>
+</BaseLayout>

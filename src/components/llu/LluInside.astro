@@ -1,0 +1,129 @@
+---
+import { offer, reviews, survey, SURVEY_SOURCE } from "@/data/llu";
+import LluImg from "./LluImg.astro";
+import LluReviewCard from "./LluReviewCard.astro";
+import { profiles } from "./images";
+
+const week = [
+  { day: "Wed", on: true, title: "Live group call with Izzy", note: "Every week, starting December 9", tag: "Live" },
+  { day: "Live", on: false, title: "Rebuild workshop", note: "Resume and LinkedIn, with hot seats", tag: "Group" },
+  { day: "Any", on: false, title: "The community", note: "Ask, share a win, get feedback", tag: "Open" },
+  { day: "Any", on: false, title: "AI Achievement Interviewer", note: "Find the numbers in your work", tag: "Yours" },
+];
+---
+
+<section class="llu-band llu-band--white" id="inside">
+  <div class="llu-wrap">
+    <div class="llu-head">
+      <p class="llu-eyebrow">What's inside</p>
+      <h2 class="llu-h2">Here's what you get.</h2>
+    </div>
+
+    <!-- 1. The room and the Wednesday call -->
+    <div class="llu-row llu-mt-72">
+      <div>
+        <p class="llu-eyebrow">Live every Wednesday</p>
+        <h3 class="llu-h3 llu-mt-16">One hour a week that keeps you moving.</h3>
+        <div class="llu-stack llu-measure llu-mt-24">
+          <p>Every Wednesday we meet live. {offer.seatsTotal} people at most. Bring what happened this week.</p>
+          <p>We fix what isn't working. You leave knowing what to do before next Wednesday.</p>
+        </div>
+        <LluReviewCard class="llu-mt-32" item={reviews.sparsh} />
+      </div>
+      <div class="llu-card llu-ui">
+        <div class="llu-ui__bar">
+          <span class="llu-title">Your 3 months in the room</span>
+          <span class="llu-cap">Starts {offer.startDateShort}</span>
+        </div>
+        <ul class="llu-ui__body">
+          {
+            week.map((w) => (
+              <li class="llu-ui__row">
+                <span class:list={["llu-ui__day", w.on && "llu-ui__day--on"]}>{w.day}</span>
+                <div class="llu-ui__grow">
+                  <p class="llu-strong">{w.title}</p>
+                  <p class="llu-cap">{w.note}</p>
+                </div>
+                <span class="llu-cap">{w.tag}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <!-- 2. The rebuild workshop -->
+    <div class="llu-row llu-row--flip">
+      <div>
+        <p class="llu-eyebrow">The rebuild workshop</p>
+        <h3 class="llu-h3 llu-mt-16">Your resume and LinkedIn, rebuilt with hot seats.</h3>
+        <div class="llu-stack llu-measure llu-mt-24">
+          <p>We rebuild together, live. I put a member's resume on screen and we rework it line by line.</p>
+          <p>You do the same to yours as we go. We keep digging until your work has numbers on it.</p>
+        </div>
+        <LluReviewCard class="llu-mt-32" item={reviews.tamara} />
+      </div>
+      <figure class="llu-card llu-ui">
+        <figcaption class="llu-ui__bar">
+          <span class="llu-title">Eblen G.</span>
+          <span class="llu-cap">A real LinkedIn profile, before and after</span>
+        </figcaption>
+        <div class="llu-ui__body llu-pair">
+          <div>
+            <span class="llu-chip llu-pair__label">Before</span>
+            <LluImg
+              class="llu-img"
+              img={profiles.eblen.before}
+              alt="Eblen G.'s LinkedIn profile before: a stock banner and a headline with no numbers"
+              sizes="(min-width: 1024px) 460px, calc(100vw - 96px)"
+            />
+          </div>
+          <div>
+            <span class="llu-chip llu-chip--solid llu-pair__label">After</span>
+            <LluImg
+              class="llu-img"
+              img={profiles.eblen.after}
+              alt="Eblen G.'s LinkedIn profile after: a custom banner and a headline with results"
+              sizes="(min-width: 1024px) 460px, calc(100vw - 96px)"
+            />
+          </div>
+          <p class="llu-strong">
+            “Delivered $850K in Total Contract Value | Drove 140+ Go-Lives & Achieved 30% Client Retention Increase”
+          </p>
+        </div>
+      </figure>
+    </div>
+
+    <!-- 3. AI Achievement Interviewer -->
+    <div class="llu-row">
+      <div>
+        <p class="llu-eyebrow">AI Achievement Interviewer</p>
+        <h3 class="llu-h3 llu-mt-16">A tool that pulls the numbers out of you.</h3>
+        <div class="llu-stack llu-measure llu-mt-24">
+          <p>Most people can't list their own wins. This asks you one question at a time until they have numbers.</p>
+          <p>We use what it finds in your rebuild and in your interviews.</p>
+          <p class="llu-cap">
+            Past members rated my AI prompts <span class="llu-num">{survey.aiPromptsRating.toFixed(2)}</span> out of 5.
+            {SURVEY_SOURCE}
+          </p>
+        </div>
+      </div>
+      <figure class="llu-card llu-ui">
+        <div class="llu-ui__bar">
+          <span class="llu-title">AI Achievement Interviewer</span>
+          <span class="llu-cap">Illustration, not a real transcript</span>
+        </div>
+        <div class="llu-ui__body llu-stack">
+          <p class="llu-bubble">What did you own in your last role?</p>
+          <p class="llu-bubble llu-bubble--you">Vendor contracts for our region.</p>
+          <p class="llu-bubble">How many? And what did you change?</p>
+          <p class="llu-bubble llu-bubble--you">About 40. I renegotiated the five biggest.</p>
+          <div class="llu-bubble llu-bubble--out">
+            <p class="llu-cap">Drafted for your resume</p>
+            <p class="llu-mt-8">An achievement line with your numbers in it, ready for us to sharpen together.</p>
+          </div>
+        </div>
+      </figure>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,26 @@
+---
+import type { Img } from "./images";
+
+interface Props {
+  img: Img;
+  alt: string;
+  class?: string;
+  sizes?: string;
+  /** Rendered size for small fixed images such as faces. */
+  size?: number;
+  eager?: boolean;
+}
+const { img, alt, class: className, sizes, size, eager = false } = Astro.props;
+---
+
+<img
+  class={className}
+  src={img.src}
+  srcset={img.srcset}
+  sizes={img.srcset ? sizes : undefined}
+  width={size ?? img.width}
+  height={size ?? img.height}
+  alt={alt}
+  loading={eager ? "eager" : "lazy"}
+  decoding="async"
+/>
