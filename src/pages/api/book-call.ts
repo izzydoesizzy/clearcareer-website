@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
-import { cleanAnswers, scoreLead, bookingUrl, diagnose, type BookCallAnswers, type Diagnosis } from '../../lib/book-call.js';
+import { cleanAnswers, scoreLead, bookingUrl, diagnose } from '../../lib/book-call.js';
 import { consentAttributes } from '../../lib/brevo.js';
+import { buildLeadEmail } from '../../lib/lead-email.js';
 
 export const prerender = false;
 
@@ -12,9 +13,6 @@ const NOTIFY_TO = import.meta.env.BOOK_CALL_NOTIFY_EMAIL || 'izzy@joinclearcaree
 const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json' } });
 
-const esc = (s: unknown) =>
-  String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c] as string));
-
 // Light per-instance rate limit. Not perfect on serverless, but stops casual spam.
 const hits = new Map<string, number[]>();
 function limited(ip: string): boolean {
@@ -23,23 +21,6 @@ function limited(ip: string): boolean {
   recent.push(now);
   hits.set(ip, recent);
   return recent.length > 8;
-}
-
-function rows(a: BookCallAnswers, qualified: boolean, reason: string, d: Diagnosis): string {
-  const r = (label: string, value: unknown) =>
-    `<tr><td style="padding:6px 12px 6px 0;color:#64748b;vertical-align:top;white-space:nowrap;">${esc(label)}</td><td style="padding:6px 0;color:#0f172a;">${esc(value) || '-'}</td></tr>`;
-  return `<table role="presentation" cellpadding="0" cellspacing="0" style="font-family:Arial,sans-serif;font-size:14px;line-height:1.5;">
-${r('Verdict', qualified ? 'QUALIFIED. Booking link shown.' : `Not yet (${reason}). No booking link shown.`)}
-${r('Diagnosis', `${d.title}. ${d.callFocus}`)}
-${r('Name', `${a.firstName} ${a.lastName || ''}`)}${r('Email', a.email)}${r('Phone', a.phone)}
-${r('Email permission', a.consent ? 'Yes, ticked' : 'No')}
-${r('Country', a.country)}${r('Situation', a.situation)}${r('Job titles', a.jobTitles)}${r('Target salary', a.targetSalary)}
-${r('Years of experience', a.yearsExperience)}${r('Searching for', a.searchLength)}${r('Applications per week', a.appsPerWeek)}
-${r('Total applications', a.totalApplications)}${r('Interviews', a.interviews)}${r('Offers', a.offers)}
-${r('Biggest struggles', a.struggles.join(', '))}${r('Biggest challenge', a.challenge)}${r('Success besides a job', a.milestones)}
-${r('Motivation (0-5)', a.motivation)}${r('Wants from the call', a.callGoal)}${r('Who decides', a.decider)}
-${r('Could start', a.start)}${r('Would pay by', a.payment)}${r('Ready to invest', a.ready)}
-</table>`;
 }
 
 export const POST: APIRoute = async ({ request, clientAddress }) => {
@@ -113,16 +94,18 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       }
       saved = res.ok || res.status === 204;
 
-      // 2. Email every answer to Izzy. This is the record that can never be lost.
+      // 2. Email Izzy a lead brief with every answer. This is the record that can never be lost.
+      const brief = buildLeadEmail(data, verdict, diagnosis, new Date(submittedAt));
       const mail = await fetch('https://api.brevo.com/v3/smtp/email', {
         method: 'POST',
         headers,
         body: JSON.stringify({
           sender: { name: 'ClearCareer Bookings', email: 'izzy@joinclearcareer.com' },
           to: [{ email: NOTIFY_TO }],
-          replyTo: { email: data.email, name: `${data.firstName} ${data.lastName || ''}`.trim() },
-          subject: `${verdict.qualified ? 'QUALIFIED' : 'Not yet'} (${diagnosis.title}): ${data.firstName} ${data.lastName || ''}`.trim(),
-          htmlContent: rows(data, verdict.qualified, verdict.reason, diagnosis),
+          replyTo: { email: data.email, name: `${data.firstName} ${data.lastName}`.trim() },
+          subject: brief.subject,
+          htmlContent: brief.html,
+          tags: ['book-a-call'],
         }),
       });
       notified = mail.ok;
