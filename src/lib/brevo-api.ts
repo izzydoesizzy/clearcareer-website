@@ -1,6 +1,42 @@
 /**
  * Small Brevo REST helpers for server routes. Never import this in client code.
+ *
+ * EMAIL_MODE controls every email this system sends (set it in Vercel):
+ *   live     (default) send normally
+ *   test     send ONLY to EMAIL_TEST_TO, with "[TEST for name@example.com]" in the subject.
+ *            Uses one Brevo credit per email, but no real person ever gets one.
+ *   off      send nothing at all, and use zero credits. The flow still runs and records each step,
+ *            and the subject and recipient are written to the Vercel logs.
+ *   sandbox  ask Brevo to check the email without delivering it (X-Sib-Sandbox: drop).
+ *            Brevo doesn't say whether this saves credits, so prefer "off" for that.
  */
+export type EmailMode = 'live' | 'test' | 'off' | 'sandbox';
+
+export function emailMode(env: Record<string, unknown> = (import.meta as any).env || {}): { mode: EmailMode; testTo: string } {
+  const m = String(env.EMAIL_MODE || 'live').toLowerCase();
+  const mode: EmailMode = m === 'test' || m === 'off' || m === 'sandbox' ? m : 'live';
+  const testTo = String(env.EMAIL_TEST_TO || 'izzy@joinclearcareer.com');
+  return { mode, testTo };
+}
+
+export interface Mail { to: string; toName?: string; subject: string; html: string; replyTo?: { email: string; name?: string }; tags?: string[]; senderName?: string; bcc?: string; attachments?: { name: string; content: string }[] }
+
+/** The exact Brevo request for a mail in a given mode, or null when nothing should be sent. Pure, so it's easy to test. */
+export function brevoPayload(mail: Mail, m = emailMode()): Record<string, unknown> | null {
+  if (m.mode === 'off') return null;
+  const test = m.mode === 'test';
+  return {
+    sender: { name: mail.senderName || 'Izzy from ClearCareer', email: 'izzy@joinclearcareer.com' },
+    to: [test ? { email: m.testTo } : { email: mail.to, ...(mail.toName ? { name: mail.toName } : {}) }],
+    ...(mail.replyTo ? { replyTo: mail.replyTo } : {}),
+    subject: test ? `[TEST for ${mail.to}] ${mail.subject}` : mail.subject,
+    htmlContent: mail.html,
+    tags: [...(mail.tags || []), ...(test ? ['test'] : [])],
+    ...(mail.bcc && !test ? { bcc: [{ email: mail.bcc }] } : {}),
+    ...(mail.attachments?.length ? { attachment: mail.attachments } : {}),
+    ...(m.mode === 'sandbox' ? { headers: { 'X-Sib-Sandbox': 'drop' } } : {}),
+  };
+}
 export interface BrevoContact {
   email: string;
   emailBlacklisted?: boolean;
@@ -46,21 +82,13 @@ export function brevo(apiKey: string) {
       return out;
     },
 
-    async send(mail: { to: string; toName?: string; subject: string; html: string; replyTo?: { email: string; name?: string }; tags?: string[]; senderName?: string; bcc?: string; attachments?: { name: string; content: string }[] }): Promise<boolean> {
-      const r = await fetch(`${base}/smtp/email`, {
-        method: 'POST',
-        headers,
-        body: JSON.stringify({
-          sender: { name: mail.senderName || 'Izzy from ClearCareer', email: 'izzy@joinclearcareer.com' },
-          to: [{ email: mail.to, ...(mail.toName ? { name: mail.toName } : {}) }],
-          ...(mail.replyTo ? { replyTo: mail.replyTo } : {}),
-          subject: mail.subject,
-          htmlContent: mail.html,
-          tags: mail.tags || [],
-          ...(mail.bcc ? { bcc: [{ email: mail.bcc }] } : {}),
-          ...(mail.attachments?.length ? { attachment: mail.attachments } : {}),
-        }),
-      });
+    async send(mail: Mail): Promise<boolean> {
+      const payload = brevoPayload(mail);
+      if (!payload) {
+        console.log(`[EMAIL_MODE=off] not sent: "${mail.subject}" to ${mail.to}`);
+        return true;
+      }
+      const r = await fetch(`${base}/smtp/email`, { method: 'POST', headers, body: JSON.stringify(payload) });
       if (!r.ok) console.error('Brevo send error:', r.status, await r.text());
       return r.ok;
     },

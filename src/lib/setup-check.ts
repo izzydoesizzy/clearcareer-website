@@ -13,8 +13,11 @@ export function setupGaps(env: Record<string, string | undefined>): string[] {
   need('CALENDLY_QUALIFIED_URL', 'approved leads are getting the public booking link.');
   need('PUBLIC_GROUP_CHECKOUT_URL', 'the group "Claim my seat" button goes to the form instead of Stripe.');
   need('PUBLIC_PRIVATE_CHECKOUT_URL', 'the private "Claim my seat" button goes to the form instead of Stripe.');
+  need('PUBLIC_GROUP_CHECKOUT_URL_REGULAR', 'after Black Friday, the group button falls back to the form.');
+  need('PUBLIC_PRIVATE_CHECKOUT_URL_REGULAR', 'after Black Friday, the private button falls back to the form.');
+  need('STRIPE_DEAL_LINK_IDS', 'the Black Friday payment links will not switch off on their own after Nov 30.');
   need('STRIPE_WEBHOOK_SECRET', 'payments do not trigger welcome emails or onboarding.');
-  need('STRIPE_SECRET_KEY', 'the thank-you page cannot show the onboarding button right away (the email still works).');
+  need('STRIPE_SECRET_KEY', 'the thank-you page cannot show the onboarding button right away, and Black Friday links cannot switch off on their own.');
   need('ONBOARD_SECRET', 'welcome emails cannot include the onboarding link.');
   need('GOOGLE_REFRESH_TOKEN', 'no Drive folders, uploads, signed PDFs or roster. Run scripts/google-auth.mjs.');
   need('GOOGLE_PARENT_FOLDER_ID', 'client folders have nowhere to go.');

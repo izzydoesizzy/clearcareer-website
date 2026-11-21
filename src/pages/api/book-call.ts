@@ -5,6 +5,7 @@ import { checkoutFromEnv } from '../../lib/call-runner.js';
 import { consentAttributes } from '../../lib/brevo.js';
 import { buildLeadEmail } from '../../lib/lead-email.js';
 import { notYetEmail } from '../../lib/call-emails.js';
+import { brevo } from '../../lib/brevo-api.js';
 import { dealIsLive } from '../../lib/email/deal.js';
 
 export const prerender = false;
@@ -122,37 +123,21 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
 
       // 2. Email Izzy a lead brief with every answer. This is the record that can never be lost.
       const brief = buildLeadEmail(data, verdict, diagnosis, new Date(submittedAt), score, value);
-      const mail = await fetch('https://api.brevo.com/v3/smtp/email', {
-        method: 'POST',
-        headers,
-        body: JSON.stringify({
-          sender: { name: 'ClearCareer Bookings', email: 'izzy@joinclearcareer.com' },
-          to: [{ email: NOTIFY_TO }],
-          replyTo: { email: data.email, name: `${data.firstName} ${data.lastName}`.trim() },
-          subject: brief.subject,
-          htmlContent: brief.html,
-          tags: ['book-a-call'],
-        }),
+      const api = brevo(BREVO_API_KEY);
+      notified = await api.send({
+        to: NOTIFY_TO,
+        senderName: 'ClearCareer Bookings',
+        replyTo: { email: data.email, name: `${data.firstName} ${data.lastName}`.trim() },
+        subject: brief.subject,
+        html: brief.html,
+        tags: ['book-a-call'],
       });
-      notified = mail.ok;
 
       // 3. Not a fit right now: a kind, useful reply instead of silence.
       if (!verdict.qualified) {
         const ny = notYetEmail(data, verdict.reason === 'experience' ? 'experience' : 'not-ready');
-        const r = await fetch('https://api.brevo.com/v3/smtp/email', {
-          method: 'POST',
-          headers,
-          body: JSON.stringify({
-            sender: { name: 'Izzy from ClearCareer', email: 'izzy@joinclearcareer.com' },
-            to: [{ email: data.email, name: data.firstName }],
-            subject: ny.subject,
-            htmlContent: ny.html,
-            tags: ['book-a-call-not-yet'],
-          }),
-        });
-        if (!r.ok) console.error('Not-yet email failed:', r.status, await r.text());
+        await api.send({ to: data.email, toName: data.firstName, subject: ny.subject, html: ny.html, tags: ['book-a-call-not-yet'] });
       }
-      if (!mail.ok) console.error('Notify email failed:', mail.status, await mail.text());
     } else {
       console.error('BREVO_API_KEY not set: lead was not saved');
     }

@@ -7,17 +7,19 @@
  * - Every statistic needs its source and sample size.
  */
 import { dealIsLive } from "../lib/email/deal";
+import { checkoutLinks } from "../lib/checkout";
 
 
 // ── Destinations ────────────────────────────────────────────────────────────
-// Stripe payment links, one per tier. Set them in Vercel as PUBLIC_GROUP_CHECKOUT_URL and
-// PUBLIC_PRIVATE_CHECKOUT_URL. Until then both buttons open the book-a-call form, so they are never a dead end.
-export const GROUP_CHECKOUT_URL: string = import.meta.env.PUBLIC_GROUP_CHECKOUT_URL || "/book-a-call";
-export const PRIVATE_CHECKOUT_URL: string = import.meta.env.PUBLIC_PRIVATE_CHECKOUT_URL || "/book-a-call";
-
 // Black Friday is checked when the site builds. A daily job (src/pages/api/cron/deal.ts)
 // rebuilds the site just after the deadline, so the page switches to regular prices on its own.
 export const dealLive = dealIsLive();
+
+// Stripe payment links, one per tier (Black Friday and regular). See src/lib/checkout.ts.
+// Until they're set, both buttons open the book-a-call form, so they are never a dead end.
+const links = checkoutLinks(import.meta.env);
+export const GROUP_CHECKOUT_URL: string = links.group || "/book-a-call";
+export const PRIVATE_CHECKOUT_URL: string = links.private || "/book-a-call";
 
 export const CTA_LABEL = "Claim my founding seat";
 

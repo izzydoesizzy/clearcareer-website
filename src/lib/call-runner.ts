@@ -2,6 +2,7 @@
  * Sends the emails for one booked call and records what went out on the Brevo contact.
  */
 import { brevo, type BrevoContact } from './brevo-api.js';
+import { checkoutLinks } from './checkout.js';
 import { bookedEmail, dayBeforeEmail, morningOfEmail, followUp1Email, followUp2Email, noBook1Email, noBook2Email, canceledEmail, noShowEmail, type Checkout } from './call-emails.js';
 import { buildSalesBrief } from './sales-brief.js';
 import { callInfo, storedAnswers, type Step } from './call-flow.js';
@@ -68,7 +69,7 @@ export function runnerEnv(env: Record<string, string | undefined>): RunnerEnv {
   };
 }
 
-export function checkoutFromEnv(env: Record<string, string | undefined>): Checkout {
-  const ok = (u?: string) => (u && /^https:\/\//.test(u) && !u.includes('calendly.com') ? u : undefined);
-  return { group: ok(env.PUBLIC_GROUP_CHECKOUT_URL), private: ok(env.PUBLIC_PRIVATE_CHECKOUT_URL) };
+/** Black Friday links until the deal ends, regular links after. See src/lib/checkout.ts. */
+export function checkoutFromEnv(env: Record<string, string | undefined>, now: Date = new Date()): Checkout {
+  return checkoutLinks(env, now);
 }
