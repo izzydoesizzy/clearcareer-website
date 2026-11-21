@@ -7,6 +7,7 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import "@/styles/llu.css";
 import { offer, RESULTS_VARY } from "@/data/llu";
 import { PROGRAMS } from "@/lib/book-call";
+import { DEFAULT_RAISE_PCT, NEGOTIATION_EXAMPLES } from "@/lib/roi";
 
 const live = offer.dealLive;
 const prices = {
@@ -29,8 +30,8 @@ const prices = {
         <div class="llu-wrap">
           <div class="llu-head">
             <p class="llu-eyebrow">The math</p>
-            <h1 class="llu-h2">What is landing sooner worth to you?</h1>
-            <p class="llu-lead">Every week of searching has a price. Here's yours, next to the price of the program.</p>
+            <h1 class="llu-h2">What is landing sooner, and negotiating better, worth to you?</h1>
+            <p class="llu-lead">Every week of searching has a price, and every offer has room to negotiate. Here are your numbers, next to the price of the program.</p>
           </div>
           <div class="llu-form-wrap llu-mt-48">
             <div class="llu-card llu-stack" data-prices={JSON.stringify(prices)} id="roi">
@@ -45,8 +46,18 @@ const prices = {
                   <label class="llu-choice"><input type="radio" name="program" value="private" /> <span>{PROGRAMS.private.name}, ${prices.private.toLocaleString("en-CA")}</span></label>
                 </div>
               </div>
+              <div class="llu-field">
+                <label class="llu-field__label" for="raise">Negotiated increase in your next offer (%)</label>
+                <p class="llu-cap">We use {DEFAULT_RAISE_PCT}% as a careful example. Change it to see your own scenario.</p>
+                <input id="raise" class="llu-input" type="number" inputmode="decimal" min="0" max="50" step="1" value={DEFAULT_RAISE_PCT} />
+              </div>
               <div aria-live="polite" id="roi-out" class="llu-stack"><p class="llu-cap">Enter your target salary to see your numbers.</p></div>
-              <p class="llu-cap">Before tax, at 260 working days a year. Prices are CAD plus HST{live ? `, Black Friday pricing until ${offer.dealEndsShort}` : ""}. {RESULTS_VARY}</p>
+              <div class="llu-surface llu-stack">
+                <p class="llu-eyebrow">What clients have negotiated</p>
+                <ul class="llu-list">{NEGOTIATION_EXAMPLES.map((e) => <li><strong>{e.name}</strong>: {e.result}</li>)}</ul>
+                <p class="llu-cap">From public reviews and client testimonials. Not typical, not promised.</p>
+              </div>
+              <p class="llu-cap">Before tax, at 260 working days a year. A raise is paid every year, so it keeps paying after year one. Prices are CAD plus HST{live ? `, Black Friday pricing until ${offer.dealEndsShort}` : ""}. {RESULTS_VARY}</p>
             </div>
           </div>
           <p class="llu-center llu-mt-32"><a class="llu-link" href="/land-and-level-up#pricing">See what's included</a></p>
@@ -61,6 +72,7 @@ const prices = {
   const root = document.getElementById("roi")!;
   const prices = JSON.parse(root.dataset.prices || "{}") as Record<string, number>;
   const salary = document.getElementById("salary") as HTMLInputElement;
+  const raise = document.getElementById("raise") as HTMLInputElement;
   const out = document.getElementById("roi-out")!;
   const q = new URLSearchParams(location.search);
   if (Number(q.get("salary")) > 0) salary.value = String(Number(q.get("salary")));
@@ -68,7 +80,7 @@ const prices = {
   function render() {
     const prog = (document.querySelector('input[name="program"]:checked') as HTMLInputElement).value;
     const price = prices[prog];
-    const r = roi(Number(salary.value), price);
+    const r = roi(Number(salary.value), price, Number(raise.value));
     if (!r) { out.innerHTML = '<p class="llu-cap">Enter your target salary to see your numbers.</p>'; return; }
     out.innerHTML = `
       <p class="llu-title"><strong>${money(price)}</strong> is ${daysLabel(r.daysOfPay)} of your target pay.</p>
@@ -76,9 +88,13 @@ const prices = {
         <tr><td>One working day</td><td>${money(r.perDay)}</td></tr>
         <tr><td>One month</td><td>${money(r.perMonth)}</td></tr>
         ${r.rows.map((x) => `<tr><td>Land ${x.label}</td><td>${money(x.value)} <span>${multipleLabel(x.multiple)} the cost</span></td></tr>`).join("")}
+        <tr><td>${r.raise.perYear.label} in your next offer</td><td>${money(r.raise.perYear.value)}/yr <span>${multipleLabel(r.raise.perYear.multiple)} the cost, every year</span></td></tr>
+        <tr><td>${r.raise.threeYears.label}</td><td>${money(r.raise.threeYears.value)} <span>${multipleLabel(r.raise.threeYears.multiple)} the cost</span></td></tr>
+        <tr class="llu-roi__total"><td>${r.both.label}</td><td>${money(r.both.value)} <span>${multipleLabel(r.both.multiple)} the cost, in year one</span></td></tr>
       </tbody></table>`;
   }
   salary.addEventListener("input", render);
+  raise.addEventListener("input", render);
   document.querySelectorAll('input[name="program"]').forEach((el) => el.addEventListener("change", render));
   render();
 </script>
@@ -88,4 +104,5 @@ const prices = {
   .llu-roi td { padding: 12px 0; border-top: 1px solid var(--llu-hairline); color: var(--llu-body); }
   .llu-roi td:last-child { text-align: right; font-weight: 700; color: var(--llu-ink); white-space: nowrap; }
   .llu-roi td span { display: block; font-size: 13px; font-weight: 600; color: #0f766e; }
+  .llu-roi .llu-roi__total td { font-weight: 700; color: var(--llu-ink); border-top: 2px solid var(--llu-ink); }
 </style>

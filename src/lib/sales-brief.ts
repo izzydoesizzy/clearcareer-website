@@ -62,7 +62,7 @@ export function predictObjections(a: BookCallAnswers, d: Diagnosis): Objection[]
     say: [
       "You're right to watch every dollar. Can I show you how I think about it?",
       monthly > 0
-        ? `You're aiming for ${money(a.targetSalary)}. That's about ${money(monthly)} a month before tax.${!employed && MONTHS[a.searchLength] ? ` You've been searching ${a.searchLength}, so roughly ${money(monthly * MONTHS[a.searchLength])} so far.` : ''} The ${rec.program.toLowerCase()} is ${money(recPrice)} plus HST for 3 months. That's ${daysLabel(recPrice / (a.targetSalary / WORKING_DAYS))} of your target pay.`
+        ? `You're aiming for ${money(a.targetSalary)}. That's about ${money(monthly)} a month before tax.${!employed && MONTHS[a.searchLength] ? ` You've been searching ${a.searchLength}, so roughly ${money(monthly * MONTHS[a.searchLength])} so far.` : ''} The ${rec.program.toLowerCase()} is ${money(recPrice)} plus HST for 3 months. That's ${daysLabel(recPrice / (a.targetSalary / WORKING_DAYS))} of your target pay. And if we negotiate even 5% more in your next offer, that's ${money(a.targetSalary * 0.05)} a year, every year. Laura got $22,000 more. Chris got $25k more.`
         : `The ${rec.program.toLowerCase()} is ${money(recPrice)} plus HST for 3 months. What's one month of your next salary worth?`,
       `If we get you hired even a few weeks sooner, it pays for itself. And you can spread it out: Klarna at checkout splits it into monthly payments for up to 12 months.`,
       `${offer.guarantee}`,

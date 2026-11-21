@@ -45,6 +45,11 @@ describe('ROI math', async () => {
     expect(daysLabel(r.daysOfPay)).toBe('about 2 working days');
     expect(Math.round(r.rows[0].value)).toBe(4615);
     expect(multipleLabel(r.rows[1].multiple)).toBe('11x');
+    expect(Math.round(r.raise.perYear.value)).toBe(6000);
+    expect(Math.round(r.raise.threeYears.value)).toBe(18000);
+    expect(Math.round(r.both.value)).toBe(16000);
+    expect(multipleLabel(r.both.multiple)).toBe('17x');
+    expect(roi(120000, 949, 10)!.raise.perYear.value).toBe(12000);
     expect(roi(0, 949)).toBeNull();
   });
 });

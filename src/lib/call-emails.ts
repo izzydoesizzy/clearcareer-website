@@ -22,7 +22,7 @@ import { PROGRAMS, ALTERNATIVE, QUALIFY, diagnose } from './book-call.js';
 import type { BookCallAnswers, DiagnosisKey } from './book-call.js';
 import { offer, RESULTS_VARY } from '../data/llu.js';
 import { storyFor, recommend, IZZY, STORIES, type Story } from './stories.js';
-import { roi, daysLabel, multipleLabel } from './roi.js';
+import { roi, daysLabel, multipleLabel, NEGOTIATION_EXAMPLES } from './roi.js';
 
 export interface CallInfo {
   firstName: string;
@@ -74,7 +74,19 @@ const PROGRAM_FIX: Record<DiagnosisKey, string> = {
 };
 
 /** What the call is, said plainly, so nobody shows up expecting a free coaching session. */
-const FIT_CALL = "This isn't a coaching session, so there's nothing to prepare or bring. We'll talk about where you are, where you want to be, what's in the way, and whether Land and Level Up is the right way to close that gap.";
+const FIT_CALL = "This call has one job: to help you decide whether Land and Level Up is right for you. It isn't a coaching session, so there are no documents to bring. We'll talk about where you are, where you want to be, what's in the way, and whether this program is the right way to close that gap.";
+
+/**
+ * Why we decide on the call, said softly. Both answers are good; the cost is the limbo.
+ * Used in the booked and day-before emails.
+ */
+const DECIDE_ON_CALL = "By the end, you'll have a clear answer: yes or no. Both are great outcomes. What I want to save you from is \"let me think about it\" turning into three more weeks of wondering, while the search keeps costing you time and energy.";
+
+const HOW_TO_PREPARE = [
+  "<strong>Write down your questions and doubts.</strong> All of them, especially the awkward ones: money, timing, \"will this actually work for me?\" I'd much rather hear them on the call than have them nag at you after.",
+  "<strong>Bring anyone who's part of the decision.</strong> A partner, a family member. Same link. Big decisions are easier when everyone hears the same answers.",
+  "<strong>Know how you'd pay if it's a yes.</strong> Card, or Klarna monthly for up to 12 months. Both at checkout.",
+];
 
 /** Free next steps for people who aren't a fit right now. */
 const FREE_STEPS: Record<DiagnosisKey, [string, string, string][]> = {
@@ -169,7 +181,7 @@ const hey = (c: { firstName: string }) => P(`Hey ${esc(c.firstName)},`);
 const joinLine = (c: CallInfo) => (c.joinUrl ? button('Join the call', c.joinUrl) : '');
 const partnerLine = (c: CallInfo) =>
   c.answers?.decider && c.answers.decider !== 'Just me'
-    ? P("You mentioned someone else is part of this decision. Bring them along, same link. You'll both hear the same answers, and nobody has to play telephone at the dinner table after.")
+    ? P("You mentioned someone else is part of this decision, so please do bring them. Nobody has to play telephone at the dinner table after.")
     : '';
 const payLine = 'Pay by card, or spread it out monthly with Klarna (up to 12 months). Both at checkout.';
 
@@ -205,8 +217,12 @@ function roiBlock(a: Partial<BookCallAnswers>, campaign: string): string {
 ${row('One working day of your target pay', money(r.perDay))}
 ${row('One month', money(r.perMonth))}
 ${r.rows.map((x) => row(`Land ${x.label}`, money(x.value), `${multipleLabel(x.multiple)} the cost`)).join('')}
+${row(`${esc(r.raise.perYear.label)} in your next offer`, `${money(r.raise.perYear.value)}/yr`, `${multipleLabel(r.raise.perYear.multiple)} the cost, every year`)}
+${row(esc(r.raise.threeYears.label), money(r.raise.threeYears.value), `${multipleLabel(r.raise.threeYears.multiple)} the cost`)}
+${row(`<strong>${esc(r.both.label)}</strong>`, money(r.both.value), `${multipleLabel(r.both.multiple)} the cost, in year one`, false)}
 </table>
-${small(`Before tax, at 260 working days a year. Price is ${isPrivate ? `the ${esc(p.name.toLowerCase())}` : 'the group cohort'} plus HST. ${esc(RESULTS_VARY)} ${link('Try your own numbers', calc)}.`)}`;
+${P(`Why negotiation counts: a raise isn't paid once. It's paid every year, and every future raise builds on it. We prepare for that moment together in the program. Clients have done far better than 5%: ${NEGOTIATION_EXAMPLES.map((e) => `${esc(e.name.split(' ')[0])} got ${esc(e.result)}`).join('; ')}.`)}
+${small(`Before tax, at 260 working days a year. The 5% is an example, not a promise, and the client results above are not typical. Price is ${isPrivate ? `the ${esc(p.name.toLowerCase())}` : 'the group cohort'} plus HST. ${esc(RESULTS_VARY)} ${link('Try your own numbers', calc)}.`)}`;
 }
 
 // ── Not yet (form, not qualified) ───────────────────────────────────────────────
@@ -280,18 +296,19 @@ ${c.answers?.totalApplications !== undefined ? P("I've got your answers in front
 ${numbersBlock(c.answers)}
 ${key ? P(`That pattern tells me ${esc(DIAGNOSIS_LINE[key])}`) : P("We'll skip the small talk and go straight to your search.")}
 ${c.answers?.challenge ? P(`And you wrote that your biggest challenge is: <em>&ldquo;${esc(c.answers.challenge.replace(/[.!?]+$/, ''))}.&rdquo;</em> I've got that written down. We'll get to it.`) : ''}
-${H('No prep needed')}
+${H('What this call is for')}
 ${P(FIT_CALL)}
+${P(DECIDE_ON_CALL)}
 ${H("Here's how the call goes")}
 ${list([
   'Where you are now, and where you want to be.',
   "What's in the way, and what it's costing you to stay stuck.",
-  "Whether Land and Level Up closes that gap. If it does, you can join on the call. If it doesn't, I'll tell you straight.",
+  "Whether Land and Level Up closes that gap. If it's a yes, we get you set up before we hang up. If it's a no, I'll tell you straight and point you somewhere better.",
 ], true)}
-${H('One quick thing')}
-${P("Hit reply and tell me the ONE question you need answered to decide if this is right for you. That way we spend our time on what matters most to you.")}
-${P(`If it's a fit, you can join right on the call. ${payLine}`)}
+${H('How to get the most out of it')}
+${list(HOW_TO_PREPARE)}
 ${partnerLine(c)}
+${P("And if one question is already on your mind, hit reply and send it now. I'll make sure we cover it.")}
 ${P(`Want to look around first? ${link('Both programs and the common questions are on one page', utm(`${SITE_URL}/booked`, 'booked'))}.`)}
 ${c.rescheduleUrl ? P(`Need a different time? ${link('Reschedule here', c.rescheduleUrl)}, no stress. It frees the slot for someone else.`) : ''}
 ${sign()}
@@ -337,12 +354,13 @@ ${P(`Why this story? Because your numbers look a lot like this. Tomorrow we'll t
 ${small(esc(RESULTS_VARY))}
 ${H('Is it worth it? Your numbers')}
 ${roiBlock(a, 'day-before')}
-${H('What tomorrow is (and isn\'t)')}
-${P(FIT_CALL)}
+${H('Tomorrow is decision day')}
+${P("Tomorrow's call is where we decide together whether this is right for you. So tonight, take ten minutes and write down every question or doubt that's still in your head. If something below doesn't answer it, hit reply, or bring it tomorrow.")}
+${P(DECIDE_ON_CALL)}
 ${H('Questions people ask me before they join')}
 ${P("Here are the straight answers, so tomorrow we can spend the whole call on you. If yours isn't here, hit reply.")}
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 20px;">${rows}</table>
-${P("If you already know you're in, tell me at the start and we'll go straight to getting you set up. Have your card or Klarna handy.")}
+${P("If you already know you're in, tell me at the start and we'll go straight to getting you set up. Either way, have your card or Klarna handy, so a yes doesn't have to wait.")}
 ${joinLine(c)}
 ${sign('See you tomorrow,')}`);
   return { subject, html };
@@ -353,8 +371,8 @@ export function morningOfEmail(c: CallInfo) {
   const subject = `Today at ${callTime(c.callAt, false)}`;
   const html = shell('Today', `See you at ${callTime(c.callAt, false)}`, `
 ${hey(c)}
-${P("Today's the day. I'm genuinely looking forward to this one. No prep needed, just come as you are. Three things that help:")}
-${list(['The one question you need answered to decide', "Anyone who's part of the decision, if they're joining", 'Your card or Klarna handy, in case we decide it fits'])}
+${P("Today's the day. I'm genuinely looking forward to this one. Today we decide together whether Land and Level Up is right for you, so bring:")}
+${list(['Your list of questions and doubts (all of them)', "Anyone who's part of the decision", 'Your card or Klarna handy, so a yes can happen right away'])}
 ${joinLine(c)}
 ${c.rescheduleUrl ? P(`Something came up? ${link('Pick another time', c.rescheduleUrl)}. Life happens, no stress.`) : ''}
 ${sign('See you soon,')}`);
@@ -409,7 +427,7 @@ ${hey(c)}
 ${P("Thanks for the chat yesterday. It was really great getting to know you and your search.")}
 ${c.answers?.milestones ? P(`You told me that, besides a job, success looks like <em>&ldquo;${esc(String(c.answers.milestones).replace(/[.!?]+$/, ''))}.&rdquo;</em> That's what the next 3 months are for.`) : ''}
 ${key ? P(esc(PROGRAM_FIX[key])) : ''}
-${(() => { const sal = Number(c.answers?.targetSalary) || 0; const isP = c.answers?.program === PROGRAMS.private.name; const pr = dealIsLive() ? (isP ? PROGRAMS.private.price : PROGRAMS.group.price) : (isP ? PROGRAMS.private.regular : PROGRAMS.group.regular); const r = roi(sal, pr); return r ? P(`And the math from yesterday: at ${money(sal)}, the ${isP ? esc(PROGRAMS.private.name.toLowerCase()) : 'group cohort'} costs ${daysLabel(r.daysOfPay)} of your target pay. Landing even 2 weeks sooner is worth ${money(r.rows[0].value)}.`) : ''; })()}
+${(() => { const sal = Number(c.answers?.targetSalary) || 0; const isP = c.answers?.program === PROGRAMS.private.name; const pr = dealIsLive() ? (isP ? PROGRAMS.private.price : PROGRAMS.group.price) : (isP ? PROGRAMS.private.regular : PROGRAMS.group.regular); const r = roi(sal, pr); return r ? P(`And the math from yesterday: at ${money(sal)}, the ${isP ? esc(PROGRAMS.private.name.toLowerCase()) : 'group cohort'} costs ${daysLabel(r.daysOfPay)} of your target pay. Landing even 2 weeks sooner is worth ${money(r.rows[0].value)}, and negotiating ${r.raise.pct}% more in your next offer is worth ${money(r.raise.perYear.value)} every year after.`) : ''; })()}
 ${P("If you're ready, here's where to claim your seat:")}
 ${joinLinks(k, c.answers)}
 ${P(`${payLine} ${esc(offer.guarantee)}${deadlineLine()}`)}
