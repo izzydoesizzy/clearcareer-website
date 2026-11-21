@@ -30,6 +30,7 @@ Only these values appear on the page. No tints, no opacity-derived colours, no s
 | `--llu-hairline` | `#E2DFD6` | 1px borders on light. Caption text on navy. |
 | `--llu-panel` | `#0B1030` | Panels inside navy bands. |
 | `--llu-panel-border` | `#262C52` | 1px borders inside navy bands. |
+| `--llu-sale` | `#C2392B` | The Black Friday bar background. Nothing else. A deliberate exception to "one accent only". |
 
 Screenshots and photographs keep their own colours. They are evidence, not decoration.
 
@@ -102,7 +103,7 @@ Spacing tokens in px: **8, 16, 24, 32, 48, 72, 96**. Nothing between them.
 
 ### Band order
 
-1. Black Friday bar: blue, sticky
+1. Black Friday bar: brick red, sticky
 2. Nav: navy, sticky from 1024px beneath the bar
 3. Hero: navy
 4. People row: paper
@@ -127,7 +128,7 @@ Hover: background goes to ink on light bands, to white with ink text on navy. 12
 
 **Text link.** Blue on light, white on navy and blue, underlined 1px, offset 4px. At least 44px tall hit area. Hover: underline goes to 2px.
 
-**Black Friday bar.** A blue band above the nav that stays stuck to the top of the screen. White Inter 600 at 14px (15px on phones), at least 44px tall. Long text from 768px, a short line on phones, and a "See the prices" text link to the pricing band. No countdown, no close button, no animation. The nav sticks directly beneath it from 1024px. Sticky is position, not motion. Remove the bar and the Black Friday labels after November 30.
+**Black Friday bar.** A brick-red band (`#C2392B`) above the nav that stays stuck to the top of the screen. White Inter 600 at 14px (15px on phones), at least 44px tall. Long text from 768px, a short line on phones, and a "See the prices" text link to the pricing band. No countdown, no close button, no animation. The nav sticks directly beneath it from 1024px. Sticky is position, not motion. The red is the one deliberate exception to the single-accent rule, chosen by Izzy so the sale reads as urgent. White on it is 5.37:1. It appears on this bar only, never on buttons, text or anything else. Remove the bar and the Black Friday labels after November 30.
 
 **Status label.** 6px blue dot plus "Founding group open, N of 16 seats left". N is set by hand in `src/data/llu.ts`. Never computed, never faked.
 

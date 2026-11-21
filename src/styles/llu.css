@@ -1076,10 +1076,13 @@ body:has(> .llu) {
 
 /* ── Black Friday bar: sticky, blue, always visible ─────────────────────── */
 .llu-dealbar {
+  /* The one deliberate exception to the single-accent rule: a warm brick red so the
+     sale reads as urgent. White on this red is 5.37:1. Used on this bar only. */
+  --llu-sale: #c2392b;
   position: sticky;
   top: 0;
   z-index: 20;
-  background: var(--llu-blue);
+  background: var(--llu-sale);
   color: var(--llu-white);
 }
 .llu-dealbar__row {
@@ -1099,6 +1102,13 @@ body:has(> .llu) {
   font-weight: 600;
   line-height: 1.4;
   text-align: left;
+}
+.llu-dealbar__label {
+  display: block;
+  margin-right: 0;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 .llu-dealbar__short {
   display: inline;
@@ -1127,6 +1137,10 @@ body:has(> .llu) {
   outline-offset: 2px;
 }
 @media (min-width: 768px) {
+  .llu-dealbar__label {
+    display: inline;
+    margin-right: 8px;
+  }
   .llu-dealbar__long {
     display: inline;
   }
