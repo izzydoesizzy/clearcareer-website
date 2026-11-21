@@ -168,7 +168,7 @@ function buildLayoffKitEmailData(baseUrl: string, sessionId: string, firstName?:
 </ul>`,
     upsell: {
       headline: "Want to talk it through?",
-      description: "Getting laid off is overwhelming. If you want to talk through your situation, your severance, or your next move, book a free call. No pitch, just clarity.",
+      description: "Getting laid off is overwhelming. If you want to talk through your situation, your severance, or your next move, book a free call to see if working together is the right fit.",
       bullets: [
         "Review your severance package with a career expert",
         "Get a clear 30-day action plan",

@@ -180,3 +180,14 @@ describe('call email consistency', () => {
     expect(h).toContain('the group plus private 1:1 rebuild costs about 4 working days');
   });
 });
+
+describe('goal line in the follow-up', async () => {
+  const { goalLine } = await import('../../src/lib/call-emails');
+  it('quotes the form, and skips answers that would read badly', () => {
+    expect(goalLine('Feeling confident again')).toContain('On your form, you said');
+    expect(goalLine('Feeling confident again')).not.toContain('You told me');
+    expect(goalLine('idk')).toBe('');
+    expect(goalLine('money')).toBe('');
+    expect(goalLine('x '.repeat(150))).toBe('');
+  });
+});

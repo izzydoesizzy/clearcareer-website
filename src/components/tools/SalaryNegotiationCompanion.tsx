@@ -335,7 +335,7 @@ export default function SalaryNegotiationCompanion() {
                   href="https://joinclearcareer.com/book-a-call"
                   className="inline-flex items-center mt-3 rounded-lg bg-blue px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-dark transition-colors"
                 >
-                  Book a Free Audit
+                  Book a Free Call
                 </a>
               </div>
             </div>

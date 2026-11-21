@@ -134,13 +134,13 @@ function buildReportEmail(data: {
           </div>
         </td></tr>
 
-        <!-- CTA 3: Free Audit -->
+        <!-- CTA 3: Free call -->
         <tr><td style="padding:20px 32px; background:white; text-align:center; border-bottom:1px solid ${COLORS.grey200};">
           <div style="font-size:14px; font-weight:600; color:${COLORS.navy};">Not sure where to start?</div>
-          <div style="font-size:13px; color:${COLORS.grey500}; margin-top:2px;">Book a free 20-minute career audit. No pitch, just an honest assessment.</div>
+          <div style="font-size:13px; color:${COLORS.grey500}; margin-top:2px;">We'll look at where you're stuck and whether working together is the right fit.</div>
           <div style="margin-top:12px;">
             <a href="${DISCOVERY_CALL_URL}" style="color:${COLORS.blue}; font-size:14px; font-weight:600; text-decoration:underline;">
-              Book Your Free Audit &rarr;
+              Book a Free Call &rarr;
             </a>
           </div>
         </td></tr>
