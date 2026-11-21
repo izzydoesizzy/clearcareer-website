@@ -232,7 +232,7 @@ export default function OnboardingForm() {
           <p className="llu-lead">Got everything. I'll go through it before we start, so we hit the ground running. Your next steps are in your inbox too.</p>
           <ol className="llu-list">
             <li>{n.communityUrl ? <>Join the community: <a className="llu-link llu-link--inline" href={n.communityUrl}>join us on {n.communityName}</a>, then post a quick hello.</> : <>Your {n.communityName} invite is coming from me before we start.</>}</li>
-            <li>{n.callTime && n.callUrl ? <>Every Wednesday at {n.callTime}: <a className="llu-link llu-link--inline" href={n.callUrl}>join link</a>. <a className="llu-link llu-link--inline" href="/llu-calls.ics">Add all 13 calls to your calendar</a>.</> : <>The Wednesday call time and link are coming from me before the first call.</>}</li>
+            <li>{n.callTime && n.callUrl ? <>Every Wednesday at {n.callTime}: <a className="llu-link llu-link--inline" href={n.callUrl}>join link</a>. <a className="llu-link llu-link--inline" href="/llu-calls.ics">Add all 6 calls to your calendar</a>.</> : <>The Wednesday call time and link are coming from me before the first call.</>}</li>
             {s.isPrivate && <li>{n.privateBookingUrl ? <>Book your 1:1 rebuild: <a className="llu-link llu-link--inline" href={n.privateBookingUrl}>pick your times</a>.</> : <>I'll email you to book your 1:1 rebuild sessions.</>}</li>}
           </ol>
           <p className="llu-cap">Questions? Email izzy@joinclearcareer.com. It comes straight to me.</p>

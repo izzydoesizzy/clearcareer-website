@@ -549,7 +549,7 @@ export default function ParentalLeaveCalculator() {
               8-week group coaching. Done-for-you resume, LinkedIn, outreach templates. Three 1:1 sessions with Izzy. Cohorts capped at 10.
             </div>
             <div style={{ marginTop: "12px" }}>
-              <a href="https://joinclearcareer.com/programs/jsis" style={{ display: "inline-block", background: "#0161EF", color: "white", padding: "10px 24px", borderRadius: "8px", fontSize: "13px", fontWeight: 600, textDecoration: "none" }}>
+              <a href="https://joinclearcareer.com/land-and-level-up" style={{ display: "inline-block", background: "#0161EF", color: "white", padding: "10px 24px", borderRadius: "8px", fontSize: "13px", fontWeight: 600, textDecoration: "none" }}>
                 Explore the Program &rarr;
               </a>
             </div>

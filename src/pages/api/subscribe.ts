@@ -82,7 +82,7 @@ const UPSELL_BLOCKS: Record<UpsellGroup, UpsellBlock> = {
       'Weekly group calls and WhatsApp support for 8 weeks',
     ],
     buttonText: 'Learn About the Program',
-    buttonUrl: `${SITE_URL}/programs/jsis`,
+    buttonUrl: `${SITE_URL}/land-and-level-up`,
   },
   'layoff-kit': {
     quickWinTip: 'The first 72 hours matter most. Before you update LinkedIn or start applying, read the severance section. Most people leave thousands of dollars on the table by accepting the first offer.',

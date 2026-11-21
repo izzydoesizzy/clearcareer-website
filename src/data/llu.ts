@@ -29,6 +29,11 @@ export const offer = {
   startDateLong: "Monday, December 7, 2026",
   startDateShort: "December 7",
   firstCallLong: "Wednesday, December 9",
+  /** 6 weeks, with a holiday break. Calls: Dec 9, 16, then Jan 6, 13, 20, 27. */
+  programLength: "6 weeks",
+  lastCallLong: "Wednesday, January 27, 2027",
+  callDates: "December 9 and 16, then January 6, 13, 20 and 27",
+  holidayBreak: "No calls on December 23 and 30. We break for the holidays.",
   seatsTotal: 16,
   seatsLeft: 16, // hand-set, true count as of November 21, 2026
   currency: "CAD",
@@ -45,13 +50,13 @@ export const offer = {
     name: "Group cohort",
     price: dealLive ? "$949" : "$1,200",
     regular: "$1,200",
-    priceNote: "CAD plus HST. One payment covers your first 3 months.",
+    priceNote: "CAD plus HST. One payment covers the full 6 weeks.",
     seatsTotal: 12,
     seatsLeft: 12, // hand-set
     forWho: "You want the room, the weekly call and the rebuild workshop.",
     includes: [
-      "3 months in the Land and Level Up community",
-      "A live group call every Wednesday",
+      "6 weeks in the Land and Level Up community",
+      "6 live group calls on Wednesdays (with a holiday break)",
       "Resume and LinkedIn rebuild workshop, with hot seats",
       "The AI Achievement Interviewer",
     ],
@@ -60,7 +65,7 @@ export const offer = {
     name: "Group plus private rebuild",
     price: dealLive ? "$1,797" : "$2,297",
     regular: "$2,297",
-    priceNote: "CAD plus HST. One payment covers your first 3 months.",
+    priceNote: "CAD plus HST. One payment covers the full 6 weeks.",
     seatsTotal: 4,
     seatsLeft: 4, // hand-set
     forWho: "You want all of that, and me rebuilding it with you 1:1.",
@@ -71,7 +76,7 @@ export const offer = {
     ],
   },
   paying: "Pay by card, or spread it out monthly with Klarna (up to 12 months). Both at checkout.",
-  afterThreeMonths: "After month 3, you can stay on for $50 a month. Leave any time.",
+  afterProgram: "After the 6 weeks, you can stay on for $49 a month. Leave any time.",
   guarantee: "7-day money-back guarantee. It ends once your rebuild work has started.",
 };
 
@@ -347,7 +352,7 @@ export const objections: { q: string; a: string[]; proof: string }[] = [
     q: "“Money is tight right now.”",
     a: [
       "I get it. You're watching every dollar, and that's the right instinct.",
-      `So do the math with me. At a $100,000 salary, one month without a paycheque is $8,333 before tax. The group cohort is ${dealLive ? "$949" : "$1,200"} plus HST, for 3 months.`,
+      `So do the math with me. At a $100,000 salary, one month without a paycheque is $8,333 before tax. The group cohort is ${dealLive ? "$949" : "$1,200"} plus HST, for the full 6 weeks.`,
       "You can spread it out with Klarna. And there's a 7-day money-back guarantee, as long as your rebuild work hasn't started.",
     ],
     proof:
@@ -382,7 +387,7 @@ export const objections: { q: string; a: string[]; proof: string }[] = [
   {
     q: "“What if I land a job in the first month?”",
     a: [
-      "Then we celebrate. And you keep your seat for the full 3 months.",
+      "Then we celebrate. And you keep your seat for the full 6 weeks.",
       "Use that time to negotiate the offer and start the new role well.",
     ],
     proof:

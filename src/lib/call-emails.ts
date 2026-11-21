@@ -332,13 +332,13 @@ export function dayBeforeEmail(c: CallInfo) {
     qa('Can I pay over time?', `Yes. ${payLine} Pick whatever works for your budget. No judgement, I've been between jobs too.`),
     qa("What if it's not for me?", `${esc(offer.guarantee)} Email me inside those 7 days and I'll refund you, no awkward conversation.`),
     qa('How much time does it take?', employed
-      ? 'One live hour every Wednesday with the group. The rest is your search, done smarter. You told me you\'re still employed, so we\'ll build a plan that fits around your job, not on top of it.'
-      : 'One live hour every Wednesday with the group. The rest is your search, which you\'re already doing. We just point that time at what works.'),
+      ? 'One live hour a week with the group, for 6 weeks. The rest is your search, done smarter. You told me you\'re still employed, so we\'ll build a plan that fits around your job, not on top of it.'
+      : 'One live hour a week with the group, for 6 weeks. The rest is your search, which you\'re already doing. We just point that time at what works.'),
     qa("I've already tried a coach. Why would this be different?", `Most coaching hands you advice, then leaves you alone with it. Here we build it together: your resume and LinkedIn in a live workshop, then your real search on the call every Wednesday. ${esc(STORIES.andrew.story)} In Andrew's words: &ldquo;${esc(STORIES.andrew.quote)}&rdquo;`),
     qa('Will this work in my field?', 'Yes. The work is the same in every field: a clear story, proof with numbers, and conversations with real people. Laura works in reproductive health. Raunika landed a director role at a large Canadian payments company. Darin is a project manager.'),
     qa('Group cohort or the private rebuild?', `<strong>${esc(g.name)}</strong> (${priceOf(g)}): ${esc(offer.group.forWho)}<br><strong>${esc(p.name)}</strong> (${priceOf(p)}): ${esc(offer.private.forWho)}${pick}`),
-    qa('What if I land a job in the first month?', 'Then we celebrate (loudly). You keep your seat for the full 3 months, and we use that time to negotiate the offer and start the new role strong.'),
-    qa('When does it start?', `${esc(offer.startDateLong)}. Our first Wednesday call is ${esc(offer.firstCallLong)}. ${offer.seatsTotal} seats in total.${dealIsLive() ? ` Black Friday pricing ends ${esc(offer.dealEndsLong)}.` : ''}`),
+    qa('What if I land a job in the first month?', 'Then we celebrate (loudly). You keep your seat for the full 6 weeks, and we use that time to negotiate the offer and start the new role strong.'),
+    qa('When does it start, and how long is it?', `We start ${esc(offer.startDateLong)}. Six live Wednesday calls: ${esc(offer.callDates)}. ${esc(offer.holidayBreak)} ${esc(offer.afterProgram)} ${offer.seatsTotal} seats in total.${dealIsLive() ? ` Black Friday pricing ends ${esc(offer.dealEndsLong)}.` : ''}`),
   ].join('');
 
   const html = shell('Tomorrow', 'A story, then straight answers', `
@@ -407,7 +407,7 @@ ${sign()}`);
 export function goalLine(raw?: unknown): string {
   const g = String(raw ?? '').trim().replace(/\s+/g, ' ').replace(/[.!?]+$/, '');
   if (g.length < 10 || g.length > 200 || g.split(' ').length < 2) return '';
-  return P(`On your form, you said that besides a new job, success would look like <em>&ldquo;${esc(g)}.&rdquo;</em> That's exactly what the next 3 months are built for.`);
+  return P(`On your form, you said that besides a new job, success would look like <em>&ldquo;${esc(g)}.&rdquo;</em> That's exactly what the next 6 weeks are built for.`);
 }
 
 // ── Follow-ups after the call (skipped once they enrol, cancel, or no-show) ──────────

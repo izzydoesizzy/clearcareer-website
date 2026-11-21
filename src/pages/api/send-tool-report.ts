@@ -72,7 +72,7 @@ export const POST: APIRoute = async ({ request }) => {
           'Weekly group calls and WhatsApp support',
         ],
         buttonText: 'Learn About the Program',
-        buttonUrl: `${SITE_URL}/programs/jsis`,
+        buttonUrl: `${SITE_URL}/land-and-level-up`,
       },
       testimonial,
       discoveryCall: {

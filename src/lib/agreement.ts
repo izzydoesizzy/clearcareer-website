@@ -10,7 +10,7 @@
  */
 import { offer, RESULTS_VARY } from '../data/llu.js';
 
-export const AGREEMENT_DEFAULT_VERSION = 'v1-draft-2026-11-21';
+export const AGREEMENT_DEFAULT_VERSION = 'v2-draft-2026-11-21';
 
 const li = (items: readonly string[]) => `<ul>${items.map((i) => `<li>${i}</li>`).join('')}</ul>`;
 
@@ -19,11 +19,11 @@ export const DEFAULT_AGREEMENT_HTML = `<h1>Land and Level Up: Client Agreement</
 <p><strong>Date:</strong> {{DATE}}<br><strong>Program:</strong> {{PROGRAM}}<br><strong>Price paid:</strong> {{PRICE}} CAD plus HST</p>
 
 <h2>1. What you get</h2>
-<p>Land and Level Up runs for 3 months, starting ${offer.startDateLong}. It includes:</p>
+<p>Land and Level Up runs for 6 weeks, starting ${offer.startDateLong}. The live calls are on ${offer.callDates}. ${offer.holidayBreak} It includes:</p>
 ${li(offer.group.includes)}
 <p>If you joined the Group plus private rebuild, you also get:</p>
 ${li(offer.private.includes.slice(1))}
-<p>The weekly group call is live, about 60 minutes, every Wednesday. The community lives on Mighty Networks.</p>
+<p>Each group call is live and about 60 minutes. The community lives on Mighty Networks.</p>
 
 <h2>2. Payment</h2>
 <p>You paid in full at checkout, by card or through Klarna. If you used Klarna, your monthly payments are a separate agreement between you and Klarna. HST applies.</p>
@@ -31,7 +31,7 @@ ${li(offer.private.includes.slice(1))}
 <h2>3. The 7-day money-back guarantee</h2>
 <p>If you change your mind, email izzy@joinclearcareer.com and I'll refund you in full. The guarantee ends at the earlier of:</p>
 <ul><li>7 days after you paid, or</li><li>the moment rebuild work on your resume or LinkedIn starts: your first 1:1 rebuild session, or your resume or LinkedIn being reworked in a workshop hot seat.</li></ul>
-<p>I can't take rebuild work back once it's done, which is why the guarantee ends there. After the guarantee ends, payments are not refundable, and you keep full access for the 3 months.</p>
+<p>I can't take rebuild work back once it's done, which is why the guarantee ends there. After the guarantee ends, payments are not refundable, and you keep full access for the 6 weeks.</p>
 
 <h2>4. No guarantee of results</h2>
 <p>${RESULTS_VARY} Land and Level Up is career coaching. It is not legal, financial, tax or immigration advice.</p>
@@ -52,8 +52,8 @@ ${li(offer.private.includes.slice(1))}
 <h2>8. Your materials and privacy</h2>
 <p>The resumes, LinkedIn exports and other files you share are stored in ClearCareer's Google Drive and used only to deliver this program. I won't share them. Ask me any time and I'll delete them. I'll only quote you or share your results publicly with your written permission. See joinclearcareer.com/privacy.</p>
 
-<h2>9. After 3 months</h2>
-<p>${offer.afterThreeMonths} Staying on is a separate monthly subscription that you choose to start. Nothing renews automatically.</p>
+<h2>9. After the 6 weeks</h2>
+<p>${offer.afterProgram} Staying on is a separate monthly subscription that you choose to start. Nothing renews automatically.</p>
 
 <h2>10. If ClearCareer cancels</h2>
 <p>If I cancel the program before it starts, you get a full refund.</p>

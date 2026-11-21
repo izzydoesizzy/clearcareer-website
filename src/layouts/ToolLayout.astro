@@ -17,6 +17,8 @@ interface Props {
   faqItems?: { question: string; answer: string }[];
   relatedTools?: { name: string; slug: string; icon: string }[];
   featureList?: string[];
+  /** Hide from search engines (drafts and old versions). */
+  noindex?: boolean;
 }
 
 const {
@@ -53,7 +55,7 @@ const relatedPosts = allPosts
   .slice(0, 3);
 ---
 
-<PageLayout title={`${title} | ClearCareer`} description={description}>
+<PageLayout title={`${title} | ClearCareer`} description={description} noindex={Astro.props.noindex}>
   <script
     type="application/ld+json"
     slot="head"

@@ -105,7 +105,7 @@ ${P("Money is tight when you're between roles. I've been there. So let's do the 
 ${P('Grab your target salary. Divide it by 12.')}
 ${BIG('At $100,000, that\'s $8,333. Every month.')}
 ${P("That's what one more month of searching costs. Not in theory. In groceries, in rent, in the quiet stress of watching your savings go down a little more every time you check.")}
-${P(`Now put the price next to it. The group cohort is <strong>${g.price} plus HST</strong> for your first 3 months${offer.dealLive ? ` (the Black Friday price, regular ${g.regular})` : ''}. If it helps you land even a few weeks sooner, it pays for itself.`)}
+${P(`Now put the price next to it. The group cohort is <strong>${g.price} plus HST</strong> for the full 6 weeks${offer.dealLive ? ` (the Black Friday price, regular ${g.regular})` : ''}. If it helps you land even a few weeks sooner, it pays for itself.`)}
 ${QUOTE(STORIES.annie.quote, STORIES.annie.who)}
 ${P(`${esc(STORIES.annie.story)} I get that. That's exactly why the price is what it is, and why there's a guarantee.`)}
 ${LIST([esc(offer.paying), esc(offer.guarantee)])}
@@ -145,10 +145,10 @@ ${P("You log on. Small group, 16 people at most, everyone working on their next 
 ${QUOTE(STORIES.sparsh.quote, STORIES.sparsh.who)}
 ${P("Here's everything you get:")}
 ${LIST([
-  `<strong>A live group call every Wednesday</strong>, 60 minutes. First one is ${offer.firstCallLong}.`,
+  `<strong>Six live group calls on Wednesdays</strong>, 60 minutes each: ${offer.callDates}. We break for the holidays.`,
   '<strong>A resume and LinkedIn rebuild workshop</strong>, with hot seats. We rework real resumes line by line, so you see exactly what to change.',
   '<strong>The AI Achievement Interviewer.</strong> It asks you one question at a time until your work has numbers on it. Most people undersell their work. This makes that a lot harder to do.',
-  `<strong>The community</strong> for 3 months: people in the same spot, plus me. ${esc(offer.afterThreeMonths)}`,
+  `<strong>The community</strong> for the 6 weeks: people in the same spot, plus me. ${esc(offer.afterProgram)}`,
   `<strong>${p.seatsTotal} seats also include a 1:1 rebuild with me</strong>, 2 to 3 hours, just the two of us.`,
 ])}
 ${P(`What does a rebuild do? ${esc(STORIES.victor.story)}`)}
@@ -188,7 +188,7 @@ ${SIGN()}`,
       body: `
 ${P("Your inbox is full of Black Friday right now. Mine too. So I'll keep this honest and useful.")}
 ${BIG(`Group cohort: ${g.price}, regular ${g.regular}.<br>Group plus private rebuild: ${p.price}, regular ${p.regular}.`)}
-${P(`CAD plus HST, for your first 3 months. ${esc(offer.dealLine)} It ends ${offer.dealEndsLong}.`)}
+${P(`CAD plus HST, for the full 6 weeks. ${esc(offer.dealLine)} It ends ${offer.dealEndsLong}.`)}
 ${P("But price isn't really the question, is it? The question is whether this will actually work for you. Here are the doubts I hear most:")}
 ${P('<strong>"I already paid for a coach. It went nowhere."</strong>')}
 ${P(`${esc(STORIES.andrew.story)} In Andrew's words: &ldquo;${esc(STORIES.andrew.quote)}&rdquo; Most coaching hands you advice and leaves. Here we build it together, every week.`)}
@@ -251,7 +251,7 @@ ${SIGN('Fortune favours the bold,')}`,
 ${P(`Land and Level Up starts this Monday, ${offer.startDateShort}. Our first Wednesday call is ${offer.firstCallLong}.`)}
 ${P("This is the last email I'll send you about it. After Monday, the founding group is closed and we get to work.")}
 ${P('Picture next Wednesday. Your resume has numbers on it. Your LinkedIn says what you actually do. And you have a room full of people who get it, plus me, helping you figure out what to do next. Every week.')}
-${P(`The group cohort is ${g.regular} plus HST for your first 3 months, or ${p.regular} with the private 1:1 rebuild. ${esc(offer.paying)} ${esc(offer.guarantee)}`)}
+${P(`The group cohort is ${g.regular} plus HST for the full 6 weeks, or ${p.regular} with the private 1:1 rebuild. ${esc(offer.paying)} ${esc(offer.guarantee)}`)}
 ${BTN('Join before Monday', page(9, '#pricing'))}
 ${P(`Questions? ${A('Answer a few questions and grab a call', form(9))}, or just hit reply.`)}
 ${P("And if now isn't the time, that's okay. My free tools and guides are always there for you on the site. Keep showing up for yourself.")}

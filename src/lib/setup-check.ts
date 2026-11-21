@@ -23,7 +23,7 @@ export function setupGaps(env: Record<string, string | undefined>): string[] {
   need('GOOGLE_PARENT_FOLDER_ID', 'client folders have nowhere to go.');
   need('GOOGLE_ROSTER_SHEET_ID', 'the client roster sheet is not updating.');
   need('VERCEL_DEPLOY_HOOK_URL', 'the landing page will not switch off Black Friday prices on its own.');
-  need('PUBLIC_RENEWAL_URL', 'the month-3 email will ask people to reply instead of linking to the $50 a month plan.');
+  need('PUBLIC_RENEWAL_URL', 'the end-of-program email will ask people to reply instead of linking to the $49 a month plan.');
   if (!env.CALENDLY_WEBHOOK_SIGNING_KEY && !env.CALL_WEBHOOK_SECRET) out.push('Calendly is not connected (CALENDLY_WEBHOOK_SIGNING_KEY or CALL_WEBHOOK_SECRET): no booked, reminder or no-show emails.');
   if (!welcome.communityUrl) out.push('Mighty Networks invite link is empty in src/data/llu.ts (welcome.communityUrl).');
   if (!welcome.callStart || !welcome.callUrl) out.push('Wednesday call time or link is empty in src/data/llu.ts (welcome.callStart, welcome.callUrl).');

@@ -127,7 +127,7 @@ function buildVaultEmailData(baseUrl: string, sessionId: string, firstName?: str
         "Weekly group calls and WhatsApp support for 8 weeks",
       ],
       buttonText: "Learn About the Program",
-      buttonUrl: `${baseUrl}/programs/jsis`,
+      buttonUrl: `${baseUrl}/land-and-level-up`,
     },
     testimonial: {
       quote: "Top of salary range, extra vacation, and a role that matters.",

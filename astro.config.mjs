@@ -13,10 +13,15 @@ export default defineConfig({
   integrations: [
     mdx(),
     // /land-and-level-up is noindex until launch. Remove this filter when it goes live.
-    sitemap({ filter: (page) => { const p = new URL(page).pathname.replace(/\/$/, ''); return !['/land-and-level-up', '/book-a-call', '/booked', '/welcome', '/onboarding', '/roi'].includes(p) && !p.startsWith('/team/'); } }),
+    sitemap({ filter: (page) => { const p = new URL(page).pathname.replace(/\/$/, ''); return !['/land-and-level-up', '/book-a-call', '/booked', '/welcome', '/onboarding', '/roi', '/testimonial-variations'].includes(p) && !p.startsWith('/team/') && !p.endsWith('-old'); } }),
     react(),
   ],
   redirects: {
+    // Old programs, hidden while Land and Level Up runs. Blog posts and old links still work.
+    '/programs': '/land-and-level-up',
+    '/programs/jsis': '/land-and-level-up',
+    '/programs/community': '/land-and-level-up',
+    '/community': '/land-and-level-up',
     '/blog/build-your-target-company-list-with-chatgpt': '/blog/build-your-target-company-list-with-ai',
   },
 });

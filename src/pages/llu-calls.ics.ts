@@ -1,4 +1,4 @@
-/** /llu-calls.ics: all 13 Wednesday calls as one recurring calendar event. Built with the site. */
+/** /llu-calls.ics: all 6 Wednesday calls (holiday break Dec 23 and 30) as one recurring calendar event. Built with the site. */
 import type { APIRoute } from 'astro';
 import { callsIcs } from '../lib/onboarding.js';
 
