@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { cleanAnswers, scoreLead, bookingUrl, diagnose } from '../../lib/book-call.js';
+import { cleanAnswers, scoreLead, bookingUrl, diagnose, leadScore, programValue } from '../../lib/book-call.js';
 import { consentAttributes } from '../../lib/brevo.js';
 import { buildLeadEmail } from '../../lib/lead-email.js';
 
@@ -39,6 +39,8 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
 
     const verdict = scoreLead(data);
     const diagnosis = diagnose(data);
+    const score = leadScore(data);
+    const value = programValue(data.program);
     const submittedAt = new Date().toISOString();
     let saved = false;
     let notified = false;
@@ -61,6 +63,9 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
         LEAD_INTERVIEWS: data.interviews,
         LEAD_OFFERS: data.offers,
         LEAD_DIAGNOSIS: diagnosis.key,
+        LEAD_SCORE: score.score,
+        LEAD_PROGRAM: data.program,
+        LEAD_VALUE: value.high,
         LEAD_TARGET_SALARY: data.targetSalary,
         LEAD_STRUGGLES: data.struggles.join(', '),
         LEAD_CHALLENGE: data.challenge,
@@ -95,7 +100,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       saved = res.ok || res.status === 204;
 
       // 2. Email Izzy a lead brief with every answer. This is the record that can never be lost.
-      const brief = buildLeadEmail(data, verdict, diagnosis, new Date(submittedAt));
+      const brief = buildLeadEmail(data, verdict, diagnosis, new Date(submittedAt), score, value);
       const mail = await fetch('https://api.brevo.com/v3/smtp/email', {
         method: 'POST',
         headers,

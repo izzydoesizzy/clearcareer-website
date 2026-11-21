@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import {
-  READY, NOT_READY, ALTERNATIVE, SEARCH_LENGTH, APPS_PER_WEEK, STRUGGLES, SITUATION, COUNTRY, DECIDER, START, PAYMENT,
+  READY, NOT_READY, ALTERNATIVE, PROGRAMS, PROGRAM_CHOICES, SEARCH_LENGTH, APPS_PER_WEEK, STRUGGLES, SITUATION, COUNTRY, DECIDER, START, PAYMENT,
 } from '../../lib/book-call';
 import { CONSENT_TEXT } from '../../lib/consent';
+import { dealIsLive } from '../../lib/email/deal';
 
 type Values = Record<string, any>;
 type Result = { qualified: boolean; reason: string; diagnosis?: { key: string; title: string; text: string }; bookingUrl?: string } | null;
@@ -82,7 +83,7 @@ export default function BookCallForm() {
       req('challenge'); req('milestones'); req('motivation', 'Please choose 1 to 5.');
     }
     if (i === 3) { req('callGoal'); req('decider', 'Please choose one.'); req('start', 'Please choose one.'); req('payment', 'Please choose one.'); }
-    if (i === 4) req('ready', 'Please choose one.');
+    if (i === 4) { req('program', 'Please choose one.'); req('ready', 'Please choose one.'); }
     return e;
   }
 
@@ -212,6 +213,12 @@ export default function BookCallForm() {
       {step === 4 && (
         <div className="llu-stack">
           <p className="llu-lead">Land and Level Up is a high-touch program with a low four-figure investment. There's a 7-day money-back guarantee, as long as your rebuild work hasn't started.</p>
+          <Field id="program" label="Which option are you most interested in?" error={errors.program}
+            hint={dealIsLive()
+              ? `${PROGRAMS.group.name}: $${PROGRAMS.group.price.toLocaleString('en-CA')} (regular $${PROGRAMS.group.regular.toLocaleString('en-CA')}). ${PROGRAMS.private.name}: $${PROGRAMS.private.price.toLocaleString('en-CA')} (regular $${PROGRAMS.private.regular.toLocaleString('en-CA')}). Black Friday prices, CAD plus HST.`
+              : `${PROGRAMS.group.name}: $${PROGRAMS.group.regular.toLocaleString('en-CA')}. ${PROGRAMS.private.name}: $${PROGRAMS.private.regular.toLocaleString('en-CA')}. CAD plus HST.`}>
+            <Choices name="program" options={PROGRAM_CHOICES} value={v.program} onChange={(x) => set('program', x)} />
+          </Field>
           <Field id="ready" label="Are you in a place where you're ready to invest that amount to achieve the goals you shared?" error={errors.ready}>
             <Choices name="ready" options={[READY, NOT_READY]} value={v.ready} onChange={(x) => set('ready', x)} />
           </Field>

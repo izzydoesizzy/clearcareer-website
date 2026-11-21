@@ -3,7 +3,7 @@
  * Email-safe HTML (tables and inline styles only), readable on a phone.
  */
 import type { BookCallAnswers, Diagnosis, Verdict } from './book-call';
-import { QUALIFY } from './book-call';
+import { QUALIFY, leadScore, programValue } from './book-call';
 
 const C = {
   blue: '#0161EF', navy: '#030620', ink: '#0f172a', body: '#334155', muted: '#64748b',
@@ -105,7 +105,14 @@ function section(title: string, rows: [string, unknown][]): string {
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${body}</table></td></tr>`;
 }
 
-export function buildLeadEmail(a: BookCallAnswers, v: Verdict, d: Diagnosis, submittedAt: Date = new Date()) {
+export function buildLeadEmail(
+  a: BookCallAnswers,
+  v: Verdict,
+  d: Diagnosis,
+  submittedAt: Date = new Date(),
+  score = leadScore(a),
+  value = programValue(a.program, submittedAt),
+) {
   const name = `${a.firstName} ${a.lastName}`.trim();
   const when = submittedAt.toLocaleString('en-CA', {
     timeZone: 'America/Toronto', weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit',
@@ -114,7 +121,8 @@ export function buildLeadEmail(a: BookCallAnswers, v: Verdict, d: Diagnosis, sub
   const verdict = v.qualified
     ? { text: 'Qualified. Shown the booking link.', bg: C.green }
     : { text: v.reason === 'experience' ? `Not yet: under ${QUALIFY.minYears} years` : 'Not yet: not ready to invest', bg: C.red };
-  const subject = `${v.qualified ? 'Qualified' : 'Not yet'} | ${d.title} | ${name}`;
+  const subject = `${score.grade} ${score.score} | ${v.qualified ? 'Qualified' : 'Not yet'} | ${value.label} | ${name}`;
+  const gradeColour = score.grade === 'Hot' ? C.red : score.grade === 'Warm' ? '#b45309' : C.muted;
   const tel = a.phone.replace(/[^\d+]/g, '');
 
   const html = `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(subject)}</title>
@@ -128,6 +136,21 @@ export function buildLeadEmail(a: BookCallAnswers, v: Verdict, d: Diagnosis, sub
 <h1 style="margin:0 0 12px;font-family:${SERIF};font-size:30px;font-weight:400;line-height:1.15;color:${C.white};">${esc(name)}</h1>
 <span style="display:inline-block;padding:6px 12px;border-radius:999px;background:${verdict.bg};font-family:${FONT};font-size:13px;font-weight:700;color:${C.white};">${esc(verdict.text)}</span>
 </td></tr>
+
+<tr><td style="padding:0;border-bottom:1px solid ${C.line};">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="stack"><tr>
+<td width="33%" style="padding:16px 12px 16px 32px;border-right:1px solid ${C.line};vertical-align:top;" class="px">
+<div style="font-family:${FONT};font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:${C.muted};">Lead score</div>
+<div style="font-family:${FONT};font-size:26px;font-weight:700;color:${C.ink};line-height:1.2;margin-top:4px;">${score.score}<span style="font-size:14px;color:${C.muted};font-weight:600;">/100</span></div>
+<div style="font-family:${FONT};font-size:13px;font-weight:700;color:${gradeColour};">${esc(score.grade)}</div></td>
+<td width="33%" style="padding:16px 12px;border-right:1px solid ${C.line};vertical-align:top;">
+<div style="font-family:${FONT};font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:${C.muted};">Interested in</div>
+<div style="font-family:${FONT};font-size:15px;font-weight:700;color:${C.ink};line-height:1.35;margin-top:6px;">${esc(a.program)}</div></td>
+<td width="34%" style="padding:16px 32px 16px 12px;vertical-align:top;" class="px">
+<div style="font-family:${FONT};font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:${C.muted};">Investment value</div>
+<div style="font-family:${FONT};font-size:22px;font-weight:700;color:${C.ink};line-height:1.25;margin-top:4px;">${esc(value.label)}</div>
+<div style="font-family:${FONT};font-size:12px;color:${C.muted};">CAD plus HST</div></td>
+</tr></table></td></tr>
 
 <tr><td style="padding:16px 32px;border-bottom:1px solid ${C.line};font-family:${FONT};font-size:14px;line-height:1.6;color:${C.body};" class="px">
 <a href="mailto:${esc(a.email)}" style="color:${C.blue};font-weight:600;text-decoration:none;">${esc(a.email)}</a>
@@ -189,6 +212,7 @@ ${section('Where they are', [
   ['Motivation', `${a.motivation} of 5`],
 ])}
 ${section('Readiness', [
+  ['Program', a.program],
   ['Ready to invest', a.ready],
   ['Who decides', a.decider],
   ['Could start', a.start],
@@ -197,7 +221,7 @@ ${section('Readiness', [
 ])}
 
 <tr><td style="padding:28px 32px;font-family:${FONT};font-size:12px;line-height:1.5;color:${C.muted};" class="px">
-The diagnosis is a first read from four numbers, not a verdict. Saved on their Brevo contact as LEAD_DIAGNOSIS = ${esc(d.key)}.
+Lead score: ready 30, experience 10, start date 15, decides alone 10, payment 10, motivation 15, program 10. The diagnosis is a first read from four numbers, not a verdict. Saved on their Brevo contact (LEAD_SCORE, LEAD_DIAGNOSIS).
 </td></tr>
 </table></td></tr></table></body></html>`;
 

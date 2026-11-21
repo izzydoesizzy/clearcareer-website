@@ -7,7 +7,7 @@ const raw = {
   targetSalary: 120000, yearsExperience: 8, searchLength: '6-7 months', appsPerWeek: '6-10', totalApplications: 120,
   interviews: 3, offers: 0, situation: 'Laid off in the last 3 months', country: 'Canada', struggles: [STRUGGLES[2]],
   challenge: 'No replies <script>alert(1)</script>', milestones: 'Confidence', motivation: 2, callGoal: 'A plan',
-  decider: 'Me and a partner or family member', start: 'This month', payment: 'Klarna (monthly)', ready: READY, consent: true,
+  decider: 'Me and a partner or family member', start: 'This month', payment: 'Klarna (monthly)', program: 'Group cohort', ready: READY, consent: true,
 };
 
 describe('lead brief email', () => {
@@ -17,11 +17,11 @@ describe('lead brief email', () => {
   const { subject, html } = buildLeadEmail(data, v, d, new Date('2026-11-21T15:00:00Z'));
 
   it('puts the verdict, diagnosis and name in the subject', () => {
-    expect(subject).toBe('Qualified | Targeting, your resume, or both | Sam Lee');
+    expect(subject).toMatch(/^(Hot|Warm|Cool) \d+ \| Qualified \| \$[\d,]+ \| Sam Lee$/);
   });
 
   it('includes the diagnosis, key numbers, call plan and every section', () => {
-    for (const s of ['Diagnosis', 'Focus the call on', 'interview rate', 'Insights', 'Open the call with', 'In their words', 'Their search', 'Where they are', 'Readiness']) {
+    for (const s of ['Lead score', 'Interested in', 'Investment value', 'Group cohort', 'Diagnosis', 'Focus the call on', 'interview rate', 'Insights', 'Open the call with', 'In their words', 'Their search', 'Where they are', 'Readiness']) {
       expect(html).toContain(s);
     }
     expect(html).toContain('2.5%');
@@ -43,6 +43,16 @@ describe('lead brief email', () => {
 
   it('labels people who were not approved', () => {
     const { data: n } = cleanAnswers({ ...raw, ready: NOT_READY });
-    expect(buildLeadEmail(n, scoreLead(n), diagnose(n)).subject.startsWith('Not yet')).toBe(true);
+    expect(buildLeadEmail(n, scoreLead(n), diagnose(n)).subject).toContain('| Not yet |');
+  });
+
+  it('scores leads and prices programs', async () => {
+    const { leadScore, programValue } = await import('../../src/lib/book-call');
+    const top = { ready: READY, yearsExperience: 10, start: 'This month', decider: 'Just me', payment: 'Credit card in full', motivation: 5, program: 'Group plus private 1:1 rebuild' };
+    expect(leadScore(top)).toEqual({ score: 100, grade: 'Hot' });
+    expect(leadScore({ ...top, ready: NOT_READY }).grade).toBe('Warm');
+    expect(programValue('Group cohort', new Date('2026-11-25T12:00:00Z')).label).toBe('$949');
+    expect(programValue('Group cohort', new Date('2026-12-02T12:00:00Z')).label).toBe('$1,200');
+    expect(programValue('Not sure yet', new Date('2026-11-25T12:00:00Z')).label).toBe('$949 to $1,797');
   });
 });

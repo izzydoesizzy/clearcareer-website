@@ -5,6 +5,7 @@
  * To change who is allowed to book, edit QUALIFY below.
  */
 import { CONSENT_TEXT } from './consent';
+import { dealIsLive } from './email/deal';
 
 export const CALENDLY_URL = 'https://calendly.com/clearcareer/discovery-call';
 
@@ -15,6 +16,24 @@ export const QUALIFY = {
   /** Minimum years of professional experience. */
   minYears: 5,
 };
+
+/** The two programs. Prices in CAD, before HST. Black Friday prices apply until the deal ends. */
+export const PROGRAMS = {
+  group: { name: 'Group cohort', price: 949, regular: 1200 },
+  private: { name: 'Group plus private 1:1 rebuild', price: 1797, regular: 2297 },
+} as const;
+export const PROGRAM_CHOICES = [PROGRAMS.group.name, PROGRAMS.private.name, 'Not sure yet'];
+
+/** What the program they picked is worth today, in CAD before HST. */
+export function programValue(program: string, now: Date = new Date()): { low: number; high: number; label: string } {
+  const live = dealIsLive(now);
+  const price = (p: { price: number; regular: number }) => (live ? p.price : p.regular);
+  const fmt = (n: number) => `$${n.toLocaleString('en-CA')}`;
+  if (program === PROGRAMS.group.name) { const n = price(PROGRAMS.group); return { low: n, high: n, label: fmt(n) }; }
+  if (program === PROGRAMS.private.name) { const n = price(PROGRAMS.private); return { low: n, high: n, label: fmt(n) }; }
+  const lo = price(PROGRAMS.group); const hi = price(PROGRAMS.private);
+  return { low: lo, high: hi, label: `${fmt(lo)} to ${fmt(hi)}` };
+}
 
 export const READY = "Let's do this!";
 export const NOT_READY = "I'm not ready to invest in my results";
@@ -68,6 +87,7 @@ export interface BookCallAnswers {
   decider: string;
   start: string;
   payment: string;
+  program: string;
   ready: string;
   website?: string; // honeypot
 }
@@ -115,6 +135,7 @@ export function cleanAnswers(raw: Record<string, unknown>): { data: BookCallAnsw
     decider: pick(raw.decider, DECIDER),
     start: pick(raw.start, START),
     payment: pick(raw.payment, PAYMENT),
+    program: pick(raw.program, PROGRAM_CHOICES),
     ready: pick(raw.ready, [READY, NOT_READY]),
     website: str(raw.website, 200),
   };
@@ -141,6 +162,7 @@ export function cleanAnswers(raw: Record<string, unknown>): { data: BookCallAnsw
   need('decider', !!data.decider, 'Please choose one.');
   need('start', !!data.start, 'Please choose one.');
   need('payment', !!data.payment, 'Please choose one.');
+  need('program', !!data.program, 'Please choose one.');
   need('ready', !!data.ready, 'Please choose one.');
 
   return { data, errors };
@@ -207,6 +229,34 @@ export function diagnose(a: Pick<BookCallAnswers, 'appsPerWeek' | 'totalApplicat
   else if (!highVolume) key = 'clarity';
   else key = 'tuning';
   return { key, ...DIAGNOSES[key] };
+}
+
+/**
+ * Lead score, 0 to 100. Every point is explained, so you can trust it or change it.
+ *   Ready to invest 30 | Experience at or above the minimum 10 | Start date up to 15
+ *   Decides alone up to 10 | Payment up to 10 | Motivation up to 15 | Program up to 10
+ */
+export const SCORE = {
+  ready: 30,
+  experience: 10,
+  start: { 'This month': 15, 'In the next 1 to 2 months': 8, 'Not sure yet': 3, 'Later than that': 0 } as Record<string, number>,
+  decider: { 'Just me': 10, 'Me and a partner or family member': 5, 'Someone else is involved': 0 } as Record<string, number>,
+  payment: { 'Credit card in full': 10, 'Klarna (monthly)': 8, "I'd want to split it into payments": 6, 'Not sure yet': 2 } as Record<string, number>,
+  motivationMax: 15,
+  program: { 'Group plus private 1:1 rebuild': 10, 'Group cohort': 8, 'Not sure yet': 4 } as Record<string, number>,
+};
+
+export function leadScore(a: Pick<BookCallAnswers, 'ready' | 'yearsExperience' | 'start' | 'decider' | 'payment' | 'motivation' | 'program'>): { score: number; grade: 'Hot' | 'Warm' | 'Cool' } {
+  let s = 0;
+  if (a.ready === READY) s += SCORE.ready;
+  if (a.yearsExperience >= QUALIFY.minYears) s += SCORE.experience;
+  s += SCORE.start[a.start] ?? 0;
+  s += SCORE.decider[a.decider] ?? 0;
+  s += SCORE.payment[a.payment] ?? 0;
+  if (a.motivation >= 1 && a.motivation <= 5) s += Math.round((a.motivation / 5) * SCORE.motivationMax);
+  s += SCORE.program[a.program] ?? 0;
+  const score = Math.max(0, Math.min(100, s));
+  return { score, grade: score >= 75 ? 'Hot' : score >= 50 ? 'Warm' : 'Cool' };
 }
 
 export type Verdict = { qualified: boolean; reason: 'ok' | 'not-ready' | 'experience' };
