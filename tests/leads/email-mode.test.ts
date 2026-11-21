@@ -36,3 +36,15 @@ describe('checkout links', () => {
     expect(checkoutLinks({}, new Date('2026-12-02T00:00:00Z'))).toEqual({ group: undefined, private: undefined });
   });
 });
+
+describe('ROI math', async () => {
+  const { roi, daysLabel, multipleLabel } = await import('../../src/lib/roi');
+  it('turns a salary into days of pay and value of landing sooner', () => {
+    const r = roi(120000, 949)!;
+    expect(Math.round(r.perDay)).toBe(462);
+    expect(daysLabel(r.daysOfPay)).toBe('about 2 working days');
+    expect(Math.round(r.rows[0].value)).toBe(4615);
+    expect(multipleLabel(r.rows[1].multiple)).toBe('11x');
+    expect(roi(0, 949)).toBeNull();
+  });
+});

@@ -10,6 +10,7 @@ import { dealIsLive } from './email/deal.js';
 import { offer, objections, RESULTS_VARY } from '../data/llu.js';
 import { callTime } from './call-emails.js';
 import { recommend, storyFor } from './stories.js';
+import { daysLabel, WORKING_DAYS } from './roi.js';
 export { recommend };
 
 const C = {
@@ -61,7 +62,7 @@ export function predictObjections(a: BookCallAnswers, d: Diagnosis): Objection[]
     say: [
       "You're right to watch every dollar. Can I show you how I think about it?",
       monthly > 0
-        ? `You're aiming for ${money(a.targetSalary)}. That's about ${money(monthly)} a month before tax.${!employed && MONTHS[a.searchLength] ? ` You've been searching ${a.searchLength}, so roughly ${money(monthly * MONTHS[a.searchLength])} so far.` : ''} The ${rec.program.toLowerCase()} is ${money(recPrice)} plus HST for 3 months.`
+        ? `You're aiming for ${money(a.targetSalary)}. That's about ${money(monthly)} a month before tax.${!employed && MONTHS[a.searchLength] ? ` You've been searching ${a.searchLength}, so roughly ${money(monthly * MONTHS[a.searchLength])} so far.` : ''} The ${rec.program.toLowerCase()} is ${money(recPrice)} plus HST for 3 months. That's ${daysLabel(recPrice / (a.targetSalary / WORKING_DAYS))} of your target pay.`
         : `The ${rec.program.toLowerCase()} is ${money(recPrice)} plus HST for 3 months. What's one month of your next salary worth?`,
       `If we get you hired even a few weeks sooner, it pays for itself. And you can spread it out: Klarna at checkout splits it into monthly payments for up to 12 months.`,
       `${offer.guarantee}`,
@@ -136,7 +137,7 @@ export function predictObjections(a: BookCallAnswers, d: Diagnosis): Objection[]
       title: '"I\'ve sent hundreds of applications. Why would this be different?"',
       likelihood: 'Possible',
       why: `${a.totalApplications} applications, ${a.interviews} interviews.`,
-      strategy: "Agree that more volume won't fix it. Show the targeting and resume fix on their actual resume, live.",
+      strategy: "Agree that more volume won't fix it. Name what's off (targeting, resume, or both) without fixing it on the call. The fix is what we do together in the program.",
       say: ['More applications won\'t fix this. The people who turn it around slow down and change the approach.', proof(1)],
     });
   }
@@ -241,7 +242,7 @@ export function buildSalesBrief(a: BookCallAnswers, call: { callAt: Date; joinUr
   const agenda: [string, string][] = [
     ['0 to 2 min', `Rapport, then set the frame: "By the end, you'll know whether this fits. If it does, we can get you in today. If it doesn't, I'll tell you."`],
     ['2 to 8 min', 'Discovery. Use the questions below. Listen more than you talk.'],
-    ['8 to 11 min', `Give the diagnosis: "${d.title}". Show one concrete fix on their actual resume or LinkedIn.`],
+    ['8 to 11 min', `Name the gap: "${d.title}". Put a number on what it's costing them (see the money math below). Don't fix it on the call: the fix is the program.`],
     ['11 to 14 min', `Recommend the ${rec.program.toLowerCase()}. Tie each part to something they said.`],
     ['14 to 20 min', 'Close, handle the objection, take payment while they are still on the call.'],
   ];
@@ -331,7 +332,7 @@ ${row('After 3 months', esc(offer.afterThreeMonths))}
 </table>
 
 ${H("Don'ts")}
-${OL(['Never promise a job or a timeline. ' + RESULTS_VARY, 'Never discount below the current price. Downsell to the group instead.', "Don't invent urgency. Use the real deadline and the real seat count only."])}
+${OL(["Don't coach on the call. Diagnose, put a number on the gap, recommend. Free fixes get taken away, tried alone, and rarely work.", 'Never promise a job or a timeline. ' + RESULTS_VARY, 'Never discount below the current price. Downsell to the group instead.', "Don't invent urgency. Use the real deadline and the real seat count only."])}
 
 ${H('After the call')}
 ${OL(['Enrolled: they get the Stripe receipt, and the follow-up emails stop automatically.', `Not yet: they get a follow-up the next morning, and one last note 3 days later. To stop those, set CALL_OUTCOME on their Brevo contact to "lost" or "enrolled".`, 'Add a one-line note on how it went, so the next brief gets better.'])}

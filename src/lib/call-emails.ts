@@ -22,6 +22,7 @@ import { PROGRAMS, ALTERNATIVE, QUALIFY, diagnose } from './book-call.js';
 import type { BookCallAnswers, DiagnosisKey } from './book-call.js';
 import { offer, RESULTS_VARY } from '../data/llu.js';
 import { storyFor, recommend, IZZY, STORIES, type Story } from './stories.js';
+import { roi, daysLabel, multipleLabel } from './roi.js';
 
 export interface CallInfo {
   firstName: string;
@@ -61,13 +62,19 @@ const DIAGNOSIS_LINE: Record<DiagnosisKey, string> = {
   tuning: "your numbers look healthy. The gains from here are in fine-tuning, and in negotiating well when the offer comes, so you don't leave money on the table.",
 };
 
-/** What we'd work on first, by diagnosis. */
-const FIRST_FIX: Record<DiagnosisKey, string> = {
-  clarity: 'Pick one or two target roles you actually want, then build a weekly rhythm around them.',
-  positioning: 'Check the targeting first, then put numbers on your resume and LinkedIn, then start reaching real people instead of only job boards.',
-  interviewing: 'Build your library of stories with numbers, sharpen "Tell me about yourself", and send a follow-up that actually says something.',
-  tuning: 'Tighten what is working, and get ready to negotiate before the offer lands.',
+/**
+ * What the PROGRAM does about it, by diagnosis. Deliberately not do-it-yourself steps: the call is a
+ * fit call, not free coaching, and half-advice taken away and tried alone rarely works.
+ */
+const PROGRAM_FIX: Record<DiagnosisKey, string> = {
+  clarity: 'Inside Land and Level Up, we pin down the roles that actually fit you and build a weekly rhythm you can stick to. Together, not alone.',
+  positioning: 'Inside Land and Level Up, we fix the targeting, rebuild how your resume and LinkedIn show your value, and get you talking to real people. Together, not alone.',
+  interviewing: "Inside Land and Level Up, we build your interview stories and practise them live, so the interviews you're already getting turn into offers.",
+  tuning: 'Inside Land and Level Up, we sharpen what is already working and get you ready to negotiate before the offer lands.',
 };
+
+/** What the call is, said plainly, so nobody shows up expecting a free coaching session. */
+const FIT_CALL = "This isn't a coaching session, so there's nothing to prepare or bring. We'll talk about where you are, where you want to be, what's in the way, and whether Land and Level Up is the right way to close that gap.";
 
 /** Free next steps for people who aren't a fit right now. */
 const FREE_STEPS: Record<DiagnosisKey, [string, string, string][]> = {
@@ -179,6 +186,29 @@ const numbersBlock = (a?: Partial<BookCallAnswers>) => {
 const keyOf = (c: CallInfo): DiagnosisKey | undefined =>
   c.diagnosisKey || (c.answers && c.answers.totalApplications !== undefined ? diagnose(c.answers as BookCallAnswers).key : undefined);
 
+/** Their own numbers: what one week, one month and three months of their target pay are worth, next to the price. */
+function roiBlock(a: Partial<BookCallAnswers>, campaign: string): string {
+  const salary = Number(a.targetSalary) || 0;
+  const g = PROGRAMS.group;
+  const p = PROGRAMS.private;
+  const isPrivate = a.program === p.name;
+  const price = dealIsLive() ? (isPrivate ? p.price : g.price) : (isPrivate ? p.regular : g.regular);
+  const r = roi(salary, price);
+  const calc = `${SITE_URL}/roi?salary=${Math.round(salary) || ''}&program=${isPrivate ? 'private' : 'group'}&utm_source=email&utm_medium=call-journey&utm_campaign=${campaign}`;
+  if (!r) return P(`Want to see what landing sooner is worth for you? ${link('Plug your target salary into this calculator', calc)}.`);
+  const row = (label: string, value: string, extra = '', bold = false) =>
+    `<tr><td style="padding:10px 14px;border-top:1px solid ${COLORS.grey200};font-family:${FONTS.body};font-size:15px;color:${COLORS.text};${bold ? 'font-weight:700;' : ''}" class="email-text email-border">${label}</td>
+<td style="padding:10px 14px;border-top:1px solid ${COLORS.grey200};font-family:${FONTS.body};font-size:15px;color:${COLORS.heading};font-weight:700;text-align:right;white-space:nowrap;" class="email-heading email-border">${value}${extra ? `<span style="display:block;font-size:12px;font-weight:600;color:${COLORS.green};">${extra}</span>` : ''}</td></tr>`;
+  return `${P(`You told me you're aiming for <strong>${money(salary)}</strong>. Here's what that means in plain numbers:`)}
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 12px;border:1px solid ${COLORS.grey200};border-radius:10px;border-collapse:separate;overflow:hidden;" class="email-border">
+<tr><td colspan="2" style="padding:14px;background:${COLORS.blueBg};font-family:${FONTS.body};font-size:16px;line-height:1.5;color:${COLORS.heading};" class="email-tip-bg email-heading"><strong>${money(price)}</strong> is ${daysLabel(r.daysOfPay)} of your target pay.</td></tr>
+${row('One working day of your target pay', money(r.perDay))}
+${row('One month', money(r.perMonth))}
+${r.rows.map((x) => row(`Land ${x.label}`, money(x.value), `${multipleLabel(x.multiple)} the cost`)).join('')}
+</table>
+${small(`Before tax, at 260 working days a year. Price is ${isPrivate ? `the ${esc(p.name.toLowerCase())}` : 'the group cohort'} plus HST. ${esc(RESULTS_VARY)} ${link('Try your own numbers', calc)}.`)}`;
+}
+
 // ── Not yet (form, not qualified) ───────────────────────────────────────────────
 export function notYetEmail(a: BookCallAnswers, reason: 'not-ready' | 'experience') {
   const key = diagnose(a).key;
@@ -229,8 +259,8 @@ export function noBook2Email(c: CallInfo) {
 ${hey(c)}
 ${P("Last nudge from me about the call, promise. I'll leave you with a story, because I think you'll see yourself in it.")}
 ${storyBlock(s, 'Someone who was where you are')}
-${P(`Results vary, and I can't promise you the same thing. But the pattern matters: ${esc(FIRST_FIX[key])}`)}
-${P("If you want to look at your search together, here's your link:")}
+${P(`Results vary, and I can't promise you the same thing. But the pattern matters. ${esc(PROGRAM_FIX[key])}`)}
+${P("If you want to talk about whether that's the right move for you, here's your link:")}
 ${c.bookUrl ? button('Pick a time', c.bookUrl) : button('Pick a time', `${SITE_URL}/book-a-call`)}
 ${P(`Not the right time? All good. Here's something to keep you moving: ${link(ALTERNATIVE.label, ALTERNATIVE.url)}.`)}
 ${sign()}`);
@@ -250,22 +280,22 @@ ${c.answers?.totalApplications !== undefined ? P("I've got your answers in front
 ${numbersBlock(c.answers)}
 ${key ? P(`That pattern tells me ${esc(DIAGNOSIS_LINE[key])}`) : P("We'll skip the small talk and go straight to your search.")}
 ${c.answers?.challenge ? P(`And you wrote that your biggest challenge is: <em>&ldquo;${esc(c.answers.challenge.replace(/[.!?]+$/, ''))}.&rdquo;</em> I've got that written down. We'll get to it.`) : ''}
-${H('One quick thing')}
-${P("Hit reply and tell me the ONE question you most want answered on our call. The one that's been sitting on your chest. That way we spend our time on what matters most to you.")}
-${H('Have these open')}
-${list(['Your resume', 'Your LinkedIn profile', "2 or 3 job posts you'd love to land"])}
+${H('No prep needed')}
+${P(FIT_CALL)}
 ${H("Here's how the call goes")}
 ${list([
-  'Where you are stuck, in your own words.',
-  "What I'd change first, and why. You'll leave with that either way.",
-  "If Land and Level Up fits, how to join. If it doesn't, I'll tell you straight, and point you somewhere better.",
+  'Where you are now, and where you want to be.',
+  "What's in the way, and what it's costing you to stay stuck.",
+  "Whether Land and Level Up closes that gap. If it does, you can join on the call. If it doesn't, I'll tell you straight.",
 ], true)}
+${H('One quick thing')}
+${P("Hit reply and tell me the ONE question you need answered to decide if this is right for you. That way we spend our time on what matters most to you.")}
 ${P(`If it's a fit, you can join right on the call. ${payLine}`)}
 ${partnerLine(c)}
 ${P(`Want to look around first? ${link('Both programs and the common questions are on one page', utm(`${SITE_URL}/booked`, 'booked'))}.`)}
 ${c.rescheduleUrl ? P(`Need a different time? ${link('Reschedule here', c.rescheduleUrl)}, no stress. It frees the slot for someone else.`) : ''}
 ${sign()}
-${s ? P(`<strong>P.S.</strong> ${esc(s.who.split(',')[0])} was in a similar spot. Ask me on the call what we changed.`) : ''}`);
+${s ? P(`<strong>P.S.</strong> ${esc(s.who.split(',')[0])} was in a similar spot. Ask me about that story on the call.`) : ''}`);
   return { subject, html };
 }
 
@@ -275,15 +305,10 @@ export function dayBeforeEmail(c: CallInfo) {
   const key = keyOf(c) || 'positioning';
   const s = storyFor(key, a);
   const subject = `Before tomorrow: ${s.who.split(',')[0]}'s story, and your questions answered`;
-  const salary = Number(a.targetSalary) || 0;
   const g = PROGRAMS.group;
   const p = PROGRAMS.private;
   const employed = String(a.situation || '').startsWith('Still employed');
 
-  const theirs = a.program === p.name ? `The ${p.name.toLowerCase()} is ${priceOf(p)}` : a.program === g.name ? `The group cohort is ${priceOf(g)}` : `The group cohort is ${priceOf(g)} (or ${priceOf(p)} with the private 1:1 rebuild)`;
-  const worth = salary > 0
-    ? `You told me you're aiming for ${money(salary)}. That's about ${money(salary / 12)} a month before tax${employed ? ' you could be earning in the right role' : ''}. ${theirs} plus HST for 3 months. If we get you there even a few weeks sooner, it pays for itself.`
-    : `Grab your target salary and divide it by 12. That's what one month is worth. ${theirs} plus HST for 3 months. If we get you there even a few weeks sooner, it pays for itself.`;
 
   const partner = a.decider && a.decider !== 'Just me'
     ? qa('Can my partner join the call?', 'Yes, please. Same link. Big decisions are easier when you both hear the same answers.')
@@ -292,7 +317,6 @@ export function dayBeforeEmail(c: CallInfo) {
 
   const rows = [
     partner,
-    qa('Is it worth the money?', worth),
     qa('Can I pay over time?', `Yes. ${payLine} Pick whatever works for your budget. No judgement, I've been between jobs too.`),
     qa("What if it's not for me?", `${esc(offer.guarantee)} Email me inside those 7 days and I'll refund you, no awkward conversation.`),
     qa('How much time does it take?', employed
@@ -309,12 +333,16 @@ export function dayBeforeEmail(c: CallInfo) {
 ${hey(c)}
 ${P(`We're on for <strong>${esc(callTime(c.callAt))}</strong>. Before then, let me tell you about someone.`)}
 ${storyBlock(s)}
-${P(`Why this story? Because your numbers look a lot like this. ${esc(FIRST_FIX[key])} That's where we'll start tomorrow.`)}
+${P(`Why this story? Because your numbers look a lot like this. Tomorrow we'll talk about what's in the way for you, and what changing it would be worth.`)}
 ${small(esc(RESULTS_VARY))}
+${H('Is it worth it? Your numbers')}
+${roiBlock(a, 'day-before')}
+${H('What tomorrow is (and isn\'t)')}
+${P(FIT_CALL)}
 ${H('Questions people ask me before they join')}
 ${P("Here are the straight answers, so tomorrow we can spend the whole call on you. If yours isn't here, hit reply.")}
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 20px;">${rows}</table>
-${P("If you already know you're in, tell me at the start and we'll use every minute on your plan. Have your card or Klarna handy.")}
+${P("If you already know you're in, tell me at the start and we'll go straight to getting you set up. Have your card or Klarna handy.")}
 ${joinLine(c)}
 ${sign('See you tomorrow,')}`);
   return { subject, html };
@@ -325,8 +353,8 @@ export function morningOfEmail(c: CallInfo) {
   const subject = `Today at ${callTime(c.callAt, false)}`;
   const html = shell('Today', `See you at ${callTime(c.callAt, false)}`, `
 ${hey(c)}
-${P("Today's the day. I'm genuinely looking forward to this one. Quick checklist:")}
-${list(['Your resume and LinkedIn open', "2 or 3 job posts you'd love to land", 'The one question you most want answered', 'Your card or Klarna handy, in case we decide it fits'])}
+${P("Today's the day. I'm genuinely looking forward to this one. No prep needed, just come as you are. Three things that help:")}
+${list(['The one question you need answered to decide', "Anyone who's part of the decision, if they're joining", 'Your card or Klarna handy, in case we decide it fits'])}
 ${joinLine(c)}
 ${c.rescheduleUrl ? P(`Something came up? ${link('Pick another time', c.rescheduleUrl)}. Life happens, no stress.`) : ''}
 ${sign('See you soon,')}`);
@@ -339,7 +367,7 @@ export function canceledEmail(c: CallInfo) {
   const html = shell('Call canceled', "No explanation needed. Here's a link to pick a new time.", `
 ${hey(c)}
 ${P("I saw you canceled our call. No problem at all, and no explanation needed. Job searching pulls you in fifty directions at once.")}
-${P('If you still want to look at your search together, grab a new time here:')}
+${P('If you still want to talk about your search, grab a new time here:')}
 ${button('Pick a new time', c.bookUrl || `${SITE_URL}/book-a-call`)}
 ${P("If you decided it's not the right time, that's okay too. Hit reply and tell me what changed. Maybe I can point you to something that fits better.")}
 ${sign()}`);
@@ -376,11 +404,12 @@ function joinLinks(k: Checkout, a?: Partial<BookCallAnswers>): string {
 export function followUp1Email(c: CallInfo, k: Checkout = {}) {
   const key = keyOf(c);
   const subject = `Your plan from yesterday, ${c.firstName}`;
-  const html = shell('Following up', "Here's where I'd start, and your link to join.", `
+  const html = shell('Following up', "The math from yesterday, and your link to join.", `
 ${hey(c)}
 ${P("Thanks for the chat yesterday. It was really great getting to know you and your search.")}
 ${c.answers?.milestones ? P(`You told me that, besides a job, success looks like <em>&ldquo;${esc(String(c.answers.milestones).replace(/[.!?]+$/, ''))}.&rdquo;</em> That's what the next 3 months are for.`) : ''}
-${key ? P(`Here's the short version of where I'd start: ${esc(FIRST_FIX[key])}`) : ''}
+${key ? P(esc(PROGRAM_FIX[key])) : ''}
+${(() => { const sal = Number(c.answers?.targetSalary) || 0; const isP = c.answers?.program === PROGRAMS.private.name; const pr = dealIsLive() ? (isP ? PROGRAMS.private.price : PROGRAMS.group.price) : (isP ? PROGRAMS.private.regular : PROGRAMS.group.regular); const r = roi(sal, pr); return r ? P(`And the math from yesterday: at ${money(sal)}, the ${isP ? esc(PROGRAMS.private.name.toLowerCase()) : 'group cohort'} costs ${daysLabel(r.daysOfPay)} of your target pay. Landing even 2 weeks sooner is worth ${money(r.rows[0].value)}.`) : ''; })()}
 ${P("If you're ready, here's where to claim your seat:")}
 ${joinLinks(k, c.answers)}
 ${P(`${payLine} ${esc(offer.guarantee)}${deadlineLine()}`)}

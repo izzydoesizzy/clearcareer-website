@@ -13,7 +13,7 @@ export default defineConfig({
   integrations: [
     mdx(),
     // /land-and-level-up is noindex until launch. Remove this filter when it goes live.
-    sitemap({ filter: (page) => { const p = new URL(page).pathname.replace(/\/$/, ''); return !['/land-and-level-up', '/book-a-call', '/booked', '/welcome', '/onboarding'].includes(p) && !p.startsWith('/team/'); } }),
+    sitemap({ filter: (page) => { const p = new URL(page).pathname.replace(/\/$/, ''); return !['/land-and-level-up', '/book-a-call', '/booked', '/welcome', '/onboarding', '/roi'].includes(p) && !p.startsWith('/team/'); } }),
     react(),
   ],
   redirects: {
