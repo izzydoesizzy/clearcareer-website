@@ -18,7 +18,7 @@ const money = (n: number) => (Number.isFinite(n) ? `$${Math.round(n).toLocaleStr
 const pct = (n: number) => (!Number.isFinite(n) ? '-' : n === 0 ? '0%' : `${(n * 100).toFixed(n < 0.1 ? 1 : 0)}%`);
 
 /** Questions to open the call with, by diagnosis. */
-const CALL_PLAN: Record<Diagnosis['key'], string[]> = {
+export const CALL_PLAN: Record<Diagnosis['key'], string[]> = {
   positioning: [
     'Which two job titles are you applying for most? Do they match your last two roles?',
     'Pull up your resume. Does the top third show results with numbers?',
@@ -73,6 +73,8 @@ export function insights(a: BookCallAnswers, v: Verdict): Insight[] {
   if (a.motivation >= 4) out.push({ tone: 'good', text: `High motivation (${a.motivation} of 5).` });
   if (a.decider !== 'Just me') out.push({ tone: 'flag', text: `Not deciding alone: "${a.decider}". Consider inviting them to the call.` });
   if (a.payment !== 'Credit card in full') out.push({ tone: 'note', text: `Payment preference: ${a.payment}. Have Klarna or a payment plan ready.` });
+  if (a.commit?.startsWith('Yes')) out.push({ tone: 'good', text: 'Says they will have a card ready if it fits. Plan to close on the call.' });
+  if (a.commit?.startsWith('No')) out.push({ tone: 'flag', text: 'Wants time to think after the call. Find the real question behind that.' });
   if (a.start === 'This month') out.push({ tone: 'good', text: 'Ready to start this month.' });
   if (a.start === 'Later than that' || a.start === 'Not sure yet') out.push({ tone: 'flag', text: `Timing: ${a.start}. Test urgency on the call.` });
   if (a.country === 'Somewhere else') out.push({ tone: 'flag', text: 'Based outside Canada and the US.' });
@@ -214,6 +216,7 @@ ${section('Where they are', [
 ${section('Readiness', [
   ['Program', a.program],
   ['Ready to invest', a.ready],
+  ['Enrol on the call?', a.commit],
   ['Who decides', a.decider],
   ['Could start', a.start],
   ['Would pay by', a.payment],
@@ -221,7 +224,7 @@ ${section('Readiness', [
 ])}
 
 <tr><td style="padding:28px 32px;font-family:${FONT};font-size:12px;line-height:1.5;color:${C.muted};" class="px">
-Lead score: ready 30, experience 10, start date 15, decides alone 10, payment 10, motivation 15, program 10. The diagnosis is a first read from four numbers, not a verdict. Saved on their Brevo contact (LEAD_SCORE, LEAD_DIAGNOSIS).
+Lead score: ready to invest 25, experience 10, start date 15, ready to enrol on the call 10, decides alone 10, payment 10, motivation 10, program 10. The diagnosis is a first read from four numbers, not a verdict. Saved on their Brevo contact (LEAD_SCORE, LEAD_DIAGNOSIS).
 </td></tr>
 </table></td></tr></table></body></html>`;
 

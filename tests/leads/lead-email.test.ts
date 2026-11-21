@@ -7,7 +7,7 @@ const raw = {
   targetSalary: 120000, yearsExperience: 8, searchLength: '6-7 months', appsPerWeek: '6-10', totalApplications: 120,
   interviews: 3, offers: 0, situation: 'Laid off in the last 3 months', country: 'Canada', struggles: [STRUGGLES[2]],
   challenge: 'No replies <script>alert(1)</script>', milestones: 'Confidence', motivation: 2, callGoal: 'A plan',
-  decider: 'Me and a partner or family member', start: 'This month', payment: 'Klarna (monthly)', program: 'Group cohort', ready: READY, consent: true,
+  decider: 'Me and a partner or family member', start: 'This month', payment: 'Klarna (monthly)', program: "Group cohort", commit: "Yes, I'll have my card ready", ready: READY, consent: true,
 };
 
 describe('lead brief email', () => {
@@ -48,9 +48,9 @@ describe('lead brief email', () => {
 
   it('scores leads and prices programs', async () => {
     const { leadScore, programValue } = await import('../../src/lib/book-call');
-    const top = { ready: READY, yearsExperience: 10, start: 'This month', decider: 'Just me', payment: 'Credit card in full', motivation: 5, program: 'Group plus private 1:1 rebuild' };
+    const top = { ready: READY, yearsExperience: 10, start: 'This month', decider: 'Just me', payment: 'Credit card in full', motivation: 5, program: 'Group plus private 1:1 rebuild', commit: "Yes, I'll have my card ready" };
     expect(leadScore(top)).toEqual({ score: 100, grade: 'Hot' });
-    expect(leadScore({ ...top, ready: NOT_READY }).grade).toBe('Warm');
+    expect(leadScore({ ...top, ready: NOT_READY })).toEqual({ score: 49, grade: 'Cool' });
     expect(programValue('Group cohort', new Date('2026-11-25T12:00:00Z')).label).toBe('$949');
     expect(programValue('Group cohort', new Date('2026-12-02T12:00:00Z')).label).toBe('$1,200');
     expect(programValue('Not sure yet', new Date('2026-11-25T12:00:00Z')).label).toBe('$949 to $1,797');

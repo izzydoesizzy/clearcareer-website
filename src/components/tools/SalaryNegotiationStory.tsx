@@ -306,7 +306,7 @@ export default function SalaryNegotiationStory() {
             </h3>
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
               <a
-                href="https://calendly.com/clearcareer/discovery-call"
+                href="/book-a-call"
                 className="inline-flex items-center justify-center rounded-lg bg-white text-blue px-8 py-3.5 text-base font-semibold hover:bg-gray-100 hover:shadow-lg transition-all"
               >
                 Book a Free Audit

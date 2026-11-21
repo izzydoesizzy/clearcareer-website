@@ -6,7 +6,7 @@
  *
  * Creates: the contact fields that record consent, and two lists
  * ("Nurture: Land and Level Up (opted in)", "Call booked" and "Book-a-call applicants").
- * Prints the list IDs. Put them in Vercel: BREVO_NURTURE_LIST_ID and BREVO_LEADS_LIST_ID
+ * Prints the list IDs. Put them in Vercel: BREVO_NURTURE_LIST_ID, BREVO_CALL_LIST_ID ("Call booked") and BREVO_LEADS_LIST_ID
  * (the applicants list). Also set BOOK_CALL_NOTIFY_EMAIL if you want notifications elsewhere.
  */
 const KEY = process.env.BREVO_API_KEY;
@@ -34,6 +34,15 @@ const attrs = [
   ['LEAD_INTERVIEWS', 'float'],
   ['LEAD_OFFERS', 'float'],
   ['LEAD_DIAGNOSIS', 'text'],
+  ['LEAD_COMMIT', 'text'],
+  ['LEAD_ANSWERS', 'text'],
+  ['CALL_AT', 'text'],
+  ['CALL_JOIN_URL', 'text'],
+  ['CALL_RESCHEDULE_URL', 'text'],
+  ['CALL_EMAILS_SENT', 'text'],
+  ['CALL_OUTCOME', 'text'],
+  ['ENROLLED_AT', 'date'],
+  ['ENROLLED_AMOUNT', 'float'],
   ['LEAD_SCORE', 'float'],
   ['LEAD_PROGRAM', 'text'],
   ['LEAD_VALUE', 'float'],

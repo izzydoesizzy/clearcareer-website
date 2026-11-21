@@ -1,7 +1,10 @@
 import type { APIRoute } from 'astro';
-import { cleanAnswers, scoreLead, bookingUrl, diagnose, leadScore, programValue } from '../../lib/book-call.js';
+import { cleanAnswers, scoreLead, bookingUrl, diagnose, leadScore, programValue, PROGRAMS } from '../../lib/book-call.js';
+import { packAnswers } from '../../lib/call-flow.js';
+import { checkoutFromEnv } from '../../lib/call-runner.js';
 import { consentAttributes } from '../../lib/brevo.js';
 import { buildLeadEmail } from '../../lib/lead-email.js';
+import { dealIsLive } from '../../lib/email/deal.js';
 
 export const prerender = false;
 
@@ -9,6 +12,9 @@ const BREVO_API_KEY = import.meta.env.BREVO_API_KEY;
 const NURTURE_LIST_ID = Number(import.meta.env.BREVO_NURTURE_LIST_ID) || 0;
 const LEADS_LIST_ID = Number(import.meta.env.BREVO_LEADS_LIST_ID) || 0;
 const NOTIFY_TO = import.meta.env.BOOK_CALL_NOTIFY_EMAIL || 'izzy@joinclearcareer.com';
+/** The private Calendly event only approved leads see. Falls back to the public one until it's set. */
+const QUALIFIED_URL = import.meta.env.CALENDLY_QUALIFIED_URL || undefined;
+const CHECKOUT = checkoutFromEnv(import.meta.env);
 
 const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json' } });
@@ -21,6 +27,18 @@ function limited(ip: string): boolean {
   recent.push(now);
   hits.set(ip, recent);
   return recent.length > 8;
+}
+
+/** Hot leads who picked a program can skip the call and pay now, once the Stripe links are set. */
+function hotCheckoutFor(program: string, grade: string) {
+  if (grade !== 'Hot') return {};
+  const live = dealIsLive();
+  const fmt = (n: number) => `$${n.toLocaleString('en-CA')}`;
+  if (program === PROGRAMS.group.name && CHECKOUT.group)
+    return { checkout: { url: CHECKOUT.group, program: PROGRAMS.group.name.toLowerCase(), price: fmt(live ? PROGRAMS.group.price : PROGRAMS.group.regular) } };
+  if (program === PROGRAMS.private.name && CHECKOUT.private)
+    return { checkout: { url: CHECKOUT.private, program: PROGRAMS.private.name.toLowerCase(), price: fmt(live ? PROGRAMS.private.price : PROGRAMS.private.regular) } };
+  return {};
 }
 
 export const POST: APIRoute = async ({ request, clientAddress }) => {
@@ -73,6 +91,8 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
         LEAD_START: data.start,
         LEAD_PAYMENT: data.payment,
         LEAD_READY: data.ready,
+        LEAD_COMMIT: data.commit,
+        LEAD_ANSWERS: packAnswers(data),
         ...(data.consent ? consentAttributes('book-a-call') : { MARKETING_CONSENT: false }),
       };
       const listIds = [data.consent && NURTURE_LIST_ID ? NURTURE_LIST_ID : 0, LEADS_LIST_ID].filter(Boolean);
@@ -125,7 +145,8 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       qualified: verdict.qualified,
       reason: verdict.reason,
       diagnosis: { key: diagnosis.key, title: diagnosis.title, text: diagnosis.text },
-      ...(verdict.qualified ? { bookingUrl: bookingUrl(data) } : {}),
+      ...(verdict.qualified ? { bookingUrl: bookingUrl(data, QUALIFIED_URL) } : {}),
+      ...(verdict.qualified ? hotCheckoutFor(data.program, score.grade) : {}),
     });
   } catch (err) {
     console.error('book-call error:', err);

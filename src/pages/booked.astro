@@ -1,0 +1,138 @@
+---
+/**
+ * "You're booked": where Calendly sends people after they book (Calendly > event > Booking page
+ * options > Redirect to an external site: https://joinclearcareer.com/booked, with "pass event details" on).
+ * Everything they need before the call, so the call itself is a quick yes.
+ */
+import BaseLayout from "@layouts/BaseLayout.astro";
+import "@/styles/llu.css";
+import { offer, objections, RESULTS_VARY } from "@/data/llu";
+
+const title = "You're booked | ClearCareer";
+const description = "What to have open, how the call goes, and straight answers to the questions people ask most.";
+const tiers = [offer.group, offer.private];
+const faq = [objections[0], objections[2], objections[4], objections[6]];
+---
+
+<BaseLayout title={title} description={description} noindex>
+  <div class="llu">
+    <header class="llu-nav">
+      <div class="llu-wrap llu-nav__row">
+        <a class="llu-nav__brand" href="/land-and-level-up" aria-label="ClearCareer, Land and Level Up">
+          <span>
+            <span class="llu-nav__mark">ClearCareer</span>
+            <span class="llu-nav__sub">Land and Level Up</span>
+          </span>
+        </a>
+      </div>
+    </header>
+    <main id="main-content">
+      <section class="llu-band">
+        <div class="llu-wrap">
+          <div class="llu-head">
+            <p class="llu-eyebrow">You're booked</p>
+            <h1 class="llu-h2" id="booked-title">See you soon.</h1>
+            <p class="llu-lead" id="booked-when">Your confirmation is on its way to your inbox, with the link to join.</p>
+          </div>
+
+          <div class="llu-grid llu-grid--2 llu-mt-48">
+            <div class="llu-surface llu-stack">
+              <p class="llu-eyebrow">Have these open</p>
+              <ul class="llu-list">
+                <li>Your resume</li>
+                <li>Your LinkedIn profile</li>
+                <li>2 or 3 job posts you would love to land</li>
+              </ul>
+            </div>
+            <div class="llu-surface llu-stack">
+              <p class="llu-eyebrow">How the call goes</p>
+              <ol class="llu-list">
+                <li>Where you're stuck, in your own words.</li>
+                <li>What I'd change first, and why.</li>
+                <li>If Land and Level Up fits, how to join. If it doesn't, I'll tell you straight.</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="llu-band llu-band--navy">
+        <div class="llu-wrap">
+          <div class="llu-head">
+            <p class="llu-eyebrow">{offer.dealLive ? `Black Friday pricing, until ${offer.dealEndsShort}` : "The two options"}</p>
+            <h2 class="llu-h2">If it's a fit, you can join on the call.</h2>
+            <p class="llu-lead">{offer.paying}</p>
+          </div>
+          <div class="llu-grid llu-grid--2 llu-mt-48">
+            {
+              tiers.map((t) => (
+                <div class="llu-surface llu-tier">
+                  <p class="llu-eyebrow">{t.name}</p>
+                  <p class="llu-tier__price llu-mt-16">
+                    {t.price} {offer.dealLive && <s class="llu-strike">{t.regular}</s>}
+                  </p>
+                  <p class="llu-cap llu-mt-8">{t.priceNote}</p>
+                  <p class="llu-strong llu-mt-16">{t.forWho}</p>
+                  <ul class="llu-list llu-mt-16">{t.includes.map((i) => <li>{i}</li>)}</ul>
+                </div>
+              ))
+            }
+          </div>
+          <div class="llu-ruled llu-ruled--3 llu-mt-48">
+            <div>
+              <p class="llu-eyebrow">Guarantee</p>
+              <p class="llu-mt-8">{offer.guarantee}</p>
+            </div>
+            <div>
+              <p class="llu-eyebrow">We start</p>
+              <p class="llu-mt-8">{offer.startDateLong}. First Wednesday call {offer.firstCallLong}.</p>
+            </div>
+            <div>
+              <p class="llu-eyebrow">After month 3</p>
+              <p class="llu-mt-8">{offer.afterThreeMonths}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="llu-band">
+        <div class="llu-wrap">
+          <div class="llu-head">
+            <p class="llu-eyebrow">Straight answers</p>
+            <h2 class="llu-h2">The questions people ask me most.</h2>
+          </div>
+          <div class="llu-stack llu-mt-48">
+            {
+              faq.map((o) => (
+                <div class="llu-surface llu-stack">
+                  <p class="llu-title">{o.q}</p>
+                  {o.a.map((p) => <p>{p}</p>)}
+                  <p class="llu-cap">{o.proof}</p>
+                </div>
+              ))
+            }
+          </div>
+          <p class="llu-cap llu-center llu-mt-32">{RESULTS_VARY}</p>
+          <p class="llu-center llu-mt-16"><a class="llu-link" href="/land-and-level-up">See the full program page</a></p>
+        </div>
+      </section>
+    </main>
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  // Calendly adds the booking details to the URL when "pass event details" is on.
+  (function () {
+    var q = new URLSearchParams(location.search);
+    var name = (q.get("invitee_first_name") || "").trim();
+    var start = q.get("event_start_time");
+    if (name) document.getElementById("booked-title").textContent = "See you soon, " + name + ".";
+    if (start) {
+      var d = new Date(start);
+      if (!isNaN(d.getTime())) {
+        var when = d.toLocaleString("en-CA", { weekday: "long", month: "long", day: "numeric", hour: "numeric", minute: "2-digit", timeZoneName: "short" });
+        document.getElementById("booked-when").textContent = "We're on for " + when + ". Your confirmation is on its way, with the link to join.";
+      }
+    }
+  })();
+</script>

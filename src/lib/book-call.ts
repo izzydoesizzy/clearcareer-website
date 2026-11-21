@@ -7,6 +7,10 @@
 import { CONSENT_TEXT } from './consent';
 import { dealIsLive } from './email/deal';
 
+/**
+ * Fallback booking link. Set CALENDLY_QUALIFIED_URL in Vercel to a Calendly event that
+ * is not linked anywhere else, so only approved leads can find it.
+ */
 export const CALENDLY_URL = 'https://calendly.com/clearcareer/discovery-call';
 
 /** Who gets to book. Everyone else sees the "not yet" screen and never sees the booking link. */
@@ -61,6 +65,8 @@ export const SITUATION = ['Laid off in the last 3 months', 'Laid off more than 3
 export const COUNTRY = ['Canada', 'United States', 'Somewhere else'];
 export const DECIDER = ['Just me', 'Me and a partner or family member', 'Someone else is involved'];
 export const START = ['This month', 'In the next 1 to 2 months', 'Later than that', 'Not sure yet'];
+/** The pre-close question: are they ready to enrol on the call if it fits? */
+export const COMMIT = ["Yes, I'll have my card ready", 'Probably, once my questions are answered', 'No, I want time to think after the call'];
 export const PAYMENT = ['Credit card in full', 'Klarna (monthly)', "I'd want to split it into payments", 'Not sure yet'];
 
 export interface BookCallAnswers {
@@ -88,6 +94,7 @@ export interface BookCallAnswers {
   start: string;
   payment: string;
   program: string;
+  commit: string;
   ready: string;
   website?: string; // honeypot
 }
@@ -136,6 +143,7 @@ export function cleanAnswers(raw: Record<string, unknown>): { data: BookCallAnsw
     start: pick(raw.start, START),
     payment: pick(raw.payment, PAYMENT),
     program: pick(raw.program, PROGRAM_CHOICES),
+    commit: pick(raw.commit, COMMIT),
     ready: pick(raw.ready, [READY, NOT_READY]),
     website: str(raw.website, 200),
   };
@@ -163,6 +171,7 @@ export function cleanAnswers(raw: Record<string, unknown>): { data: BookCallAnsw
   need('start', !!data.start, 'Please choose one.');
   need('payment', !!data.payment, 'Please choose one.');
   need('program', !!data.program, 'Please choose one.');
+  need('commit', !!data.commit, 'Please choose one.');
   need('ready', !!data.ready, 'Please choose one.');
 
   return { data, errors };
@@ -233,29 +242,35 @@ export function diagnose(a: Pick<BookCallAnswers, 'appsPerWeek' | 'totalApplicat
 
 /**
  * Lead score, 0 to 100. Every point is explained, so you can trust it or change it.
- *   Ready to invest 30 | Experience at or above the minimum 10 | Start date up to 15
- *   Decides alone up to 10 | Payment up to 10 | Motivation up to 15 | Program up to 10
+ *   Ready to invest 25 | Experience at or above the minimum 10 | Start date up to 15
+ *   Ready to enrol on the call up to 10 | Decides alone up to 10 | Payment up to 10
+ *   Motivation up to 10 | Program up to 10
+ * Anyone not ready to invest is capped at 49 (Cool).
  */
 export const SCORE = {
-  ready: 30,
+  ready: 25,
   experience: 10,
   start: { 'This month': 15, 'In the next 1 to 2 months': 8, 'Not sure yet': 3, 'Later than that': 0 } as Record<string, number>,
+  commit: { [COMMIT[0]]: 10, [COMMIT[1]]: 6, [COMMIT[2]]: 0 } as Record<string, number>,
   decider: { 'Just me': 10, 'Me and a partner or family member': 5, 'Someone else is involved': 0 } as Record<string, number>,
   payment: { 'Credit card in full': 10, 'Klarna (monthly)': 8, "I'd want to split it into payments": 6, 'Not sure yet': 2 } as Record<string, number>,
-  motivationMax: 15,
+  motivationMax: 10,
   program: { 'Group plus private 1:1 rebuild': 10, 'Group cohort': 8, 'Not sure yet': 4 } as Record<string, number>,
 };
 
-export function leadScore(a: Pick<BookCallAnswers, 'ready' | 'yearsExperience' | 'start' | 'decider' | 'payment' | 'motivation' | 'program'>): { score: number; grade: 'Hot' | 'Warm' | 'Cool' } {
+export type Grade = 'Hot' | 'Warm' | 'Cool';
+export function leadScore(a: Pick<BookCallAnswers, 'ready' | 'yearsExperience' | 'start' | 'decider' | 'payment' | 'motivation' | 'program'> & { commit?: string }): { score: number; grade: Grade } {
   let s = 0;
   if (a.ready === READY) s += SCORE.ready;
   if (a.yearsExperience >= QUALIFY.minYears) s += SCORE.experience;
   s += SCORE.start[a.start] ?? 0;
+  s += SCORE.commit[a.commit ?? ''] ?? 0;
   s += SCORE.decider[a.decider] ?? 0;
   s += SCORE.payment[a.payment] ?? 0;
   if (a.motivation >= 1 && a.motivation <= 5) s += Math.round((a.motivation / 5) * SCORE.motivationMax);
   s += SCORE.program[a.program] ?? 0;
-  const score = Math.max(0, Math.min(100, s));
+  // Not ready to invest caps the lead at Cool, however strong the rest looks.
+  const score = Math.max(0, Math.min(a.ready === READY ? 100 : 49, s));
   return { score, grade: score >= 75 ? 'Hot' : score >= 50 ? 'Warm' : 'Cool' };
 }
 
@@ -269,14 +284,14 @@ export function scoreLead(a: Pick<BookCallAnswers, 'ready' | 'yearsExperience'>)
 }
 
 /** Calendly link with the person's name and email already filled in. */
-export function bookingUrl(a: Pick<BookCallAnswers, 'firstName' | 'lastName' | 'email'>): string {
+export function bookingUrl(a: Pick<BookCallAnswers, 'firstName' | 'lastName' | 'email'>, base: string = CALENDLY_URL): string {
   const params = new URLSearchParams({
     name: `${a.firstName} ${a.lastName || ''}`.trim(),
     email: a.email,
     utm_source: 'book-a-call',
     utm_medium: 'form',
   });
-  return `${CALENDLY_URL}?${params.toString()}`;
+  return `${base}${base.includes('?') ? '&' : '?'}${params.toString()}`;
 }
 
 export { CONSENT_TEXT };

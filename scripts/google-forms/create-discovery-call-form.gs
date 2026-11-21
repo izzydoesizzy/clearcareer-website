@@ -15,7 +15,7 @@
  */
 
 // ── Things you may want to change ──────────────────────────────────────────
-var CALENDLY_URL = 'https://calendly.com/clearcareer/discovery-call';
+var CALENDLY_URL = 'https://joinclearcareer.com/book-a-call';
 // Your Typeform question 16 names the Job Search Ignition System. Change this
 // to 'Land and Level Up' (and update the price wording) if this form is for the new group.
 var PROGRAM_NAME = 'Job Search Ignition System';

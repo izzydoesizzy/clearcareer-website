@@ -14,7 +14,7 @@ import LluButton from "./LluButton.astro";
       </p>
       <LluButton />
       <p class="llu-cap">
-        Black Friday pricing ends {offer.dealEndsLong}. We start {offer.startDateShort}.
+        {offer.dealLive && <>Black Friday pricing ends {offer.dealEndsLong}. </>}We start {offer.startDateShort}.
         <span class="llu-num">{offer.seatsTotal}</span> seats.
       </p>
     </div>

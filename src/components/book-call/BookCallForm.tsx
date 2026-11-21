@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import {
-  READY, NOT_READY, ALTERNATIVE, PROGRAMS, PROGRAM_CHOICES, SEARCH_LENGTH, APPS_PER_WEEK, STRUGGLES, SITUATION, COUNTRY, DECIDER, START, PAYMENT,
+  READY, NOT_READY, ALTERNATIVE, PROGRAMS, PROGRAM_CHOICES, COMMIT, SEARCH_LENGTH, APPS_PER_WEEK, STRUGGLES, SITUATION, COUNTRY, DECIDER, START, PAYMENT,
 } from '../../lib/book-call';
 import { CONSENT_TEXT } from '../../lib/consent';
 import { dealIsLive } from '../../lib/email/deal';
 
 type Values = Record<string, any>;
-type Result = { qualified: boolean; reason: string; diagnosis?: { key: string; title: string; text: string }; bookingUrl?: string } | null;
+type Result = { qualified: boolean; reason: string; diagnosis?: { key: string; title: string; text: string }; bookingUrl?: string; checkout?: { url: string; program: string; price: string } } | null;
 
 const STEPS = ['About you', 'Your search', 'Where you are', 'The call', 'Investment'];
 
@@ -83,7 +83,7 @@ export default function BookCallForm() {
       req('challenge'); req('milestones'); req('motivation', 'Please choose 1 to 5.');
     }
     if (i === 3) { req('callGoal'); req('decider', 'Please choose one.'); req('start', 'Please choose one.'); req('payment', 'Please choose one.'); }
-    if (i === 4) { req('program', 'Please choose one.'); req('ready', 'Please choose one.'); }
+    if (i === 4) { req('program', 'Please choose one.'); req('commit', 'Please choose one.'); req('ready', 'Please choose one.'); }
     return e;
   }
 
@@ -125,6 +125,13 @@ export default function BookCallForm() {
         )}
         <p className="llu-cap">Have a credit card nearby on the call, in case we decide it's a fit. You can also pay with Klarna.</p>
         <p><a className="llu-btn" href={result.bookingUrl}>Pick a time</a></p>
+        {result.checkout && (
+          <div className="llu-surface llu-stack">
+            <p className="llu-eyebrow">Already sure?</p>
+            <p>You don't need a call to join. Claim your seat in the {result.checkout.program} now ({result.checkout.price} CAD plus HST). The 7-day money-back guarantee still applies.</p>
+            <p><a className="llu-link" href={result.checkout.url}>Skip the call and claim my seat</a></p>
+          </div>
+        )}
       </div>
     ) : (
       <div className="llu-card llu-stack" aria-live="polite">
@@ -204,7 +211,7 @@ export default function BookCallForm() {
       {step === 3 && (
         <div className="llu-stack">
           <Field id="callGoal" label="What do you most want from our call?" error={errors.callGoal}><textarea {...text('callGoal', { rows: 3 })} className="llu-input" /></Field>
-          <Field id="decider" label="Who else is part of this decision?" error={errors.decider}><Choices name="decider" options={DECIDER} value={v.decider} onChange={(x) => set('decider', x)} /></Field>
+          <Field id="decider" label="Who else is part of this decision?" error={errors.decider} hint="If someone else helps you decide, bring them to the call. You'll both hear the same answers."><Choices name="decider" options={DECIDER} value={v.decider} onChange={(x) => set('decider', x)} /></Field>
           <Field id="start" label="If it's a fit, when could you start?" error={errors.start}><Choices name="start" options={START} value={v.start} onChange={(x) => set('start', x)} /></Field>
           <Field id="payment" label="How would you want to pay?" error={errors.payment}><Choices name="payment" options={PAYMENT} value={v.payment} onChange={(x) => set('payment', x)} /></Field>
         </div>
@@ -218,6 +225,9 @@ export default function BookCallForm() {
               ? `${PROGRAMS.group.name}: $${PROGRAMS.group.price.toLocaleString('en-CA')} (regular $${PROGRAMS.group.regular.toLocaleString('en-CA')}). ${PROGRAMS.private.name}: $${PROGRAMS.private.price.toLocaleString('en-CA')} (regular $${PROGRAMS.private.regular.toLocaleString('en-CA')}). Black Friday prices, CAD plus HST.`
               : `${PROGRAMS.group.name}: $${PROGRAMS.group.regular.toLocaleString('en-CA')}. ${PROGRAMS.private.name}: $${PROGRAMS.private.regular.toLocaleString('en-CA')}. CAD plus HST.`}>
             <Choices name="program" options={PROGRAM_CHOICES} value={v.program} onChange={(x) => set('program', x)} />
+          </Field>
+          <Field id="commit" label="If we agree on the call that it's a fit, are you ready to enrol then?" error={errors.commit} hint="No pressure either way. It helps me plan the call so we spend the time on what you need.">
+            <Choices name="commit" options={COMMIT} value={v.commit} onChange={(x) => set('commit', x)} />
           </Field>
           <Field id="ready" label="Are you in a place where you're ready to invest that amount to achieve the goals you shared?" error={errors.ready}>
             <Choices name="ready" options={[READY, NOT_READY]} value={v.ready} onChange={(x) => set('ready', x)} />

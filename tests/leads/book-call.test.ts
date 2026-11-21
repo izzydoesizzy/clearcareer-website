@@ -6,7 +6,7 @@ const good = {
   searchLength: '3-5 months', appsPerWeek: '4-5', totalApplications: 60, interviews: 3,
   situation: 'Laid off in the last 3 months', country: 'Canada', struggles: [STRUGGLES[5]],
   challenge: 'No replies', milestones: 'Confidence', callGoal: 'See if it fits', decider: 'Just me',
-  start: 'This month', payment: 'Credit card in full', program: 'Group cohort', ready: READY,
+  start: 'This month', payment: 'Credit card in full', program: "Group cohort", commit: "Yes, I'll have my card ready", ready: READY,
 };
 
 describe('book-a-call gate', () => {

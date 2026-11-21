@@ -6,17 +6,24 @@
  * - Quotes are the client's exact words. Do not tidy them.
  * - Every statistic needs its source and sample size.
  */
+import { dealIsLive } from "../lib/email/deal";
+
 
 // ── Destinations ────────────────────────────────────────────────────────────
-// TODO(Izzy): paste the live Stripe payment links, one per tier.
-// Until then both buttons open the discovery call, so they are never a dead end.
-export const GROUP_CHECKOUT_URL = "https://calendly.com/clearcareer/discovery-call";
-export const PRIVATE_CHECKOUT_URL = "https://calendly.com/clearcareer/discovery-call";
+// Stripe payment links, one per tier. Set them in Vercel as PUBLIC_GROUP_CHECKOUT_URL and
+// PUBLIC_PRIVATE_CHECKOUT_URL. Until then both buttons open the book-a-call form, so they are never a dead end.
+export const GROUP_CHECKOUT_URL: string = import.meta.env.PUBLIC_GROUP_CHECKOUT_URL || "/book-a-call";
+export const PRIVATE_CHECKOUT_URL: string = import.meta.env.PUBLIC_PRIVATE_CHECKOUT_URL || "/book-a-call";
+
+// Black Friday is checked when the site builds. A daily job (src/pages/api/cron/deal.ts)
+// rebuilds the site just after the deadline, so the page switches to regular prices on its own.
+export const dealLive = dealIsLive();
 
 export const CTA_LABEL = "Claim my founding seat";
 
 // ── The offer (confirmed by Izzy, November 21, 2026) ────────────────────────
 export const offer = {
+  dealLive,
   startDateLong: "Monday, December 7, 2026",
   startDateShort: "December 7",
   firstCallLong: "Wednesday, December 9",
@@ -34,7 +41,7 @@ export const offer = {
   regularFrom: "On December 1 they go back to $1,200 and $2,297.",
   group: {
     name: "Group cohort",
-    price: "$949",
+    price: dealLive ? "$949" : "$1,200",
     regular: "$1,200",
     priceNote: "CAD plus HST. One payment covers your first 3 months.",
     seatsTotal: 12,
@@ -49,7 +56,7 @@ export const offer = {
   },
   private: {
     name: "Group plus private rebuild",
-    price: "$1,797",
+    price: dealLive ? "$1,797" : "$2,297",
     regular: "$2,297",
     priceNote: "CAD plus HST. One payment covers your first 3 months.",
     seatsTotal: 4,
@@ -319,7 +326,7 @@ export const objections: { q: string; a: string[]; proof: string }[] = [
     q: "“Money is tight right now.”",
     a: [
       "I get it. You're watching every dollar, and that's the right instinct.",
-      "So do the math with me. At a $100,000 salary, one month without a paycheque is $8,333 before tax. The group cohort is $949 plus HST, for 3 months.",
+      `So do the math with me. At a $100,000 salary, one month without a paycheque is $8,333 before tax. The group cohort is ${dealLive ? "$949" : "$1,200"} plus HST, for 3 months.`,
       "You can spread it out with Klarna. And there's a 7-day money-back guarantee, as long as your rebuild work hasn't started.",
     ],
     proof:

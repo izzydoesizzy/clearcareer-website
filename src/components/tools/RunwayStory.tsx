@@ -663,7 +663,7 @@ export default function RunwayStory() {
               You know your number. Now make every month count.
             </h3>
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-              <a href="https://calendly.com/clearcareer/discovery-call"
+              <a href="/book-a-call"
                 className="inline-flex items-center justify-center rounded-lg bg-white text-blue px-8 py-3.5 text-base font-semibold hover:bg-gray-100 hover:shadow-lg transition-all">
                 Book a Free Audit
               </a>
@@ -785,8 +785,8 @@ export default function RunwayStory() {
             <div style={{ fontSize: "15px", fontWeight: 700, color: "#030620" }}>Not sure where to start? Book a free 20-minute career audit.</div>
             <div style={{ fontSize: "13px", color: "#6b7280", marginTop: "4px" }}>No pitch. Just an honest assessment of where you stand and what to do next.</div>
             <div style={{ marginTop: "12px" }}>
-              <a href="https://calendly.com/clearcareer/discovery-call" style={{ color: "#0161EF", fontSize: "13px", fontWeight: 600 }}>
-                calendly.com/clearcareer/discovery-call
+              <a href="https://joinclearcareer.com/book-a-call" style={{ color: "#0161EF", fontSize: "13px", fontWeight: 600 }}>
+                joinclearcareer.com/book-a-call
               </a>
             </div>
           </div>

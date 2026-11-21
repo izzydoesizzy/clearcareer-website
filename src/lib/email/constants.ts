@@ -1,5 +1,5 @@
 export const SITE_URL = 'https://joinclearcareer.com';
-export const DISCOVERY_CALL_URL = 'https://calendly.com/clearcareer/discovery-call';
+export const DISCOVERY_CALL_URL = 'https://joinclearcareer.com/book-a-call';
 
 // Brand logos — served via GitHub Pages CDN (always available, no deploy needed)
 const BRAND_CDN = 'https://izzydoesizzy.github.io/clearcareer-brand/assets/logo';

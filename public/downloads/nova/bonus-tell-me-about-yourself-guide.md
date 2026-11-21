@@ -329,7 +329,7 @@ In the full program, we build a complete interview toolkit: a bank of 10-12 STAR
 
 <div class="cta-link">
 
-[Book your free discovery call ->](https://calendly.com/clearcareer/discovery-call)
+[Book your free discovery call ->](https://joinclearcareer.com/book-a-call)
 
 </div>
 
