@@ -27,6 +27,10 @@ export const offer = {
   dealEndsLong: "Monday, November 30 at 11:59 pm ET",
   dealEndsShort: "November 30",
   dealLine: "I haven't priced it this low since 2021.",
+  /** Text for the sticky bar. Built from the same prices, so one edit changes everything. */
+  dealBarLong: "Black Friday pricing: group cohort $749, regular $1,200. Ends Monday, November 30 at 11:59 pm ET.",
+  dealBarShort: "Black Friday: from $749, ends Nov 30.",
+  regularFrom: "On December 1 they go back to $1,200 and $2,297.",
   group: {
     name: "Group cohort",
     price: "$749",

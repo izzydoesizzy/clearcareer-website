@@ -102,22 +102,23 @@ Spacing tokens in px: **8, 16, 24, 32, 48, 72, 96**. Nothing between them.
 
 ### Band order
 
-1. Nav: navy, sticky from 1024px
-2. Hero: navy
-3. People row: paper
-4. Why this exists: paper
-5. The questions you can't ask at dinner: blue
-6. Here's what you get: white
-7. The private rebuild: paper
-8. Your first week: white
-9. Results: navy
-10. Before and after: paper
-11. Who it's for: white
-12. By the numbers: paper
-13. Choose your room, with the guarantee: navy
-14. Your host: paper
-15. The questions I'd ask too: white
-16. Close and footer: navy
+1. Black Friday bar: blue, sticky
+2. Nav: navy, sticky from 1024px beneath the bar
+3. Hero: navy
+4. People row: paper
+5. Why this exists: paper
+6. The questions you can't ask at dinner: blue
+7. Here's what you get: white
+8. The private rebuild: paper
+9. Your first week: white
+10. Results: navy
+11. Before and after: paper
+12. Who it's for: white
+13. By the numbers: paper
+14. Choose your room, with the guarantee: navy
+15. Your host: paper
+16. The questions I'd ask too: white
+17. Close and footer: navy
 
 ## 5. Components
 
@@ -125,6 +126,8 @@ Spacing tokens in px: **8, 16, 24, 32, 48, 72, 96**. Nothing between them.
 Hover: background goes to ink on light bands, to white with ink text on navy. 120ms.
 
 **Text link.** Blue on light, white on navy and blue, underlined 1px, offset 4px. At least 44px tall hit area. Hover: underline goes to 2px.
+
+**Black Friday bar.** A blue band above the nav that stays stuck to the top of the screen. White Inter 600 at 14px (15px on phones), at least 44px tall. Long text from 768px, a short line on phones, and a "See the prices" text link to the pricing band. No countdown, no close button, no animation. The nav sticks directly beneath it from 1024px. Sticky is position, not motion. Remove the bar and the Black Friday labels after November 30.
 
 **Status label.** 6px blue dot plus "Founding group open, N of 16 seats left". N is set by hand in `src/data/llu.ts`. Never computed, never faked.
 

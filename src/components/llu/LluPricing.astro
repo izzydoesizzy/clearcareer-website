@@ -12,6 +12,7 @@ const tiers = [
     <div class="llu-head">
       <p class="llu-eyebrow">Black Friday pricing, until {offer.dealEndsShort}</p>
       <h2 class="llu-h2">Choose your room.</h2>
+      <p class="llu-lead">These are Black Friday prices. {offer.regularFrom}</p>
       <p class="llu-lead">“{offer.dealLine}”</p>
     </div>
 
@@ -26,7 +27,7 @@ const tiers = [
       </div>
       <div>
         <dt class="llu-stat__fig">{offer.group.price}</dt>
-        <dd class="llu-stat__label">The group cohort, for your first 3 months. CAD plus HST.</dd>
+        <dd class="llu-stat__label">The group cohort at the Black Friday price, for your first 3 months. CAD plus HST.</dd>
       </div>
     </dl>
 
@@ -39,6 +40,7 @@ const tiers = [
               <p class="llu-tier__price llu-mt-16">
                 {t.price} <s class="llu-strike">{t.regular}</s>
               </p>
+              <p class="llu-bf llu-mt-8">Black Friday price, regular {t.regular}</p>
               <p class="llu-cap llu-mt-8">{t.priceNote}</p>
             </div>
             <div class="llu-tier__for">

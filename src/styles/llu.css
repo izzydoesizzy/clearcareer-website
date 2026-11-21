@@ -1073,3 +1073,82 @@ body:has(> .llu) {
   color: var(--fg-muted);
   text-decoration: line-through;
 }
+
+/* ── Black Friday bar: sticky, blue, always visible ─────────────────────── */
+.llu-dealbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--llu-blue);
+  color: var(--llu-white);
+}
+.llu-dealbar__row {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0 16px;
+  min-height: 44px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.llu-dealbar__text {
+  flex: 0 1 auto;
+  min-width: 0;
+  font-size: var(--llu-fs-cap);
+  font-weight: 600;
+  line-height: 1.4;
+  text-align: left;
+}
+.llu-dealbar__short {
+  display: inline;
+}
+.llu-dealbar__long {
+  display: none;
+}
+.llu-dealbar__link {
+  flex: none;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: var(--llu-fs-cap);
+  font-weight: 600;
+  color: var(--llu-white);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+.llu-dealbar__link:hover {
+  text-decoration-thickness: 2px;
+}
+.llu-dealbar__link:focus-visible {
+  outline: 2px solid var(--llu-white);
+  outline-offset: 2px;
+}
+@media (min-width: 768px) {
+  .llu-dealbar__long {
+    display: inline;
+  }
+  .llu-dealbar__short {
+    display: none;
+  }
+}
+/* The nav sticks under the bar from 1024px, and anchors clear both */
+@media (min-width: 1024px) {
+  .llu-nav {
+    top: 44px;
+  }
+  .llu-band {
+    scroll-margin-top: 117px;
+  }
+}
+/* Label for the Black Friday price, beside the price and in the cost row */
+.llu-bf {
+  display: block;
+  font-size: var(--llu-fs-cap);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
