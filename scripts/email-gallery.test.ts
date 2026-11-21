@@ -36,31 +36,34 @@ it('builds the email gallery', () => {
       ['Daily digest (7:30 a.m.)', ...(() => { const e = onb.digestEmail({ now: new Date('2026-12-07T12:30:00Z'), callsToday: [{ name: 'Sam Lee', email: 'sam@example.com', at: callAt, grade: 'Hot 81' }], unconfirmed: [], newLeads: [{ name: 'Alex Kim', email: 'alex@example.com', status: 'qualified', score: 72 }], notBooked: [{ name: 'Jo Park', email: 'jo@example.com', days: 2 }], enrolled: [{ name: 'Sam Lee', email: 'sam@example.com', program: 'Group cohort' }], onboarding: [{ name: 'Sam Lee', email: 'sam@example.com', agreement: true, intake: false, days: 2 }], seats: { group: 3, private: 1 }, setup: [] }); return [e.subject, e.html] as [string, string]; })()],
     ]],
     ['Leads: after the form', [
-      ['Not yet: not ready to invest', ...Object.values(call.notYetEmail({ ...a, ready: NOT_READY }, 'not-ready')).reverse() as [string, string]],
-      ['Not yet: under 5 years', ...Object.values(call.notYetEmail({ ...a, yearsExperience: 2 }, 'experience')).reverse() as [string, string]],
-      ['Qualified, not booked: next morning', ...Object.values(call.noBook1Email(c)).reverse() as [string, string]],
-      ['Qualified, not booked: 3 days', ...Object.values(call.noBook2Email(c)).reverse() as [string, string]],
+      ['Not yet: not ready to invest', ...Object.values(call.notYetEmail({ ...a, ready: NOT_READY }, 'not-ready')) as [string, string]],
+      ['Not yet: under 5 years', ...Object.values(call.notYetEmail({ ...a, yearsExperience: 2 }, 'experience')) as [string, string]],
+      ['Qualified, not booked: next morning', ...Object.values(call.noBook1Email(c)) as [string, string]],
+      ['Qualified, not booked: 3 days', ...Object.values(call.noBook2Email(c)) as [string, string]],
     ]],
     ['Leads: around the call', [
-      ['Booked', ...Object.values(call.bookedEmail(c)).reverse() as [string, string]],
-      ['Day before', ...Object.values(call.dayBeforeEmail(c)).reverse() as [string, string]],
-      ['Morning of', ...Object.values(call.morningOfEmail(c)).reverse() as [string, string]],
-      ['Canceled', ...Object.values(call.canceledEmail(c)).reverse() as [string, string]],
-      ['No-show', ...Object.values(call.noShowEmail(c)).reverse() as [string, string]],
-      ['Follow-up: next morning', ...Object.values(call.followUp1Email(c, k)).reverse() as [string, string]],
-      ['Follow-up: 3 days, last one', ...Object.values(call.followUp2Email(c, k)).reverse() as [string, string]],
+      ['Booked', ...Object.values(call.bookedEmail(c)) as [string, string]],
+      ['Day before', ...Object.values(call.dayBeforeEmail(c)) as [string, string]],
+      ['Morning of', ...Object.values(call.morningOfEmail(c)) as [string, string]],
+      ['Canceled', ...Object.values(call.canceledEmail(c)) as [string, string]],
+      ['No-show', ...Object.values(call.noShowEmail(c)) as [string, string]],
+      ['Follow-up: next morning', ...Object.values(call.followUp1Email(c, k)) as [string, string]],
+      ['Follow-up: 3 days, last one', ...Object.values(call.followUp2Email(c, k)) as [string, string]],
     ]],
     ['Clients: after payment', [
-      ['Welcome', ...Object.values(onb.welcomeEmail({ firstName: 'Sam', program: 'Group cohort', token: 'example' })).reverse() as [string, string]],
-      ['Reminder: 2 days', ...Object.values(onb.reminderEmail({ firstName: 'Sam', token: 'example', agreement: true, intake: false }, false)).reverse() as [string, string]],
-      ['Reminder: 4 days', ...Object.values(onb.reminderEmail({ firstName: 'Sam', token: 'example', agreement: false, intake: false }, true)).reverse() as [string, string]],
-      ['Signed copy', ...Object.values(onb.signedCopyEmail({ firstName: 'Sam', token: 'example' })).reverse() as [string, string]],
-      ["Intake done: you're set", ...Object.values(onb.intakeDoneEmail({ firstName: 'Sam', program: 'Group plus private 1:1 rebuild' })).reverse() as [string, string]],
-      ['Week 11: renewal', ...Object.values(onb.renewalEmail({ firstName: 'Sam', renewalUrl: 'https://buy.stripe.com/example-renewal' })).reverse() as [string, string]],
+      ['Welcome', ...Object.values(onb.welcomeEmail({ firstName: 'Sam', program: 'Group cohort', token: 'example' })) as [string, string]],
+      ['Reminder: 2 days', ...Object.values(onb.reminderEmail({ firstName: 'Sam', token: 'example', agreement: true, intake: false }, false)) as [string, string]],
+      ['Reminder: 4 days', ...Object.values(onb.reminderEmail({ firstName: 'Sam', token: 'example', agreement: false, intake: false }, true)) as [string, string]],
+      ['Signed copy', ...Object.values(onb.signedCopyEmail({ firstName: 'Sam', token: 'example' })) as [string, string]],
+      ["Intake done: you're set", ...Object.values(onb.intakeDoneEmail({ firstName: 'Sam', program: 'Group plus private 1:1 rebuild' })) as [string, string]],
+      ['Week 11: renewal', ...Object.values(onb.renewalEmail({ firstName: 'Sam', renewalUrl: 'https://buy.stripe.com/example-renewal' })) as [string, string]],
     ]],
     ['Launch sequence (Brevo campaigns)', nurtureEmails().map((e) => [`${e.n}. ${e.sendAt} ET`, e.subject, e.html.replace(/\{\{ contact\.FIRSTNAME[^}]*\}\}/g, 'Sam').replace(/\{\{ unsubscribe \}\}/g, '#')] as [string, string, string])],
   ];
 
+  // The headshot only exists on joinclearcareer.com after the branch is merged, so preview it from GitHub.
+  const preview = (h: string) => h.split('https://joinclearcareer.com/images/email/').join('https://raw.githubusercontent.com/izzydoesizzy/clearcareer-website/claude/practical-dirac-66uspu/public/images/email/');
+  for (const [, items] of groups) for (const it of items) it[2] = preview(it[2]);
   const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   let n = 0;
   const nav = groups.map(([g, items]) => `<h3>${esc(g)}</h3><ol>${items.map(([label]) => `<li><a href="#e${++n}">${esc(label)}</a></li>`).join('')}</ol>`).join('');

@@ -69,7 +69,7 @@ export const STORIES = {
   andrew: {
     who: 'Andrew C.',
     story: 'Andrew had already paid for expensive career courses. They didn\'t lead anywhere. Hundreds of applications, no results.',
-    quote: 'Receiving responses from employers within the first week of joining his program.',
+    quote: "Izzy's system completely transformed my job search from sending out hundreds of applications with no results, to receiving responses from employers within the first week of joining his program.",
   },
   annie: {
     who: 'Annie B.',

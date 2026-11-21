@@ -36,7 +36,7 @@ ${small('This link is just for you. It saves as you go, so you can come back to 
 // ── To the client ────────────────────────────────────────────────────────────────
 export function welcomeEmail(c: { firstName: string; program: string; token: string }) {
   const subject = `You're in, ${c.firstName}! Here's your first step`;
-  const html = cshell('Welcome', "You're in. Let's go.", `
+  const html = cshell('Welcome', 'Two quick things this week, about 15 minutes.', `
 ${P(`Hey ${esc(c.firstName)},`)}
 ${P(`You did it. Welcome to Land and Level Up${c.program === PROGRAMS.private.name ? ', with the private 1:1 rebuild' : ''}.`)}
 ${P("I know this wasn't a small decision. You looked hard at your search, decided you deserved backup, and backed yourself. That's exactly the energy we need for the next 3 months.")}
@@ -56,7 +56,7 @@ ${sign('So excited to work with you,')}`);
 export function reminderEmail(c: { firstName: string; token: string; agreement: boolean; intake: boolean }, second: boolean) {
   const missing = !c.agreement && !c.intake ? 'the agreement and your intake' : !c.agreement ? 'the agreement' : 'your intake';
   const subject = second ? `${c.firstName}, I don't want you to miss week 1` : `Quick reminder: ${missing}`;
-  const html = cshell('Before we start', second ? "Let's get you set up" : 'One quick thing', `
+  const html = cshell('Before we start', 'About 15 minutes, and it saves as you go.', `
 ${P(`Hey ${esc(c.firstName)},`)}
 ${second
   ? P(`I still don't have ${missing} from you, and I don't want you starting week 1 a step behind. The intake is how I prep for you: the more I see before ${esc(offer.firstCallLong)}, the more useful our first call is.`)
@@ -69,9 +69,9 @@ ${sign()}`);
 
 export function signedCopyEmail(c: { firstName: string; token: string }) {
   const subject = 'Your signed Land and Level Up agreement';
-  const html = cshell('Signed', 'Thanks for signing', `
+  const html = cshell('Signed', 'Your signed copy is attached. Next up: your intake.', `
 ${P(`Hey ${esc(c.firstName)},`)}
-${P("Thanks for signing. Your copy is attached as a PDF, for your records.")}
+${P("Thanks for signing. Your signed copy is attached, for your records.")}
 ${P('Next up is your intake, if you haven\'t done it yet:')}
 ${button('Go to my intake', onboardingUrl(c.token))}
 ${sign()}`);
@@ -80,7 +80,9 @@ ${sign()}`);
 
 export function intakeDoneEmail(c: { firstName: string; program: string }) {
   const time = callTimeLabel();
-  const subject = `Got it, ${c.firstName}. Here's your community invite and our Wednesday call`;
+  const subject = welcome.communityUrl && time && welcome.callUrl
+    ? `Got it, ${c.firstName}. Here's your community invite and our Wednesday call`
+    : `Got it, ${c.firstName}. You're all set`;
   const steps = [
     welcome.communityUrl
       ? `<strong>Join the community.</strong> ${link(`Join us on ${welcome.communityName}`, welcome.communityUrl)}, then post a quick hello: your target role, and one win you're proud of.`
@@ -94,7 +96,7 @@ export function intakeDoneEmail(c: { firstName: string; program: string }) {
         : "<strong>Your 1:1 rebuild:</strong> I'll email you to book our sessions."]
       : []),
   ];
-  const html = cshell('All set', "You're all set", `
+  const html = cshell('All set', 'Your next steps, and what happens before we start.', `
 ${P(`Hey ${esc(c.firstName)},`)}
 ${P("Got your intake. Thank you. I know digging up old resumes and writing down your wins isn't fun. It's also exactly the raw material we need, so: nicely done.")}
 ${H('Your next steps')}
@@ -106,7 +108,7 @@ ${sign('See you Wednesday,')}`);
 
 export function renewalEmail(c: { firstName: string; renewalUrl?: string }) {
   const subject = `${c.firstName}, what's next after month 3`;
-  const html = cshell('Month 3', "What's next", `
+  const html = cshell('Month 3', 'Stay on for $50 a month, and one small favour.', `
 ${P(`Hey ${esc(c.firstName)},`)}
 ${P("We're coming up on the end of our 3 months together. However your search is going right now, I'm proud of how you've shown up.")}
 ${P(`${esc(offer.afterThreeMonths)} You keep the community, the Wednesday calls and the tools.`)}

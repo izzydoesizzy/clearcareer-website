@@ -122,16 +122,36 @@ const small = (html: string) => P(`<span style="font-size:13px;color:${COLORS.sl
 const REASON = "You're getting this because you asked about a call with ClearCareer. Reply \"stop\" and I won't email you about it again.";
 const UNSUB = 'mailto:izzy@joinclearcareer.com?subject=Stop%20call%20emails';
 
-function shell(eyebrow: string, headline: string, body: string, reason = REASON, unsub = UNSUB): string {
+/** Izzy's headshot for the signature. JPG, because Outlook can't show WebP. */
+export const IZZY_PHOTO = `${SITE_URL}/images/email/izzy-144.jpg`;
+
+/** The hidden line inboxes show next to the subject. */
+const preheader = (text: string) =>
+  `<div style="display:none;max-height:0;overflow:hidden;mso-hide:all;font-size:1px;line-height:1px;color:#f8fafc;opacity:0;">${esc(text)}&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;</div>`;
+
+/**
+ * One-to-one emails look like a note from Izzy, not a newsletter: no banner, a small wordmark,
+ * and a signature with his photo. People reply to these, and they're more likely to land in
+ * the main inbox. (The launch campaign keeps the branded banner: see src/lib/email/nurture.ts.)
+ * `headline` becomes the preview text inboxes show next to the subject.
+ */
+function shell(_eyebrow: string, headline: string, body: string, reason = REASON, unsub = UNSUB): string {
   return wrapDocument(
+    preheader(headline) +
     outerTable(`<tr><td>
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:${COLORS.white};border-radius:12px;overflow:hidden;" class="email-card">
-<tr><td style="background-color:${COLORS.blue};padding:36px 40px;" class="email-padding">
-<p style="margin:0 0 16px;color:#ffffff;font-size:15px;font-weight:700;letter-spacing:1.5px;font-family:${FONTS.body};">CLEARCAREER</p>
-<p style="margin:0 0 6px;color:rgba(255,255,255,0.85);font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;font-family:${FONTS.body};">${esc(eyebrow)}</p>
-<h1 style="margin:0;color:#ffffff;font-size:28px;font-weight:400;line-height:1.2;font-family:${FONTS.heading};">${esc(headline)}</h1>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:${COLORS.white};border-radius:12px;overflow:hidden;border:1px solid ${COLORS.grey200};" class="email-card email-border">
+<tr><td style="padding:28px 40px 0;" class="email-padding">
+<p style="margin:0 0 24px;font-family:${FONTS.body};font-size:13px;font-weight:700;letter-spacing:1.5px;color:${COLORS.blue};">CLEARCAREER</p>
 </td></tr>
-<tr><td style="padding:32px 40px 8px;" class="email-padding">${body}</td></tr>
+<tr><td style="padding:0 40px 4px;" class="email-padding">${body}</td></tr>
+<tr><td style="padding:4px 40px 28px;" class="email-padding">
+<table role="presentation" cellpadding="0" cellspacing="0" style="border-top:1px solid ${COLORS.grey200};padding-top:16px;" class="email-border"><tr>
+<td style="padding:16px 14px 0 0;vertical-align:middle;"><img src="${IZZY_PHOTO}" width="56" height="56" alt="Izzy Piyale-Sheard" style="display:block;width:56px;height:56px;border-radius:28px;"></td>
+<td style="padding:16px 0 0;vertical-align:middle;font-family:${FONTS.body};">
+<p style="margin:0;font-size:15px;font-weight:700;color:${COLORS.heading};" class="email-heading">Izzy Piyale-Sheard</p>
+<p style="margin:2px 0 0;font-size:13px;color:${COLORS.slate500};" class="email-text-muted">Career coach, ClearCareer &middot; <a href="${SITE_URL}" style="color:${COLORS.blue};text-decoration:none;">joinclearcareer.com</a></p>
+</td></tr></table>
+</td></tr>
 ${footer(unsub, { reason })}
 </table></td></tr>`),
   );
@@ -154,7 +174,7 @@ function numbers(a?: Partial<BookCallAnswers>): string {
 }
 const numbersBlock = (a?: Partial<BookCallAnswers>) => {
   const s = numbers(a);
-  return s ? `<p style="margin:0 0 16px;padding:14px 18px;border-left:4px solid ${COLORS.blue};background:${COLORS.offWhite};font-family:${FONTS.body};font-size:17px;font-weight:700;color:${COLORS.heading};" class="email-heading">${esc(s)}</p>` : '';
+  return s ? `<p style="margin:0 0 16px;padding:14px 18px;border-left:4px solid ${COLORS.blue};background:${COLORS.blueBg};font-family:${FONTS.body};font-size:17px;font-weight:700;color:${COLORS.heading};" class="email-tip-bg email-heading">${esc(s)}</p>` : '';
 };
 const keyOf = (c: CallInfo): DiagnosisKey | undefined =>
   c.diagnosisKey || (c.answers && c.answers.totalApplications !== undefined ? diagnose(c.answers as BookCallAnswers).key : undefined);
@@ -166,7 +186,7 @@ export function notYetEmail(a: BookCallAnswers, reason: 'not-ready' | 'experienc
   const subject = reason === 'experience' ? `Thanks, ${a.firstName}. An honest answer, and a few free tools` : `Thanks, ${a.firstName}. Something to keep you moving`;
   const opener =
     reason === 'experience'
-      ? `Land and Level Up is built for people with ${QUALIFY.minYears}+ years of experience, and you've got ${a.yearsExperience}. I'd rather tell you that now than take your money for a room that wasn't built for where you are. That's not a knock on you. It's just not the right fit yet.`
+      ? `Land and Level Up is built for people with ${QUALIFY.minYears}+ years of experience, and you shared ${a.yearsExperience} so far. I'd rather tell you that now than take your money for a room that wasn't built for where you are. That's not a knock on you. It's just not the right fit yet, and the free tools below will do more for you right now.`
       : "You told me you're not ready to invest right now. Honestly? Thank you for saying it. The right program at the wrong time isn't the right program, and I'd never want you stretching for something that adds stress to an already stressful search.";
   const html = shell('Thank you', 'Not quite yet. Here\'s what I\'d do.', `
 ${hey(a)}
@@ -190,7 +210,7 @@ export function noBook1Email(c: CallInfo) {
   const subject = `Your call link, ${c.firstName}`;
   const html = shell('Your link', 'You\'re in. Just pick a time.', `
 ${hey(c)}
-${P("You filled out the form and you're a fit for a call. You just didn't grab a time yet. Totally fine. Job searching is a full-time job with no pay, and things slip.")}
+${P("Thanks for filling out the form. I read your answers, and I'd really like to talk. You just didn't grab a time yet. Totally fine. Job searching is a full-time job with no pay, and things slip.")}
 ${P('Here\'s what you shared:')}
 ${numbersBlock(c.answers)}
 ${key ? P(`From what I see, ${esc(DIAGNOSIS_LINE[key])} That's what we'd dig into.`) : ''}
@@ -229,11 +249,11 @@ ${joinLine(c)}
 ${c.answers?.totalApplications !== undefined ? P("I've got your answers in front of me. Here's what jumped out:") : ''}
 ${numbersBlock(c.answers)}
 ${key ? P(`That pattern tells me ${esc(DIAGNOSIS_LINE[key])}`) : P("We'll skip the small talk and go straight to your search.")}
-${c.answers?.challenge ? P(`And you wrote that your biggest challenge is: <em>&ldquo;${esc(c.answers.challenge)}&rdquo;</em> I've got that written down. We'll get to it.`) : ''}
+${c.answers?.challenge ? P(`And you wrote that your biggest challenge is: <em>&ldquo;${esc(c.answers.challenge.replace(/[.!?]+$/, ''))}.&rdquo;</em> I've got that written down. We'll get to it.`) : ''}
 ${H('One quick thing')}
 ${P("Hit reply and tell me the ONE question you most want answered on our call. The one that's been sitting on your chest. That way we spend our time on what matters most to you.")}
 ${H('Have these open')}
-${list(['Your resume', 'Your LinkedIn profile', '2 or 3 job posts you would love to land'])}
+${list(['Your resume', 'Your LinkedIn profile', "2 or 3 job posts you'd love to land"])}
 ${H("Here's how the call goes")}
 ${list([
   'Where you are stuck, in your own words.',
@@ -260,9 +280,10 @@ export function dayBeforeEmail(c: CallInfo) {
   const p = PROGRAMS.private;
   const employed = String(a.situation || '').startsWith('Still employed');
 
+  const theirs = a.program === p.name ? `The ${p.name.toLowerCase()} is ${priceOf(p)}` : a.program === g.name ? `The group cohort is ${priceOf(g)}` : `The group cohort is ${priceOf(g)} (or ${priceOf(p)} with the private 1:1 rebuild)`;
   const worth = salary > 0
-    ? `You told me you're aiming for ${money(salary)}. That's about ${money(salary / 12)} a month before tax${employed ? ' you could be earning in the right role' : ''}. The group cohort is ${priceOf(g)} plus HST for 3 months. If we get you there even a few weeks sooner, it pays for itself.`
-    : `Grab your target salary and divide it by 12. That's what one month is worth. The group cohort is ${priceOf(g)} plus HST for 3 months. If we get you there even a few weeks sooner, it pays for itself.`;
+    ? `You told me you're aiming for ${money(salary)}. That's about ${money(salary / 12)} a month before tax${employed ? ' you could be earning in the right role' : ''}. ${theirs} plus HST for 3 months. If we get you there even a few weeks sooner, it pays for itself.`
+    : `Grab your target salary and divide it by 12. That's what one month is worth. ${theirs} plus HST for 3 months. If we get you there even a few weeks sooner, it pays for itself.`;
 
   const partner = a.decider && a.decider !== 'Just me'
     ? qa('Can my partner join the call?', 'Yes, please. Same link. Big decisions are easier when you both hear the same answers.')
@@ -277,7 +298,7 @@ export function dayBeforeEmail(c: CallInfo) {
     qa('How much time does it take?', employed
       ? 'One live hour every Wednesday with the group. The rest is your search, done smarter. You told me you\'re still employed, so we\'ll build a plan that fits around your job, not on top of it.'
       : 'One live hour every Wednesday with the group. The rest is your search, which you\'re already doing. We just point that time at what works.'),
-    qa("I've already tried a coach. Why would this be different?", `Most coaching hands you advice, then leaves you alone with it. Here we build it together: your resume and LinkedIn in a live workshop, then your real search on the call every Wednesday. ${esc(STORIES.andrew.story)} Then: &ldquo;${esc(STORIES.andrew.quote)}&rdquo;`),
+    qa("I've already tried a coach. Why would this be different?", `Most coaching hands you advice, then leaves you alone with it. Here we build it together: your resume and LinkedIn in a live workshop, then your real search on the call every Wednesday. ${esc(STORIES.andrew.story)} In Andrew's words: &ldquo;${esc(STORIES.andrew.quote)}&rdquo;`),
     qa('Will this work in my field?', 'Yes. The work is the same in every field: a clear story, proof with numbers, and conversations with real people. Laura works in reproductive health. Raunika landed a director role at a large Canadian payments company. Darin is a project manager.'),
     qa('Group cohort or the private rebuild?', `<strong>${esc(g.name)}</strong> (${priceOf(g)}): ${esc(offer.group.forWho)}<br><strong>${esc(p.name)}</strong> (${priceOf(p)}): ${esc(offer.private.forWho)}${pick}`),
     qa('What if I land a job in the first month?', 'Then we celebrate (loudly). You keep your seat for the full 3 months, and we use that time to negotiate the offer and start the new role strong.'),
@@ -305,7 +326,7 @@ export function morningOfEmail(c: CallInfo) {
   const html = shell('Today', `See you at ${callTime(c.callAt, false)}`, `
 ${hey(c)}
 ${P("Today's the day. I'm genuinely looking forward to this one. Quick checklist:")}
-${list(['Your resume and LinkedIn open', '2 or 3 job posts you would love to land', 'The one question you most want answered', 'Your card or Klarna handy, in case we decide it fits'])}
+${list(['Your resume and LinkedIn open', "2 or 3 job posts you'd love to land", 'The one question you most want answered', 'Your card or Klarna handy, in case we decide it fits'])}
 ${joinLine(c)}
 ${c.rescheduleUrl ? P(`Something came up? ${link('Pick another time', c.rescheduleUrl)}. Life happens, no stress.`) : ''}
 ${sign('See you soon,')}`);
@@ -315,7 +336,7 @@ ${sign('See you soon,')}`);
 // ── Canceled and no-show ─────────────────────────────────────────────────────────
 export function canceledEmail(c: CallInfo) {
   const subject = `No problem, ${c.firstName}. Want a new time?`;
-  const html = shell('Call canceled', 'Totally fine. Want a new time?', `
+  const html = shell('Call canceled', "No explanation needed. Here's a link to pick a new time.", `
 ${hey(c)}
 ${P("I saw you canceled our call. No problem at all, and no explanation needed. Job searching pulls you in fifty directions at once.")}
 ${P('If you still want to look at your search together, grab a new time here:')}
@@ -327,7 +348,7 @@ ${sign()}`);
 
 export function noShowEmail(c: CallInfo) {
   const subject = 'We missed each other today';
-  const html = shell('Missed call', 'We missed each other', `
+  const html = shell('Missed call', "Zero guilt. Here's a link to pick a new time.", `
 ${hey(c)}
 ${P("Looks like we missed each other today. Zero guilt here. I've been the person juggling ten things and losing track of the eleventh.")}
 ${P("If you still want to talk, pick a new time. Same call, same answers.")}
@@ -346,15 +367,19 @@ function joinLinks(k: Checkout, a?: Partial<BookCallAnswers>): string {
   if (k.private) items.push({ label: `${PROGRAMS.private.name}, ${priceOf(PROGRAMS.private)} plus HST`, url: k.private, first: rec === PROGRAMS.private.name });
   if (!items.length) return P("Reply \"I'm in\" and I'll send your payment link right away.");
   items.sort((x, y) => Number(y.first) - Number(x.first));
-  return items.map((i, n) => (n === 0 ? button(`Claim my seat: ${i.label}`, i.url) : P(`Or: ${link(i.label, i.url)}`))).join('');
+  // Short button text fits on a phone. The program name goes on the line above.
+  return items
+    .map((i, n) => (n === 0 ? P(`<strong>${esc(i.label)}</strong>`, 'margin-bottom:4px;') + button('Claim my seat', i.url) : P(`Or the ${link(i.label.toLowerCase(), i.url)}.`)))
+    .join('');
 }
 
 export function followUp1Email(c: CallInfo, k: Checkout = {}) {
   const key = keyOf(c);
   const subject = `Your plan from yesterday, ${c.firstName}`;
-  const html = shell('Following up', 'Thanks for yesterday', `
+  const html = shell('Following up', "Here's where I'd start, and your link to join.", `
 ${hey(c)}
 ${P("Thanks for the chat yesterday. It was really great getting to know you and your search.")}
+${c.answers?.milestones ? P(`You told me that, besides a job, success looks like <em>&ldquo;${esc(String(c.answers.milestones).replace(/[.!?]+$/, ''))}.&rdquo;</em> That's what the next 3 months are for.`) : ''}
 ${key ? P(`Here's the short version of where I'd start: ${esc(FIRST_FIX[key])}`) : ''}
 ${P("If you're ready, here's where to claim your seat:")}
 ${joinLinks(k, c.answers)}

@@ -30,6 +30,8 @@ const BTN = (t: string, u: string) => `<table role="presentation" cellpadding="0
 const A = (t: string, u: string) => `<a href="${u}" style="color:${COLORS.blue};font-weight:600;text-decoration:underline;">${esc(t)}</a>`;
 const SMALL = (h: string) => `<p style="margin:0 0 16px;font-family:${FONTS.body};font-size:13px;line-height:1.6;color:${COLORS.slate500};">${h}</p>`;
 const SIGN = (close = 'Chat soon,') => P(`${close}<br><strong>Izzy</strong>`);
+const PS = (h: string) => `<p style="margin:8px 0 16px;font-family:${FONTS.body};font-size:16px;line-height:1.65;color:${COLORS.text};" class="email-text"><strong>P.S.</strong> ${h}</p>`;
+const tool = (slug: string, n: number) => `${SITE_URL}/free-tools/${slug}?utm_source=email&utm_medium=nurture&utm_campaign=launch-${n}`;
 const CALL = (n: number) => P(`Rather talk it through? ${A('Answer a few questions (about 5 minutes) and grab a time with me', form(n))}. I read every answer before we talk.`);
 
 export interface NurtureEmail {
@@ -86,6 +88,7 @@ ${SIGN()}`,
     },
     {
       n: 2, templateId: 3, name: 'LLU Launch 2 - The math', sendAt: '2026-11-23 09:12',
+      ps: `Black Friday pricing ends Monday, November 30 at 11:59 pm ET. After that, the group cohort goes back to ${g.regular}.`,
       subject: 'Divide your target salary by 12',
       preheader: "That's what every month of searching costs. Let's do the math together.",
       eyebrow: 'The math', headline: 'What one more month costs',
@@ -105,6 +108,7 @@ ${SIGN()}`,
     },
     {
       n: 3, templateId: 4, name: 'LLU Launch 3 - 600 applications', sendAt: '2026-11-24 09:12',
+      ps: `Want to test one thing today? Paste a resume bullet into my free ${A('Resume Bullet Scorer', tool('resume-bullet-scorer', 3))}. If it describes your job instead of proving your value, that's the first thing we'd fix.`,
       subject: '600 applications. 3 interviews.',
       preheader: "Darin did everything right, and it wasn't working. Here's what changed.",
       eyebrow: 'A real story', headline: '600 applications. 3 interviews.',
@@ -123,6 +127,7 @@ ${SIGN()}`,
     },
     {
       n: 4, templateId: 6, name: "LLU Launch 4 - What's inside", sendAt: '2026-11-25 09:12',
+      ps: `The group is capped at ${offer.seatsTotal} people on purpose, so everyone gets airtime on Wednesdays.`,
       subject: 'What actually happens on a Wednesday',
       preheader: 'The live call, the rebuild workshop, and the room that kept Sparsh going.',
       eyebrow: "What's inside", headline: 'What happens on a Wednesday',
@@ -147,6 +152,7 @@ ${SIGN()}`,
     },
     {
       n: 5, templateId: 5, name: 'LLU Launch 5 - Negotiation', sendAt: '2026-11-26 09:12',
+      ps: `Want to know your number before the offer lands? Try my free ${A('Salary Negotiation Calculator', tool('salary-negotiation-calculator', 5))}.`,
       subject: '$22,000 more, from one conversation',
       preheader: 'Landing the offer is half the job. Here is the other half.',
       eyebrow: 'The other half', headline: '$22,000 from one conversation',
@@ -167,6 +173,7 @@ ${SIGN()}`,
     },
     {
       n: 6, templateId: 7, name: 'LLU Launch 6 - Black Friday, honest version', sendAt: '2026-11-27 09:12',
+      ps: `${esc(offer.dealLine)} Black Friday pricing ends Monday at 11:59 pm ET. ${A('See the prices', page(6, '#pricing'))}.`,
       subject: "It's Black Friday. Here's the honest version.",
       preheader: 'The doubts I hear most, answered straight. Plus the price.',
       eyebrow: 'Black Friday', headline: 'The honest version',
@@ -188,6 +195,7 @@ ${SIGN()}`,
     },
     {
       n: 7, templateId: 8, name: 'LLU Launch 7 - Who it is for', sendAt: '2026-11-28 09:12',
+      ps: "Not sure which option fits? The form asks which one you're leaning toward. Pick 'Not sure yet' and we'll figure it out together on the call.",
       subject: "Who this is for (and who it isn't)",
       preheader: 'I would rather tell you now than take your money for the wrong room.',
       eyebrow: 'Straight talk', headline: "Who this is for, and who it isn't",
@@ -244,6 +252,6 @@ ${SIGN('All the best,')}`,
   ];
   return list.map((e: any) => ({
     n: e.n, templateId: e.templateId, name: e.name, subject: e.subject, preheader: e.preheader, sendAt: e.sendAt,
-    html: shell(e.n, e.preheader, e.eyebrow, e.headline, e.body),
+    html: shell(e.n, e.preheader, e.eyebrow, e.headline, e.body + (e.ps ? PS(e.ps) : '')),
   }));
 }
