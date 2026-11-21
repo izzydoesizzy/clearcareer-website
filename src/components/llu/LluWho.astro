@@ -1,0 +1,41 @@
+---
+import { roles } from "@/data/llu";
+---
+
+<section class="llu-band llu-band--white" id="who">
+  <div class="llu-wrap">
+    <div class="llu-head">
+      <p class="llu-eyebrow">Who it's for</p>
+      <h2 class="llu-h2">From project managers to legal analysts.</h2>
+      <p class="llu-lead">Experienced professionals between roles, in Canada and the US. Any field.</p>
+    </div>
+
+    <ul class="llu-chips llu-chips--center llu-mt-48">
+      {roles.map((r, i) => <li class:list={["llu-chip", i % 5 === 0 && "llu-chip--solid"]}>{r}</li>)}
+    </ul>
+    <p class="llu-cap llu-center llu-mt-24">
+      Roles of people I've coached, taken from their reviews, testimonials and profiles.
+    </p>
+
+    <div class="llu-row llu-row--top llu-mt-72">
+      <div class="llu-surface">
+        <p class="llu-eyebrow">This is for you if</p>
+        <ul class="llu-list llu-mt-16">
+          <li>You've applied a lot and heard little back.</li>
+          <li>You were laid off, or you're between roles.</li>
+          <li>You'll give your search a few focused hours a week.</li>
+          <li>You'd rather do this with people than alone.</li>
+        </ul>
+      </div>
+      <div class="llu-surface">
+        <p class="llu-eyebrow">It's not for you if</p>
+        <ul class="llu-list llu-list--no llu-mt-16">
+          <li>You want someone to run your search for you.</li>
+          <li>You'd rather go solo, at your own pace.</li>
+          <li>You can't make time for your search right now.</li>
+          <li>You want a guaranteed job. No one can promise that.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

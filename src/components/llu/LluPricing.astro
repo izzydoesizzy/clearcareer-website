@@ -1,90 +1,97 @@
 ---
-import {
-  offer,
-  quotes,
-  CTA_LABEL,
-  LAUNCH_PACK_CHECKOUT_URL,
-  CONCIERGE_APPLICATION_URL,
-  RESULTS_VARY,
-} from "@/data/llu";
-import LluReviewCard from "./LluReviewCard.astro";
+import { offer, CTA_LABEL, GROUP_CHECKOUT_URL, PRIVATE_CHECKOUT_URL } from "@/data/llu";
 
-const { launchPack, concierge } = offer;
+const tiers = [
+  { t: offer.group, href: GROUP_CHECKOUT_URL, lead: true },
+  { t: offer.private, href: PRIVATE_CHECKOUT_URL, lead: false },
+];
 ---
 
-<section class="llu-section llu-dark" id="pricing">
+<section class="llu-band llu-band--navy" id="pricing">
   <div class="llu-wrap">
-    <p class="llu-eyebrow">Founding group</p>
-    <h2 class="llu-h2 llu-mt-16">Choose your room.</h2>
-    <p class="llu-lead llu-measure llu-mt-24">
-      {offer.seatsTotal} founding seats. {launchPack.seatsTotal} in the Launch Pack, {concierge.seatsTotal} in Concierge.
-      We start {offer.startDateLong}.
-    </p>
+    <div class="llu-head">
+      <p class="llu-eyebrow">Black Friday pricing, until {offer.dealEndsShort}</p>
+      <h2 class="llu-h2">Choose your room.</h2>
+      <p class="llu-lead">“{offer.dealLine}”</p>
+    </div>
+
+    <dl class="llu-ruled llu-ruled--3 llu-mt-72">
+      <div>
+        <dt class="llu-stat__fig">$8,333</dt>
+        <dd class="llu-stat__label">One month of a $100,000 salary, before tax.</dd>
+      </div>
+      <div>
+        <dt class="llu-stat__fig">5.5 months</dt>
+        <dd class="llu-stat__label">Average time unemployed in the US (Bureau of Labor Statistics, 2025).</dd>
+      </div>
+      <div>
+        <dt class="llu-stat__fig">{offer.group.price}</dt>
+        <dd class="llu-stat__label">The group cohort, for your first 3 months. CAD plus HST.</dd>
+      </div>
+    </dl>
 
     <div class="llu-grid llu-grid--2 llu-mt-48">
-      <div class="llu-panel llu-tier llu-tier--lead">
-        <div>
-          <p class="llu-status">
-            <span class="llu-tag"><span class="llu-num">{launchPack.seatsLeft} of {launchPack.seatsTotal}</span>&nbsp;seats left</span>
-          </p>
-          <h3 class="llu-h3 llu-mt-16">{launchPack.name}</h3>
-          <p class="llu-mt-8">Your rebuild, the room and the weekly call.</p>
-        </div>
-        <div>
-          <p class="llu-tier__price">{launchPack.price}</p>
-          <p class="llu-cap llu-mt-8">{launchPack.priceNote}</p>
-        </div>
-        <ul class="llu-list llu-tier__grow">
-          {launchPack.includes.map((i) => <li>{i}</li>)}
-        </ul>
-        <a class="llu-btn" href={LAUNCH_PACK_CHECKOUT_URL} target="_blank" rel="noopener">{CTA_LABEL}</a>
-      </div>
-
-      <div class="llu-panel llu-tier">
-        <div>
-          <p class="llu-status">
-            <span class="llu-tag"><span class="llu-num">{concierge.seatsLeft} of {concierge.seatsTotal}</span>&nbsp;seats left</span>
-          </p>
-          <h3 class="llu-h3 llu-mt-16">{concierge.name}</h3>
-          <p class="llu-mt-8">Everything above, plus I work your search with you each week.</p>
-        </div>
-        <div>
-          <p class="llu-tier__price">{concierge.price}</p>
-          <p class="llu-cap llu-mt-8">{concierge.priceNote}</p>
-        </div>
-        <ul class="llu-list llu-tier__grow">
-          {concierge.includes.map((i) => <li>{i}</li>)}
-        </ul>
-        <a class="llu-link" href={CONCIERGE_APPLICATION_URL} target="_blank" rel="noopener">Apply for a Concierge seat</a>
-      </div>
+      {
+        tiers.map(({ t, href, lead }) => (
+          <div class:list={["llu-surface llu-tier", lead && "llu-tier--lead"]}>
+            <div>
+              <p class="llu-eyebrow">{t.name}</p>
+              <p class="llu-tier__price llu-mt-16">
+                {t.price} <s class="llu-strike">{t.regular}</s>
+              </p>
+              <p class="llu-cap llu-mt-8">{t.priceNote}</p>
+            </div>
+            <div class="llu-tier__for">
+              <p class="llu-eyebrow">Who it's for</p>
+              <p class="llu-strong llu-mt-8">{t.forWho}</p>
+            </div>
+            <ul class="llu-list llu-tier__grow">
+              {t.includes.map((i) => <li>{i}</li>)}
+            </ul>
+            <div>
+              <a class="llu-btn llu-btn--wide" href={href} target="_blank" rel="noopener">{CTA_LABEL}</a>
+              <p class="llu-cap llu-mt-16">
+                <span class="llu-num">{t.seatsLeft} of {t.seatsTotal}</span> seats left. {t.regular} plus HST from
+                December 1.
+              </p>
+            </div>
+          </div>
+        ))
+      }
     </div>
 
-    <div class="llu-grid llu-grid--3 llu-mt-32">
+    <div class="llu-ruled llu-ruled--3 llu-mt-48">
       <div>
-        <p class="llu-title">After 3 months</p>
+        <p class="llu-eyebrow">The deadline</p>
+        <p class="llu-mt-8">Black Friday pricing ends {offer.dealEndsLong}. No extensions.</p>
+      </div>
+      <div>
+        <p class="llu-eyebrow">Ways to pay</p>
+        <p class="llu-mt-8">{offer.paying}</p>
+      </div>
+      <div>
+        <p class="llu-eyebrow">After month 3</p>
         <p class="llu-mt-8">{offer.afterThreeMonths}</p>
       </div>
-      <div>
-        <p class="llu-title">The guarantee</p>
-        <p class="llu-mt-8">
-          7 days, money back, as long as we haven't started your rebuild.
-          <a class="llu-link llu-link--inline" href="#guarantee">Read the terms</a>
-        </p>
-      </div>
-      <div>
-        <p class="llu-title">Seats are real</p>
-        <p class="llu-mt-8">
-          I count them by hand. When {offer.seatsTotal} people have joined, the founding group is closed.
-        </p>
-      </div>
     </div>
 
-    <hr class="llu-rule llu-mt-72" />
-
-    <div class="llu-grid llu-grid--2 llu-mt-72">
-      <LluReviewCard item={quotes.chris} tone="dark" />
-      <LluReviewCard item={quotes.septembre} tone="dark" />
+    <div class="llu-card llu-mt-72" id="guarantee">
+      <div class="llu-row llu-row--top">
+        <div>
+          <p class="llu-eyebrow">The guarantee</p>
+          <h3 class="llu-h3 llu-mt-16">Seven days to change your mind.</h3>
+        </div>
+        <div class="llu-stack">
+          <p>
+            If it isn't right for you, email me at izzy@joinclearcareer.com within 7 days of joining. I'll refund every
+            dollar.
+          </p>
+          <p>
+            <span class="llu-strong">One condition.</span> The guarantee ends once your rebuild work has started, in the
+            workshop or 1:1. I can't take that work back.
+          </p>
+        </div>
+      </div>
     </div>
-    <p class="llu-cap llu-measure llu-mt-32">{RESULTS_VARY}</p>
   </div>
 </section>

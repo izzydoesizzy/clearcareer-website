@@ -1,0 +1,26 @@
+---
+import { people, reviews } from "@/data/llu";
+import LluImg from "./LluImg.astro";
+import { faces } from "./images";
+---
+
+<section class="llu-band llu-band--tight" aria-label="People Izzy has coached">
+  <div class="llu-wrap">
+    <ul class="llu-people">
+      {
+        people.map((p) => (
+          <li class="llu-person">
+            <LluImg class="llu-face llu-face--sm" img={faces[p.key]} alt="" size={48} eager />
+            <span>
+              <span class="llu-who__name">{reviews[p.key].name}</span>
+              <span class="llu-cap llu-block">{p.result}</span>
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="llu-cap llu-center llu-mt-24">
+      Eight people I've coached, in their own words from public LinkedIn reviews, January to March 2025.
+    </p>
+  </div>
+</section>

@@ -1,0 +1,49 @@
+---
+import { profilePairs } from "@/data/llu";
+import LluImg from "./LluImg.astro";
+import { profiles } from "./images";
+---
+
+<section class="llu-band" id="before-after">
+  <div class="llu-wrap">
+    <div class="llu-head">
+      <p class="llu-eyebrow">Before and after</p>
+      <h2 class="llu-h2">Same person. A very different first impression.</h2>
+      <p class="llu-lead">Four more real LinkedIn profiles, before and after we worked on them.</p>
+    </div>
+
+    <div class="llu-grid llu-grid--2 llu-mt-72">
+      {
+        profilePairs.map((p) => (
+          <figure class="llu-card llu-stack">
+            <div class="llu-pair llu-pair--side">
+              <div>
+                <span class="llu-chip llu-pair__label">Before</span>
+                <LluImg
+                  class="llu-img"
+                  img={profiles[p.key].before}
+                  alt={`${p.name}'s LinkedIn profile before. Headline: ${p.before}`}
+                  sizes="(min-width: 768px) 230px, calc(100vw - 96px)"
+                />
+              </div>
+              <div>
+                <span class="llu-chip llu-chip--solid llu-pair__label">After</span>
+                <LluImg
+                  class="llu-img"
+                  img={profiles[p.key].after}
+                  alt={`${p.name}'s LinkedIn profile after. Headline: ${p.after}`}
+                  sizes="(min-width: 768px) 230px, calc(100vw - 96px)"
+                />
+              </div>
+            </div>
+            <figcaption>
+              <p class="llu-title">{p.name}</p>
+              <p class="llu-cap llu-mt-8">Headline before: “{p.before}”</p>
+              <p class="llu-mt-8">Headline after: <span class="llu-strong">“{p.after}”</span></p>
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+</section>

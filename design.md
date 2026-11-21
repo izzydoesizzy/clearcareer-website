@@ -4,12 +4,16 @@ This file governs one page: `/land-and-level-up`. It does not change the rest of
 The page follows this file with no exceptions. If the page and this file disagree, the page is wrong.
 
 Implementation: tokens and primitives live in `src/styles/llu.css`, scoped under `.llu`.
-Content and every number live in `src/data/llu.ts`.
+Content and every number live in `src/data/llu.ts`. Images live in `public/images/llu/`.
 
 ## 1. The feeling
 
-A well-printed prospectus. Calm, solid, specific. Paper, ink, one blue.
-The page earns trust with real names, real faces and real numbers, not with effects.
+Sleek, calm and confident. A room of real people, shown plainly.
+One idea per section. One visual per row. Plenty of air. Paper, ink, one blue.
+
+The structure follows join.creatorscience.com/explore: a centred hero, a row of people, the reason it exists,
+what it is like inside, what you get in alternating rows, results, who it is for, the numbers, the rooms, the host,
+the questions, and a quiet close. I borrowed the structure and the polish. Never the words, the layout details or the brand.
 
 ## 2. Palette
 
@@ -17,36 +21,48 @@ Only these values appear on the page. No tints, no opacity-derived colours, no s
 
 | Token | Hex | Use |
 |---|---|---|
-| `--llu-paper` | `#F7F6F2` | Page background on light sections. Body text on dark sections. |
-| `--llu-card` | `#FFFFFF` | Cards on light sections. Headlines on dark sections. Button text. |
-| `--llu-ink` | `#030620` | Headlines on light. Background of dark sections. |
-| `--llu-blue` | `#0161EF` | The one accent: buttons, links, highlighted phrases, chart bars, the status dot. |
+| `--llu-paper` | `#F7F6F2` | Light band. Inset cards on white bands. Body text on navy. |
+| `--llu-white` | `#FFFFFF` | White band. Cards. Headlines on navy and blue. Button text. |
+| `--llu-ink` | `#030620` | Headlines on light. Navy band and nav. |
+| `--llu-blue` | `#0161EF` | The one accent: buttons, links, eyebrows on light, highlighted phrases, chart bars, the dot, one blue band. |
 | `--llu-body` | `#2B3040` | Body text on light. |
-| `--llu-caption` | `#565C6B` | Captions, sources and labels on light. |
-| `--llu-hairline` | `#E2DFD6` | 1px borders on light. Caption text on dark. |
-| `--llu-panel` | `#0B1030` | Panels inside dark sections. |
-| `--llu-panel-border` | `#262C52` | 1px borders inside dark sections. |
+| `--llu-caption` | `#565C6B` | Captions and sources on light. |
+| `--llu-hairline` | `#E2DFD6` | 1px borders on light. Caption text on navy. |
+| `--llu-panel` | `#0B1030` | Panels inside navy bands. |
+| `--llu-panel-border` | `#262C52` | 1px borders inside navy bands. |
 
 Screenshots and photographs keep their own colours. They are evidence, not decoration.
 
+### Bands
+
+Every section is a full-width band in one of four colours. Each band sets its own text colours, so a component looks right wherever it sits.
+
+| Band | Background | Headline | Body | Caption | Eyebrow |
+|---|---|---|---|---|---|
+| Paper | `#F7F6F2` | ink | body | caption | blue |
+| White | `#FFFFFF` | ink | body | caption | blue |
+| Navy | `#030620` | white | paper | hairline | hairline |
+| Blue | `#0161EF` | white | white | white | white |
+
+The blue band is used once. Never more than 3 light bands in a row.
+
 ### Contrast (WCAG ratio, measured)
 
-Every text pair on the page is in this table and is 4.5:1 or better, 14px captions included.
+Every text pair on the page is 4.5:1 or better, 14px captions included.
 
 | Text | Background | Ratio |
 |---|---|---|
-| ink | paper / card | 18.48 / 19.99 |
-| body | paper / card | 12.14 / 13.13 |
-| caption | paper / card | 6.19 / 6.69 |
-| blue | paper / card | 4.91 / 5.31 |
-| white | blue (button) | 5.31 |
+| ink | paper / white | 18.48 / 19.99 |
+| body | paper / white | 12.14 / 13.13 |
+| caption | paper / white | 6.19 / 6.69 |
+| blue | paper / white | 4.91 / 5.31 |
+| white | blue | 5.31 |
 | white | ink / panel | 19.99 / 18.57 |
 | paper | ink / panel | 18.48 / 17.17 |
 | hairline | ink / panel | 15.00 / 13.93 |
-| ink | white (button hover on dark) | 19.99 |
 
-Banned pairs, because they fail: blue text on ink (3.77), caption grey on ink (2.99), blue text on hairline (3.98).
-On dark sections blue appears only as a button fill, an underline, a bar or the dot. Never as text.
+Banned pairs, because they fail: blue text on ink (3.77), caption grey on ink (2.99), ink or paper-grey text on blue.
+On navy, blue appears only as a button fill, an underline, a bar or the dot. Never as text.
 
 ## 3. Type
 
@@ -59,91 +75,117 @@ Scale in px: **76 / 52 / 34 / 20 / 17 / 14**. No other sizes on desktop.
 |---|---|---|---|---|
 | Display (hero h1) | 76 | 52 | DM Serif Display | 1.02 |
 | Headline (section h2) | 52 | 34 | DM Serif Display | 1.06 desktop, 1.1 phone |
-| Title (h3, tier names, pull lines) | 34 | 34 | DM Serif Display | 1.1 |
-| Stat figure | 52 or 34 | 34 | Inter 600, tabular numerals | 1.02 to 1.1 |
-| Lead and card titles | 20 | 20 | Inter 400 (lead) or 600 (card title) | 1.5 (lead), 1.3 (title) |
+| Title (h3, featured quote) | 34 | 34 | DM Serif Display | 1.1 |
+| Stat figure | 52 or 34 | 34 | Inter 600, tabular numerals | 1.04 to 1.1 |
+| Lead and card titles | 20 | 20 | Inter 400 (lead) or 600 (title) | 1.5 (lead), 1.3 (title) |
 | Body | 17 | 17 | Inter 400 | 1.55 |
-| Caption, label, source | 14 | **15** | Inter 400 or 600 | 1.5 |
+| Caption, eyebrow, chip, source | 14 | **15** | Inter 400 or 600 | 1.5 |
 
-- Phone floor: no text under 15px at 390px wide. That is why captions step up from 14 to 15 on phones. This is the system, not an exception to it.
-- Body measure: 55 to 70 characters on desktop. Running copy is capped at 600px wide (about 66 characters at 17px) and never sits in a column under 520px. Short card copy (a label and one or two sentences) may run narrower.
+- Phone floor: no text under 15px at 390px wide. Captions step up from 14 to 15 on phones. That is the system, not an exception.
+- Body measure: 55 to 70 characters on desktop. Running copy is capped at 600px wide.
 - Statistics use Inter with `font-variant-numeric: tabular-nums`, always.
-- Labels (eyebrows) are 14px Inter 600, uppercase, 0.08em tracking, caption colour. 15px on phones.
-- Headline letter-spacing: -0.01em on Display and Headline. None elsewhere.
-- No centred body paragraphs longer than 2 lines. Body copy is left-aligned.
+- Eyebrows are 14px Inter 600, uppercase, 0.08em tracking.
+- Section headers are centred from 768px and left-aligned on phones. A centred header is an eyebrow, a headline and at most one line of lead.
+- No centred body paragraphs longer than 2 lines. Running copy is left-aligned.
 
 ## 4. Space and layout
 
 Spacing tokens in px: **8, 16, 24, 32, 48, 72, 96**. Nothing between them.
 
-- Section padding: 96px top and bottom on desktop, 56px on phones.
-- The hero sits directly under the nav, so it uses 72px top and bottom on desktop and 48px on top on phones. This keeps the headline, the button and the 3 proof numbers above the fold at 1440 x 900.
-- Sections that continue the same light background are separated by a hairline rule instead of doubled padding.
+- Band padding: 96px top and bottom on desktop, 56px on phones. The hero uses 72px so the headline, button and 3 proof numbers sit above the fold at 1440 x 900.
 - Content max-width: 1120px, with 24px side gutters at every size.
-- Grid: 12 columns on desktop, 32px gap (72px between a feature's text and its interface view). Single column under 768px. Two columns allowed from 768px.
-- Card radius: 20px. Images and inner panels: 16px. Small chips: pill. All within 16 to 24px or full pill.
-- Card border: 1px hairline on light, 1px panel-border on dark.
-- Card shadow: `0 1px 2px rgb(3 6 32 / 0.06)` on light cards only. Nothing heavier anywhere. No shadow on dark.
-- Card padding: 32px desktop, 24px phone.
+- Rows: two equal columns with a 72px gap from 1024px. Words on one side, one visual on the other. Rows alternate sides. Rows inside a band are 96px apart.
+- Grids: 2, 3 or 4 equal columns with a 32px gap. Single column under 768px.
+- Card radius: 20px. Interface views: 24px. Images: 16 to 20px. Chips and people pills: full pill.
+- Card border: 1px hairline on light, 1px panel-border on navy.
+- Card shadow: `0 1px 2px rgb(3 6 32 / 0.06)` on white cards only. Nothing heavier anywhere.
 
-### Light and dark rhythm
+### Band order
 
-Never more than 3 light sections in a row.
-
-1. Hero: light
-2. Is this you: dark
-3. The after: light
-4. By the numbers: light
-5. Izzy: dark
-6. What you get: light
-7. First week: light
-8. What a month costs: light
-9. Choose your room: dark
-10. Guarantee and who it is not for: light
-11. Objections: light
-12. Close and footer: dark
+1. Nav: navy, sticky from 1024px
+2. Hero: navy
+3. People row: paper
+4. Why this exists: paper
+5. The questions you can't ask at dinner: blue
+6. Here's what you get: white
+7. The private rebuild: paper
+8. Your first week: white
+9. Results: navy
+10. Before and after: paper
+11. Who it's for: white
+12. By the numbers: paper
+13. Choose your room, with the guarantee: navy
+14. Your host: paper
+15. The questions I'd ask too: white
+16. Close and footer: navy
 
 ## 5. Components
 
-**Primary button.** 56px tall, pill, blue fill, white Inter 600 at 17px, 32px side padding. One label on the whole page: "Claim my founding seat". Full width on phones.
-Hover: background changes to ink on light sections, to white with ink text on dark sections. 120ms.
+**Primary button.** 56px tall, pill, blue fill, white Inter 600 at 17px, 32px side padding. One label on the whole page: "Claim my founding seat". Full width on phones and inside a tier card.
+Hover: background goes to ink on light bands, to white with ink text on navy. 120ms.
 
-**Text link.** Blue on light, white on dark, underlined, 1px, offset 4px. Minimum 44px tall hit area (links inside a sentence get 16px of vertical padding, which widens the hit area without moving the line). Hover: underline goes to 2px. Used for the Concierge application and for "see the original review".
+**Text link.** Blue on light, white on navy and blue, underlined 1px, offset 4px. At least 44px tall hit area. Hover: underline goes to 2px.
 
-**Status label.** 6px blue dot plus "Founding group open, N of 20 seats left". N is set by hand in `src/data/llu.ts`. It is never computed and never faked.
+**Status label.** 6px blue dot plus "Founding group open, N of 16 seats left". N is set by hand in `src/data/llu.ts`. Never computed, never faked.
 
-**Review card.** White card (panel on dark). Face cropped from the person's own LinkedIn review, 56px circle. Clients with no public photo get a serif initial in the same circle, never a stock face. First name and last initial, source and date. Exact words, 25 to 70 words. One highlighted phrase per quote: blue Inter 600 on light, white 600 with a 2px blue underline on dark. Link to the original screenshot.
+**People pill.** A 48px face, a name and a result of five words or fewer. The result is taken from that person's own review.
 
-**Review screenshot.** The untouched LinkedIn screenshot, shown from 960px wide and up at a maximum of 880px so its text stays readable. Hidden under 960px, where the same review appears as a review card.
+**Quote.** Exact client words. One highlighted phrase per quote. A 56px face cropped from the person's own LinkedIn review, or a serif initial where no public photo exists. Never a stock face.
+Three forms: a white card, a plain quote with no box, and one featured quote set in the headline face.
 
-**Stat.** Figure in Inter 600 tabular. One line saying what it counts. Source and sample size directly under it in caption style. No stat appears without its source.
+**Case card.** Face, name, a one-fact chip, "the starting point", "the result", and a link to the original review. Facts restate the review. No adjectives.
 
-**Interface view.** A white card (or panel on dark) drawn like a product screen: a title bar label, rows, chips. Used to show the weekly call, the rebuild, the AI Achievement Interviewer and the Concierge shortlist. Any view that is not a real screenshot carries the caption "Illustration".
+**Stat.** Figure in Inter 600 tabular, one line saying what it counts. One source line per section states the source and sample size.
 
-**Chart.** Static horizontal bars. HTML and CSS only. Single series, blue bars, 16px tall, 4px rounded data ends, 8px gaps, the value printed beside every bar, an ink baseline on the left, a title that states the sample. A "before" bar may use caption grey. No tooltips, no animation.
+**Ruled row.** Three or four figures or short notes, each under a 1px rule. Used for the hero stats, the first week, the cost of waiting and the pricing notes.
 
-**Objection.** Native `<details>`. The question is in the buyer's words at 20px Inter 600. Plus and minus glyph, no rotation, no transition. 44px minimum summary height.
+**Interface view.** A white card drawn like a product screen: a title bar, then rows, bubbles or a before and after pair. One per row. Any view that is not a real screenshot says "Illustration" in its title bar.
 
-**Focus.** 2px blue outline, 2px offset, on light. 2px white outline on dark.
+**Chip.** A pill with 14px Inter 600. Outline by default, solid ink for emphasis. On the blue band chips are white or paper with ink text.
 
-## 6. Touch and phone rules
+**Chart.** Static horizontal bars. HTML and CSS only. Single series, blue, 16px tall, 4px rounded data ends, the value printed beside every bar. A "before" bar may use caption grey. No tooltips, no animation.
+
+**Tier card.** Tier name, the price in the stat face, the regular price struck through beside it, who it is for, what is included, the button, seats left.
+
+**Deadline.** Stated as plain text with a date and time. No countdown timer. Nothing ticks.
+
+**Objection.** Native `<details>`. The question is in the buyer's words at 20px Inter 600. Plus and minus glyph, no rotation, no transition.
+
+**Focus.** 2px outline, 2px offset: blue on light, white on navy and blue.
+
+## 6. Photos and assets
+
+Every image comes from elsewhere on joinclearcareer.com. Nothing is stock and nothing is generated.
+
+| Used for | Source in `public/images/` |
+|---|---|
+| Nav and footer mark | `logo/clearcareer-logo.png` |
+| Client faces | cropped from the 8 screenshots in `testimonials/` |
+| Before and after profiles | `before-after/` (Eblen, Nathaniel, Henrique, Julia, Rubina), cropped to banner and headline |
+| Host photo | `izzy.webp` |
+| Private rebuild and close | `izzy-coaching.jpg` |
+| Community photos | `remote-work/matz.jpg`, `remote-work/vietnam3.jpg`, `izzy-more.webp` |
+| Client video | thumbnail of the client video already embedded on `/testimonials`, linking to YouTube |
+
+Rules: crops never change what a screenshot says. Personal contact details are covered (Henrique's banner email). Third-party names under a profile are cropped out. A client's own press logos are never presented as ClearCareer's.
+
+## 7. Touch and phone rules
 
 - Every link, button and summary is at least 44px tall.
 - At 390px: one column, nothing clipped, no horizontal scroll, no text under 15px.
-- The nav shows the wordmark and the status label on phones. The button moves to the hero.
-- The nav is sticky from 1024px wide and static below that. Sticky is position, not motion.
+- The nav shows the mark, the wordmark and the status label on phones. Section links appear from 1280px. The button appears from 1024px.
 
-## 7. Motion budget: 95% static
+## 8. Motion budget: 95% static
 
 Everything renders at opacity 1 in its final position on load.
 
 **Allowed, and nothing else:**
 1. The 6px status dot pulses opacity 0.35 to 1 over 3.5s. It stops under `prefers-reduced-motion`.
-2. Hover states: a 120ms change of `background-color` or `border-color` (or underline thickness) on buttons, links and cards. No movement.
+2. Hover states: a 120ms change of `background-color`, `border-color` or underline colour on buttons, links and cards. No movement.
 
-**Forbidden:** scroll-triggered fades or slides, stagger delays, parallax, typing effects, carousels, marquees, counters that tick up, hover transforms, smooth scrolling, and every JS animation library. The page ships no JavaScript of its own.
+**Forbidden:** scroll-triggered fades or slides, stagger delays, parallax, typing effects, carousels, marquees, counters that tick up, countdown timers, autoplaying video, hover transforms, smooth scrolling, and every JS animation library. The page ships no JavaScript of its own.
 
-## 8. Anti-patterns
+## 9. Anti-patterns
 
 - No gradient washes.
 - No glassmorphism or backdrop blur.
@@ -158,49 +200,50 @@ Everything renders at opacity 1 in its final position on load.
 - No second accent colour, no tints of the accent.
 - No empty boxes, bracketed placeholders or lorem ipsum.
 - No competing buttons. One label.
-- No statistic without a source and sample size beside it.
+- No more than one visual per row, and no caption under every number.
+- No statistic without a source and sample size in its section.
 - No testimonial that is not the client's exact words.
 
-## 9. Voice
+## 10. Voice
 
 Plain, warm, direct, first person. Sentences under 20 words. Canadian English. No em dashes.
 No buzzwords. The site is joinclearcareer.com only. Client names appear as first name and last initial.
 
-## 10. What I studied, and what I borrow
+## 11. What I studied, and what I borrow
 
 Each was opened at 1440px and 390px. I borrow patterns and polish. Never words, layouts or brand.
 
-**join.creatorscience.com/explore**
-- Trust: a named person with a face and a credential sits inside every section, and the member numbers state their sample ("128 members answered").
-- Desire: it sells the room. You see who is in it and this week's calls before you see a price.
-- Borrow: a quote beside every feature, the "this week" schedule card, and pricing framed as choosing a room.
+**join.creatorscience.com/explore** (the model for this page)
+- Trust: a named person with a face sits in every section, and the member numbers state their sample.
+- Desire: it sells the room. You see who is in it and what a week looks like before you see a price.
+- Borrow: the section order, centred headers, the people row, question chips, alternating rows with one quote each, case cards, the wall of quotes, "who it's for" on each tier, the host block and the quiet close.
 
 **founderos.com**
 - Trust: a founder who says plainly what he wishes he had when he started.
-- Desire: a "today" list set beside a "with us" list, so the gap is visible at a glance.
-- Borrow: the before and after pairing, told here in each client's own numbers.
+- Desire: a "today" list beside a "with us" list, so the gap is visible at a glance.
+- Borrow: the before and after pairing, told here with real LinkedIn profiles.
 
 **lifestylebusiness.com/part-time-youtuber-academy**
-- Trust: the founder's own story opens the page and reads as proof, with his numbers on a timeline.
-- Desire: case studies are sorted by where the person started, so every reader finds themselves.
-- Borrow: reviews grouped by starting point, and objections headed "what you're probably thinking".
+- Trust: the founder's own story reads as proof.
+- Desire: case studies are sorted by where the person started.
+- Borrow: "the starting point" and "the result" on every case card.
 
 **ship30for30.com**
-- Trust: dates, session count and days are stated in the first line of the page.
-- Desire: three "is this you" cards make the reader self-select in seconds.
-- Borrow: the "is this you?" opening, and accountability made concrete as a named day and time.
+- Trust: dates and the weekly rhythm are stated up front.
+- Desire: "is this you" makes the reader self-select in seconds.
+- Borrow: a named day for the live call, and the "for you if" list.
 
 **justinwelsh.me/the-creator-mba**
-- Trust: restraint. One column, plain statements, a refund policy stated without spin.
+- Trust: restraint. Plain statements, a refund policy stated without spin.
 - Desire: three plain numbers under the hero do the selling.
-- Borrow: the stat strip, the quiet close, and the confidence to leave space empty.
+- Borrow: the stat strip and the confidence to leave space empty.
 
 **buildingasecondbrain.com**
-- Trust: it describes the reader's problem accurately before it mentions the product.
-- Desire: the button is written in the first person, so clicking is a statement.
-- Borrow: the problem-first opening and first-person button copy ("Claim my founding seat").
+- Trust: it describes the reader's problem before it mentions the product.
+- Desire: the button is written in the first person.
+- Borrow: the problem-first opening and first-person button copy.
 
 **sevenfigurecreators.mattlakajev.ai/6-weeks/online**
-- Trust: every result has a name, a job and a place. A "not typical, not promised" line sits under the results.
-- Desire: each feature is tied to a worry in the buyer's own words.
-- Borrow: objections in the buyer's voice, the short "not for you if" list, and "today, then day one" sequencing.
+- Trust: every result has a name and a job, with a "not typical, not promised" line under the results.
+- Desire: each feature answers a worry in the buyer's own words.
+- Borrow: objections in the buyer's voice and the short "not for you if" list.

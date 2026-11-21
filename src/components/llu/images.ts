@@ -1,5 +1,5 @@
 /**
- * Pre-optimised WebP files in public/images/llu/.
+ * Pre-optimised WebP files in public/images/llu/, made from the originals in public/images/.
  * Faces are cropped from each person's own public LinkedIn review screenshot.
  */
 import type { ReviewKey } from "@/data/llu";
@@ -33,7 +33,7 @@ export const faces: Record<ReviewKey, Img> = {
   raunika: face("raunika"),
 };
 
-/** Full LinkedIn screenshots, shown large on desktop. */
+/** Full LinkedIn screenshot, shown large on desktop. */
 export const shots = {
   sparsh: set("review-sparsh", [[880, 387], [1542, 678]]),
   raunika: set("review-raunika", [[880, 426], [1536, 744]]),
@@ -53,11 +53,31 @@ export const originals: Record<ReviewKey, string> = {
 
 export const izzy = {
   face: face("izzy"),
+  faceYellow: face("izzy-yellow"),
   sofa: set("izzy-sofa", [[480, 480], [880, 880]]),
   events: set("izzy-events", [[440, 440], [768, 768]]),
+  headshot: set("izzy-headshot", [[480, 480], [800, 800]]),
 };
 
+export const community = {
+  matz: set("community-matz", [[480, 348], [690, 500]]),
+  vietnam: set("community-vietnam", [[480, 348], [690, 500]]),
+  clouds: set("remote-clouds", [[480, 348], [690, 500]]),
+};
+
+export const logo: Img = { src: "/images/llu/logo-cc-96.webp", width: 96, height: 96 };
+export const videoThumb = set("video-thumb", [[640, 360], [1280, 720]]);
+
 export const profiles = {
-  eblenBefore: set("eblen-before", [[480, 206], [817, 350]]),
-  eblenAfter: set("eblen-after", [[480, 220], [817, 374]]),
+  eblen: { before: set("eblen-before", [[480, 206], [817, 350]]), after: set("eblen-after", [[480, 220], [817, 374]]) },
+  nathaniel: {
+    before: set("nathaniel-before", [[480, 198], [817, 336]]),
+    after: set("nathaniel-after", [[480, 206], [815, 350]]),
+  },
+  henrique: {
+    before: set("henrique-before", [[480, 199], [817, 338]]),
+    after: set("henrique-after", [[480, 231], [817, 393]]),
+  },
+  julia: { before: set("julia-before", [[480, 195], [819, 332]]), after: set("julia-after", [[480, 220], [825, 378]]) },
+  rubina: { before: set("rubina-before", [[480, 195], [817, 332]]), after: set("rubina-after", [[480, 206], [815, 349]]) },
 };

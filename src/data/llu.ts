@@ -8,11 +8,10 @@
  */
 
 // ── Destinations ────────────────────────────────────────────────────────────
-// TODO(Izzy): paste the live Stripe payment link for the Launch Pack.
-// Until then the Launch Pack button opens the discovery call, so it is never a dead end.
-export const LAUNCH_PACK_CHECKOUT_URL = "https://calendly.com/clearcareer/discovery-call";
-// TODO(Izzy): paste the Concierge application link (form or booking page).
-export const CONCIERGE_APPLICATION_URL = "https://calendly.com/clearcareer/discovery-call";
+// TODO(Izzy): paste the live Stripe payment links, one per tier.
+// Until then both buttons open the discovery call, so they are never a dead end.
+export const GROUP_CHECKOUT_URL = "https://calendly.com/clearcareer/discovery-call";
+export const PRIVATE_CHECKOUT_URL = "https://calendly.com/clearcareer/discovery-call";
 
 export const CTA_LABEL = "Claim my founding seat";
 
@@ -21,36 +20,45 @@ export const offer = {
   startDateLong: "Monday, December 7, 2026",
   startDateShort: "December 7",
   firstCallLong: "Wednesday, December 9",
-  seatsTotal: 20,
-  seatsLeft: 20, // hand-set, true count as of November 21, 2026
+  seatsTotal: 16,
+  seatsLeft: 16, // hand-set, true count as of November 21, 2026
   currency: "CAD",
-  launchPack: {
-    name: "Launch Pack",
-    price: "$647",
-    priceNote: "CAD. One payment. Covers your first 3 months.",
-    seatsTotal: 15,
-    seatsLeft: 15, // hand-set
+  /** Black Friday pricing. Regular prices apply from December 1, 2026. No extensions. */
+  dealEndsLong: "Monday, November 30 at 11:59 pm ET",
+  dealEndsShort: "November 30",
+  dealLine: "I haven't priced it this low since 2021.",
+  group: {
+    name: "Group cohort",
+    price: "$749",
+    regular: "$1,200",
+    priceNote: "CAD plus HST. One payment covers your first 3 months.",
+    seatsTotal: 12,
+    seatsLeft: 12, // hand-set
+    forWho: "You want the room, the weekly call and the rebuild workshop.",
     includes: [
-      "Your resume and LinkedIn, rebuilt 1:1 with me",
-      "3 months in the community",
-      "A live group call every Wednesday, 60 minutes",
+      "3 months in the Land and Level Up community",
+      "A live group call every Wednesday",
+      "Resume and LinkedIn rebuild workshop, with hot seats",
       "The AI Achievement Interviewer",
     ],
   },
-  concierge: {
-    name: "Concierge",
-    price: "$1,997",
-    priceNote: "CAD per quarter. By application.",
-    seatsTotal: 5,
-    seatsLeft: 5, // hand-set
+  private: {
+    name: "Group plus private rebuild",
+    price: "$1,797",
+    regular: "$2,297",
+    priceNote: "CAD plus HST. One payment covers your first 3 months.",
+    seatsTotal: 4,
+    seatsLeft: 4, // hand-set
+    forWho: "You want all of that, and me rebuilding it with you 1:1.",
     includes: [
-      "Everything in the Launch Pack",
-      "A weekly shortlist of roles, picked for you",
-      "A tailored resume for each shortlisted role",
-      "A 1:1 with me every month",
+      "Everything in the group cohort",
+      "A 1:1 resume and LinkedIn rebuild with me",
+      "2 to 3 hours together, just the two of us",
     ],
   },
-  afterThreeMonths: "After your first 3 months, founding members can stay for $50 CAD a month. Leave any time.",
+  paying: "Pay in full, monthly through Klarna (up to 12 months), or in up to three payments with me.",
+  afterThreeMonths: "After month 3, you can stay on for $50 a month. Leave any time.",
+  guarantee: "7-day money-back guarantee. It ends once your rebuild work has started.",
 };
 
 // ── Sources ────────────────────────────────────────────────────────────────
@@ -288,7 +296,7 @@ export const objections: { q: string; a: string[]; proof: string }[] = [
     q: "“I already paid for a career coach. It went nowhere.”",
     a: [
       "I hear this every week. Most coaching gives you advice, then leaves you to do it alone.",
-      "Here we build the thing together. I rebuild your resume and LinkedIn with you. Then you bring your real search to the group every Wednesday.",
+      "Here we build the thing together. We rebuild your resume and LinkedIn in a live workshop. Then you bring your real search to the group every Wednesday.",
     ],
     proof:
       "Andrew C. had taken expensive career courses that “didn't lead anywhere.” In my program, employers responded within the first week.",
@@ -306,8 +314,8 @@ export const objections: { q: string; a: string[]; proof: string }[] = [
     q: "“Money is tight right now.”",
     a: [
       "I get it. You're watching every dollar, and that's the right instinct.",
-      "So do the math with me. At a $100,000 salary, one month without a paycheque is $8,333 before tax. The Launch Pack is $647, once, for 3 months.",
-      "And there's a 7-day money-back guarantee, as long as we haven't started your rebuild.",
+      "So do the math with me. At a $100,000 salary, one month without a paycheque is $8,333 before tax. The group cohort is $749 plus HST, for 3 months.",
+      "You can spread it out with Klarna. And there's a 7-day money-back guarantee, as long as your rebuild work hasn't started.",
     ],
     proof:
       "Annie B. was “blown away by the $1500+ price tags with zero promises” elsewhere. Annie joined my course and got 2 offers within weeks.",
@@ -333,7 +341,7 @@ export const objections: { q: string; a: string[]; proof: string }[] = [
     q: "“I'm not a group person. A weekly call sounds awkward.”",
     a: [
       "Fair. You don't have to perform. Bring one stuck point, or just listen for the first few weeks.",
-      "The group is 20 people at most. Everyone in it is working on their next role, same as you.",
+      "The group is 16 people at most. Everyone in it is working on their next role, same as you.",
     ],
     proof:
       "Sparsh K. wrote that “the weekly group sessions kept me motivated.” Past members rated weekly calls 4.17 out of 5 (58 surveyed, December 2024).",
@@ -354,3 +362,149 @@ export const objectionsForSchema = objections.map((o) => ({
   question: o.q.replace(/[“”]/g, ""),
   answer: [...o.a, o.proof].join(" ").replace(/[“”]/g, '"'),
 }));
+
+// ════════════════════════════════════════════════════════════════════════════
+// Redesign (Creator Science structure): extra content blocks
+// ════════════════════════════════════════════════════════════════════════════
+
+export const navLinks = [
+  { href: "#inside", label: "What's inside" },
+  { href: "#results", label: "Results" },
+  { href: "#pricing", label: "Pricing" },
+];
+
+/** People row under the hero. Each result is taken from that person's LinkedIn review. */
+export const people: { key: ReviewKey; result: string }[] = [
+  { key: "kristin", result: "Employed in three weeks" },
+  { key: "sparsh", result: "A job within 30 days" },
+  { key: "laura", result: "$22,000 a year more" },
+  { key: "tamara", result: "$20,000 salary increase" },
+  { key: "darin", result: "Offer signed, no pay cut" },
+  { key: "raunika", result: "Director-level role" },
+  { key: "blake", result: "$5,000 salary increase" },
+  { key: "kira", result: "A strong counteroffer" },
+];
+
+/** Questions members bring. These are examples written by Izzy, not quotes. */
+export const questions = [
+  "Is this offer low, or am I being greedy?",
+  "How do I explain an eight-month gap?",
+  "Do I take the contract, or keep looking?",
+  "Is it my resume, or is it the market?",
+  "Should I follow up again, or let it go?",
+  "How much do I say about the layoff?",
+  "They said the budget is fixed. Now what?",
+  "Am I aiming too high, or too low?",
+];
+
+/** Case cards. `start` and `result` restate facts from each person's own LinkedIn review. */
+export const cases: { key: ReviewKey; chip: string; start: string; result: string }[] = [
+  {
+    key: "darin",
+    chip: "600+ applications",
+    start: "Applied for 600+ jobs and landed three interviews.",
+    result: "Slowed down, reached out to hiring managers, and signed an offer at the same salary. No pay cut.",
+  },
+  {
+    key: "laura",
+    chip: "+$22,000 a year",
+    start: "Saw a dream organization was hiring and wanted to get it right.",
+    result: "Landed the role and raised salary by $22,000 a year. That's more than a 30% increase.",
+  },
+  {
+    key: "blake",
+    chip: "200+ applications",
+    start: "Changing fields. Over 200 applications, 10 interviews and no offers.",
+    result: "Sent 27 targeted emails. Landed a full-time role and negotiated a $5,000 salary increase.",
+  },
+];
+
+/** More client quotes for the wall (src/data/testimonials.json, whole sentences). */
+export const moreQuotes = {
+  jorge: {
+    name: "Jorge G.",
+    context: "ClearCareer client.",
+    before:
+      "Before working with Izzy, I spent 12 months job searching. I applied to over 160 jobs. I had 16 interviews... But I never landed an offer. After joining Izzy's program, he helped me with the whole interview process. Before, during and after the interview. And today, ",
+    mark: "I finally landed an offer",
+    after: ".",
+    isExcerpt: true,
+  },
+  wil: {
+    name: "Wil G.",
+    context: "Software engineer. ClearCareer client.",
+    before:
+      "Izzy helped me rebuild my confidence and approach job searching with renewed energy and focus after being recently unemployed. He helped me hone in on my strengths and communicate them effectively, leading me to ",
+    mark: "receive three job offers",
+    after:
+      ". With Izzy's guidance, I negotiated a $10k raise and felt empowered and confident in my abilities.",
+    isExcerpt: true,
+  },
+  /** A former colleague, on Izzy as a community builder. Not a client. */
+  heidi: {
+    name: "Heidi P.",
+    context: "Former colleague at Hacker Paradise.",
+    before: "I'm not sure I've ever met someone who ",
+    mark: "works so hard and so efficiently",
+    after: " at both the technical and personal aspects of maintaining a community.",
+    isExcerpt: true,
+  },
+} satisfies Record<string, Quote>;
+
+/** LinkedIn headlines, before and after. Exact text from each person's profile screenshot. */
+export const profilePairs = [
+  {
+    key: "nathaniel",
+    name: "Nathaniel A.",
+    before: "Design Strategy and Design Ops Leader - Looking for Full Time Role",
+    after:
+      "Head of Design and Studio Operations | Cofounded Design/Venture Studios at ConsenSys & IBM iX | Led High-Impact Innovation for Fortune 500 & Public Sector Clients",
+  },
+  {
+    key: "henrique",
+    name: "Henrique P.",
+    before: "Finance",
+    after:
+      "Senior Accounts Receivable Manager | Portfolio of $1Billion+ Including Fortune 500 Companies such as PepsiCo, Walmart, Costco, ExxonMobil, and Coca Cola | Recovered 40% of portfolio past due balance $56M in under 9mo",
+  },
+  {
+    key: "julia",
+    name: "Julia S.",
+    before: "Sex & Relationship Educator for Teens & Millennials",
+    after:
+      "Program Director | Expert in 2SLGBTQIA+ Programming | Delivered 150+ Workshops on Consent & Boundaries | Led Teen Camps Empowering 50+ Youth Annually",
+  },
+  {
+    key: "rubina",
+    name: "Rubina A.",
+    before: "Personal Finance Journalist",
+    after:
+      "Personal Finance Expert | Featured on CBC, Global, Corus Network, SiriusXM | Nationally-Syndicated Columnist | Journalist | Host",
+  },
+] as const;
+
+/** Roles of people Izzy has coached, as written in their reviews, testimonials and profiles. */
+export const roles = [
+  "Project managers",
+  "Software engineers",
+  "Customer success managers",
+  "Growth marketers",
+  "Program directors",
+  "Operations leads",
+  "Legal analysts",
+  "Product managers",
+  "Accounts receivable managers",
+  "Heads of design",
+  "Front-end developers",
+  "Field marketing managers",
+  "Communications writers",
+  "Non-profit coordinators",
+  "IT specialists",
+  "Associate directors",
+  "Finance journalists",
+  "Digital marketing managers",
+  "Startup co-founders",
+  "Financial services directors",
+];
+
+export const VIDEO_URL = "https://www.youtube.com/watch?v=xyDUx1ji3io";

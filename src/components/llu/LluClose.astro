@@ -1,48 +1,49 @@
 ---
-import LluImg from "./LluImg.astro";
-import { offer } from "@/data/llu";
+import { offer, SURVEY_SOURCE, NEW_PROGRAM_NOTE, RESULTS_VARY } from "@/data/llu";
 import LluButton from "./LluButton.astro";
-import { izzy } from "./images";
+import LluImg from "./LluImg.astro";
+import { izzy, logo } from "./images";
 ---
 
-<section class="llu-section llu-dark" id="join">
+<section class="llu-band llu-band--navy" id="join">
   <div class="llu-wrap">
-    <div class="llu-grid llu-grid--split">
-      <div>
-        <p class="llu-status">
-          <span class="llu-tag">
-            <span class="llu-num">{offer.seatsLeft} of {offer.seatsTotal}</span>&nbsp;founding seats left
-          </span>
-        </p>
-        <h2 class="llu-h2 llu-mt-16">{offer.seatsTotal} seats. We start {offer.startDateShort}.</h2>
-        <div class="llu-stack llu-measure llu-mt-24">
-          <p class="llu-lead">You've done this alone for long enough.</p>
-          <p>
-            Come do it with a coach and a small group who get it. You bring the effort. I bring the system and the
-            people.
-          </p>
-        </div>
-        <div class="llu-mt-32">
-          <LluButton />
-        </div>
-        <p class="llu-cap llu-mt-16">
-          Starts {offer.startDateLong}. Launch Pack {offer.launchPack.price} CAD. 7-day money-back guarantee, terms above.
-        </p>
-      </div>
-      <div class="llu-panel">
+    <div class="llu-head">
+      <p class="llu-eyebrow">
+        <span class="llu-num">{offer.seatsLeft} of {offer.seatsTotal}</span> founding seats left
+      </p>
+      <h2 class="llu-h2">You've done this alone for long enough.</h2>
+      <p class="llu-lead">
+        We start {offer.startDateLong}. Black Friday pricing ends {offer.dealEndsLong}.
+      </p>
+    </div>
+    <div class="llu-center-row llu-mt-32">
+      <LluButton />
+    </div>
+    <div class="llu-center-row llu-mt-48">
+      <div class="llu-who">
+        <LluImg class="llu-face llu-face--lg" img={izzy.faceYellow} alt="Izzy Piyale-Sheard" size={72} />
         <p>
-          One last thing. I can't promise you a job. Nobody honest can. What I can promise is that you won't be
-          guessing alone anymore.
+          <span class="llu-who__name">I can't promise you a job. Nobody honest can.</span>
+          <span class="llu-cap llu-block">I can promise you won't be guessing alone. Izzy</span>
         </p>
-        <p class="llu-mt-16">See you Wednesday.</p>
-        <div class="llu-sign llu-mt-24">
-          <LluImg class="llu-face" img={izzy.face} alt="Izzy Piyale-Sheard" size={72} />
-          <p class="llu-cap">
-            <span class="llu-strong llu-block">Izzy Piyale-Sheard</span>
-            Founder, ClearCareer
-          </p>
-        </div>
       </div>
     </div>
+
+    <footer class="llu-footer">
+      <div class="llu-footer__row">
+        <div class="llu-who">
+          <LluImg class="llu-nav__logo" img={logo} alt="" size={32} />
+          <p class="llu-cap">© 2026 ClearCareer. joinclearcareer.com</p>
+        </div>
+        <div class="llu-footer__links">
+          <a class="llu-link llu-link--cap" href="/privacy">Privacy</a>
+          <a class="llu-link llu-link--cap" href="/terms">Terms</a>
+        </div>
+      </div>
+      <p class="llu-cap llu-mt-24">
+        {RESULTS_VARY} {NEW_PROGRAM_NOTE} {SURVEY_SOURCE} Client reviews are public on LinkedIn. Other quotes are from
+        ClearCareer clients, shared with first name and last initial.
+      </p>
+    </footer>
   </div>
 </section>

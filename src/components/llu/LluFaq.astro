@@ -1,20 +1,19 @@
 ---
-import { objections, objectionsForSchema } from "@/data/llu";
+import { objections, objectionsForSchema, quotes } from "@/data/llu";
 import { generateFAQSchema } from "@utils/seo";
+import LluReviewCard from "./LluReviewCard.astro";
 
 const schema = generateFAQSchema(objectionsForSchema);
 ---
 
-<section class="llu-section llu-section--flush-top" id="doubts">
+<section class="llu-band llu-band--white" id="questions">
   <div class="llu-wrap">
-    <hr class="llu-rule" />
-    <div class="llu-grid llu-grid--split-even llu-mt-72">
+    <div class="llu-row llu-row--top">
       <div>
         <p class="llu-eyebrow">Your doubts</p>
         <h2 class="llu-h2 llu-mt-16">The questions I'd ask too.</h2>
-        <p class="llu-measure llu-mt-24">
-          You've been burned before. So here are the honest answers, each with a real result beside it.
-        </p>
+        <p class="llu-lead llu-measure llu-mt-24">You've been burned before. Here are honest answers.</p>
+        <LluReviewCard class="llu-mt-32" variant="plain" item={quotes.surveyLayoff} />
       </div>
       <div>
         {

@@ -1,65 +1,33 @@
 ---
-import { offer, quotes } from "@/data/llu";
+import { offer } from "@/data/llu";
 import LluButton from "./LluButton.astro";
-import LluReviewCard from "./LluReviewCard.astro";
 
 const steps = [
-  {
-    n: "1",
-    when: "Today",
-    title: "You claim a seat.",
-    body: `There are ${offer.seatsTotal} in the founding group. Yours is held from the moment you join.`,
-  },
-  {
-    n: "2",
-    when: "Mon, Dec 7",
-    title: "The room opens.",
-    body: "You get into the community. The AI Achievement Interviewer is yours to start.",
-  },
-  {
-    n: "3",
-    when: "Wed, Dec 9",
-    title: "Our first live call.",
-    body: "One hour together. Bring one thing that's stuck. You'll meet the people searching beside you.",
-  },
-  {
-    n: "4",
-    when: "First weeks",
-    title: "We rebuild, 1:1.",
-    body: "You and I rework your resume and LinkedIn. Your wins, with numbers, in your words.",
-  },
+  { when: "Today", body: `You claim one of ${offer.seatsTotal} founding seats.` },
+  { when: "Mon, Dec 7", body: "The room opens. You get the community and the AI Achievement Interviewer." },
+  { when: "Wed, Dec 9", body: "Our first live call. One hour. Bring one thing that's stuck." },
+  { when: "First weeks", body: "We rebuild your resume and LinkedIn in the workshop, or 1:1 if you chose that." },
 ];
 ---
 
-<section class="llu-section llu-section--flush-top" id="first-week">
+<section class="llu-band llu-band--white" id="first-week">
   <div class="llu-wrap">
-    <hr class="llu-rule" />
-    <p class="llu-eyebrow llu-mt-72">What happens first</p>
-    <h2 class="llu-h2 llu-mt-16">Your first week, step by step.</h2>
-
-    <ol class="llu-steps llu-mt-48">
+    <div class="llu-head">
+      <p class="llu-eyebrow">What happens first</p>
+      <h2 class="llu-h2">Your first week.</h2>
+    </div>
+    <ol class="llu-ruled llu-ruled--4 llu-mt-72">
       {
         steps.map((s) => (
-          <li class="llu-card">
-            <p class="llu-step__when">
-              <span class="llu-step__n">{s.n}</span>
-              <span class="llu-eyebrow">{s.when}</span>
-            </p>
-            <h3 class="llu-title">{s.title}</h3>
-            <p class="llu-mt-8">{s.body}</p>
+          <li>
+            <p class="llu-stat__fig">{s.when}</p>
+            <p class="llu-stat__label">{s.body}</p>
           </li>
         ))
       }
     </ol>
-
-    <div class="llu-grid llu-grid--split llu-mt-48">
-      <LluReviewCard item={quotes.andrew} />
-      <div>
-        <p class="llu-lead">Join now and you're in the room on day one. We begin {offer.startDateLong}.</p>
-        <div class="llu-mt-24">
-          <LluButton />
-        </div>
-      </div>
+    <div class="llu-center-row llu-mt-72">
+      <LluButton />
     </div>
   </div>
 </section>

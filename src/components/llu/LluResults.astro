@@ -1,0 +1,80 @@
+---
+import { cases, reviews, quotes, moreQuotes, RESULTS_VARY, NEW_PROGRAM_NOTE, VIDEO_URL } from "@/data/llu";
+import LluImg from "./LluImg.astro";
+import LluButton from "./LluButton.astro";
+import LluReviewCard from "./LluReviewCard.astro";
+import { faces, originals, videoThumb } from "./images";
+
+const wall = [
+  reviews.kira,
+  quotes.chris,
+  moreQuotes.jorge,
+  reviews.raunika,
+  quotes.annie,
+  moreQuotes.wil,
+  quotes.septembre,
+  quotes.victor,
+  quotes.andrew,
+];
+---
+
+<section class="llu-band llu-band--navy" id="results">
+  <div class="llu-wrap">
+    <div class="llu-head">
+      <p class="llu-eyebrow">Results</p>
+      <h2 class="llu-h2">What people did next.</h2>
+    </div>
+
+    <div class="llu-grid llu-grid--3 llu-mt-72">
+      {
+        cases.map((c) => (
+          <article class="llu-card llu-stack">
+            <div class="llu-who">
+              <LluImg class="llu-face" img={faces[c.key]} alt="" size={56} />
+              <p>
+                <span class="llu-who__name">{reviews[c.key].name}</span>
+                <span class="llu-cap llu-block">{reviews[c.key].context}</span>
+              </p>
+            </div>
+            <p><span class="llu-chip llu-chip--solid llu-num">{c.chip}</span></p>
+            <div>
+              <p class="llu-eyebrow">The starting point</p>
+              <p class="llu-mt-8">{c.start}</p>
+            </div>
+            <div>
+              <p class="llu-eyebrow">The result</p>
+              <p class="llu-mt-8 llu-strong">{c.result}</p>
+            </div>
+            <a class="llu-link llu-link--cap" href={originals[c.key]} target="_blank" rel="noopener">
+              Read {reviews[c.key].name.split(" ")[0]}'s LinkedIn review
+            </a>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="llu-row llu-mt-72">
+      <a class="llu-card llu-video" href={VIDEO_URL} target="_blank" rel="noopener">
+        <LluImg img={videoThumb} alt="A ClearCareer client speaking on video" sizes="(min-width: 1024px) 524px, calc(100vw - 48px)" />
+        <span class="llu-video__body">
+          <span class="llu-who__name">Hear it from clients, on video</span>
+          <span class="llu-cap llu-block">Opens on YouTube. Nothing plays until you press play.</span>
+        </span>
+      </a>
+      <LluReviewCard item={reviews.kristin} variant="big" />
+    </div>
+
+    <div class="llu-head llu-mt-72">
+      <p class="llu-eyebrow">In their words</p>
+      <h2 class="llu-h3">More from people I've coached.</h2>
+    </div>
+    <div class="llu-wall llu-mt-48">
+      {wall.map((q) => <LluReviewCard item={q} />)}
+    </div>
+
+    <p class="llu-cap llu-center llu-mt-32">{NEW_PROGRAM_NOTE} {RESULTS_VARY}</p>
+    <div class="llu-center-row llu-mt-48">
+      <LluButton />
+    </div>
+  </div>
+</section>

@@ -1,0 +1,72 @@
+---
+import { moreQuotes } from "@/data/llu";
+import LluImg from "./LluImg.astro";
+import LluReviewCard from "./LluReviewCard.astro";
+import { izzy, community } from "./images";
+
+const creds = [
+  "200+ coached one-on-one",
+  "Coaching since 2016",
+  "CBC's For What It's Worth",
+  "Global News",
+  "Newsweek",
+  "Inc. Magazine",
+];
+---
+
+<section class="llu-band" id="izzy">
+  <div class="llu-wrap">
+    <div class="llu-row">
+      <LluImg
+        class="llu-img llu-img--square"
+        img={izzy.sofa}
+        alt="Izzy Piyale-Sheard, founder of ClearCareer, sitting on a sofa with a notebook"
+        sizes="(min-width: 1024px) 524px, calc(100vw - 48px)"
+      />
+      <div>
+        <p class="llu-eyebrow">Your host</p>
+        <h2 class="llu-h2 llu-mt-16">I built the room I wish I'd had.</h2>
+        <div class="llu-stack llu-measure llu-mt-24">
+          <p class="llu-lead">Hi, I'm Izzy. I'm a career zig-zagger and a jack-of-all-trades.</p>
+          <p>
+            I've been through long periods of unemployment. I felt unclear, confused and unmotivated, stuck in negative
+            cycles that were hard to break.
+          </p>
+          <p>
+            Since 2016, I've been building the support network I wished I had when I was struggling in silence. Land and
+            Level Up is that room.
+          </p>
+        </div>
+        <ul class="llu-chips llu-mt-32">
+          {creds.map((c, i) => <li class:list={["llu-chip", i < 2 && "llu-chip--solid"]}>{c}</li>)}
+        </ul>
+        <p class="llu-cap llu-mt-16">
+          Workshops for the University of Toronto, Toronto Metropolitan University and Humber College. Also Lighthouse
+          Labs, FlexJobs and the United Nations Association in Canada. The 200+ is ClearCareer's own count.
+        </p>
+      </div>
+    </div>
+
+    <div class="llu-head llu-mt-72">
+      <p class="llu-eyebrow">Before ClearCareer</p>
+      <h2 class="llu-h3">I've been bringing people together for years.</h2>
+    </div>
+    <div class="llu-grid llu-grid--3 llu-mt-48">
+      <figure>
+        <LluImg class="llu-img llu-img--photo" img={community.matz} alt="A group of remote workers cheering on a staircase in Japan" sizes="(min-width: 768px) 352px, calc(100vw - 48px)" />
+        <figcaption class="llu-cap llu-mt-16">Japan, with a group of remote workers and the creator of Ruby.</figcaption>
+      </figure>
+      <figure>
+        <LluImg class="llu-img llu-img--photo" img={community.vietnam} alt="Ten people sitting side by side on a stone wall in a forest in Vietnam" sizes="(min-width: 768px) 352px, calc(100vw - 48px)" />
+        <figcaption class="llu-cap llu-mt-16">Vietnam. I spent years working remotely from 20+ countries.</figcaption>
+      </figure>
+      <figure>
+        <LluImg class="llu-img llu-img--photo" img={izzy.events} alt="Photos of Izzy at events and workshops, including Techweek New York, Microsoft and a classroom session" sizes="(min-width: 768px) 352px, calc(100vw - 48px)" />
+        <figcaption class="llu-cap llu-mt-16">Workshops, classrooms and events since then.</figcaption>
+      </figure>
+    </div>
+    <div class="llu-center-row llu-mt-48">
+      <LluReviewCard class="llu-measure" item={moreQuotes.heidi} link={false} />
+    </div>
+  </div>
+</section>

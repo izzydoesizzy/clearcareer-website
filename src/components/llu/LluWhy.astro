@@ -1,0 +1,49 @@
+---
+import { befores, reviews } from "@/data/llu";
+import LluImg from "./LluImg.astro";
+import { faces } from "./images";
+---
+
+<section class="llu-band llu-band--join" id="why">
+  <div class="llu-wrap">
+    <div class="llu-row">
+      <div>
+        <p class="llu-eyebrow">Why this exists</p>
+        <h2 class="llu-h2 llu-mt-16">The search was never meant to be solo.</h2>
+        <div class="llu-stack llu-measure llu-mt-24">
+          <p class="llu-lead">You tailored the resume. You fixed your LinkedIn. You applied to hundreds of roles.</p>
+          <p>
+            And you heard nothing. After a few months of that, anyone starts to wonder if the problem is them.
+          </p>
+          <p>
+            I see the same pattern in every search I coach. Talented people grinding alone, convinced the silence is
+            their fault. It isn't.
+          </p>
+          <p class="llu-strong">So I built a small room where you don't do this alone.</p>
+        </div>
+      </div>
+
+      <div class="llu-card">
+        <p class="llu-eyebrow">Where four of my clients started</p>
+        <ul class="llu-mt-16">
+          {
+            befores.map((b) => (
+              <li class="llu-ui__row">
+                <LluImg class="llu-face llu-face--sm" img={faces[b.key]} alt="" size={48} />
+                <div class="llu-ui__grow">
+                  <p class="llu-strong">
+                    <span class="llu-num">{b.figure}</span> {b.unit}
+                  </p>
+                  <p class="llu-cap">
+                    {b.then}. {reviews[b.key].name}
+                  </p>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="llu-cap llu-mt-24">Their numbers, from their own LinkedIn reviews.</p>
+      </div>
+    </div>
+  </div>
+</section>

@@ -6,24 +6,21 @@ import { faces, originals } from "./images";
 interface Props {
   /** A LinkedIn review (has a face and an original screenshot) or a stored client quote. */
   item: Review | Quote;
-  tone?: "light" | "dark";
-  tag?: string;
+  /** "card" is a white card. "plain" has no box. "big" sets the quote in the headline face. */
+  variant?: "card" | "plain" | "big";
+  link?: boolean;
   class?: string;
 }
-const { item, tone = "light", tag, class: className = "" } = Astro.props;
+const { item, variant = "card", link = true, class: className = "" } = Astro.props;
 const key = "key" in item ? (item.key as ReviewKey) : undefined;
-const isLinkedIn = Boolean(key);
-const source = isLinkedIn
-  ? `${(item as Review).context}. LinkedIn review, 5.0 stars, ${(item as Review).date}.`
-  : item.context;
+const source = key ? `${(item as Review).context}. LinkedIn review, 5.0 stars.` : item.context;
 ---
 
-<figure class:list={[tone === "dark" ? "llu-panel" : "llu-card", "llu-review", className]}>
-  {tag && <span class="llu-tag">{tag}</span>}
-  <blockquote class="llu-review__quote">
+<figure class:list={["llu-quote", variant === "card" && "llu-card", variant === "big" && "llu-quote--big", className]}>
+  <blockquote class="llu-quote__text">
     “{item.before}<mark class="llu-mark">{item.mark}</mark>{item.after}”
   </blockquote>
-  <figcaption class="llu-review__who">
+  <figcaption class="llu-who">
     {
       key ? (
         <LluImg class="llu-face" img={faces[key]} alt={`${item.name}, from their LinkedIn review`} size={56} />
@@ -32,12 +29,12 @@ const source = isLinkedIn
       )
     }
     <span>
-      <span class="llu-review__name">{item.name}</span>
+      <span class="llu-who__name">{item.name}</span>
       <span class="llu-cap llu-block">{source}{item.isExcerpt ? " Excerpt." : ""}</span>
     </span>
   </figcaption>
   {
-    key && (
+    key && link && (
       <a class="llu-link llu-link--cap" href={originals[key]} target="_blank" rel="noopener">
         See {item.name.split(" ")[0]}'s original review
       </a>
