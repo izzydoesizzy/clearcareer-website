@@ -12,6 +12,7 @@ import { COLORS, FONTS, SITE_URL } from './constants.js';
 import { wrapDocument, outerTable, footer } from './components.js';
 import { offer, RESULTS_VARY, VIDEO_URL } from '../../data/llu.js';
 import { STORIES, IZZY } from '../stories.js';
+import { IZZY_PHOTO } from '../call-emails.js';
 
 const NAME = '{{ contact.FIRSTNAME | default : "there" }}';
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -57,6 +58,13 @@ function shell(n: number, preheader: string, eyebrow: string, headline: string, 
 <h1 style="margin:0;color:#ffffff;font-size:28px;font-weight:400;line-height:1.2;font-family:${FONTS.heading};">${esc(headline)}</h1>
 </td></tr>
 <tr><td style="padding:32px 40px 8px;" class="email-padding">${P(`Hey ${NAME},`)}${body}</td></tr>
+<tr><td style="padding:0 40px 28px;" class="email-padding">
+<table role="presentation" cellpadding="0" cellspacing="0" style="border-top:1px solid ${COLORS.grey200};" class="email-border"><tr>
+<td style="padding:16px 14px 0 0;vertical-align:middle;"><img src="${IZZY_PHOTO}" width="56" height="56" alt="Izzy Piyale-Sheard" style="display:block;width:56px;height:56px;border-radius:28px;"></td>
+<td style="padding:16px 0 0;vertical-align:middle;font-family:${FONTS.body};">
+<p style="margin:0;font-size:15px;font-weight:700;color:${COLORS.heading};" class="email-heading">Izzy Piyale-Sheard</p>
+<p style="margin:2px 0 0;font-size:13px;color:${COLORS.slate500};" class="email-text-muted">Career coach, ClearCareer &middot; <a href="${SITE_URL}" style="color:${COLORS.blue};text-decoration:none;">joinclearcareer.com</a></p>
+</td></tr></table></td></tr>
 ${footer('{{ unsubscribe }}', { reason: "You're getting this because you asked for a free ClearCareer resource and agreed to get emails from me." })}
 </table></td></tr>`),
   );
@@ -173,7 +181,7 @@ ${SIGN()}`,
     },
     {
       n: 6, templateId: 7, name: 'LLU Launch 6 - Black Friday, honest version', sendAt: '2026-11-27 09:12',
-      ps: `${esc(offer.dealLine)} Black Friday pricing ends Monday at 11:59 pm ET. ${A('See the prices', page(6, '#pricing'))}.`,
+      ps: `Pay by card, or spread it out monthly with Klarna (up to 12 months). Black Friday pricing ends Monday at 11:59 pm ET. ${A('See the prices', page(6, '#pricing'))}.`,
       subject: "It's Black Friday. Here's the honest version.",
       preheader: 'The doubts I hear most, answered straight. Plus the price.',
       eyebrow: 'Black Friday', headline: 'The honest version',
@@ -183,7 +191,7 @@ ${BIG(`Group cohort: ${g.price}, regular ${g.regular}.<br>Group plus private reb
 ${P(`CAD plus HST, for your first 3 months. ${esc(offer.dealLine)} It ends ${offer.dealEndsLong}.`)}
 ${P("But price isn't really the question, is it? The question is whether this will actually work for you. Here are the doubts I hear most:")}
 ${P('<strong>"I already paid for a coach. It went nowhere."</strong>')}
-${P(`${esc(STORIES.andrew.story)} Then, after joining: &ldquo;${esc(STORIES.andrew.quote)}&rdquo; Most coaching hands you advice and leaves. Here we build it together, every week.`)}
+${P(`${esc(STORIES.andrew.story)} In Andrew's words: &ldquo;${esc(STORIES.andrew.quote)}&rdquo; Most coaching hands you advice and leaves. Here we build it together, every week.`)}
 ${QUOTE('After experiencing layoffs, I invested in other career coaches but didn\'t even receive the bare minimum of support that Izzy has provided.', 'ClearCareer member, anonymous survey, December 2024')}
 ${P('<strong>"What if it\'s not for me?"</strong>')}
 ${P(`You have 7 days. Email me and I'll refund you, no awkward conversation. One condition: the guarantee ends once your rebuild work starts, because I can't take that work back.`)}

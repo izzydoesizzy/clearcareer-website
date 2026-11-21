@@ -68,7 +68,7 @@ export const STORIES = {
   },
   andrew: {
     who: 'Andrew C.',
-    story: 'Andrew had already paid for expensive career courses. They didn\'t lead anywhere. Hundreds of applications, no results.',
+    story: 'Andrew had already paid for expensive career courses. They didn\'t lead anywhere.',
     quote: "Izzy's system completely transformed my job search from sending out hundreds of applications with no results, to receiving responses from employers within the first week of joining his program.",
   },
   annie: {

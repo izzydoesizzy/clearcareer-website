@@ -265,7 +265,7 @@ ${partnerLine(c)}
 ${P(`Want to look around first? ${link('Both programs and the common questions are on one page', utm(`${SITE_URL}/booked`, 'booked'))}.`)}
 ${c.rescheduleUrl ? P(`Need a different time? ${link('Reschedule here', c.rescheduleUrl)}, no stress. It frees the slot for someone else.`) : ''}
 ${sign()}
-${s ? small(`<strong>P.S.</strong> ${esc(s.who.split(',')[0])} was in a similar spot. Ask me on the call what we changed.`) : ''}`);
+${s ? P(`<strong>P.S.</strong> ${esc(s.who.split(',')[0])} was in a similar spot. Ask me on the call what we changed.`) : ''}`);
   return { subject, html };
 }
 
@@ -369,7 +369,7 @@ function joinLinks(k: Checkout, a?: Partial<BookCallAnswers>): string {
   items.sort((x, y) => Number(y.first) - Number(x.first));
   // Short button text fits on a phone. The program name goes on the line above.
   return items
-    .map((i, n) => (n === 0 ? P(`<strong>${esc(i.label)}</strong>`, 'margin-bottom:4px;') + button('Claim my seat', i.url) : P(`Or the ${link(i.label.toLowerCase(), i.url)}.`)))
+    .map((i, n) => (n === 0 ? P(`<strong>${esc(i.label)}</strong>`, 'margin-bottom:4px;') + button('Claim my seat', i.url) : P(`Or the ${link(i.label.replace(/^[^,]+/, (n) => n.toLowerCase()), i.url)}.`)))
     .join('');
 }
 
