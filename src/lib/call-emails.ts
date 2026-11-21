@@ -179,10 +179,6 @@ ${footer(unsub, { reason })}
 const sign = (close = 'Chat soon,') => P(`${close}<br><strong>Izzy</strong>`);
 const hey = (c: { firstName: string }) => P(`Hey ${esc(c.firstName)},`);
 const joinLine = (c: CallInfo) => (c.joinUrl ? button('Join the call', c.joinUrl) : '');
-const partnerLine = (c: CallInfo) =>
-  c.answers?.decider && c.answers.decider !== 'Just me'
-    ? P("You mentioned someone else is part of this decision, so please do bring them. Nobody has to play telephone at the dinner table after.")
-    : '';
 const payLine = 'Pay by card, or spread it out monthly with Klarna (up to 12 months). Both at checkout.';
 
 /** "120 applications, 3 interviews and 0 offers over 6-7 months." Only the numbers they gave us. */
@@ -287,7 +283,7 @@ ${sign()}`);
 export function bookedEmail(c: CallInfo) {
   const key = keyOf(c);
   const s = key ? storyFor(key, c.answers) : null;
-  const subject = `You're booked, ${c.firstName} (one quick thing before we talk)`;
+  const subject = `You're booked, ${c.firstName}. Here's what our call is for`;
   const html = shell('Call booked', `See you ${callTime(c.callAt)}`, `
 ${hey(c)}
 ${P(`We're on for <strong>${esc(callTime(c.callAt))}</strong>. Looking forward to it.`)}
@@ -307,7 +303,6 @@ ${list([
 ], true)}
 ${H('How to get the most out of it')}
 ${list(HOW_TO_PREPARE)}
-${partnerLine(c)}
 ${P("And if one question is already on your mind, hit reply and send it now. I'll make sure we cover it.")}
 ${P(`Want to look around first? ${link('Both programs and the common questions are on one page', utm(`${SITE_URL}/booked`, 'booked'))}.`)}
 ${c.rescheduleUrl ? P(`Need a different time? ${link('Reschedule here', c.rescheduleUrl)}, no stress. It frees the slot for someone else.`) : ''}
@@ -427,7 +422,7 @@ ${hey(c)}
 ${P("Thanks for the chat yesterday. It was really great getting to know you and your search.")}
 ${c.answers?.milestones ? P(`You told me that, besides a job, success looks like <em>&ldquo;${esc(String(c.answers.milestones).replace(/[.!?]+$/, ''))}.&rdquo;</em> That's what the next 3 months are for.`) : ''}
 ${key ? P(esc(PROGRAM_FIX[key])) : ''}
-${(() => { const sal = Number(c.answers?.targetSalary) || 0; const isP = c.answers?.program === PROGRAMS.private.name; const pr = dealIsLive() ? (isP ? PROGRAMS.private.price : PROGRAMS.group.price) : (isP ? PROGRAMS.private.regular : PROGRAMS.group.regular); const r = roi(sal, pr); return r ? P(`And the math from yesterday: at ${money(sal)}, the ${isP ? esc(PROGRAMS.private.name.toLowerCase()) : 'group cohort'} costs ${daysLabel(r.daysOfPay)} of your target pay. Landing even 2 weeks sooner is worth ${money(r.rows[0].value)}, and negotiating ${r.raise.pct}% more in your next offer is worth ${money(r.raise.perYear.value)} every year after.`) : ''; })()}
+${(() => { const sal = Number(c.answers?.targetSalary) || 0; const isP = (c.answers && c.answers.totalApplications !== undefined ? recommend(c.answers as BookCallAnswers).program : c.answers?.program) === PROGRAMS.private.name; const pr = dealIsLive() ? (isP ? PROGRAMS.private.price : PROGRAMS.group.price) : (isP ? PROGRAMS.private.regular : PROGRAMS.group.regular); const r = roi(sal, pr); return r ? P(`And the math from yesterday: at ${money(sal)}, the ${isP ? esc(PROGRAMS.private.name.toLowerCase()) : 'group cohort'} costs ${daysLabel(r.daysOfPay)} of your target pay. Landing even 2 weeks sooner is worth ${money(r.rows[0].value)}, and negotiating ${r.raise.pct}% more in your next offer is worth ${money(r.raise.perYear.value)} every year after.`) : ''; })()}
 ${P("If you're ready, here's where to claim your seat:")}
 ${joinLinks(k, c.answers)}
 ${P(`${payLine} ${esc(offer.guarantee)}${deadlineLine()}`)}
