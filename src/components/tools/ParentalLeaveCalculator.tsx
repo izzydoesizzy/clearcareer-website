@@ -555,9 +555,9 @@ export default function ParentalLeaveCalculator() {
             </div>
           </div>
 
-          {/* CTA: Free Audit */}
+          {/* CTA: Free call */}
           <div className="section" style={{ padding: "20px", textAlign: "center", background: "white", borderRadius: "12px", border: "2px solid #0161EF", marginBottom: "24px" }}>
-            <div style={{ fontSize: "15px", fontWeight: 700, color: "#030620" }}>Not sure where to start? Book a free 20-minute career audit.</div>
+            <div style={{ fontSize: "15px", fontWeight: 700, color: "#030620" }}>Want help with your search? Book a free 20-minute call.</div>
             <div style={{ marginTop: "8px" }}>
               <a href="https://joinclearcareer.com/book-a-call" style={{ color: "#0161EF", fontSize: "13px", fontWeight: 600 }}>joinclearcareer.com/book-a-call</a>
             </div>

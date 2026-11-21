@@ -309,7 +309,7 @@ export default function SalaryNegotiationStory() {
                 href="https://joinclearcareer.com/book-a-call"
                 className="inline-flex items-center justify-center rounded-lg bg-white text-blue px-8 py-3.5 text-base font-semibold hover:bg-gray-100 hover:shadow-lg transition-all"
               >
-                Book a Free Audit
+                Book a Free Call
               </a>
               <a
                 href="/jsis"

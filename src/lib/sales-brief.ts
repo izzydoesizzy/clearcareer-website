@@ -335,7 +335,7 @@ ${H("Don'ts")}
 ${OL(["Don't coach on the call. Diagnose, put a number on the gap, recommend. Free fixes get taken away, tried alone, and rarely work.", 'Never promise a job or a timeline. ' + RESULTS_VARY, 'Never discount below the current price. Downsell to the group instead.', "Don't invent urgency. Use the real deadline and the real seat count only."])}
 
 ${H('After the call')}
-${OL(['Enrolled: they get the Stripe receipt, and the follow-up emails stop automatically.', `Not yet: they get a follow-up the next morning, and one last note 3 days later. To stop those, set CALL_OUTCOME on their Brevo contact to "lost" or "enrolled".`, 'Add a one-line note on how it went, so the next brief gets better.'])}
+${OL([`Not a yes yet${score.grade === 'Hot' ? ' (and they are Hot)' : ''}? Send a 2-line personal note tonight that mentions something they said on the call. Nothing converts better. The automatic follow-up goes out tomorrow at 7:30 a.m. as the backup.`, 'Enrolled: they get the Stripe receipt, and the follow-up emails stop automatically.', `Not yet: they get a follow-up the next morning, and one last note 3 days later. To stop those, set CALL_OUTCOME on their Brevo contact to "lost" or "enrolled".`, 'Add a one-line note on how it went, so the next brief gets better.'])}
 
 </td></tr></table>
 <p style="margin:16px 0 0;font-family:${FONT};font-size:12px;color:${C.muted};">Built from ${esc(a.firstName)}'s form answers. Hit reply to email them.</p>

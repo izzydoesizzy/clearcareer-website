@@ -665,7 +665,7 @@ export default function RunwayStory() {
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
               <a href="/book-a-call"
                 className="inline-flex items-center justify-center rounded-lg bg-white text-blue px-8 py-3.5 text-base font-semibold hover:bg-gray-100 hover:shadow-lg transition-all">
-                Book a Free Audit
+                Book a Free Call
               </a>
               <a href="/programs/jsis"
                 className="inline-flex items-center justify-center rounded-lg border-2 border-white/30 text-white px-8 py-3.5 text-base font-semibold hover:bg-white/10 transition-colors">
@@ -780,10 +780,10 @@ export default function RunwayStory() {
             </div>
           </div>
 
-          {/* CTA 3: Free Audit */}
+          {/* CTA 3: Free call */}
           <div className="section" style={{ padding: "20px", textAlign: "center", background: "white", borderRadius: "12px", border: "2px solid #0161EF", marginBottom: "24px" }}>
-            <div style={{ fontSize: "15px", fontWeight: 700, color: "#030620" }}>Not sure where to start? Book a free 20-minute career audit.</div>
-            <div style={{ fontSize: "13px", color: "#6b7280", marginTop: "4px" }}>No pitch. Just an honest assessment of where you stand and what to do next.</div>
+            <div style={{ fontSize: "15px", fontWeight: 700, color: "#030620" }}>Want help with your search? Book a free 20-minute call.</div>
+            <div style={{ fontSize: "13px", color: "#6b7280", marginTop: "4px" }}>We'll look at where you're stuck and whether working together is the right fit. If it isn't, I'll tell you straight.</div>
             <div style={{ marginTop: "12px" }}>
               <a href="https://joinclearcareer.com/book-a-call" style={{ color: "#0161EF", fontSize: "13px", fontWeight: 600 }}>
                 joinclearcareer.com/book-a-call

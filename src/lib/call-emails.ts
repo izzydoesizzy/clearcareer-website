@@ -400,6 +400,16 @@ ${sign()}`);
   return { subject, html };
 }
 
+/**
+ * Their own definition of success, from the form. Said as "on your form" (not "you told me"), because
+ * the call may have gone somewhere else. Left out when the answer won't read well in the sentence.
+ */
+export function goalLine(raw?: unknown): string {
+  const g = String(raw ?? '').trim().replace(/\s+/g, ' ').replace(/[.!?]+$/, '');
+  if (g.length < 10 || g.length > 200 || g.split(' ').length < 2) return '';
+  return P(`On your form, you said that besides a new job, success would look like <em>&ldquo;${esc(g)}.&rdquo;</em> That's exactly what the next 3 months are built for.`);
+}
+
 // ── Follow-ups after the call (skipped once they enrol, cancel, or no-show) ──────────
 function joinLinks(k: Checkout, a?: Partial<BookCallAnswers>): string {
   const rec = a && a.totalApplications !== undefined ? recommend(a as BookCallAnswers).program : '';
@@ -420,7 +430,7 @@ export function followUp1Email(c: CallInfo, k: Checkout = {}) {
   const html = shell('Following up', "The math from yesterday, and your link to join.", `
 ${hey(c)}
 ${P("Thanks for the chat yesterday. It was really great getting to know you and your search.")}
-${c.answers?.milestones ? P(`You told me that, besides a job, success looks like <em>&ldquo;${esc(String(c.answers.milestones).replace(/[.!?]+$/, ''))}.&rdquo;</em> That's what the next 3 months are for.`) : ''}
+${goalLine(c.answers?.milestones)}
 ${key ? P(esc(PROGRAM_FIX[key])) : ''}
 ${(() => { const sal = Number(c.answers?.targetSalary) || 0; const isP = (c.answers && c.answers.totalApplications !== undefined ? recommend(c.answers as BookCallAnswers).program : c.answers?.program) === PROGRAMS.private.name; const pr = dealIsLive() ? (isP ? PROGRAMS.private.price : PROGRAMS.group.price) : (isP ? PROGRAMS.private.regular : PROGRAMS.group.regular); const r = roi(sal, pr); return r ? P(`And the math from yesterday: at ${money(sal)}, the ${isP ? esc(PROGRAMS.private.name.toLowerCase()) : 'group cohort'} costs ${daysLabel(r.daysOfPay)} of your target pay. Landing even 2 weeks sooner is worth ${money(r.rows[0].value)}, and negotiating ${r.raise.pct}% more in your next offer is worth ${money(r.raise.perYear.value)} every year after.`) : ''; })()}
 ${P("If you're ready, here's where to claim your seat:")}

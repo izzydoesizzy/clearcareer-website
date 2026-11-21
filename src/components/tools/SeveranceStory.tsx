@@ -695,7 +695,7 @@ export default function SeveranceStory() {
                 href="/book-a-call"
                 className="inline-flex items-center justify-center rounded-lg border-2 border-white/30 text-white px-8 py-3.5 text-base font-semibold hover:bg-white/10 transition-colors"
               >
-                Book a Free Audit
+                Book a Free Call
               </a>
             </div>
           </div>
@@ -841,9 +841,9 @@ export default function SeveranceStory() {
             </div>
           </div>
 
-          {/* CTA 3: Free Audit */}
+          {/* CTA 3: Free call */}
           <div className="section" style={{ padding: "20px", textAlign: "center", background: "white", borderRadius: "12px", border: "2px solid #0161EF", marginBottom: "24px" }}>
-            <div style={{ fontSize: "15px", fontWeight: 700, color: "#030620" }}>Not sure where to start? Book a free 20-minute career audit.</div>
+            <div style={{ fontSize: "15px", fontWeight: 700, color: "#030620" }}>Want help with your search? Book a free 20-minute call.</div>
             <div style={{ marginTop: "8px" }}>
               <a href="https://joinclearcareer.com/book-a-call" style={{ color: "#0161EF", fontSize: "13px", fontWeight: 600 }}>joinclearcareer.com/book-a-call</a>
             </div>

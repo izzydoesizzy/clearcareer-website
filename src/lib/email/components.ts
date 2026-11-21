@@ -204,7 +204,7 @@ export function divider(spacing = '32px', padding = '0 40px'): string {
 export function discoveryCallRow(text: string, url: string): string {
   return `<tr><td style="padding:28px 40px 0;text-align:center;" class="email-padding">
 <p style="margin:0 0 8px;color:${COLORS.heading};font-size:14px;font-weight:600;" class="email-heading">${text}</p>
-<p style="margin:0;"><a href="${url}" style="color:${COLORS.blue};text-decoration:none;font-size:14px;font-weight:600;">Book a free discovery call &rarr;</a></p>
+<p style="margin:0;"><a href="${url}" style="color:${COLORS.blue};text-decoration:none;font-size:14px;font-weight:600;">Book a free call &rarr;</a></p>
 </td></tr>`;
 }
 

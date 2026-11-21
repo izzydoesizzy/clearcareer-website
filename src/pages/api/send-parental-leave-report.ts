@@ -183,10 +183,10 @@ function buildReportEmail(data: ReportData): string {
           </div>
         </td></tr>
 
-        <!-- CTA: Free Audit -->
+        <!-- CTA: Free call -->
         <tr><td style="padding:20px 32px; background:white; text-align:center; border-bottom:1px solid ${COLORS.grey200};">
           <div style="font-size:14px; font-weight:600; color:${COLORS.navy};">Not sure where to start?</div>
-          <div style="margin-top:8px;"><a href="${DISCOVERY_CALL_URL}" style="color:${COLORS.blue}; font-size:14px; font-weight:600;">Book a free 20-minute career audit &rarr;</a></div>
+          <div style="margin-top:8px;"><a href="${DISCOVERY_CALL_URL}" style="color:${COLORS.blue}; font-size:14px; font-weight:600;">Book a free 20-minute call &rarr;</a></div>
         </td></tr>
 
         <!-- Footer -->

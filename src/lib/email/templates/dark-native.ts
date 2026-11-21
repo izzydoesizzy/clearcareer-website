@@ -53,7 +53,7 @@ export const buildEmail: BuildEmailFn = (data) => {
     data.discoveryCall !== false
       ? `<tr><td style="padding:28px 40px 0;text-align:center;" class="email-padding">
 <p style="margin:0 0 8px;color:${DARK.text};font-size:14px;font-weight:600;">${data.discoveryCall?.text || 'Want to talk through your job search?'}</p>
-<p style="margin:0;"><a href="${data.discoveryCall?.url || DISCOVERY_CALL_URL}" style="color:${COLORS.blue};text-decoration:none;font-size:14px;font-weight:600;">Book a free discovery call &rarr;</a></p>
+<p style="margin:0;"><a href="${data.discoveryCall?.url || DISCOVERY_CALL_URL}" style="color:${COLORS.blue};text-decoration:none;font-size:14px;font-weight:600;">Book a free call &rarr;</a></p>
 </td></tr>`
       : '';
 
