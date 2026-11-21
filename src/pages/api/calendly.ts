@@ -2,7 +2,7 @@
  * Calendly webhook: runs when someone books, reschedules or cancels.
  *
  * Set up (once): in Calendly, Integrations > Webhooks (paid plan), or with Zapier.
- *   URL: https://joinclearcareer.com/api/calendly
+ *   URL: https://www.joinclearcareer.com/api/calendly   (www: the bare domain redirects, and webhooks won't follow it)
  *   Events: invitee.created, invitee.canceled
  * Security: set CALENDLY_WEBHOOK_SIGNING_KEY (Calendly's signing key), or for Zapier set
  * CALL_WEBHOOK_SECRET and add ?key=<that secret> to the URL.

@@ -6,13 +6,17 @@
  *   4. Emails Izzy
  *
  * Set up (once): Stripe > Developers > Webhooks > Add endpoint
- *   URL: https://joinclearcareer.com/api/stripe
+ *   URL: https://www.joinclearcareer.com/api/stripe   (www: the bare domain redirects, and Stripe won't follow it)
+ *
+ * Only Land and Level Up payment links are handled: they carry metadata product=land-and-level-up
+ * and program=group|private. Every other Stripe sale (Prompt Vault, Layoff Survival Kit, invoices) is ignored.
  *   Events: checkout.session.completed, checkout.session.async_payment_succeeded
  *   Then copy the signing secret into Vercel as STRIPE_WEBHOOK_SECRET.
  */
 import type { APIRoute } from 'astro';
 import { brevo, hmacHex, parseSigHeader, safeEqual } from '../../lib/brevo-api.js';
 import { programFromAmount, makeToken } from '../../lib/onboarding.js';
+import { PROGRAMS } from '../../lib/book-call.js';
 import { getClient, ensureFolder, seatsSold, type ServerEnv } from '../../lib/clients.js';
 import { welcomeEmail, enrolmentNotice } from '../../lib/onboarding-emails.js';
 
@@ -34,6 +38,7 @@ export const POST: APIRoute = async ({ request }) => {
   const event = JSON.parse(raw);
   if (!['checkout.session.completed', 'checkout.session.async_payment_succeeded'].includes(event.type)) return json({ ok: true, ignored: event.type });
   const s = event.data?.object || {};
+  if (s.metadata?.product !== 'land-and-level-up') return json({ ok: true, ignored: 'not a Land and Level Up purchase' });
   if (s.payment_status !== 'paid') return json({ ok: true, waiting: s.payment_status }); // async methods finish later
   const email = String(s.customer_details?.email || s.customer_email || '').trim().toLowerCase();
   if (!email || !env.BREVO_API_KEY) return json({ ok: true, skipped: 'no email or key' });
@@ -45,7 +50,7 @@ export const POST: APIRoute = async ({ request }) => {
   const fullName = String(s.customer_details?.name || '').trim();
   const first = String(existing?.attributes?.FIRSTNAME || fullName.split(' ')[0] || '').trim();
   const last = String(existing?.attributes?.LASTNAME || fullName.split(' ').slice(1).join(' ') || '').trim();
-  const program = programFromAmount(Number(s.amount_subtotal ?? s.amount_total ?? 0));
+  const program = s.metadata?.program === 'private' ? PROGRAMS.private.name : s.metadata?.program === 'group' ? PROGRAMS.group.name : programFromAmount(Number(s.amount_subtotal ?? s.amount_total ?? 0));
   const amount = Math.round(Number(s.amount_total || 0)) / 100;
   const clientsList = Number(env.BREVO_CLIENTS_LIST_ID) || 0;
 
