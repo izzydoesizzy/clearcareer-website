@@ -29,12 +29,12 @@ export const offer = {
   dealLine: "I haven't priced it this low since 2021.",
   /** Text for the sticky bar. Built from the same prices, so one edit changes everything. */
   dealBarLabel: "Black Friday",
-  dealBarLong: "Group cohort $749, regular $1,200. Ends Monday, November 30 at 11:59 pm ET.",
-  dealBarShort: "From $749. Ends Nov 30.",
+  dealBarLong: "Group cohort $949, regular $1,200. Ends Monday, November 30 at 11:59 pm ET.",
+  dealBarShort: "From $949. Ends Nov 30.",
   regularFrom: "On December 1 they go back to $1,200 and $2,297.",
   group: {
     name: "Group cohort",
-    price: "$749",
+    price: "$949",
     regular: "$1,200",
     priceNote: "CAD plus HST. One payment covers your first 3 months.",
     seatsTotal: 12,
@@ -319,7 +319,7 @@ export const objections: { q: string; a: string[]; proof: string }[] = [
     q: "“Money is tight right now.”",
     a: [
       "I get it. You're watching every dollar, and that's the right instinct.",
-      "So do the math with me. At a $100,000 salary, one month without a paycheque is $8,333 before tax. The group cohort is $749 plus HST, for 3 months.",
+      "So do the math with me. At a $100,000 salary, one month without a paycheque is $8,333 before tax. The group cohort is $949 plus HST, for 3 months.",
       "You can spread it out with Klarna. And there's a 7-day money-back guarantee, as long as your rebuild work hasn't started.",
     ],
     proof:
