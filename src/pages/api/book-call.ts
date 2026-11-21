@@ -4,6 +4,7 @@ import { packAnswers } from '../../lib/call-flow.js';
 import { checkoutFromEnv } from '../../lib/call-runner.js';
 import { consentAttributes } from '../../lib/brevo.js';
 import { buildLeadEmail } from '../../lib/lead-email.js';
+import { notYetEmail } from '../../lib/call-emails.js';
 import { dealIsLive } from '../../lib/email/deal.js';
 
 export const prerender = false;
@@ -134,6 +135,23 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
         }),
       });
       notified = mail.ok;
+
+      // 3. Not a fit right now: a kind, useful reply instead of silence.
+      if (!verdict.qualified) {
+        const ny = notYetEmail(data, verdict.reason === 'experience' ? 'experience' : 'not-ready');
+        const r = await fetch('https://api.brevo.com/v3/smtp/email', {
+          method: 'POST',
+          headers,
+          body: JSON.stringify({
+            sender: { name: 'Izzy from ClearCareer', email: 'izzy@joinclearcareer.com' },
+            to: [{ email: data.email, name: data.firstName }],
+            subject: ny.subject,
+            htmlContent: ny.html,
+            tags: ['book-a-call-not-yet'],
+          }),
+        });
+        if (!r.ok) console.error('Not-yet email failed:', r.status, await r.text());
+      }
       if (!mail.ok) console.error('Notify email failed:', mail.status, await mail.text());
     } else {
       console.error('BREVO_API_KEY not set: lead was not saved');

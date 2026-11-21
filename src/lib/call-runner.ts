@@ -2,7 +2,7 @@
  * Sends the emails for one booked call and records what went out on the Brevo contact.
  */
 import { brevo, type BrevoContact } from './brevo-api.js';
-import { bookedEmail, dayBeforeEmail, morningOfEmail, followUp1Email, followUp2Email, type Checkout } from './call-emails.js';
+import { bookedEmail, dayBeforeEmail, morningOfEmail, followUp1Email, followUp2Email, noBook1Email, noBook2Email, canceledEmail, noShowEmail, type Checkout } from './call-emails.js';
 import { buildSalesBrief } from './sales-brief.js';
 import { callInfo, storedAnswers, type Step } from './call-flow.js';
 
@@ -10,13 +10,15 @@ export interface RunnerEnv {
   apiKey: string;
   notifyTo: string;
   checkout: Checkout;
+  /** CALENDLY_QUALIFIED_URL, for rebooking links. */
+  bookingBase?: string;
 }
 
 export async function runSteps(env: RunnerEnv, contact: BrevoContact, steps: Step[]): Promise<Step[]> {
   const api = brevo(env.apiKey);
   const a = contact.attributes || {};
   const answers = storedAnswers(a);
-  const c = callInfo(contact.email, a, answers);
+  const c = callInfo(contact.email, a, answers, env.bookingBase);
   const done: Step[] = [];
 
   for (const step of steps) {
@@ -40,7 +42,11 @@ export async function runSteps(env: RunnerEnv, contact: BrevoContact, steps: Ste
         : step === 'daybefore' ? dayBeforeEmail(c)
         : step === 'morning' ? morningOfEmail(c)
         : step === 'follow1' ? followUp1Email(c, env.checkout)
-        : followUp2Email(c, env.checkout);
+        : step === 'follow2' ? followUp2Email(c, env.checkout)
+        : step === 'nobook1' ? noBook1Email(c)
+        : step === 'nobook2' ? noBook2Email(c)
+        : step === 'canceled' ? canceledEmail(c)
+        : noShowEmail(c);
       ok = await api.send({ to: contact.email, toName: c.firstName, subject: mail.subject, html: mail.html, tags: [`call-${step}`] });
     }
     if (ok) done.push(step);
@@ -51,6 +57,15 @@ export async function runSteps(env: RunnerEnv, contact: BrevoContact, steps: Ste
     await api.upsert(contact.email, { CALL_EMAILS_SENT: [...new Set([...sent, ...done])].join(',') });
   }
   return done;
+}
+
+export function runnerEnv(env: Record<string, string | undefined>): RunnerEnv {
+  return {
+    apiKey: env.BREVO_API_KEY || '',
+    notifyTo: env.BOOK_CALL_NOTIFY_EMAIL || 'izzy@joinclearcareer.com',
+    checkout: checkoutFromEnv(env),
+    bookingBase: env.CALENDLY_QUALIFIED_URL || undefined,
+  };
 }
 
 export function checkoutFromEnv(env: Record<string, string | undefined>): Checkout {

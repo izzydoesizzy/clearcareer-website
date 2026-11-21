@@ -1,7 +1,8 @@
 import { describe, it, expect } from 'vitest';
-import { dueSteps, packAnswers, storedAnswers, torontoDay } from '../../src/lib/call-flow';
+import { dueSteps, noBookSteps, packAnswers, storedAnswers, torontoDay } from '../../src/lib/call-flow';
 import { cleanAnswers, leadScore, READY, STRUGGLES, COMMIT } from '../../src/lib/book-call';
-import { bookedEmail, dayBeforeEmail, morningOfEmail, followUp1Email, followUp2Email } from '../../src/lib/call-emails';
+import { bookedEmail, dayBeforeEmail, morningOfEmail, followUp1Email, followUp2Email, notYetEmail, noBook1Email, noBook2Email, canceledEmail, noShowEmail, welcomeEmail } from '../../src/lib/call-emails';
+import { STORIES, IZZY } from '../../src/lib/stories';
 import { buildSalesBrief, predictObjections, recommend } from '../../src/lib/sales-brief';
 import { diagnose } from '../../src/lib/book-call';
 import { hmacHex, parseSigHeader } from '../../src/lib/brevo-api';
@@ -62,7 +63,7 @@ describe('lead score', () => {
 
 describe('lead emails', () => {
   const c = { firstName: 'Sam', email: 'sam@example.com', callAt: at('2026-12-03T19:00:00Z'), joinUrl: 'https://zoom.us/j/1', rescheduleUrl: 'https://calendly.com/r', answers: data, diagnosisKey: diagnose(data).key };
-  const all = [bookedEmail(c), dayBeforeEmail(c), morningOfEmail(c), followUp1Email(c, {}), followUp2Email(c, { group: 'https://buy.stripe.com/g' })];
+  const all = [bookedEmail(c), dayBeforeEmail(c), morningOfEmail(c), followUp1Email(c, {}), followUp2Email(c, { group: 'https://buy.stripe.com/g' }), notYetEmail(data, 'not-ready'), notYetEmail(data, 'experience'), noBook1Email({ ...c, bookUrl: 'https://calendly.com/x?name=Sam' }), noBook2Email(c), canceledEmail(c), noShowEmail(c), welcomeEmail(c)];
   it('has no em dashes and uses the time in ET', () => {
     for (const m of all) {
       expect(m.subject + m.html).not.toMatch(/—/);
@@ -75,11 +76,37 @@ describe('lead emails', () => {
     expect(h).toContain('$120,000');
     expect(h).toContain('$10,000');
     expect(h).toContain('7-day money-back guarantee');
-    expect(h).toContain('Bring them along');
+    expect(h).toContain('Can my partner join the call?');
+    expect(h).toContain('Darin');
   });
   it('asks for a payment link by reply until Stripe links exist', () => {
     expect(followUp1Email(c, {}).html).toContain('Reply');
     expect(followUp2Email(c, { group: 'https://buy.stripe.com/g' }).html).toContain('https://buy.stripe.com/g');
+  });
+});
+
+describe('new emails', () => {
+  const c = { firstName: 'Sam', email: 'sam@example.com', callAt: at('2026-12-03T19:00:00Z'), answers: data, diagnosisKey: diagnose(data).key, bookUrl: 'https://calendly.com/x?name=Sam' };
+  it('nudges people who qualified but never booked, twice, then stops', () => {
+    const sub = at('2026-12-01T20:00:00Z');
+    expect(noBookSteps(sub, now, [])).toEqual(['nobook1']);
+    expect(noBookSteps(sub, at('2026-12-04T12:30:00Z'), ['nobook1'])).toEqual(['nobook2']);
+    expect(noBookSteps(sub, at('2026-12-09T12:30:00Z'), ['nobook1'])).toEqual([]);
+  });
+  it('sends rebooking links to the private booking page', () => {
+    for (const m of [noBook1Email(c), noBook2Email(c), canceledEmail(c), noShowEmail(c)]) expect(m.html).toContain('https://calendly.com/x?name=Sam');
+  });
+  it('tells people who are not a fit why, kindly, with free next steps', () => {
+    const e = notYetEmail({ ...data, yearsExperience: 2 }, 'experience');
+    expect(e.html).toContain('5+ years');
+    expect(e.html).toContain('/free-tools/');
+    expect(notYetEmail(data, 'not-ready').html).toContain('right program at the wrong time');
+  });
+  it('uses only real stories, with no assumed pronouns', () => {
+    for (const s of [...Object.values(STORIES).map((x) => x.story), ...Object.values(IZZY)]) {
+      expect(s).not.toMatch(/\b(he|she|her|him)\b/i);
+      expect(s).not.toMatch(/\u2014/);
+    }
   });
 });
 
@@ -103,7 +130,7 @@ describe('sales brief', () => {
     expect(recommend(data).program).toBe('Group plus private 1:1 rebuild'); // resume is a named struggle
   });
   it('includes the call plan, custom questions, the close and real facts only', () => {
-    for (const s of ['Call plan', 'Discovery questions for Sam', 'No replies', 'The close', 'Which one is it?', 'Objections to expect', 'Facts you can use', 'Don&#39;ts']) {
+    for (const s of ['Story to tell', 'Call plan', 'Discovery questions for Sam', 'No replies', 'The close', 'Which one is it?', 'Objections to expect', 'Facts you can use', 'Don&#39;ts']) {
       expect(brief.html).toContain(s);
     }
     expect(brief.html).not.toMatch(/—/);
@@ -120,5 +147,21 @@ describe('webhooks', () => {
   });
   it('only accepts real Stripe links for checkout', () => {
     expect(checkoutFromEnv({ PUBLIC_GROUP_CHECKOUT_URL: 'https://calendly.com/x', PUBLIC_PRIVATE_CHECKOUT_URL: 'https://buy.stripe.com/p' })).toEqual({ group: undefined, private: 'https://buy.stripe.com/p' });
+  });
+});
+
+describe('launch sequence', async () => {
+  const { nurtureEmails } = await import('../../src/lib/email/nurture');
+  const all = nurtureEmails();
+  it('has 9 dated emails that never link straight to Calendly', () => {
+    expect(all).toHaveLength(9);
+    for (const e of all) {
+      expect(e.html).not.toContain('calendly.com');
+      expect(e.html).toContain('{{ unsubscribe }}');
+      expect(e.html).toContain('{{ contact.FIRSTNAME');
+      expect(e.subject + e.html).not.toMatch(/—/);
+      expect(e.html).toContain('710-20 Tubman Ave');
+    }
+    expect(all.filter((e) => e.html.includes('/book-a-call')).length).toBe(9);
   });
 });

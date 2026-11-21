@@ -6,6 +6,7 @@
  */
 import type { APIRoute } from 'astro';
 import { brevo, hmacHex, parseSigHeader, safeEqual } from '../../lib/brevo-api.js';
+import { welcomeEmail, welcomeReady } from '../../lib/call-emails.js';
 
 export const prerender = false;
 
@@ -28,10 +29,22 @@ export const POST: APIRoute = async ({ request }) => {
   const email = String(s.customer_details?.email || s.customer_email || '').toLowerCase();
   if (!email || !env.BREVO_API_KEY) return json({ ok: true, skipped: 'no email or key' });
 
-  await brevo(env.BREVO_API_KEY).upsert(email, {
-    CALL_OUTCOME: 'enrolled',
-    ENROLLED_AT: new Date().toISOString().slice(0, 10),
-    ENROLLED_AMOUNT: Math.round(Number(s.amount_total || 0)) / 100,
-  });
+  const api = brevo(env.BREVO_API_KEY);
+  const existing = await api.getContact(email);
+  const first = String(existing?.attributes?.FIRSTNAME || s.customer_details?.name || '').split(' ')[0] || 'there';
+  const amount = Math.round(Number(s.amount_total || 0)) / 100;
+  await api.upsert(email, { CALL_OUTCOME: 'enrolled', ENROLLED_AT: new Date().toISOString().slice(0, 10), ENROLLED_AMOUNT: amount });
+
+  if (welcomeReady()) {
+    const w = welcomeEmail({ firstName: first });
+    await api.send({ to: email, toName: first, subject: w.subject, html: w.html, tags: ['welcome'] });
+  } else {
+    await api.send({
+      to: env.BOOK_CALL_NOTIFY_EMAIL || 'izzy@joinclearcareer.com', senderName: 'ClearCareer Bookings', tags: ['enrolled'],
+      subject: `New enrolment: ${first} (${email}), $${amount}. Send the welcome yourself`,
+      html: `<p style="font-family:Arial,sans-serif;font-size:15px;">${first} (${email}) just paid $${amount}. The automatic welcome email is off until the welcome details in src/data/llu.ts are filled in, so please send them the community link and the Wednesday call link yourself.</p>`,
+      replyTo: { email },
+    });
+  }
   return json({ ok: true });
 };

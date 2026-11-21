@@ -12,6 +12,7 @@
     "astro": "astro",
     "test": "vitest run",
     "test:watch": "vitest",
+    "emails:render": "RENDER_EMAILS=1 vitest run scripts/render-emails.test.ts",
     "test:build": "npm run build && npx tsx tests/build/validate-blog-output.ts"
   },
   "dependencies": {

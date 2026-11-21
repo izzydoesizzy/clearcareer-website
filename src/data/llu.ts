@@ -73,6 +73,17 @@ export const offer = {
   guarantee: "7-day money-back guarantee. It ends once your rebuild work has started.",
 };
 
+// ── Welcome email (sent automatically after payment) ────────────────────────
+// TODO(Izzy): fill these in. Until communityUrl, wednesdayCallTime and callUrl are all set,
+// no welcome email goes out and you get a "send it yourself" note instead.
+export const welcome = {
+  communityName: "", // e.g. the platform name
+  communityUrl: "", // invite link to the community
+  wednesdayCallTime: "", // e.g. "12:00 p.m. ET"
+  callUrl: "", // Zoom link for the Wednesday calls
+  privateBookingUrl: "", // optional: where private-rebuild members book their 1:1 sessions
+};
+
 // ── Sources ────────────────────────────────────────────────────────────────
 export const SURVEY_SOURCE =
   "Survey of 58 ClearCareer program participants, December 2024. Self-reported.";

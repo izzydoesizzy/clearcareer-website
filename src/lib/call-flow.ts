@@ -7,13 +7,13 @@
  *   CALL_JOIN_URL     Zoom or Meet link from Calendly
  *   CALL_RESCHEDULE_URL
  *   CALL_EMAILS_SENT  which emails already went out for this call, e.g. "booked,brief,daybefore"
- *   CALL_OUTCOME      "", "enrolled", "lost" or "canceled". Anything but "" stops the follow-ups.
+ *   CALL_OUTCOME      "", "enrolled", "lost", "canceled" or "no-show". Anything but "" stops the follow-ups.
  */
 import type { BookCallAnswers } from './book-call.js';
-import { cleanAnswers, diagnose } from './book-call.js';
+import { cleanAnswers, diagnose, bookingUrl } from './book-call.js';
 import type { CallInfo } from './call-emails.js';
 
-export type Step = 'booked' | 'brief' | 'daybefore' | 'morning' | 'follow1' | 'follow2';
+export type Step = 'booked' | 'brief' | 'daybefore' | 'morning' | 'follow1' | 'follow2' | 'nobook1' | 'nobook2' | 'canceled' | 'noshow';
 
 /** Calendar day in Toronto, as a number of days, so "tomorrow" means tomorrow in ET. */
 export function torontoDay(d: Date): number {
@@ -40,6 +40,17 @@ export function dueSteps(callAt: Date, now: Date, sent: string[], outcome: strin
   return out;
 }
 
+/**
+ * Qualified on the form but never booked: a nudge the next morning, and one more 3 days later.
+ */
+export function noBookSteps(submittedAt: Date, now: Date, sent: string[]): Step[] {
+  const days = torontoDay(now) - torontoDay(submittedAt);
+  const out: Step[] = [];
+  if (days >= 1 && days <= 2 && !sent.includes('nobook1')) out.push('nobook1');
+  if (days >= 3 && days <= 5 && !sent.includes('nobook2')) out.push('nobook2');
+  return out;
+}
+
 export function storedAnswers(attrs: Record<string, unknown>): BookCallAnswers | null {
   try {
     const raw = JSON.parse(String(attrs.LEAD_ANSWERS || ''));
@@ -57,7 +68,7 @@ export function packAnswers(a: BookCallAnswers): string {
   return JSON.stringify({ ...rest, challenge: trim(a.challenge), milestones: trim(a.milestones), callGoal: trim(a.callGoal) });
 }
 
-export function callInfo(email: string, attrs: Record<string, unknown>, answers: BookCallAnswers | null): CallInfo {
+export function callInfo(email: string, attrs: Record<string, unknown>, answers: BookCallAnswers | null, bookingBase?: string): CallInfo {
   return {
     firstName: answers?.firstName || String(attrs.FIRSTNAME || '') || 'there',
     email,
@@ -66,5 +77,6 @@ export function callInfo(email: string, attrs: Record<string, unknown>, answers:
     rescheduleUrl: String(attrs.CALL_RESCHEDULE_URL || '') || undefined,
     answers: answers || undefined,
     diagnosisKey: answers ? diagnose(answers).key : undefined,
+    bookUrl: answers ? bookingUrl(answers, bookingBase) : undefined,
   };
 }

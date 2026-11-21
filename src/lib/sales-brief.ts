@@ -9,6 +9,8 @@ import { CALL_PLAN, esc } from './lead-email.js';
 import { dealIsLive } from './email/deal.js';
 import { offer, objections, RESULTS_VARY } from '../data/llu.js';
 import { callTime } from './call-emails.js';
+import { recommend, storyFor } from './stories.js';
+export { recommend };
 
 const C = {
   blue: '#0161EF', navy: '#030620', ink: '#0f172a', body: '#334155', muted: '#64748b',
@@ -35,22 +37,6 @@ export interface Objection {
 }
 
 const price = (p: { price: number; regular: number }) => (dealIsLive() ? p.price : p.regular);
-
-/** Which program to recommend, and why, from their answers. */
-export function recommend(a: BookCallAnswers): { program: string; why: string } {
-  const g = PROGRAMS.group.name;
-  const p = PROGRAMS.private.name;
-  const resume = a.struggles.some((s) => s.startsWith('Resume Writing'));
-  if (a.program === p) return { program: p, why: 'They picked it on the form. Confirm it, do not talk them down unless money comes up.' };
-  if (a.program === g) {
-    if (resume && a.yearsExperience >= 10 && a.payment === 'Credit card in full')
-      return { program: g, why: `They picked the group. Offer the private rebuild once, as an option: ${a.yearsExperience} years of experience, resume is a named struggle, and they'd pay by card.` };
-    return { program: g, why: 'They picked it on the form. Confirm it and close.' };
-  }
-  if (resume || a.yearsExperience >= 10)
-    return { program: p, why: `Not sure yet on the form. ${resume ? 'Resume is a named struggle' : `${a.yearsExperience} years of experience`}, so the 1:1 rebuild is the strongest fit. Have the group as the fallback.` };
-  return { program: g, why: 'Not sure yet on the form. The group fits their answers. Mention the private rebuild only if they ask for more 1:1 time.' };
-}
 
 /** The objections this person is likely to raise, with the evidence and what to say. */
 export function predictObjections(a: BookCallAnswers, d: Diagnosis): Objection[] {
@@ -321,6 +307,9 @@ ${H('Call plan (20 minutes)')}
 ${H(`Discovery questions for ${a.firstName}`)}
 ${OL(discovery(a, d))}
 ${P(`<strong>Deliver what they asked for early.</strong> They want: ${esc(q(a.callGoal))}. Give them that in the first 10 minutes, and the close gets easy.`, `background:${C.tint};padding:12px 14px;border-radius:8px;`)}
+
+${H('Story to tell')}
+${(() => { const st = storyFor(d.key, a); return P(`<strong>${esc(st.who)}.</strong> ${esc(st.story)} In their words: "${esc(st.quote)}"`) + P('Tell it when you give the diagnosis. Then: "Results vary, and I can\'t promise the same. But this is the pattern."', `color:${C.body};`); })()}
 
 ${H('The close')}
 ${P(`<strong>${esc(close.label)}</strong>`)}

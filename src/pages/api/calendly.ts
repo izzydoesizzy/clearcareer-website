@@ -12,7 +12,7 @@
 import type { APIRoute } from 'astro';
 import { brevo, hmacHex, parseSigHeader, safeEqual } from '../../lib/brevo-api.js';
 import { dueSteps, torontoDay, type Step } from '../../lib/call-flow.js';
-import { runSteps, checkoutFromEnv } from '../../lib/call-runner.js';
+import { runSteps, runnerEnv } from '../../lib/call-runner.js';
 
 export const prerender = false;
 
@@ -44,8 +44,15 @@ export const POST: APIRoute = async ({ request }) => {
 
   // Normalise Calendly's payload and the simple Zapier shape.
   const p = body.payload || body;
-  const event = String(body.event || '').includes('cancel') ? 'canceled' : 'created';
-  const email = String(p.email || '').trim().toLowerCase();
+  const ev = String(body.event || '');
+  const event = ev.includes('no_show') || ev.includes('no-show') ? 'no-show' : ev.includes('cancel') ? 'canceled' : 'created';
+  let email = String(p.email || '').trim().toLowerCase();
+  // Calendly's no-show payload only points at the invitee. Look up their email with an API token.
+  if (!email && typeof p.invitee === 'string' && env.CALENDLY_API_TOKEN) {
+    const r = await fetch(p.invitee, { headers: { Authorization: `Bearer ${env.CALENDLY_API_TOKEN}` } }).catch(() => null);
+    const j: any = r && r.ok ? await r.json() : null;
+    email = String(j?.resource?.email || '').trim().toLowerCase();
+  }
   const start = p.scheduled_event?.start_time || p.start_time;
   const joinUrl = p.scheduled_event?.location?.join_url || p.join_url || '';
   const rescheduleUrl = p.reschedule_url || '';
@@ -55,11 +62,13 @@ export const POST: APIRoute = async ({ request }) => {
   const api = brevo(env.BREVO_API_KEY);
   const listId = Number(env.BREVO_CALL_LIST_ID) || 0;
 
-  if (event === 'canceled') {
+  if (event === 'canceled' || event === 'no-show') {
     // A reschedule sends a cancel and then a new booking. Ignore the cancel half.
-    if (p.rescheduled) return json({ ok: true, ignored: 'rescheduled' });
-    await api.upsert(email, { CALL_OUTCOME: 'canceled' });
-    return json({ ok: true });
+    if (event === 'canceled' && p.rescheduled) return json({ ok: true, ignored: 'rescheduled' });
+    await api.upsert(email, { CALL_OUTCOME: event });
+    const contact = await api.getContact(email);
+    const done = contact ? await runSteps(runnerEnv(env), contact, [event === 'canceled' ? 'canceled' : 'noshow']) : [];
+    return json({ ok: true, sent: done });
   }
 
   const callAt = new Date(start);
@@ -89,7 +98,7 @@ export const POST: APIRoute = async ({ request }) => {
   const now = new Date();
   const soon = torontoDay(callAt) - torontoDay(now) <= 1;
   const steps: Step[] = ['booked', ...(soon ? dueSteps(callAt, now, [], '').filter((s) => s === 'brief') : [])];
-  const done = await runSteps({ apiKey: env.BREVO_API_KEY, notifyTo: env.BOOK_CALL_NOTIFY_EMAIL || 'izzy@joinclearcareer.com', checkout: checkoutFromEnv(env) }, contact, steps);
+  const done = await runSteps(runnerEnv(env), contact, steps);
   if (soon) {
     await api.upsert(email, { CALL_EMAILS_SENT: [...new Set([...done, 'daybefore', 'morning'])].join(',') });
   }

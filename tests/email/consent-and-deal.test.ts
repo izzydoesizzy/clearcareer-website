@@ -34,7 +34,11 @@ describe('Black Friday P.S. and opt-in rules', () => {
   it('stops advertising after the deal ends', () => {
     expect(dealIsLive(new Date('2026-11-30T23:00:00-05:00'))).toBe(true);
     expect(dealIsLive(new Date('2026-12-01T00:30:00-05:00'))).toBe(false);
-    if (!dealIsLive()) expect(dealPostscript()).toBe('');
+    expect(dealPostscript('r', 'light', new Date('2026-11-25T12:00:00Z'))).toContain('Black Friday');
+    const between = dealPostscript('r', 'light', new Date('2026-12-03T12:00:00Z'));
+    expect(between).toContain('Founding seats are open');
+    expect(between).not.toContain('Black Friday');
+    expect(dealPostscript('r', 'light', new Date('2026-12-08T12:00:00Z'))).toBe('');
   });
 
   it('keeps the wording free of em dashes', () => {
