@@ -1,0 +1,58 @@
+---
+/**
+ * Where Stripe sends people after they pay:
+ * https://joinclearcareer.com/welcome?session_id={CHECKOUT_SESSION_ID}
+ * Looks up their private onboarding link so they can start right away.
+ */
+import BaseLayout from "@layouts/BaseLayout.astro";
+import "@/styles/llu.css";
+import { offer } from "@/data/llu";
+---
+
+<BaseLayout title="You're in | Land and Level Up" description="Welcome to Land and Level Up." noindex>
+  <div class="llu">
+    <header class="llu-nav">
+      <div class="llu-wrap llu-nav__row">
+        <span class="llu-nav__brand"><span><span class="llu-nav__mark">ClearCareer</span><span class="llu-nav__sub">Land and Level Up</span></span></span>
+      </div>
+    </header>
+    <main id="main-content">
+      <section class="llu-band">
+        <div class="llu-wrap">
+          <div class="llu-form-wrap">
+            <div class="llu-card llu-stack" aria-live="polite">
+              <p class="llu-eyebrow">Payment received</p>
+              <h1 class="llu-h2" id="w-title">You're in. Welcome to Land and Level Up.</h1>
+              <p class="llu-lead">I know this wasn't a small decision. Thank you for trusting me with your search.</p>
+              <p><strong>Your first step takes about 15 minutes:</strong> sign the agreement, then send me your intake (your LinkedIn, every version of your resume, and a few wins).</p>
+              <p id="w-go" hidden><a class="llu-btn" id="w-link" href="#">Sign and start my intake</a></p>
+              <p id="w-wait" class="llu-cap">Your private link is also in your inbox (from izzy@joinclearcareer.com). If it's not there in a few minutes, check spam, or email me.</p>
+              <p class="llu-cap">We start {offer.startDateLong}. First Wednesday call: {offer.firstCallLong}. {offer.guarantee}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  (function () {
+    var id = new URLSearchParams(location.search).get("session_id");
+    if (!id) return;
+    var tries = 0;
+    function go() {
+      fetch("/api/onboarding/session?session_id=" + encodeURIComponent(id))
+        .then(function (r) { return r.json(); })
+        .then(function (j) {
+          if (j && j.url) {
+            document.getElementById("w-link").setAttribute("href", j.url);
+            document.getElementById("w-go").hidden = false;
+            if (j.firstName) document.getElementById("w-title").textContent = "You're in, " + j.firstName + ". Welcome to Land and Level Up.";
+          } else if (++tries < 5) setTimeout(go, 3000);
+        })
+        .catch(function () {});
+    }
+    go();
+  })();
+</script>

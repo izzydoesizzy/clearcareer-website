@@ -63,10 +63,10 @@ export function predictObjections(a: BookCallAnswers, d: Diagnosis): Objection[]
       monthly > 0
         ? `You're aiming for ${money(a.targetSalary)}. That's about ${money(monthly)} a month before tax.${!employed && MONTHS[a.searchLength] ? ` You've been searching ${a.searchLength}, so roughly ${money(monthly * MONTHS[a.searchLength])} so far.` : ''} The ${rec.program.toLowerCase()} is ${money(recPrice)} plus HST for 3 months.`
         : `The ${rec.program.toLowerCase()} is ${money(recPrice)} plus HST for 3 months. What's one month of your next salary worth?`,
-      `If we get you hired even a few weeks sooner, it pays for itself. And you can spread it out: Klarna monthly for up to 12 months, or up to 3 payments with me (about ${money(recPrice / 3)} each, plus HST).`,
+      `If we get you hired even a few weeks sooner, it pays for itself. And you can spread it out: Klarna at checkout splits it into monthly payments for up to 12 months.`,
       `${offer.guarantee}`,
     ],
-    fallback: rec.program === PROGRAMS.private.name ? `Downsell to the group cohort at ${money(g)}. Same community, calls and workshop, without the 1:1 rebuild.` : 'Offer the 3-payment plan. Do not lower the price.',
+    fallback: rec.program === PROGRAMS.private.name ? `Downsell to the group cohort at ${money(g)}. Same community, calls and workshop, without the 1:1 rebuild.` : 'Point to Klarna at checkout for monthly payments. Do not lower the price.',
   });
 
   // Think about it

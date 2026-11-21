@@ -11,7 +11,6 @@
  *   noShow     right after Izzy marks them as a no-show in Calendly
  *   followUp1  the morning after the call, if they haven't enrolled
  *   followUp2  3 days after the call, if they still haven't enrolled. The last one.
- *   welcome    right after they pay (only once the welcome details in src/data/llu.ts are filled in)
  *
  * Rules: real facts and real stories only (src/data/llu.ts, src/lib/stories.ts). No em dashes.
  * Canadian English. Never promise a job.
@@ -21,7 +20,7 @@ import { wrapDocument, outerTable, footer } from './email/components.js';
 import { dealIsLive } from './email/deal.js';
 import { PROGRAMS, ALTERNATIVE, QUALIFY, diagnose } from './book-call.js';
 import type { BookCallAnswers, DiagnosisKey } from './book-call.js';
-import { offer, welcome as WELCOME, RESULTS_VARY } from '../data/llu.js';
+import { offer, RESULTS_VARY } from '../data/llu.js';
 import { storyFor, recommend, IZZY, STORIES, type Story } from './stories.js';
 
 export interface CallInfo {
@@ -123,7 +122,7 @@ const small = (html: string) => P(`<span style="font-size:13px;color:${COLORS.sl
 const REASON = "You're getting this because you asked about a call with ClearCareer. Reply \"stop\" and I won't email you about it again.";
 const UNSUB = 'mailto:izzy@joinclearcareer.com?subject=Stop%20call%20emails';
 
-function shell(eyebrow: string, headline: string, body: string, reason = REASON): string {
+function shell(eyebrow: string, headline: string, body: string, reason = REASON, unsub = UNSUB): string {
   return wrapDocument(
     outerTable(`<tr><td>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:${COLORS.white};border-radius:12px;overflow:hidden;" class="email-card">
@@ -133,7 +132,7 @@ function shell(eyebrow: string, headline: string, body: string, reason = REASON)
 <h1 style="margin:0;color:#ffffff;font-size:28px;font-weight:400;line-height:1.2;font-family:${FONTS.heading};">${esc(headline)}</h1>
 </td></tr>
 <tr><td style="padding:32px 40px 8px;" class="email-padding">${body}</td></tr>
-${footer(UNSUB, { reason })}
+${footer(unsub, { reason })}
 </table></td></tr>`),
   );
 }
@@ -145,7 +144,7 @@ const partnerLine = (c: CallInfo) =>
   c.answers?.decider && c.answers.decider !== 'Just me'
     ? P("You mentioned someone else is part of this decision. Bring them along, same link. You'll both hear the same answers, and nobody has to play telephone at the dinner table after.")
     : '';
-const payLine = 'Card, Klarna (monthly, up to 12 months), or up to 3 payments with me.';
+const payLine = 'Pay by card, or spread it out monthly with Klarna (up to 12 months). Both at checkout.';
 
 /** "120 applications, 3 interviews and 0 offers over 6-7 months." Only the numbers they gave us. */
 function numbers(a?: Partial<BookCallAnswers>): string {
@@ -379,24 +378,5 @@ ${sign('All the best,')}`);
   return { subject, html };
 }
 
-// ── Welcome, after they pay ──────────────────────────────────────────────────────
-export const welcomeReady = () => !!(WELCOME.communityUrl && WELCOME.wednesdayCallTime && WELCOME.callUrl);
-
-export function welcomeEmail(c: { firstName: string }) {
-  const subject = `You're in, ${c.firstName}! Here's your first week`;
-  const html = shell('Welcome', "You're in. Let's go.", `
-${hey(c)}
-${P('You did it. Welcome to Land and Level Up.')}
-${P("I know this wasn't a small decision. You looked at your search, decided you deserved backup, and backed yourself. That's exactly the energy we need.")}
-${H('Your first steps')}
-${list([
-  `<strong>Join the community.</strong> ${link(`Join ${WELCOME.communityName || 'the community'}`, WELCOME.communityUrl)} and say hi. Tell us your target role and one win from your career you're proud of.`,
-  `<strong>Save the Wednesday call.</strong> Every Wednesday at ${esc(WELCOME.wednesdayCallTime)}, starting ${esc(offer.firstCallLong)}. ${link('Here is the link', WELCOME.callUrl)}. Add it to your calendar now.`,
-  '<strong>Before the first call,</strong> have your resume, your LinkedIn and 2 or 3 dream job posts ready. We start building right away.',
-  ...(WELCOME.privateBookingUrl ? [`<strong>Chose the private rebuild?</strong> ${link('Book your 1:1 rebuild sessions here', WELCOME.privateBookingUrl)}.`] : []),
-], true)}
-${P(`We start ${esc(offer.startDateLong)}. Your receipt comes separately from Stripe. ${esc(offer.guarantee)}`)}
-${P("Questions before then? Hit reply. It comes straight to me.")}
-${sign('So excited to work with you,')}`, "You're getting this because you joined Land and Level Up.");
-  return { subject, html };
-}
+/** Shared building blocks, reused by the onboarding emails. */
+export const ui = { shell, P, H, list, button, link, small, sign, hey, esc, payLine };

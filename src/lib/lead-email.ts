@@ -72,7 +72,7 @@ export function insights(a: BookCallAnswers, v: Verdict): Insight[] {
   if (a.motivation <= 2) out.push({ tone: 'flag', text: `Low motivation (${a.motivation} of 5). Find out what's draining them before you pitch.` });
   if (a.motivation >= 4) out.push({ tone: 'good', text: `High motivation (${a.motivation} of 5).` });
   if (a.decider !== 'Just me') out.push({ tone: 'flag', text: `Not deciding alone: "${a.decider}". Consider inviting them to the call.` });
-  if (a.payment !== 'Credit card in full') out.push({ tone: 'note', text: `Payment preference: ${a.payment}. Have Klarna or a payment plan ready.` });
+  if (a.payment !== 'Credit card in full') out.push({ tone: 'note', text: `Payment preference: ${a.payment}. Remind them Klarna spreads it over up to 12 months.` });
   if (a.commit?.startsWith('Yes')) out.push({ tone: 'good', text: 'Says they will have a card ready if it fits. Plan to close on the call.' });
   if (a.commit?.startsWith('No')) out.push({ tone: 'flag', text: 'Wants time to think after the call. Find the real question behind that.' });
   if (a.start === 'This month') out.push({ tone: 'good', text: 'Ready to start this month.' });

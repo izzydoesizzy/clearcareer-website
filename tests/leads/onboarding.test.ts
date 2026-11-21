@@ -1,0 +1,127 @@
+import { describe, it, expect } from 'vitest';
+import { readFileSync, readdirSync, statSync } from 'node:fs';
+import { join } from 'node:path';
+import { makeToken, readToken, programFromAmount, cleanIntake, onboardingDue, renewalDue, callsIcs, rosterRow, ROSTER_HEADERS, driveFileName } from '../../src/lib/onboarding';
+import { DEFAULT_AGREEMENT_HTML, fillAgreement, signatureBlock, validLegalName, cleanDocHtml } from '../../src/lib/agreement';
+import { welcomeEmail, reminderEmail, signedCopyEmail, intakeDoneEmail, renewalEmail, enrolmentNotice, intakeBrief, digestEmail } from '../../src/lib/onboarding-emails';
+import { setupGaps } from '../../src/lib/setup-check';
+
+describe('onboarding links', () => {
+  it('round-trips the email and rejects tampering', async () => {
+    const t = await makeToken('Sam@Example.com', 'secret');
+    expect(await readToken(t, 'secret')).toBe('sam@example.com');
+    expect(await readToken(t, 'other')).toBeNull();
+    expect(await readToken(t.replace(/.$/, (c) => (c === 'a' ? 'b' : 'a')), 'secret')).toBeNull();
+    expect(await readToken('nonsense', 'secret')).toBeNull();
+  });
+});
+
+describe('program and intake', () => {
+  it('tells the programs apart by price before tax', () => {
+    expect(programFromAmount(94900)).toBe('Group cohort');
+    expect(programFromAmount(120000)).toBe('Group cohort');
+    expect(programFromAmount(179700)).toBe('Group plus private 1:1 rebuild');
+    expect(programFromAmount(229700)).toBe('Group plus private 1:1 rebuild');
+  });
+  it('requires the essentials', () => {
+    const bad = cleanIntake({ linkedinUrl: 'linkedin.com/sam', wins: 'short' });
+    expect(Object.keys(bad.errors).sort()).toEqual(['linkedinUrl', 'recording', 'targetRoles', 'timezone', 'wins']);
+    const good = cleanIntake({ linkedinUrl: 'https://www.linkedin.com/in/sam-lee', targetRoles: 'Project manager', wins: 'Led a $2M migration on time and under budget.', timezone: 'Eastern (Toronto, New York)', recording: 'Please keep me out of recordings' });
+    expect(good.errors).toEqual({});
+  });
+  it('names files clearly and safely', () => {
+    expect(driveFileName('resume', 'Sam Lee', 'my/resume:v2.pdf')).toBe('Resume - Sam Lee - my-resume-v2.pdf');
+  });
+  it('builds a roster row that matches the headers', () => {
+    const row = rosterRow({ enrolledAt: new Date('2026-11-25T15:00:00Z'), email: 'sam@example.com', name: 'Sam Lee', program: 'Group cohort', amount: 1072.37, folderUrl: 'https://drive.google.com/x' });
+    expect(row).toHaveLength(ROSTER_HEADERS.length);
+    expect(row[8]).toBe('2026-12-02 or when rebuild starts');
+  });
+});
+
+describe('agreement', () => {
+  const filled = fillAgreement(DEFAULT_AGREEMENT_HTML, { name: 'Sam <Lee>', email: 'sam@example.com', program: 'Group cohort', price: '$949', date: 'November 25, 2026' });
+  it('fills every placeholder and escapes names', () => {
+    expect(filled).not.toMatch(/\{\{/);
+    expect(filled).toContain('Sam &lt;Lee&gt;');
+  });
+  it('states the guarantee, no job promise and recordings, with no em dashes', () => {
+    for (const s of ['7 days after you paid', 'No one can promise you a job', 'Recordings', 'Ontario', 'Klarna']) expect(filled).toContain(s);
+    expect(filled).not.toMatch(/—/);
+    expect(filled).not.toMatch(/3 payments|three payments/);
+  });
+  it('records who signed, when, from where and which version', () => {
+    const b = signatureBlock({ legalName: 'Sam Lee', email: 'sam@example.com', signedAt: new Date('2026-11-25T15:00:00Z'), ip: '1.2.3.4', version: 'v1' });
+    for (const s of ['Sam Lee', '1.2.3.4', 'v1', 'ET']) expect(b).toContain(s);
+  });
+  it('accepts real full names only', () => {
+    expect(validLegalName('Sam Lee')).toBe(true);
+    expect(validLegalName("Zoë O'Brien-Smith")).toBe(true);
+    expect(validLegalName('Sam')).toBe(false);
+    expect(validLegalName('<script> x')).toBe(false);
+  });
+  it('strips scripts from an exported Google Doc', () => {
+    expect(cleanDocHtml('<html><body><p onclick="x()">Hi</p><script>bad()</script></body></html>')).toBe('<p>Hi</p>');
+  });
+});
+
+describe('reminders and renewal', () => {
+  const enrolled = new Date('2026-11-25T15:00:00Z');
+  const at = (d: string) => new Date(`${d}T12:30:00Z`);
+  it('reminds at 2 and 4 days, only while something is missing', () => {
+    expect(onboardingDue(enrolled, at('2026-11-26'), { agreement: false, intake: false }, [])).toEqual([]);
+    expect(onboardingDue(enrolled, at('2026-11-27'), { agreement: true, intake: false }, [])).toEqual(['remind1']);
+    expect(onboardingDue(enrolled, at('2026-11-29'), { agreement: true, intake: false }, ['remind1'])).toEqual(['remind2']);
+    expect(onboardingDue(enrolled, at('2026-11-29'), { agreement: true, intake: true }, [])).toEqual([]);
+  });
+  it('sends the renewal once, in week 11', () => {
+    expect(renewalDue(at('2027-02-18'), [])).toBe(false);
+    expect(renewalDue(at('2027-02-19'), [])).toBe(true);
+    expect(renewalDue(at('2027-02-19'), ['renewal'])).toBe(false);
+  });
+  it('has no calendar until the call time is set', () => {
+    expect(callsIcs()).toBe('');
+  });
+});
+
+describe('onboarding emails', () => {
+  const all = [
+    welcomeEmail({ firstName: 'Sam', program: 'Group cohort', token: 'abc.def' }),
+    reminderEmail({ firstName: 'Sam', token: 'abc.def', agreement: false, intake: false }, false),
+    reminderEmail({ firstName: 'Sam', token: 'abc.def', agreement: true, intake: false }, true),
+    signedCopyEmail({ firstName: 'Sam', token: 'abc.def' }),
+    intakeDoneEmail({ firstName: 'Sam', program: 'Group plus private 1:1 rebuild' }),
+    renewalEmail({ firstName: 'Sam' }),
+    enrolmentNotice({ name: 'Sam Lee', email: 'sam@example.com', program: 'Group cohort', amount: 1072.37, seats: { group: 1, private: 0 } }),
+    intakeBrief({ name: 'Sam Lee', email: 'sam@example.com', program: 'Group cohort', intake: cleanIntake({ linkedinUrl: 'https://www.linkedin.com/in/sam', wins: 'x'.repeat(30) }).data, files: ['Resume: a.pdf'] }),
+    digestEmail({ now: new Date('2026-12-07T12:30:00Z'), callsToday: [], unconfirmed: [], newLeads: [], notBooked: [], enrolled: [], onboarding: [{ name: 'Sam', email: 'sam@example.com', agreement: false, intake: false, days: 5 }], seats: { group: 1, private: 0 }, setup: ['X is not set'] }),
+  ];
+  it('have no em dashes and link to the private onboarding page', () => {
+    for (const m of all) expect(m.subject + m.html).not.toMatch(/—/);
+    expect(all[0].html).toContain('/onboarding?t=abc.def');
+  });
+  it('flags stalled onboarding and setup gaps in the digest', () => {
+    const d = all[8];
+    expect(d.html).toContain('reach out personally');
+    expect(d.html).toContain('Setup still missing');
+    expect(d.html).toContain('out of date');
+  });
+  it('promises the community invite when the link is not set yet', () => {
+    expect(all[4].html).toContain('Mighty Networks invite</strong> is on its way');
+    expect(all[4].html).toContain('1:1 rebuild');
+  });
+});
+
+describe('setup check', () => {
+  it('lists every missing piece', () => {
+    expect(setupGaps({}).length).toBeGreaterThan(10);
+  });
+});
+
+describe('payment wording', () => {
+  it('never offers "3 payments with me" anywhere in the program code', () => {
+    const walk = (d: string): string[] => readdirSync(d).flatMap((f) => (statSync(join(d, f)).isDirectory() ? walk(join(d, f)) : [join(d, f)]));
+    const files = [...walk('src/lib'), 'src/data/llu.ts', ...walk('src/components/llu'), ...walk('src/components/book-call')];
+    for (const f of files) expect(readFileSync(f, 'utf8'), f).not.toMatch(/3 payments|three payments|split it into payments/);
+  });
+});

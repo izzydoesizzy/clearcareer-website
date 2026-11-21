@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { dueSteps, noBookSteps, packAnswers, storedAnswers, torontoDay } from '../../src/lib/call-flow';
 import { cleanAnswers, leadScore, READY, STRUGGLES, COMMIT } from '../../src/lib/book-call';
-import { bookedEmail, dayBeforeEmail, morningOfEmail, followUp1Email, followUp2Email, notYetEmail, noBook1Email, noBook2Email, canceledEmail, noShowEmail, welcomeEmail } from '../../src/lib/call-emails';
+import { bookedEmail, dayBeforeEmail, morningOfEmail, followUp1Email, followUp2Email, notYetEmail, noBook1Email, noBook2Email, canceledEmail, noShowEmail } from '../../src/lib/call-emails';
 import { STORIES, IZZY } from '../../src/lib/stories';
 import { buildSalesBrief, predictObjections, recommend } from '../../src/lib/sales-brief';
 import { diagnose } from '../../src/lib/book-call';
@@ -13,7 +13,7 @@ const raw = {
   targetSalary: 120000, yearsExperience: 8, searchLength: '8-10 months', appsPerWeek: '6-10', totalApplications: 120,
   interviews: 3, offers: 0, situation: 'Laid off in the last 3 months', country: 'Canada', struggles: [STRUGGLES[2]],
   challenge: 'No replies', milestones: 'Confidence', motivation: 3, callGoal: 'A plan',
-  decider: 'Me and a partner or family member', start: 'In the next 1 to 2 months', payment: 'Klarna (monthly)',
+  decider: 'Me and a partner or family member', start: 'In the next 1 to 2 months', payment: 'Klarna (monthly, up to 12 months)',
   program: 'Not sure yet', commit: COMMIT[2], ready: READY, consent: true,
 };
 const { data } = cleanAnswers(raw);
@@ -63,7 +63,7 @@ describe('lead score', () => {
 
 describe('lead emails', () => {
   const c = { firstName: 'Sam', email: 'sam@example.com', callAt: at('2026-12-03T19:00:00Z'), joinUrl: 'https://zoom.us/j/1', rescheduleUrl: 'https://calendly.com/r', answers: data, diagnosisKey: diagnose(data).key };
-  const all = [bookedEmail(c), dayBeforeEmail(c), morningOfEmail(c), followUp1Email(c, {}), followUp2Email(c, { group: 'https://buy.stripe.com/g' }), notYetEmail(data, 'not-ready'), notYetEmail(data, 'experience'), noBook1Email({ ...c, bookUrl: 'https://calendly.com/x?name=Sam' }), noBook2Email(c), canceledEmail(c), noShowEmail(c), welcomeEmail(c)];
+  const all = [bookedEmail(c), dayBeforeEmail(c), morningOfEmail(c), followUp1Email(c, {}), followUp2Email(c, { group: 'https://buy.stripe.com/g' }), notYetEmail(data, 'not-ready'), notYetEmail(data, 'experience'), noBook1Email({ ...c, bookUrl: 'https://calendly.com/x?name=Sam' }), noBook2Email(c), canceledEmail(c), noShowEmail(c)];
   it('has no em dashes and uses the time in ET', () => {
     for (const m of all) {
       expect(m.subject + m.html).not.toMatch(/—/);

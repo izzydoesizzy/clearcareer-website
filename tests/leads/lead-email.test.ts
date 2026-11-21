@@ -7,7 +7,7 @@ const raw = {
   targetSalary: 120000, yearsExperience: 8, searchLength: '6-7 months', appsPerWeek: '6-10', totalApplications: 120,
   interviews: 3, offers: 0, situation: 'Laid off in the last 3 months', country: 'Canada', struggles: [STRUGGLES[2]],
   challenge: 'No replies <script>alert(1)</script>', milestones: 'Confidence', motivation: 2, callGoal: 'A plan',
-  decider: 'Me and a partner or family member', start: 'This month', payment: 'Klarna (monthly)', program: "Group cohort", commit: "Yes, I'll have my card ready", ready: READY, consent: true,
+  decider: 'Me and a partner or family member', start: 'This month', payment: 'Klarna (monthly, up to 12 months)', program: "Group cohort", commit: "Yes, I'll have my card ready", ready: READY, consent: true,
 };
 
 describe('lead brief email', () => {

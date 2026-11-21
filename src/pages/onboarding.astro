@@ -1,0 +1,37 @@
+---
+/**
+ * Onboarding after payment: sign the agreement, then intake (LinkedIn, every resume version, wins).
+ * Private: the link in the welcome email carries a signed token (?t=...).
+ */
+import BaseLayout from "@layouts/BaseLayout.astro";
+import "@/styles/llu.css";
+import OnboardingForm from "@components/onboarding/OnboardingForm.tsx";
+---
+
+<BaseLayout title="Your onboarding | Land and Level Up" description="Sign your agreement and send your intake." noindex>
+  <div class="llu">
+    <header class="llu-nav">
+      <div class="llu-wrap llu-nav__row">
+        <span class="llu-nav__brand">
+          <span>
+            <span class="llu-nav__mark">ClearCareer</span>
+            <span class="llu-nav__sub">Land and Level Up</span>
+          </span>
+        </span>
+      </div>
+    </header>
+    <main id="main-content">
+      <section class="llu-band">
+        <div class="llu-wrap">
+          <div class="llu-form-wrap">
+            <OnboardingForm client:load />
+          </div>
+          <p class="llu-cap llu-center llu-mt-32">
+            Your files go to a private ClearCareer folder and are used only for your program.
+            <a class="llu-link llu-link--cap llu-link--inline" href="/privacy">Privacy</a>
+          </p>
+        </div>
+      </section>
+    </main>
+  </div>
+</BaseLayout>

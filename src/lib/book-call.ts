@@ -67,7 +67,7 @@ export const DECIDER = ['Just me', 'Me and a partner or family member', 'Someone
 export const START = ['This month', 'In the next 1 to 2 months', 'Later than that', 'Not sure yet'];
 /** The pre-close question: are they ready to enrol on the call if it fits? */
 export const COMMIT = ["Yes, I'll have my card ready", 'Probably, once my questions are answered', 'No, I want time to think after the call'];
-export const PAYMENT = ['Credit card in full', 'Klarna (monthly)', "I'd want to split it into payments", 'Not sure yet'];
+export const PAYMENT = ['Credit card in full', 'Klarna (monthly, up to 12 months)', 'Not sure yet'];
 
 export interface BookCallAnswers {
   firstName: string;
@@ -253,7 +253,7 @@ export const SCORE = {
   start: { 'This month': 15, 'In the next 1 to 2 months': 8, 'Not sure yet': 3, 'Later than that': 0 } as Record<string, number>,
   commit: { [COMMIT[0]]: 10, [COMMIT[1]]: 6, [COMMIT[2]]: 0 } as Record<string, number>,
   decider: { 'Just me': 10, 'Me and a partner or family member': 5, 'Someone else is involved': 0 } as Record<string, number>,
-  payment: { 'Credit card in full': 10, 'Klarna (monthly)': 8, "I'd want to split it into payments": 6, 'Not sure yet': 2 } as Record<string, number>,
+  payment: { 'Credit card in full': 10, 'Klarna (monthly, up to 12 months)': 8, 'Not sure yet': 2 } as Record<string, number>,
   motivationMax: 10,
   program: { 'Group plus private 1:1 rebuild': 10, 'Group cohort': 8, 'Not sure yet': 4 } as Record<string, number>,
 };

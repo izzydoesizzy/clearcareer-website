@@ -6,7 +6,8 @@
  *
  * Creates: the contact fields that record consent, and two lists
  * ("Nurture: Land and Level Up (opted in)", "Call booked" and "Book-a-call applicants").
- * Prints the list IDs. Put them in Vercel: BREVO_NURTURE_LIST_ID, BREVO_CALL_LIST_ID ("Call booked") and BREVO_LEADS_LIST_ID
+ * Prints the list IDs. Put them in Vercel: BREVO_NURTURE_LIST_ID, BREVO_CALL_LIST_ID ("Call booked"),
+ * BREVO_LEADS_LIST_ID ("Book-a-call applicants") and BREVO_CLIENTS_LIST_ID ("Land and Level Up clients")
  * (the applicants list). Also set BOOK_CALL_NOTIFY_EMAIL if you want notifications elsewhere.
  */
 const KEY = process.env.BREVO_API_KEY;
@@ -41,8 +42,22 @@ const attrs = [
   ['CALL_RESCHEDULE_URL', 'text'],
   ['CALL_EMAILS_SENT', 'text'],
   ['CALL_OUTCOME', 'text'],
-  ['ENROLLED_AT', 'date'],
+  ['ENROLLED_AT', 'text'],
   ['ENROLLED_AMOUNT', 'float'],
+  ['ENROLLED_PROGRAM', 'text'],
+  ['STRIPE_SESSION', 'text'],
+  ['DRIVE_FOLDER_ID', 'text'],
+  ['DRIVE_FOLDER_URL', 'text'],
+  ['AGREEMENT_SIGNED_AT', 'text'],
+  ['AGREEMENT_NAME', 'text'],
+  ['AGREEMENT_VERSION', 'text'],
+  ['AGREEMENT_IP', 'text'],
+  ['INTAKE_DONE_AT', 'text'],
+  ['INTAKE_FILES', 'text'],
+  ['INTAKE_LINKEDIN', 'text'],
+  ['INTAKE_RECORDING', 'text'],
+  ['INTAKE_TIMEZONE', 'text'],
+  ['ONBOARD_SENT', 'text'],
   ['LEAD_SCORE', 'float'],
   ['LEAD_PROGRAM', 'text'],
   ['LEAD_VALUE', 'float'],
@@ -61,7 +76,7 @@ for (const [name, type] of attrs) {
 
 const existing = await (await api('/contacts/lists?limit=50')).json();
 const folderId = existing.lists?.[0]?.folderId ?? 1;
-for (const name of ['Nurture: Land and Level Up (opted in)', 'Call booked', 'Book-a-call applicants']) {
+for (const name of ['Nurture: Land and Level Up (opted in)', 'Call booked', 'Book-a-call applicants', 'Land and Level Up clients']) {
   const found = existing.lists?.find((l) => l.name === name);
   if (found) { console.log(`list "${name}": already exists, id ${found.id}`); continue; }
   const r = await api('/contacts/lists', { method: 'POST', body: JSON.stringify({ name, folderId }) });

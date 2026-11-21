@@ -46,7 +46,7 @@ export function brevo(apiKey: string) {
       return out;
     },
 
-    async send(mail: { to: string; toName?: string; subject: string; html: string; replyTo?: { email: string; name?: string }; tags?: string[]; senderName?: string }): Promise<boolean> {
+    async send(mail: { to: string; toName?: string; subject: string; html: string; replyTo?: { email: string; name?: string }; tags?: string[]; senderName?: string; bcc?: string; attachments?: { name: string; content: string }[] }): Promise<boolean> {
       const r = await fetch(`${base}/smtp/email`, {
         method: 'POST',
         headers,
@@ -57,12 +57,21 @@ export function brevo(apiKey: string) {
           subject: mail.subject,
           htmlContent: mail.html,
           tags: mail.tags || [],
+          ...(mail.bcc ? { bcc: [{ email: mail.bcc }] } : {}),
+          ...(mail.attachments?.length ? { attachment: mail.attachments } : {}),
         }),
       });
       if (!r.ok) console.error('Brevo send error:', r.status, await r.text());
       return r.ok;
     },
   };
+}
+
+/** Base64 for email attachments, without Node's Buffer (works on every runtime). */
+export function toBase64(bytes: Uint8Array): string {
+  let bin = '';
+  for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+  return btoa(bin);
 }
 
 /** HMAC-SHA256 hex, for verifying Calendly and Stripe webhooks without extra packages. */

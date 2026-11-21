@@ -68,21 +68,29 @@ export const offer = {
       "2 to 3 hours together, just the two of us",
     ],
   },
-  paying: "Pay in full, monthly through Klarna (up to 12 months), or in up to three payments with me.",
+  paying: "Pay by card, or spread it out monthly with Klarna (up to 12 months). Both at checkout.",
   afterThreeMonths: "After month 3, you can stay on for $50 a month. Leave any time.",
   guarantee: "7-day money-back guarantee. It ends once your rebuild work has started.",
 };
 
-// ── Welcome email (sent automatically after payment) ────────────────────────
-// TODO(Izzy): fill these in. Until communityUrl, wednesdayCallTime and callUrl are all set,
-// no welcome email goes out and you get a "send it yourself" note instead.
+// ── Onboarding details (welcome emails, intake confirmation, calendar file) ─────────
+// TODO(Izzy): fill these in. Until they're set, emails say "I'll send this before we start",
+// and the daily digest reminds you.
 export const welcome = {
-  communityName: "", // e.g. the platform name
-  communityUrl: "", // invite link to the community
-  wednesdayCallTime: "", // e.g. "12:00 p.m. ET"
-  callUrl: "", // Zoom link for the Wednesday calls
-  privateBookingUrl: "", // optional: where private-rebuild members book their 1:1 sessions
+  communityName: "Mighty Networks",
+  communityUrl: "", // invite link to the Land and Level Up space on Mighty Networks
+  callStart: "", // Wednesday call start time in Toronto time, 24-hour, e.g. "12:00"
+  callUrl: "", // Zoom (or Mighty Networks live) link for the Wednesday calls
+  privateBookingUrl: "", // where private-rebuild members book their 1:1 sessions (e.g. a Calendly event)
 };
+
+/** "12:00 p.m. ET", or "" until callStart is set. */
+export function callTimeLabel(): string {
+  const m = /^(\d{1,2}):(\d{2})$/.exec(welcome.callStart);
+  if (!m) return "";
+  const d = new Date(Date.UTC(2026, 11, 9, Number(m[1]) + 5, Number(m[2])));
+  return `${d.toLocaleTimeString("en-CA", { timeZone: "America/Toronto", hour: "numeric", minute: "2-digit" })} ET`;
+}
 
 // ── Sources ────────────────────────────────────────────────────────────────
 export const SURVEY_SOURCE =

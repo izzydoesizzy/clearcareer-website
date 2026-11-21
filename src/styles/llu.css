@@ -1309,3 +1309,57 @@ textarea.llu-input {
   border-color: var(--llu-caption);
   cursor: wait;
 }
+
+/* ── Onboarding: progress steps and the agreement box ─────────────────────── */
+.llu-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--llu-fs-cap);
+  font-weight: 600;
+  color: var(--llu-caption);
+}
+.llu-steps li[aria-current="step"] {
+  color: var(--llu-blue);
+}
+.llu-steps li[data-done="true"] {
+  color: var(--llu-ink);
+}
+.llu-agreement {
+  max-height: 420px;
+  overflow-y: auto;
+  padding: 20px;
+  border: 1px solid var(--llu-hairline);
+  border-radius: 12px;
+  background: var(--llu-paper);
+  font-size: var(--llu-fs-body);
+  line-height: 1.6;
+  color: var(--llu-body);
+}
+.llu-agreement h1 {
+  font-family: var(--llu-serif);
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--llu-ink);
+  margin: 0 0 12px;
+}
+.llu-agreement h2 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--llu-ink);
+  margin: 20px 0 6px;
+}
+.llu-agreement p,
+.llu-agreement ul {
+  margin: 0 0 10px;
+}
+.llu-agreement ul {
+  padding-left: 20px;
+}
+.llu-agreement:focus-visible {
+  outline: 2px solid var(--llu-blue);
+  outline-offset: 2px;
+}
