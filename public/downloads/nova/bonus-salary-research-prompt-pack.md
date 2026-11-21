@@ -444,7 +444,7 @@ In the Job Search Ignition System, I don't hand you prompts. I build your entire
 
 <div class="cta-link">
 
-[Book your free discovery call ->](https://calendly.com/clearcareer/discovery-call)
+[Book your free discovery call ->](https://joinclearcareer.com/book-a-call)
 
 </div>
 

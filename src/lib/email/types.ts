@@ -31,6 +31,10 @@ export interface EmailData {
   discoveryCall?: { text: string; url: string } | false;
   /** Unsubscribe URL — Brevo uses {{unsubscribe}}, Resend handles it automatically */
   unsubscribeUrl?: string;
+  /** Add the Black Friday P.S. Only true for people who opted in to marketing. */
+  dealPostscript?: boolean;
+  /** Why they are getting this email (shown in the footer). */
+  footerReason?: string;
   /** Extra content blocks (e.g., "What's inside" list, "Quick start" steps) */
   extraContent?: string;
 }

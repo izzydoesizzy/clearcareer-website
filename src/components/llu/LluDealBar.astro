@@ -2,7 +2,7 @@
 import { offer } from "@/data/llu";
 ---
 
-<div class="llu-dealbar">
+{offer.dealLive && (<div class="llu-dealbar">
   <div class="llu-wrap llu-dealbar__row">
     <p class="llu-dealbar__text">
       <span class="llu-dealbar__label">{offer.dealBarLabel}</span>
@@ -11,4 +11,4 @@ import { offer } from "@/data/llu";
     </p>
     <a class="llu-dealbar__link" href="#pricing">See the prices</a>
   </div>
-</div>
+</div>)}

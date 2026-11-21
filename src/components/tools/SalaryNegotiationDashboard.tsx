@@ -237,7 +237,7 @@ export default function SalaryNegotiationDashboard() {
               These numbers are the starting point. Want a complete negotiation strategy?
             </p>
             <a
-              href="https://calendly.com/clearcareer/discovery-call"
+              href="https://joinclearcareer.com/book-a-call"
               className="mt-2 block w-full rounded-lg bg-blue px-4 py-2.5 text-center text-sm font-semibold text-white hover:bg-blue-dark transition-colors"
             >
               Get a Personalized Strategy

@@ -6,17 +6,26 @@
  * - Quotes are the client's exact words. Do not tidy them.
  * - Every statistic needs its source and sample size.
  */
+import { dealIsLive } from "../lib/email/deal";
+import { checkoutLinks } from "../lib/checkout";
+
 
 // ── Destinations ────────────────────────────────────────────────────────────
-// TODO(Izzy): paste the live Stripe payment links, one per tier.
-// Until then both buttons open the discovery call, so they are never a dead end.
-export const GROUP_CHECKOUT_URL = "https://calendly.com/clearcareer/discovery-call";
-export const PRIVATE_CHECKOUT_URL = "https://calendly.com/clearcareer/discovery-call";
+// Black Friday is checked when the site builds. A daily job (src/pages/api/cron/deal.ts)
+// rebuilds the site just after the deadline, so the page switches to regular prices on its own.
+export const dealLive = dealIsLive();
+
+// Stripe payment links, one per tier (Black Friday and regular). See src/lib/checkout.ts.
+// Until they're set, both buttons open the book-a-call form, so they are never a dead end.
+const links = checkoutLinks(import.meta.env);
+export const GROUP_CHECKOUT_URL: string = links.group || "/book-a-call";
+export const PRIVATE_CHECKOUT_URL: string = links.private || "/book-a-call";
 
 export const CTA_LABEL = "Claim my founding seat";
 
 // ── The offer (confirmed by Izzy, November 21, 2026) ────────────────────────
 export const offer = {
+  dealLive,
   startDateLong: "Monday, December 7, 2026",
   startDateShort: "December 7",
   firstCallLong: "Wednesday, December 9",
@@ -34,7 +43,7 @@ export const offer = {
   regularFrom: "On December 1 they go back to $1,200 and $2,297.",
   group: {
     name: "Group cohort",
-    price: "$949",
+    price: dealLive ? "$949" : "$1,200",
     regular: "$1,200",
     priceNote: "CAD plus HST. One payment covers your first 3 months.",
     seatsTotal: 12,
@@ -49,7 +58,7 @@ export const offer = {
   },
   private: {
     name: "Group plus private rebuild",
-    price: "$1,797",
+    price: dealLive ? "$1,797" : "$2,297",
     regular: "$2,297",
     priceNote: "CAD plus HST. One payment covers your first 3 months.",
     seatsTotal: 4,
@@ -61,10 +70,29 @@ export const offer = {
       "2 to 3 hours together, just the two of us",
     ],
   },
-  paying: "Pay in full, monthly through Klarna (up to 12 months), or in up to three payments with me.",
+  paying: "Pay by card, or spread it out monthly with Klarna (up to 12 months). Both at checkout.",
   afterThreeMonths: "After month 3, you can stay on for $50 a month. Leave any time.",
   guarantee: "7-day money-back guarantee. It ends once your rebuild work has started.",
 };
+
+// ── Onboarding details (welcome emails, intake confirmation, calendar file) ─────────
+// TODO(Izzy): fill these in. Until they're set, emails say "I'll send this before we start",
+// and the daily digest reminds you.
+export const welcome = {
+  communityName: "Mighty Networks",
+  communityUrl: "", // invite link to the Land and Level Up space on Mighty Networks
+  callStart: "", // Wednesday call start time in Toronto time, 24-hour, e.g. "12:00"
+  callUrl: "", // Zoom (or Mighty Networks live) link for the Wednesday calls
+  privateBookingUrl: "", // where private-rebuild members book their 1:1 sessions (e.g. a Calendly event)
+};
+
+/** "12:00 p.m. ET", or "" until callStart is set. */
+export function callTimeLabel(): string {
+  const m = /^(\d{1,2}):(\d{2})$/.exec(welcome.callStart);
+  if (!m) return "";
+  const d = new Date(Date.UTC(2026, 11, 9, Number(m[1]) + 5, Number(m[2])));
+  return `${d.toLocaleTimeString("en-CA", { timeZone: "America/Toronto", hour: "numeric", minute: "2-digit" })} ET`;
+}
 
 // ── Sources ────────────────────────────────────────────────────────────────
 export const SURVEY_SOURCE =
@@ -319,7 +347,7 @@ export const objections: { q: string; a: string[]; proof: string }[] = [
     q: "“Money is tight right now.”",
     a: [
       "I get it. You're watching every dollar, and that's the right instinct.",
-      "So do the math with me. At a $100,000 salary, one month without a paycheque is $8,333 before tax. The group cohort is $949 plus HST, for 3 months.",
+      `So do the math with me. At a $100,000 salary, one month without a paycheque is $8,333 before tax. The group cohort is ${dealLive ? "$949" : "$1,200"} plus HST, for 3 months.`,
       "You can spread it out with Klarna. And there's a 7-day money-back guarantee, as long as your rebuild work hasn't started.",
     ],
     proof:

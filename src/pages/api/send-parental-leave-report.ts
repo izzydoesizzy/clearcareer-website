@@ -1,6 +1,8 @@
 import type { APIRoute } from 'astro';
+import { withNurture, consentAttributes } from '../../lib/brevo.js';
 import { Resend } from 'resend';
 import { COLORS, FONTS, LOGO, SENDER, SITE_URL, DISCOVERY_CALL_URL } from '../../lib/email/constants.js';
+import { dealPostscriptRow } from '../../lib/email/deal.js';
 
 export const prerender = false;
 
@@ -218,7 +220,9 @@ export const POST: APIRoute = async ({ request }) => {
 
     if (RESEND_API_KEY) {
       const resend = new Resend(RESEND_API_KEY);
-      const html = buildReportEmail(reportData);
+      const baseHtml = buildReportEmail(reportData);
+      // Promotional P.S. only for people who ticked the opt-in box.
+      const html = subscribe === true ? baseHtml.replace('<!-- Footer -->', dealPostscriptRow('tool-report') + '<!-- Footer -->') : baseHtml;
       await resend.emails.send({
         from: `${SENDER.name} <${SENDER.email}>`,
         to: email,
@@ -231,7 +235,7 @@ export const POST: APIRoute = async ({ request }) => {
       await fetch('https://api.brevo.com/v3/contacts', {
         method: 'POST',
         headers: { 'api-key': BREVO_API_KEY, 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({ email, listIds: [PARENTAL_LEAVE_LIST_ID], updateEnabled: true, attributes: { SOURCE: 'parental-leave-calculator' } }),
+        body: JSON.stringify({ email, listIds: withNurture(PARENTAL_LEAVE_LIST_ID), updateEnabled: true, attributes: consentAttributes('parental-leave-calculator') }),
       }).catch((err) => console.error('Brevo error:', err));
     }
 

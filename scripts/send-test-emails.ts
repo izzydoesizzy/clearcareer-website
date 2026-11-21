@@ -11,7 +11,7 @@ if (!RESEND_API_KEY) { console.error('No RESEND_API_KEY in .env'); process.exit(
 const resend = new Resend(RESEND_API_KEY);
 const TO = 'izzy@joinclearcareer.com';
 const SITE_URL = 'https://joinclearcareer.com';
-const DISCOVERY_CALL_URL = 'https://calendly.com/clearcareer/discovery-call';
+const DISCOVERY_CALL_URL = 'https://joinclearcareer.com/book-a-call';
 
 const TESTIMONIALS = [
   { quote: '200+ failed apps. 27 targeted emails. 13 replies. 1 offer.', name: 'Blake McDermott', outcome: '$5K salary increase after rewriting resume with ClearCareer' },

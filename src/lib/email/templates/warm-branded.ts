@@ -3,6 +3,7 @@
  * Inspired by Notion, Superhuman — personal, warm, card-based, branded footer.
  */
 import type { EmailData, BuildEmailFn } from '../types.js';
+import { dealPostscript } from '../deal.js';
 import {
   wrapDocument,
   outerTable,
@@ -149,7 +150,7 @@ Questions? Just reply to this email. I read every one.<br>- Izzy
 </td></tr>
 
 <!-- Footer -->
-${footer(data.unsubscribeUrl, { style: 'dark' })}
+${footer(data.unsubscribeUrl, { style: 'dark', postscript: data.dealPostscript ? dealPostscript('resource', 'dark') : '', reason: data.footerReason })}
 
 </table>
 </td></tr>`;

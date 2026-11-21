@@ -15,20 +15,20 @@ import Hero from "@components/Hero.astro";
     subheadline="Book a free 20-minute Job Search Audit. We'll diagnose what's broken and map out your next steps."
   />
 
-  <!-- Calendly Embed -->
+  <!-- Book a call: answers first, so the call is useful -->
   <section class="py-16 md:py-24">
     <div class="mx-auto max-w-[1080px] px-4 sm:px-6 lg:px-8">
-      <div class="mx-auto max-w-[800px]">
-        <div class="overflow-hidden rounded-2xl border border-border bg-white shadow-sm">
-          <iframe
-            src="https://calendly.com/clearcareer/discovery-call"
-            width="100%"
-            height="700"
-            frameborder="0"
-            title="Book a call with Izzy"
-            loading="lazy"
-          ></iframe>
-        </div>
+      <div class="mx-auto max-w-[720px] rounded-2xl border border-border bg-white p-8 text-center shadow-sm md:p-12">
+        <h2 class="font-serif text-3xl text-navy">Answer a few questions, then pick a time</h2>
+        <p class="mt-4 text-lg text-text-muted">
+          It takes about 5 minutes. I read every answer before we talk, so we skip the small talk and get straight to your search.
+        </p>
+        <a
+          href="/book-a-call"
+          class="mt-8 inline-flex items-center justify-center rounded-lg bg-blue px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-blue-dark"
+        >
+          Start here
+        </a>
       </div>
     </div>
   </section>

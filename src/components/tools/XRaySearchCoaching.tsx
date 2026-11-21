@@ -22,7 +22,7 @@ function ChipSelect({ options, value, onChange }: { options: string[]; value: st
 
 function EmailCapture({ tool, subject, resultHtml }: { tool: string; subject: string; resultHtml: string }) {
   const [email, setEmail] = useState("");
-  const [subscribe, setSubscribe] = useState(true);
+  const [subscribe, setSubscribe] = useState(false);
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [honeypot, setHoneypot] = useState("");
@@ -65,7 +65,7 @@ function EmailCapture({ tool, subject, resultHtml }: { tool: string; subject: st
         style={{ position: "absolute", left: "-9999px", opacity: 0, height: 0, width: 0, overflow: "hidden" }} />
       <label className="flex items-start gap-2 mt-2 cursor-pointer">
         <input type="checkbox" checked={subscribe} onChange={(e) => setSubscribe(e.target.checked)} className="mt-0.5 accent-blue" />
-        <span className="text-[11px] text-text-muted leading-relaxed">Send me career tips from ClearCareer. Unsubscribe anytime.</span>
+        <span className="text-[11px] text-text-muted leading-relaxed">Also send me career tips and a short series this week about the cost of a long search and ClearCareer's Land and Level Up group. I can unsubscribe at any time.</span>
       </label>
     </div>
   );

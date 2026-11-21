@@ -43,7 +43,7 @@ export default function SeveranceStory() {
     weeklyPay: number;
   } | null>(null);
   const [email, setEmail] = useState("");
-  const [subscribe, setSubscribe] = useState(true);
+  const [subscribe, setSubscribe] = useState(false);
   const [emailSending, setEmailSending] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
   const [honeypot, setHoneypot] = useState("");
@@ -461,7 +461,7 @@ export default function SeveranceStory() {
                       style={{ position: "absolute", left: "-9999px", opacity: 0, height: 0, width: 0, overflow: "hidden" }} />
                     <label className="flex items-start gap-2 cursor-pointer">
                       <input type="checkbox" checked={subscribe} onChange={(e) => setSubscribe(e.target.checked)} className="mt-0.5 accent-blue" />
-                      <span className="text-[11px] text-white/40 leading-relaxed">Send me career tips and job search strategies from ClearCareer. Unsubscribe anytime.</span>
+                      <span className="text-[11px] text-white/40 leading-relaxed">Also send me career tips and a short series this week about the cost of a long search and ClearCareer's Land and Level Up group. I can unsubscribe at any time.</span>
                     </label>
                     {hasEmail ? (
                       <button onClick={handlePrint}
@@ -692,7 +692,7 @@ export default function SeveranceStory() {
                 Get the Layoff Survival Kit
               </a>
               <a
-                href="https://calendly.com/clearcareer/discovery-call"
+                href="/book-a-call"
                 className="inline-flex items-center justify-center rounded-lg border-2 border-white/30 text-white px-8 py-3.5 text-base font-semibold hover:bg-white/10 transition-colors"
               >
                 Book a Free Audit
@@ -845,7 +845,7 @@ export default function SeveranceStory() {
           <div className="section" style={{ padding: "20px", textAlign: "center", background: "white", borderRadius: "12px", border: "2px solid #0161EF", marginBottom: "24px" }}>
             <div style={{ fontSize: "15px", fontWeight: 700, color: "#030620" }}>Not sure where to start? Book a free 20-minute career audit.</div>
             <div style={{ marginTop: "8px" }}>
-              <a href="https://calendly.com/clearcareer/discovery-call" style={{ color: "#0161EF", fontSize: "13px", fontWeight: 600 }}>calendly.com/clearcareer/discovery-call</a>
+              <a href="https://joinclearcareer.com/book-a-call" style={{ color: "#0161EF", fontSize: "13px", fontWeight: 600 }}>joinclearcareer.com/book-a-call</a>
             </div>
           </div>
 

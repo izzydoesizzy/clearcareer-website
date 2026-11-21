@@ -3,6 +3,7 @@
  * Inspired by Stripe, Linear — clean, lots of white space, restrained color.
  */
 import type { EmailData, BuildEmailFn } from '../types.js';
+import { dealPostscript } from '../deal.js';
 import {
   wrapDocument,
   outerTable,
@@ -119,7 +120,7 @@ ${testimonialBlock(data.testimonial.quote, data.testimonial.name, data.testimoni
 ${discoverySection}
 
 <!-- Footer -->
-${footer(data.unsubscribeUrl, { style: 'light' })}
+${footer(data.unsubscribeUrl, { style: 'light', postscript: data.dealPostscript ? dealPostscript('resource', 'light') : '', reason: data.footerReason })}
 
 </table>
 </td></tr>`;

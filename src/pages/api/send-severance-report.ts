@@ -1,6 +1,8 @@
 import type { APIRoute } from 'astro';
+import { withNurture, consentAttributes } from '../../lib/brevo.js';
 import { Resend } from 'resend';
 import { COLORS, FONTS, LOGO, SENDER, SITE_URL, DISCOVERY_CALL_URL } from '../../lib/email/constants.js';
+import { dealPostscriptRow } from '../../lib/email/deal.js';
 
 export const prerender = false;
 
@@ -185,7 +187,9 @@ export const POST: APIRoute = async ({ request }) => {
 
     if (RESEND_API_KEY) {
       const resend = new Resend(RESEND_API_KEY);
-      const html = buildReportEmail(reportData);
+      const baseHtml = buildReportEmail(reportData);
+      // Promotional P.S. only for people who ticked the opt-in box.
+      const html = subscribe === true ? baseHtml.replace('<!-- Footer -->', dealPostscriptRow('tool-report') + '<!-- Footer -->') : baseHtml;
       await resend.emails.send({
         from: `${SENDER.name} <${SENDER.email}>`,
         to: email,
@@ -198,7 +202,7 @@ export const POST: APIRoute = async ({ request }) => {
       await fetch('https://api.brevo.com/v3/contacts', {
         method: 'POST',
         headers: { 'api-key': BREVO_API_KEY, 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({ email, listIds: [SEVERANCE_LIST_ID], updateEnabled: true, attributes: { SOURCE: 'severance-calculator' } }),
+        body: JSON.stringify({ email, listIds: withNurture(SEVERANCE_LIST_ID), updateEnabled: true, attributes: consentAttributes('severance-calculator') }),
       }).catch((err) => console.error('Brevo error:', err));
     }
 

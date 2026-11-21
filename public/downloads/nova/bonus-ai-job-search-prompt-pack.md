@@ -678,7 +678,7 @@ In the Job Search Ignition System, I build all 21 deliverables with you. Persona
 
 <div class="cta-link">
 
-[Book your free discovery call ->](https://calendly.com/clearcareer/discovery-call)
+[Book your free discovery call ->](https://joinclearcareer.com/book-a-call)
 
 </div>
 

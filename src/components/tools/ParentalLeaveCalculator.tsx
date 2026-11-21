@@ -59,7 +59,7 @@ export default function ParentalLeaveCalculator() {
 
   // Email state
   const [email, setEmail] = useState("");
-  const [subscribe, setSubscribe] = useState(true);
+  const [subscribe, setSubscribe] = useState(false);
   const [emailSending, setEmailSending] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
   const [honeypot, setHoneypot] = useState("");
@@ -414,7 +414,7 @@ export default function ParentalLeaveCalculator() {
                       className="mt-0.5 accent-blue"
                     />
                     <span className="text-[11px] text-white/40 leading-relaxed">
-                      Send me career tips and job search strategies from ClearCareer. Unsubscribe anytime.
+                      Also send me career tips and a short series this week about the cost of a long search and ClearCareer's Land and Level Up group. I can unsubscribe at any time.
                     </span>
                   </label>
                   {hasEmail ? (
@@ -559,7 +559,7 @@ export default function ParentalLeaveCalculator() {
           <div className="section" style={{ padding: "20px", textAlign: "center", background: "white", borderRadius: "12px", border: "2px solid #0161EF", marginBottom: "24px" }}>
             <div style={{ fontSize: "15px", fontWeight: 700, color: "#030620" }}>Not sure where to start? Book a free 20-minute career audit.</div>
             <div style={{ marginTop: "8px" }}>
-              <a href="https://calendly.com/clearcareer/discovery-call" style={{ color: "#0161EF", fontSize: "13px", fontWeight: 600 }}>calendly.com/clearcareer/discovery-call</a>
+              <a href="https://joinclearcareer.com/book-a-call" style={{ color: "#0161EF", fontSize: "13px", fontWeight: 600 }}>joinclearcareer.com/book-a-call</a>
             </div>
           </div>
         </div>

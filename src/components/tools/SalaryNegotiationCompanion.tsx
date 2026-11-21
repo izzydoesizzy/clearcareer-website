@@ -212,7 +212,7 @@ function CalculatorPanel() {
       {/* CTA */}
       {hasData && (
         <a
-          href="https://calendly.com/clearcareer/discovery-call"
+          href="https://joinclearcareer.com/book-a-call"
           className="block w-full rounded-lg bg-blue px-4 py-2.5 text-center text-sm font-semibold text-white hover:bg-blue-dark transition-colors"
         >
           Get a Personalized Strategy
@@ -332,7 +332,7 @@ export default function SalaryNegotiationCompanion() {
                   Our program gives you the strategy, the scripts, and the confidence to use them. 200+ coached negotiations, zero rescinded offers.
                 </p>
                 <a
-                  href="https://calendly.com/clearcareer/discovery-call"
+                  href="https://joinclearcareer.com/book-a-call"
                   className="inline-flex items-center mt-3 rounded-lg bg-blue px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-dark transition-colors"
                 >
                   Book a Free Audit

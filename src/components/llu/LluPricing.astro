@@ -10,10 +10,10 @@ const tiers = [
 <section class="llu-band llu-band--navy" id="pricing">
   <div class="llu-wrap">
     <div class="llu-head">
-      <p class="llu-eyebrow">Black Friday pricing, until {offer.dealEndsShort}</p>
+      <p class="llu-eyebrow">{offer.dealLive ? `Black Friday pricing, until ${offer.dealEndsShort}` : "Pricing"}</p>
       <h2 class="llu-h2">Choose your room.</h2>
-      <p class="llu-lead">These are Black Friday prices. {offer.regularFrom}</p>
-      <p class="llu-lead">“{offer.dealLine}”</p>
+      {offer.dealLive && <p class="llu-lead">These are Black Friday prices. {offer.regularFrom}</p>}
+      {offer.dealLive && <p class="llu-lead">“{offer.dealLine}”</p>}
     </div>
 
     <dl class="llu-ruled llu-ruled--3 llu-mt-72">
@@ -27,7 +27,7 @@ const tiers = [
       </div>
       <div>
         <dt class="llu-stat__fig">{offer.group.price}</dt>
-        <dd class="llu-stat__label">The group cohort at the Black Friday price, for your first 3 months. CAD plus HST.</dd>
+        <dd class="llu-stat__label">{offer.dealLive ? "The group cohort at the Black Friday price, for your first 3 months." : "The group cohort, for your first 3 months."} CAD plus HST.</dd>
       </div>
     </dl>
 
@@ -38,9 +38,9 @@ const tiers = [
             <div>
               <p class="llu-eyebrow">{t.name}</p>
               <p class="llu-tier__price llu-mt-16">
-                {t.price} <s class="llu-strike">{t.regular}</s>
+                {t.price} {offer.dealLive && <s class="llu-strike">{t.regular}</s>}
               </p>
-              <p class="llu-bf llu-mt-8">Black Friday price, regular {t.regular}</p>
+              {offer.dealLive && <p class="llu-bf llu-mt-8">Black Friday price, regular {t.regular}</p>}
               <p class="llu-cap llu-mt-8">{t.priceNote}</p>
             </div>
             <div class="llu-tier__for">
@@ -51,10 +51,9 @@ const tiers = [
               {t.includes.map((i) => <li>{i}</li>)}
             </ul>
             <div>
-              <a class="llu-btn llu-btn--wide" href={href} target="_blank" rel="noopener">{CTA_LABEL}</a>
+              <a class="llu-btn llu-btn--wide" href={href} {...(href.startsWith("http") ? { target: "_blank", rel: "noopener" } : {})}>{CTA_LABEL}</a>
               <p class="llu-cap llu-mt-16">
-                <span class="llu-num">{t.seatsLeft} of {t.seatsTotal}</span> seats left. {t.regular} plus HST from
-                December 1.
+                <span class="llu-num">{t.seatsLeft} of {t.seatsTotal}</span> seats left.{offer.dealLive && <> {t.regular} plus HST from December 1.</>}
               </p>
             </div>
           </div>
@@ -64,8 +63,8 @@ const tiers = [
 
     <div class="llu-ruled llu-ruled--3 llu-mt-48">
       <div>
-        <p class="llu-eyebrow">The deadline</p>
-        <p class="llu-mt-8">Black Friday pricing ends {offer.dealEndsLong}. No extensions.</p>
+        <p class="llu-eyebrow">{offer.dealLive ? "The deadline" : "When we start"}</p>
+        <p class="llu-mt-8">{offer.dealLive ? `Black Friday pricing ends ${offer.dealEndsLong}. No extensions.` : `${offer.startDateLong}.`}</p>
       </div>
       <div>
         <p class="llu-eyebrow">Ways to pay</p>
