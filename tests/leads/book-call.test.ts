@@ -1,10 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { cleanAnswers, scoreLead, bookingUrl, QUALIFY, READY, NOT_READY } from '../../src/lib/book-call';
+import { cleanAnswers, scoreLead, bookingUrl, QUALIFY, READY, NOT_READY, STRUGGLES } from '../../src/lib/book-call';
 
 const good = {
   firstName: 'Sam', lastName: 'Lee', email: 'sam@example.com', yearsExperience: 8,
   searchLength: '3-5 months', appsPerWeek: '4-5', totalApplications: 60, interviews: 3,
-  situation: 'Laid off in the last 3 months', country: 'Canada', struggles: ['Interviews'],
+  situation: 'Laid off in the last 3 months', country: 'Canada', struggles: [STRUGGLES[5]],
   challenge: 'No replies', milestones: 'Confidence', callGoal: 'See if it fits', decider: 'Just me',
   start: 'This month', payment: 'Credit card in full', ready: READY,
 };
@@ -32,7 +32,7 @@ describe('book-a-call gate', () => {
   });
 
   it('refuses more than 3 struggles', () => {
-    const { errors } = cleanAnswers({ ...good, struggles: ['Interviews', 'Resume writing', 'Networking', 'Applications'] });
+    const { errors } = cleanAnswers({ ...good, struggles: [STRUGGLES[0], STRUGGLES[1], STRUGGLES[2], STRUGGLES[3]] });
     expect(errors.struggles).toBeTruthy();
   });
 

@@ -22,16 +22,22 @@ export const NOT_READY = "I'm not ready to invest in my results";
 export const SEARCH_LENGTH = ['Less than 1 month', '1-2 months', '3-5 months', '6-7 months', '8-10 months', '11-12 months', '1+ years'];
 export const APPS_PER_WEEK = ['None', '0-1', '2-3', '4-5', '6-10', '10-20'];
 export const STRUGGLES = [
-  'Career direction',
-  'Experience',
-  'Resume writing',
-  'Applications',
-  'Networking',
-  'Interviews',
-  'Salary negotiation',
-  'Lack of Canadian experience',
+  "Career Direction: I feel lost. I'm not sure what I want next",
+  "Experience: I don't have the experience I need for the jobs I want",
+  "Resume Writing: My resume doesn't sound good",
+  "Job Applications: Applying for jobs is overwhelming",
+  "Networking: I find it awkward, difficult, scary, or exhausting",
+  "Interviews: I get interviews, but I don't land the job offer",
+  "Salary Negotiation: I'm afraid to negotiate my salary",
+  'International Applicant: I lack "Canadian Experience"',
   'Other',
 ];
+
+/** Shown to people who are not approved. Same free offer your Typeform sends today. */
+export const ALTERNATIVE = {
+  label: 'Get the ChatGPT Job Search Power Prompts',
+  url: 'https://izzydoesizzy.gumroad.com/l/zqvhh',
+};
 export const SITUATION = ['Laid off in the last 3 months', 'Laid off more than 3 months ago', 'Still employed, quietly searching', 'Other'];
 export const COUNTRY = ['Canada', 'United States', 'Somewhere else'];
 export const DECIDER = ['Just me', 'Me and a partner or family member', 'Someone else is involved'];
@@ -80,8 +86,9 @@ export function cleanAnswers(raw: Record<string, unknown>): { data: BookCallAnsw
   };
 
   const email = str(raw.email, 254);
-  const struggles = Array.isArray(raw.struggles) ? raw.struggles.map((s) => str(s, 80)).filter(Boolean) : [];
+  const struggles = Array.isArray(raw.struggles) ? raw.struggles.map((s) => str(s, 120)).filter(Boolean) : [];
   const pick = (v: unknown, list: string[]) => (list.includes(str(v, 200)) ? str(v, 200) : '');
+  const pickMany = (arr: string[]) => arr.filter((x) => STRUGGLES.includes(x));
 
   const data: BookCallAnswers = {
     firstName: str(raw.firstName, 80),
@@ -98,7 +105,7 @@ export function cleanAnswers(raw: Record<string, unknown>): { data: BookCallAnsw
     interviews: num(raw.interviews),
     situation: pick(raw.situation, SITUATION),
     country: pick(raw.country, COUNTRY),
-    struggles,
+    struggles: pickMany(struggles),
     challenge: str(raw.challenge),
     milestones: str(raw.milestones),
     motivation: Number.isNaN(num(raw.motivation)) ? null : num(raw.motivation),
@@ -119,7 +126,7 @@ export function cleanAnswers(raw: Record<string, unknown>): { data: BookCallAnsw
   need('interviews', data.interviews >= 0, 'Please enter a number.');
   need('situation', !!data.situation, 'Please choose one.');
   need('country', !!data.country, 'Please choose one.');
-  need('struggles', struggles.length >= 1 && struggles.length <= 3, 'Please pick 1 to 3.');
+  need('struggles', data.struggles.length >= 1 && data.struggles.length <= 3, 'Please pick 1 to 3.');
   need('challenge', data.challenge.length >= 3, 'Please tell me a little.');
   need('milestones', data.milestones.length >= 3, 'Please tell me a little.');
   need('callGoal', data.callGoal.length >= 3, 'Please tell me a little.');

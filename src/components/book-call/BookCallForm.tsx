@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import {
-  READY, NOT_READY, SEARCH_LENGTH, APPS_PER_WEEK, STRUGGLES, SITUATION, COUNTRY, DECIDER, START, PAYMENT,
+  READY, NOT_READY, ALTERNATIVE, SEARCH_LENGTH, APPS_PER_WEEK, STRUGGLES, SITUATION, COUNTRY, DECIDER, START, PAYMENT,
 } from '../../lib/book-call';
 import { CONSENT_TEXT } from '../../lib/consent';
 
@@ -124,8 +124,10 @@ export default function BookCallForm() {
             ? "Land and Level Up works best for people with several years of experience, so a call wouldn't be the best use of your time right now."
             : "That's okay. The right program at the wrong time isn't the right program."}
         </p>
-        <p>I read every answer. I'll email you with what I'd do in your spot. In the meantime, these free resources are a good start.</p>
-        <p><a className="llu-btn" href="/resources">See the free resources</a></p>
+        <p>I read every answer, and I'll email you with what I'd do in your spot.</p>
+        <p>Try this instead while you decide:</p>
+        <p><a className="llu-btn" href={ALTERNATIVE.url}>{ALTERNATIVE.label}</a></p>
+        <p><a className="llu-link" href="/resources">Or browse the free resources</a></p>
       </div>
     );
   }
@@ -142,7 +144,7 @@ export default function BookCallForm() {
             <Field id="lastName" label="Last name (optional)"><input {...text('lastName', { autoComplete: 'family-name' })} /></Field>
           </div>
           <Field id="email" label="Email address" error={errors.email}><input {...text('email', { type: 'email', autoComplete: 'email', inputMode: 'email' })} /></Field>
-          <Field id="phone" label="Phone number (optional)"><input {...text('phone', { type: 'tel', autoComplete: 'tel' })} /></Field>
+          <Field id="phone" label="Best phone number for a short call or text (optional)"><input {...text('phone', { type: 'tel', autoComplete: 'tel' })} /></Field>
           <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="llu-hp" value={v.website} onChange={(e) => set('website', e.target.value)} />
           <label className="llu-consent">
             <input type="checkbox" checked={v.consent} onChange={(e) => set('consent', e.target.checked)} />
@@ -174,8 +176,8 @@ export default function BookCallForm() {
           <Field id="struggles" label="What are your biggest struggles? Pick up to 3." error={errors.struggles}><Choices name="struggles" multi max={3} options={STRUGGLES} value={v.struggles} onChange={(x) => set('struggles', x)} /></Field>
           <Field id="challenge" label="What's your biggest challenge right now, and why?" error={errors.challenge}><textarea {...text('challenge', { rows: 4 })} className="llu-input" /></Field>
           <Field id="milestones" label="Besides landing a job, what else would make this a success?" error={errors.milestones}><textarea {...text('milestones', { rows: 3 })} className="llu-input" /></Field>
-          <Field id="motivation" label="How motivated are you to make changes? (optional)" hint="0 is very discouraged. 5 is extremely motivated.">
-            <Choices name="motivation" options={['0', '1', '2', '3', '4', '5']} value={v.motivation === undefined ? '' : String(v.motivation)} onChange={(x) => set('motivation', Number(x))} />
+          <Field id="motivation" label="How motivated are you to make changes and put in the work to get the results you want? (optional)" hint="1 is very discouraged. 5 is extremely motivated.">
+            <Choices name="motivation" options={['1', '2', '3', '4', '5']} value={v.motivation === undefined ? '' : String(v.motivation)} onChange={(x) => set('motivation', Number(x))} />
           </Field>
         </div>
       )}
@@ -191,8 +193,8 @@ export default function BookCallForm() {
 
       {step === 4 && (
         <div className="llu-stack">
-          <p className="llu-lead">Land and Level Up is a paid group. Pricing is in the low four figures, and there's a 7-day money-back guarantee as long as your rebuild work hasn't started.</p>
-          <Field id="ready" label="Are you ready to invest in your results?" error={errors.ready}>
+          <p className="llu-lead">Land and Level Up is a high-touch program with a low four-figure investment. There's a 7-day money-back guarantee, as long as your rebuild work hasn't started.</p>
+          <Field id="ready" label="Are you in a place where you're ready to invest that amount to achieve the goals you shared?" error={errors.ready}>
             <Choices name="ready" options={[READY, NOT_READY]} value={v.ready} onChange={(x) => set('ready', x)} />
           </Field>
         </div>
