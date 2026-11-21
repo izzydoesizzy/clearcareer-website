@@ -667,7 +667,7 @@ export default function RunwayStory() {
                 className="inline-flex items-center justify-center rounded-lg bg-white text-blue px-8 py-3.5 text-base font-semibold hover:bg-gray-100 hover:shadow-lg transition-all">
                 Book a Free Call
               </a>
-              <a href="/programs/jsis"
+              <a href="/land-and-level-up"
                 className="inline-flex items-center justify-center rounded-lg border-2 border-white/30 text-white px-8 py-3.5 text-base font-semibold hover:bg-white/10 transition-colors">
                 Explore the Program
               </a>
@@ -774,8 +774,8 @@ export default function RunwayStory() {
               The Job Search Ignition System: 8 weeks of group coaching for senior professionals. Done-for-you resume, LinkedIn profile, outreach templates, and three 1:1 sessions with Izzy. Cohorts capped at 10.
             </div>
             <div style={{ marginTop: "12px" }}>
-              <a href="https://joinclearcareer.com/programs/jsis" style={{ display: "inline-block", background: "#030620", color: "white", padding: "10px 24px", borderRadius: "8px", fontSize: "13px", fontWeight: 600, textDecoration: "none" }}>
-                Explore the Program &rarr; joinclearcareer.com/programs/jsis
+              <a href="https://joinclearcareer.com/land-and-level-up" style={{ display: "inline-block", background: "#030620", color: "white", padding: "10px 24px", borderRadius: "8px", fontSize: "13px", fontWeight: 600, textDecoration: "none" }}>
+                Explore the Program &rarr; joinclearcareer.com/land-and-level-up
               </a>
             </div>
           </div>

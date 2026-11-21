@@ -110,7 +110,7 @@ export const sampleSpreadsheet: EmailData = {
       'Weekly group calls and WhatsApp support for 8 weeks',
     ],
     buttonText: 'Learn About the Program',
-    buttonUrl: `${SITE_URL}/programs/jsis`,
+    buttonUrl: `${SITE_URL}/land-and-level-up`,
   },
   testimonial: {
     quote: '1 year unemployed. Employed in 3 weeks.',

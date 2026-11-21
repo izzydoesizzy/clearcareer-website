@@ -46,7 +46,8 @@ describe('agreement', () => {
     expect(filled).toContain('Sam &lt;Lee&gt;');
   });
   it('states the guarantee, no job promise and recordings, with no em dashes', () => {
-    for (const s of ['7 days after you paid', 'No one can promise you a job', 'Recordings', 'Ontario', 'Klarna']) expect(filled).toContain(s);
+    for (const s of ['7 days after you paid', 'No one can promise you a job', 'Recordings', 'Ontario', 'Klarna', 'runs for 6 weeks', 'January 6, 13, 20 and 27', '$49 a month']) expect(filled).toContain(s);
+    expect(filled).not.toMatch(/3 months|\$50/);
     expect(filled).not.toMatch(/—/);
     expect(filled).not.toMatch(/3 payments|three payments/);
   });
@@ -74,10 +75,10 @@ describe('reminders and renewal', () => {
     expect(onboardingDue(enrolled, at('2026-11-29'), { agreement: true, intake: false }, ['remind1'])).toEqual(['remind2']);
     expect(onboardingDue(enrolled, at('2026-11-29'), { agreement: true, intake: true }, [])).toEqual([]);
   });
-  it('sends the renewal once, in week 11', () => {
-    expect(renewalDue(at('2027-02-18'), [])).toBe(false);
-    expect(renewalDue(at('2027-02-19'), [])).toBe(true);
-    expect(renewalDue(at('2027-02-19'), ['renewal'])).toBe(false);
+  it('sends the renewal once, a week before the last call', () => {
+    expect(renewalDue(at('2027-01-19'), [])).toBe(false);
+    expect(renewalDue(at('2027-01-20'), [])).toBe(true);
+    expect(renewalDue(at('2027-01-20'), ['renewal'])).toBe(false);
   });
   it('has no calendar until the call time is set', () => {
     expect(callsIcs()).toBe('');
@@ -134,5 +135,24 @@ describe('email gallery page', () => {
     expect(html).toContain('<meta name="robots" content="noindex, nofollow">');
     expect(html).toContain('https://joinclearcareer.com/images/email/izzy-144.jpg');
     expect(buildGallery({ previewImages: true })).toContain('raw.githubusercontent.com');
+  });
+});
+
+describe('6-week program', async () => {
+  const { offer } = await import('../../src/data/llu');
+  const { callsIcs } = await import('../../src/lib/onboarding');
+  const { welcome } = await import('../../src/data/llu');
+  it('says 6 weeks and $49 a month, never 3 months or $50', () => {
+    expect(offer.afterProgram).toBe('After the 6 weeks, you can stay on for $49 a month. Leave any time.');
+    expect(offer.group.priceNote).toContain('full 6 weeks');
+    expect(JSON.stringify(offer)).not.toMatch(/3 months|\$50/);
+  });
+  it('builds 6 calendar calls and skips the holiday weeks', () => {
+    welcome.callStart = '12:00';
+    const ics = callsIcs(new Date('2026-11-21T12:00:00Z'));
+    welcome.callStart = '';
+    expect(ics).toContain('DTSTART;TZID=America/Toronto:20261209T120000');
+    expect(ics).toContain('UNTIL=20270128T045959Z');
+    expect(ics).toContain('EXDATE;TZID=America/Toronto:20261223T120000,20261230T120000');
   });
 });

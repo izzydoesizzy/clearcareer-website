@@ -128,7 +128,7 @@ function buildReportEmail(data: {
             The Job Search Ignition System: 8 weeks of group coaching for senior professionals. Done-for-you resume, LinkedIn, outreach templates, and three 1:1 sessions with Izzy. Cohorts capped at 10.
           </div>
           <div style="margin-top:16px;">
-            <a href="${SITE_URL}/programs/jsis" style="display:inline-block; background:${COLORS.navy}; color:white; padding:12px 28px; border-radius:8px; font-size:14px; font-weight:600; text-decoration:none;">
+            <a href="${SITE_URL}/land-and-level-up" style="display:inline-block; background:${COLORS.navy}; color:white; padding:12px 28px; border-radius:8px; font-size:14px; font-weight:600; text-decoration:none;">
               Explore the Program &rarr;
             </a>
           </div>

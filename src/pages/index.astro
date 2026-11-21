@@ -3,19 +3,18 @@ import PageLayout from "@layouts/PageLayout.astro";
 import Hero from "@components/Hero.astro";
 import StatsBar from "@components/StatsBar.astro";
 import TrustBar from "@components/TrustBar.astro";
-import DeliverableGrid from "@components/DeliverableGrid.astro";
 import TestimonialCard from "@components/TestimonialCard.astro";
 import TestimonialOutcomeCard from "@components/TestimonialOutcomeCard.astro";
 import TestimonialCarousel from "@components/TestimonialCarousel.astro";
 import TestimonialModal from "@components/TestimonialModal.astro";
 import PricingCard from "@components/PricingCard.astro";
+import { offer } from "@data/llu";
 import CTASection from "@components/CTASection.astro";
 import { getCollection } from "astro:content";
 
 import IndustryStatCard from "@components/IndustryStatCard.astro";
 import { formatName } from "@utils/format-name";
 import SourceCitations from "@components/SourceCitations.astro";
-import deliverableData from "@data/deliverables.json";
 import allTestimonials from "@data/testimonials.json";
 
 // Sort by sortPriority to get top transformations first (ones with taglines for outcome cards)
@@ -36,7 +35,7 @@ const latestPosts = (await getCollection("blog", ({ data }) => {
 
 <PageLayout
   title="ClearCareer | Career Coaching That Gets Results"
-  description="200+ professionals coached. $1.2M+ in collective raises. 8-week done-with-you job search accelerator with 20+ career assets. Book a free call."
+  description="200+ professionals coached. $1.2M+ in collective raises. Land and Level Up: a 6-week group program where we rebuild your resume and LinkedIn together and work your search live. Book a free call."
 >
   {/* ── 1. Hero ── */}
   <Hero
@@ -45,9 +44,9 @@ const latestPosts = (await getCollection("blog", ({ data }) => {
     photoAlt="Izzy Piyale-Sheard, career coach"
     eyebrow="Career Coaching That Actually Works"
     headline="Stop Grinding Alone. Start Getting <span class='bg-gradient-to-r from-blue to-blue-light bg-clip-text text-transparent'>Results.</span>"
-    subheadline="200+ professionals coached. $1.2M+ in collective raises. An 8-week system that turns stuck job seekers into confident candidates with 20+ done-for-you assets."
+    subheadline="200+ professionals coached. $1.2M+ in collective raises. Land and Level Up is my 6-week group program: we rebuild your resume and LinkedIn together, then work your real search live every Wednesday."
     primaryCTA={{ text: "Book a Free Call", href: "/book-a-call" }}
-    secondaryCTA={{ text: "See the Program", href: "/programs/jsis" }}
+    secondaryCTA={{ text: "See Land and Level Up", href: "/land-and-level-up" }}
     trustText="Free 20-minute call · No commitment · No pressure"
   />
 
@@ -210,9 +209,9 @@ const latestPosts = (await getCollection("blog", ({ data }) => {
             <div class="relative z-10 mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-blue text-sm font-bold text-white">
               2
             </div>
-            <h3 class="mt-4 text-base font-bold text-navy">Get Your Custom Plan</h3>
+            <h3 class="mt-4 text-base font-bold text-navy">Join Your Cohort</h3>
             <p class="mt-2 text-sm leading-relaxed text-text-muted">
-              AI-powered intake interview builds your personalized job search toolkit.
+              Pick the group cohort, or add a private 1:1 rebuild with Izzy. Small group, 16 seats.
             </p>
           </div>
 
@@ -221,9 +220,9 @@ const latestPosts = (await getCollection("blog", ({ data }) => {
             <div class="relative z-10 mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-blue text-sm font-bold text-white">
               3
             </div>
-            <h3 class="mt-4 text-base font-bold text-navy">Build With Your Cohort</h3>
+            <h3 class="mt-4 text-base font-bold text-navy">Rebuild and Work Your Search</h3>
             <p class="mt-2 text-sm leading-relaxed text-text-muted">
-              8 weeks of group calls, WhatsApp support, and 1:1 sessions with Izzy.
+              6 weeks of live Wednesday calls, a resume and LinkedIn rebuild workshop, and the AI Achievement Interviewer.
             </p>
           </div>
 
@@ -234,38 +233,10 @@ const latestPosts = (await getCollection("blog", ({ data }) => {
             </div>
             <h3 class="mt-4 text-base font-bold text-navy">Land Your Next Role</h3>
             <p class="mt-2 text-sm leading-relaxed text-text-muted">
-              Walk away with 20+ done-for-you assets and a strategy that works.
+              Leave with a resume and LinkedIn that show your value, and a search that works. Stay on after for $49 a month.
             </p>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  {/* ── 6. Deliverables Preview ── */}
-  <section class="py-16 md:py-24">
-    <div class="mx-auto max-w-[1080px] px-4 sm:px-6 lg:px-8">
-      <div class="text-center" data-animate="fade-up">
-        <p class="mb-4 text-sm font-semibold uppercase tracking-widest text-blue">What's Included</p>
-        <h2 class="font-display text-[clamp(1.5rem,3vw,2.25rem)] leading-[1.15] text-navy">
-          20+ Assets Built For You, Not Assigned as Homework
-        </h2>
-        <p class="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-text-muted">
-          Every asset below is built with you, not assigned as homework. That's what sets ClearCareer apart.
-        </p>
-      </div>
-
-      <div class="mt-12">
-        <DeliverableGrid pillars={deliverableData.pillars} />
-      </div>
-
-      <div class="mt-10 text-center">
-        <a
-          href="/programs/jsis"
-          class="inline-flex items-center justify-center rounded-lg bg-blue px-8 py-3.5 text-base font-semibold text-white transition-colors hover:bg-blue-dark"
-        >
-          See the Full Program
-        </a>
       </div>
     </div>
   </section>
@@ -380,56 +351,38 @@ const latestPosts = (await getCollection("blog", ({ data }) => {
     </section>
   )}
 
-  {/* ── 9. Programs Overview ── */}
+  {/* ── 9. Land and Level Up ── */}
   <section class="bg-gradient-to-br from-slate-50 to-blue-bg/50 py-16 md:py-24">
     <div class="mx-auto max-w-[1080px] px-4 sm:px-6 lg:px-8">
       <div class="text-center" data-animate="fade-up">
-        <p class="mb-4 text-sm font-semibold uppercase tracking-widest text-blue">Programs</p>
+        <p class="mb-4 text-sm font-semibold uppercase tracking-widest text-blue">Land and Level Up</p>
         <h2 class="font-display text-[clamp(1.5rem,3vw,2.25rem)] leading-[1.15] text-navy">
-          Choose Your Path
+          6 Weeks. Two Ways to Join.
         </h2>
+        <p class="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-text-muted">
+          We start {offer.startDateLong}. {offer.seatsTotal} founding seats. CAD plus HST.
+        </p>
       </div>
 
-      <div class="mx-auto mt-12 grid max-w-[1080px] grid-cols-1 gap-8 md:grid-cols-3">
+      <div class="mx-auto mt-12 grid max-w-[760px] grid-cols-1 gap-8 md:grid-cols-2">
         <PricingCard
-          tier="Profile Overhaul"
-          price="$1,997"
-          features={[
-            "Setup call with Izzy",
-            "Resume rewrite (15-20 CAR achievements)",
-            "Full LinkedIn rebuild",
-            "AI-enhanced professional headshot",
-          ]}
-          ctaText="Learn More"
-          ctaHref="/programs/jsis#pricing"
-        />
-        <PricingCard
-          tier="Group Coaching &middot; 8 Weeks"
-          price="$2,497"
-          features={[
-            "Everything in Profile Overhaul",
-            "50+ target companies + salary research",
-            "Full outreach + interview toolkit",
-            "8 weeks of group calls + community",
-            "WhatsApp async support",
-          ]}
-          ctaText="Learn More"
-          ctaHref="/programs/jsis#pricing"
+          tier={offer.group.name}
+          price={offer.group.price}
+          originalPrice={offer.dealLive ? offer.group.regular : undefined}
+          features={offer.group.includes}
+          ctaText="See the details"
+          ctaHref="/land-and-level-up#pricing"
           featured={true}
-          paymentPlan="Or 3 payments of $899/mo"
+          paymentPlan="Or monthly with Klarna"
         />
         <PricingCard
-          tier="VIP 1:1"
-          price="$4,997"
-          features={[
-            "Everything in Group Coaching",
-            "3 private 1:1 sessions with Izzy",
-            "Priority WhatsApp support",
-            "Interview coaching + negotiation scripts",
-            "LinkedIn posts written for you",
-          ]}
-          ctaText="Learn More"
-          ctaHref="/programs/jsis#pricing"
+          tier={offer.private.name}
+          price={offer.private.price}
+          originalPrice={offer.dealLive ? offer.private.regular : undefined}
+          features={offer.private.includes}
+          ctaText="See the details"
+          ctaHref="/land-and-level-up#pricing"
+          paymentPlan="Or monthly with Klarna"
         />
       </div>
     </div>
@@ -440,7 +393,7 @@ const latestPosts = (await getCollection("blog", ({ data }) => {
     heading="Ready to Stop Grinding <span class='bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent'>Alone?</span>"
     body="Book a free 20-minute call. We'll look at where your search is stuck and whether working together is the right fit."
     primaryCTA={{ text: "Book a Free Call", href: "/book-a-call" }}
-    secondaryCTA={{ text: "See the Program", href: "/programs/jsis" }}
+    secondaryCTA={{ text: "See Land and Level Up", href: "/land-and-level-up" }}
     variant="gradient"
   />
 

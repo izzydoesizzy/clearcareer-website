@@ -128,8 +128,8 @@ export function onboardingDue(enrolledAt: Date, now: Date, done: { agreement: bo
   return out;
 }
 
-/** Week 11 of the cohort: the "stay on for $50 a month" email. */
-export const RENEWAL_ON = new Date('2027-02-19T12:00:00Z');
+/** One week before the last call (Jan 27): the "stay on for $49 a month" email. */
+export const RENEWAL_ON = new Date('2027-01-20T12:00:00Z');
 export function renewalDue(now: Date, sent: string[]): boolean {
   return torontoDay(now) >= torontoDay(RENEWAL_ON) && torontoDay(now) <= torontoDay(RENEWAL_ON) + 3 && !sent.includes('renewal');
 }
@@ -150,7 +150,9 @@ export function callsIcs(now: Date = new Date()): string {
     `DTSTAMP:${stamp}`,
     `DTSTART;TZID=America/Toronto:20261209T${hh}${mm}00`,
     `DTEND;TZID=America/Toronto:20261209T${endH}${mm}00`,
-    'RRULE:FREQ=WEEKLY;BYDAY=WE;COUNT=13',
+    // 6 calls: Dec 9 and 16, then Jan 6 to 27. No calls Dec 23 and 30.
+    'RRULE:FREQ=WEEKLY;BYDAY=WE;UNTIL=20270128T045959Z',
+    `EXDATE;TZID=America/Toronto:20261223T${hh}${mm}00,20261230T${hh}${mm}00`,
     'SUMMARY:Land and Level Up: Wednesday group call',
     `DESCRIPTION:Bring what happened this week. Join: ${welcome.callUrl || 'link in your welcome email'}`,
     ...(welcome.callUrl ? [`URL:${welcome.callUrl}`, `LOCATION:${welcome.callUrl}`] : []),

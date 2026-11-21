@@ -62,8 +62,8 @@ export function predictObjections(a: BookCallAnswers, d: Diagnosis): Objection[]
     say: [
       "You're right to watch every dollar. Can I show you how I think about it?",
       monthly > 0
-        ? `You're aiming for ${money(a.targetSalary)}. That's about ${money(monthly)} a month before tax.${!employed && MONTHS[a.searchLength] ? ` You've been searching ${a.searchLength}, so roughly ${money(monthly * MONTHS[a.searchLength])} so far.` : ''} The ${rec.program.toLowerCase()} is ${money(recPrice)} plus HST for 3 months. That's ${daysLabel(recPrice / (a.targetSalary / WORKING_DAYS))} of your target pay. And if we negotiate even 5% more in your next offer, that's ${money(a.targetSalary * 0.05)} a year, every year. Laura got $22,000 more. Chris got $25k more.`
-        : `The ${rec.program.toLowerCase()} is ${money(recPrice)} plus HST for 3 months. What's one month of your next salary worth?`,
+        ? `You're aiming for ${money(a.targetSalary)}. That's about ${money(monthly)} a month before tax.${!employed && MONTHS[a.searchLength] ? ` You've been searching ${a.searchLength}, so roughly ${money(monthly * MONTHS[a.searchLength])} so far.` : ''} The ${rec.program.toLowerCase()} is ${money(recPrice)} plus HST for the full 6 weeks. That's ${daysLabel(recPrice / (a.targetSalary / WORKING_DAYS))} of your target pay. And if we negotiate even 5% more in your next offer, that's ${money(a.targetSalary * 0.05)} a year, every year. Laura got $22,000 more. Chris got $25k more.`
+        : `The ${rec.program.toLowerCase()} is ${money(recPrice)} plus HST for the full 6 weeks. What's one month of your next salary worth?`,
       `If we get you hired even a few weeks sooner, it pays for itself. And you can spread it out: Klarna at checkout splits it into monthly payments for up to 12 months.`,
       `${offer.guarantee}`,
     ],
@@ -168,7 +168,7 @@ export function predictObjections(a: BookCallAnswers, d: Diagnosis): Objection[]
       title: '"What if I land a job in the first month?"',
       likelihood: 'Possible',
       why: `${a.interviews} interviews and ${a.offers} offers so far.`,
-      strategy: 'Celebrate it. They keep the seat for 3 months and use it for negotiation and starting well.',
+      strategy: 'Celebrate it. They keep the seat for the 6 weeks and use it for negotiation and starting well.',
       say: [...objections[6].a, proof(6)],
     });
   }
@@ -322,13 +322,14 @@ ${objHtml}
 
 ${H('Facts you can use')}
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-${row('Prices', `${PROGRAMS.group.name}: ${money(price(PROGRAMS.group))}. ${PROGRAMS.private.name}: ${money(price(PROGRAMS.private))}. CAD plus HST, first 3 months.${live ? ` Regular ${money(PROGRAMS.group.regular)} and ${money(PROGRAMS.private.regular)}.` : ''}`)}
+${row('Prices', `${PROGRAMS.group.name}: ${money(price(PROGRAMS.group))}. ${PROGRAMS.private.name}: ${money(price(PROGRAMS.private))}. CAD plus HST, full 6 weeks.${live ? ` Regular ${money(PROGRAMS.group.regular)} and ${money(PROGRAMS.private.regular)}.` : ''}`)}
 ${live ? row('Deadline', `Black Friday pricing ends ${esc(offer.dealEndsLong)}. No extensions. ${esc(offer.dealLine)}`) : ''}
 ${row('Start', `${esc(offer.startDateLong)}. First Wednesday call ${esc(offer.firstCallLong)}.`)}
 ${row('Seats', `${offer.seatsLeft} of ${offer.seatsTotal} left (group ${offer.group.seatsLeft}, private ${offer.private.seatsLeft}), as set by hand in src/data/llu.ts. Only quote it if it's current.`)}
 ${row('Paying', esc(offer.paying))}
 ${row('Guarantee', esc(offer.guarantee))}
-${row('After 3 months', esc(offer.afterThreeMonths))}
+${row('Length', `${esc(offer.programLength)}. Calls ${esc(offer.callDates)}. ${esc(offer.holidayBreak)}`)}
+${row('After the 6 weeks', esc(offer.afterProgram))}
 </table>
 
 ${H("Don'ts")}

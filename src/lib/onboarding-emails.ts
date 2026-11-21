@@ -6,7 +6,7 @@
  *   remind1/2      2 and 4 days later, if the agreement or intake isn't done
  *   signedCopy     right after signing, with the signed PDF attached
  *   intakeDone     right after intake: Mighty Networks invite, Wednesday call, calendar file
- *   renewal        week 11: stay on for $50 a month, and an optional testimonial
+ *   renewal        a week before the last call: stay on for $49 a month, and an optional testimonial
  * To Izzy:
  *   enrolment      right after payment
  *   intakeBrief    right after intake, with the folder link
@@ -39,12 +39,12 @@ export function welcomeEmail(c: { firstName: string; program: string; token: str
   const html = cshell('Welcome', 'Two quick things this week, about 15 minutes.', `
 ${P(`Hey ${esc(c.firstName)},`)}
 ${P(`You did it. Welcome to Land and Level Up${c.program === PROGRAMS.private.name ? ', with the private 1:1 rebuild' : ''}.`)}
-${P("I know this wasn't a small decision. You looked hard at your search, decided you deserved backup, and backed yourself. That's exactly the energy we need for the next 3 months.")}
+${P("I know this wasn't a small decision. You looked hard at your search, decided you deserved backup, and backed yourself. That's exactly the energy we need for the next 6 weeks.")}
 ${firstSteps(c.token)}
 ${H('What happens next')}
 ${list([
   `As soon as your intake is in, you get your invite to our ${esc(welcome.communityName)} community and the Wednesday call details.`,
-  `We start ${esc(offer.startDateLong)}. Our first Wednesday call is ${esc(offer.firstCallLong)}${callTimeLabel() ? ` at ${esc(callTimeLabel())}` : ''}.`,
+  `We start ${esc(offer.startDateLong)}. Six live calls on Wednesdays${callTimeLabel() ? ` at ${esc(callTimeLabel())}` : ''}: ${esc(offer.callDates)}. ${esc(offer.holidayBreak)}`,
   "Before then, I'll go through everything you send me, so we hit the ground running.",
 ])}
 ${P(`Your receipt comes separately from Stripe. ${esc(offer.guarantee)}`)}
@@ -88,7 +88,7 @@ export function intakeDoneEmail(c: { firstName: string; program: string }) {
       ? `<strong>Join the community.</strong> ${link(`Join us on ${welcome.communityName}`, welcome.communityUrl)}, then post a quick hello: your target role, and one win you're proud of.`
       : `<strong>Your ${esc(welcome.communityName)} invite</strong> is on its way from me before ${esc(offer.startDateShort)}.`,
     time && welcome.callUrl
-      ? `<strong>Save the Wednesday call.</strong> Every Wednesday at ${esc(time)}, starting ${esc(offer.firstCallLong)}. ${link('Join link', welcome.callUrl)}. ${link('Add all 13 calls to your calendar', `${SITE_URL}/llu-calls.ics`)}.`
+      ? `<strong>Save the Wednesday call.</strong> Wednesdays at ${esc(time)}: ${esc(offer.callDates)}. ${link('Join link', welcome.callUrl)}. ${link('Add all 6 calls to your calendar', `${SITE_URL}/llu-calls.ics`)}.`
       : `<strong>The Wednesday call details</strong> (time and link) are coming from me before ${esc(offer.firstCallLong)}.`,
     ...(c.program === PROGRAMS.private.name
       ? [welcome.privateBookingUrl
@@ -107,12 +107,12 @@ ${sign('See you Wednesday,')}`);
 }
 
 export function renewalEmail(c: { firstName: string; renewalUrl?: string }) {
-  const subject = `${c.firstName}, what's next after month 3`;
-  const html = cshell('Month 3', 'Stay on for $50 a month, and one small favour.', `
+  const subject = `${c.firstName}, what's next after our 6 weeks`;
+  const html = cshell('Next steps', 'Stay on for $49 a month, and one small favour.', `
 ${P(`Hey ${esc(c.firstName)},`)}
-${P("We're coming up on the end of our 3 months together. However your search is going right now, I'm proud of how you've shown up.")}
-${P(`${esc(offer.afterThreeMonths)} You keep the community, the Wednesday calls and the tools.`)}
-${c.renewalUrl ? button('Stay on for $50 a month', c.renewalUrl) : P('Reply "stay" and I\'ll send you the link.')}
+${P(`We're coming up on the end of our 6 weeks together. Our last call is ${esc(offer.lastCallLong)}. However your search is going right now, I'm proud of how you've shown up.`)}
+${P(`${esc(offer.afterProgram)} You keep the community, the Wednesday calls and the tools.`)}
+${c.renewalUrl ? button('Stay on for $49 a month', c.renewalUrl) : P('Reply "stay" and I\'ll send you the link.')}
 ${H('One favour')}
 ${P("If Land and Level Up helped you, would you write 2 or 3 sentences about it? What it was like before, what changed, and where you are now. Hit reply with it. I'll only share it publicly if you say yes, and you can choose to use just your first name and last initial.")}
 ${sign('Thank you, truly,')}`);
