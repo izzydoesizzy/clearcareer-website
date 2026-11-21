@@ -1,0 +1,45 @@
+---
+/**
+ * Book a call: answers first, booking second.
+ * Only people who pass the checks in src/lib/book-call.ts are shown the Calendly link.
+ */
+import BaseLayout from "@layouts/BaseLayout.astro";
+import "@/styles/llu.css";
+import BookCallForm from "@components/book-call/BookCallForm.tsx";
+
+const title = "Book a call | ClearCareer";
+const description = "Answer a few questions so our call is useful. Then pick a time.";
+---
+
+<BaseLayout title={title} description={description} noindex>
+  <div class="llu">
+    <header class="llu-nav">
+      <div class="llu-wrap llu-nav__row">
+        <a class="llu-nav__brand" href="/land-and-level-up" aria-label="ClearCareer, Land and Level Up">
+          <span>
+            <span class="llu-nav__mark">ClearCareer</span>
+            <span class="llu-nav__sub">Land and Level Up</span>
+          </span>
+        </a>
+      </div>
+    </header>
+    <main id="main-content">
+      <section class="llu-band">
+        <div class="llu-wrap">
+          <div class="llu-head">
+            <p class="llu-eyebrow">Before we talk</p>
+            <h1 class="llu-h2">A few questions, so our call is useful.</h1>
+            <p class="llu-lead">It takes about 5 minutes. I read every answer before we talk.</p>
+          </div>
+          <div class="llu-form-wrap llu-mt-48">
+            <BookCallForm client:load />
+          </div>
+          <p class="llu-cap llu-center llu-mt-32">
+            ClearCareer, 710-20 Tubman Ave, Toronto, ON M5A 0M8, Canada. Your answers go to ClearCareer only.
+            <a class="llu-link llu-link--cap llu-link--inline" href="/privacy">Privacy</a>
+          </p>
+        </div>
+      </section>
+    </main>
+  </div>
+</BaseLayout>
