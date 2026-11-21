@@ -123,7 +123,7 @@ export default function BookCallForm() {
             <p>{result.diagnosis.text}</p>
           </div>
         )}
-        <p className="llu-cap">Have a credit card nearby on the call, in case we decide it's a fit. You can also pay with Klarna.</p>
+        <p className="llu-cap">The call is where we decide together whether the program is right for you. Come with your questions, bring anyone who's part of the decision, and have your card or Klarna handy so a yes doesn't have to wait.</p>
         <p><a className="llu-btn" href={result.bookingUrl}>Pick a time</a></p>
         {result.checkout && (
           <div className="llu-surface llu-stack">

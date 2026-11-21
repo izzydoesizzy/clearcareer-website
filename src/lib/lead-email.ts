@@ -21,7 +21,7 @@ const pct = (n: number) => (!Number.isFinite(n) ? '-' : n === 0 ? '0%' : `${(n *
 export const CALL_PLAN: Record<Diagnosis['key'], string[]> = {
   positioning: [
     'Which two job titles are you applying for most? Do they match your last two roles?',
-    'Pull up your resume. Does the top third show results with numbers?',
+    'When an application goes nowhere, what do you think the recruiter saw in the first 10 seconds?',
     'Where do you find roles: job boards only, or do you reach out to people too?',
   ],
   interviewing: [

@@ -165,3 +165,18 @@ describe('launch sequence', async () => {
     expect(all.filter((e) => e.html.includes('/book-a-call')).length).toBe(9);
   });
 });
+
+describe('call email consistency', () => {
+  const c = { firstName: 'Sam', email: 'sam@example.com', callAt: new Date('2026-12-03T19:00:00Z'), answers: { ...data, program: 'Not sure yet', yearsExperience: 11 }, diagnosisKey: diagnose(data).key };
+  it('booked subject matches the email, and asks to bring decision-makers once', () => {
+    const e = bookedEmail(c);
+    expect(e.subject).toBe("You're booked, Sam. Here's what our call is for");
+    expect((e.html.match(/part of (the|this) decision/g) || []).length).toBe(1);
+  });
+  it('follow-up math uses the same program as the first button', () => {
+    const h = followUp1Email(c, { group: 'https://buy.stripe.com/g', private: 'https://buy.stripe.com/p' }).html;
+    const first = h.indexOf('Group plus private 1:1 rebuild, $1,797');
+    expect(first).toBeGreaterThan(-1);
+    expect(h).toContain('the group plus private 1:1 rebuild costs about 4 working days');
+  });
+});
