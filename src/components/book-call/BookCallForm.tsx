@@ -5,7 +5,7 @@ import {
 import { CONSENT_TEXT } from '../../lib/consent';
 
 type Values = Record<string, any>;
-type Result = { qualified: boolean; reason: string; bookingUrl?: string } | null;
+type Result = { qualified: boolean; reason: string; diagnosis?: { key: string; title: string; text: string }; bookingUrl?: string } | null;
 
 const STEPS = ['About you', 'Your search', 'Where you are', 'The call', 'Investment'];
 
@@ -66,17 +66,20 @@ export default function BookCallForm() {
     const req = (k: string, msg = 'Please fill this in.') => { if (!String(v[k] ?? '').trim()) e[k] = msg; };
     const numReq = (k: string) => { if (v[k] === '' || v[k] === undefined || Number.isNaN(Number(v[k])) || Number(v[k]) < 0) e[k] = 'Please enter a number.'; };
     if (i === 0) {
-      req('firstName');
+      req('firstName'); req('lastName', 'Please enter your last name.');
+      if (String(v.phone || '').replace(/\D/g, '').length < 7) e.phone = 'Please enter a phone number I can reach you on.';
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v.email || '').trim())) e.email = 'Please enter a valid email address.';
     }
     if (i === 1) {
+      req('jobTitles', 'Please tell me which roles.'); numReq('targetSalary');
       numReq('yearsExperience'); req('searchLength', 'Please choose one.'); req('appsPerWeek', 'Please choose one.');
-      numReq('totalApplications'); numReq('interviews');
+      numReq('totalApplications'); numReq('interviews'); numReq('offers');
+      if (!e.interviews && !e.offers && Number(v.offers) > Number(v.interviews)) e.offers = "Offers can't be more than interviews. Please check.";
     }
     if (i === 2) {
       req('situation', 'Please choose one.'); req('country', 'Please choose one.');
       if (!v.struggles?.length) e.struggles = 'Please pick 1 to 3.';
-      req('challenge'); req('milestones');
+      req('challenge'); req('milestones'); req('motivation', 'Please choose 1 to 5.');
     }
     if (i === 3) { req('callGoal'); req('decider', 'Please choose one.'); req('start', 'Please choose one.'); req('payment', 'Please choose one.'); }
     if (i === 4) req('ready', 'Please choose one.');
@@ -112,6 +115,13 @@ export default function BookCallForm() {
         <p className="llu-eyebrow">You're a fit</p>
         <h2 className="llu-h2">Thank you, {v.firstName}. Let's talk.</h2>
         <p className="llu-lead">I've got your answers. Pick a time that works for you. Your name and email are already filled in.</p>
+        {result.diagnosis && (
+          <div className="llu-surface llu-stack">
+            <p className="llu-eyebrow">What I'm seeing in your answers</p>
+            <p className="llu-title">{result.diagnosis.title}</p>
+            <p>{result.diagnosis.text}</p>
+          </div>
+        )}
         <p className="llu-cap">Have a credit card nearby on the call, in case we decide it's a fit. You can also pay with Klarna.</p>
         <p><a className="llu-btn" href={result.bookingUrl}>Pick a time</a></p>
       </div>
@@ -124,6 +134,13 @@ export default function BookCallForm() {
             ? "Land and Level Up works best for people with several years of experience, so a call wouldn't be the best use of your time right now."
             : "That's okay. The right program at the wrong time isn't the right program."}
         </p>
+        {result.diagnosis && (
+          <div className="llu-surface llu-stack">
+            <p className="llu-eyebrow">What I'm seeing in your answers</p>
+            <p className="llu-title">{result.diagnosis.title}</p>
+            <p>{result.diagnosis.text}</p>
+          </div>
+        )}
         <p>I read every answer, and I'll email you with what I'd do in your spot.</p>
         <p>Try this instead while you decide:</p>
         <p><a className="llu-btn" href={ALTERNATIVE.url}>{ALTERNATIVE.label}</a></p>
@@ -141,10 +158,10 @@ export default function BookCallForm() {
         <div className="llu-stack">
           <div className="llu-grid llu-grid--2">
             <Field id="firstName" label="First name" error={errors.firstName}><input {...text('firstName', { autoComplete: 'given-name' })} /></Field>
-            <Field id="lastName" label="Last name (optional)"><input {...text('lastName', { autoComplete: 'family-name' })} /></Field>
+            <Field id="lastName" label="Last name" error={errors.lastName}><input {...text('lastName', { autoComplete: 'family-name' })} /></Field>
           </div>
           <Field id="email" label="Email address" error={errors.email}><input {...text('email', { type: 'email', autoComplete: 'email', inputMode: 'email' })} /></Field>
-          <Field id="phone" label="Best phone number for a short call or text (optional)"><input {...text('phone', { type: 'tel', autoComplete: 'tel' })} /></Field>
+          <Field id="phone" label="Best phone number for a short call or text" error={errors.phone}><input {...text('phone', { type: 'tel', autoComplete: 'tel' })} /></Field>
           <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="llu-hp" value={v.website} onChange={(e) => set('website', e.target.value)} />
           <label className="llu-consent">
             <input type="checkbox" checked={v.consent} onChange={(e) => set('consent', e.target.checked)} />
@@ -155,9 +172,9 @@ export default function BookCallForm() {
 
       {step === 1 && (
         <div className="llu-stack">
-          <Field id="jobTitles" label="Job titles you're interested in (optional)"><textarea {...text('jobTitles', { rows: 2 })} className="llu-input" /></Field>
+          <Field id="jobTitles" label="What job titles are you interested in?" error={errors.jobTitles}><textarea {...text('jobTitles', { rows: 2 })} className="llu-input" /></Field>
           <div className="llu-grid llu-grid--2">
-            <Field id="targetSalary" label="Target annual salary (optional)"><input {...text('targetSalary', { type: 'number', inputMode: 'numeric', min: 0 })} /></Field>
+            <Field id="targetSalary" label="Target annual salary" error={errors.targetSalary}><input {...text('targetSalary', { type: 'number', inputMode: 'numeric', min: 0 })} /></Field>
             <Field id="yearsExperience" label="Years of experience" error={errors.yearsExperience}><input {...text('yearsExperience', { type: 'number', inputMode: 'numeric', min: 0 })} /></Field>
           </div>
           <Field id="searchLength" label="How long have you been actively job searching?" error={errors.searchLength}><Choices name="searchLength" options={SEARCH_LENGTH} value={v.searchLength} onChange={(x) => set('searchLength', x)} /></Field>
@@ -166,6 +183,7 @@ export default function BookCallForm() {
             <Field id="totalApplications" label="Total applications so far" error={errors.totalApplications}><input {...text('totalApplications', { type: 'number', inputMode: 'numeric', min: 0 })} /></Field>
             <Field id="interviews" label="Interview invitations so far" error={errors.interviews}><input {...text('interviews', { type: 'number', inputMode: 'numeric', min: 0 })} /></Field>
           </div>
+          <Field id="offers" label="How many job offers have you received?" error={errors.offers}><input {...text('offers', { type: 'number', inputMode: 'numeric', min: 0 })} /></Field>
         </div>
       )}
 
@@ -176,7 +194,7 @@ export default function BookCallForm() {
           <Field id="struggles" label="What are your biggest struggles? Pick up to 3." error={errors.struggles}><Choices name="struggles" multi max={3} options={STRUGGLES} value={v.struggles} onChange={(x) => set('struggles', x)} /></Field>
           <Field id="challenge" label="What's your biggest challenge right now, and why?" error={errors.challenge}><textarea {...text('challenge', { rows: 4 })} className="llu-input" /></Field>
           <Field id="milestones" label="Besides landing a job, what else would make this a success?" error={errors.milestones}><textarea {...text('milestones', { rows: 3 })} className="llu-input" /></Field>
-          <Field id="motivation" label="How motivated are you to make changes and put in the work to get the results you want? (optional)" hint="1 is very discouraged. 5 is extremely motivated.">
+          <Field id="motivation" label="How motivated are you to make changes and put in the work to get the results you want?" error={errors.motivation} hint="1 is very discouraged. 5 is extremely motivated.">
             <Choices name="motivation" options={['1', '2', '3', '4', '5']} value={v.motivation === undefined ? '' : String(v.motivation)} onChange={(x) => set('motivation', Number(x))} />
           </Field>
         </div>

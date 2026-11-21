@@ -32,6 +32,8 @@ const attrs = [
   ['LEAD_SEARCH_LENGTH', 'text'],
   ['LEAD_APPS_TOTAL', 'float'],
   ['LEAD_INTERVIEWS', 'float'],
+  ['LEAD_OFFERS', 'float'],
+  ['LEAD_DIAGNOSIS', 'text'],
   ['LEAD_TARGET_SALARY', 'float'],
   ['LEAD_STRUGGLES', 'text'],
   ['LEAD_CHALLENGE', 'text'],

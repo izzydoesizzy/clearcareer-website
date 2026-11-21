@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { cleanAnswers, scoreLead, bookingUrl, type BookCallAnswers } from '../../lib/book-call.js';
+import { cleanAnswers, scoreLead, bookingUrl, diagnose, type BookCallAnswers, type Diagnosis } from '../../lib/book-call.js';
 import { consentAttributes } from '../../lib/brevo.js';
 
 export const prerender = false;
@@ -25,16 +25,17 @@ function limited(ip: string): boolean {
   return recent.length > 8;
 }
 
-function rows(a: BookCallAnswers, qualified: boolean, reason: string): string {
+function rows(a: BookCallAnswers, qualified: boolean, reason: string, d: Diagnosis): string {
   const r = (label: string, value: unknown) =>
     `<tr><td style="padding:6px 12px 6px 0;color:#64748b;vertical-align:top;white-space:nowrap;">${esc(label)}</td><td style="padding:6px 0;color:#0f172a;">${esc(value) || '-'}</td></tr>`;
   return `<table role="presentation" cellpadding="0" cellspacing="0" style="font-family:Arial,sans-serif;font-size:14px;line-height:1.5;">
 ${r('Verdict', qualified ? 'QUALIFIED. Booking link shown.' : `Not yet (${reason}). No booking link shown.`)}
+${r('Diagnosis', `${d.title}. ${d.callFocus}`)}
 ${r('Name', `${a.firstName} ${a.lastName || ''}`)}${r('Email', a.email)}${r('Phone', a.phone)}
 ${r('Email permission', a.consent ? 'Yes, ticked' : 'No')}
 ${r('Country', a.country)}${r('Situation', a.situation)}${r('Job titles', a.jobTitles)}${r('Target salary', a.targetSalary)}
 ${r('Years of experience', a.yearsExperience)}${r('Searching for', a.searchLength)}${r('Applications per week', a.appsPerWeek)}
-${r('Total applications', a.totalApplications)}${r('Interviews', a.interviews)}
+${r('Total applications', a.totalApplications)}${r('Interviews', a.interviews)}${r('Offers', a.offers)}
 ${r('Biggest struggles', a.struggles.join(', '))}${r('Biggest challenge', a.challenge)}${r('Success besides a job', a.milestones)}
 ${r('Motivation (0-5)', a.motivation)}${r('Wants from the call', a.callGoal)}${r('Who decides', a.decider)}
 ${r('Could start', a.start)}${r('Would pay by', a.payment)}${r('Ready to invest', a.ready)}
@@ -56,6 +57,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     if (Object.keys(errors).length) return json({ error: 'Please check your answers.', errors }, 400);
 
     const verdict = scoreLead(data);
+    const diagnosis = diagnose(data);
     const submittedAt = new Date().toISOString();
     let saved = false;
     let notified = false;
@@ -76,7 +78,9 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
         LEAD_SEARCH_LENGTH: data.searchLength,
         LEAD_APPS_TOTAL: data.totalApplications,
         LEAD_INTERVIEWS: data.interviews,
-        LEAD_TARGET_SALARY: data.targetSalary ?? '',
+        LEAD_OFFERS: data.offers,
+        LEAD_DIAGNOSIS: diagnosis.key,
+        LEAD_TARGET_SALARY: data.targetSalary,
         LEAD_STRUGGLES: data.struggles.join(', '),
         LEAD_CHALLENGE: data.challenge,
         LEAD_CALL_GOAL: data.callGoal,
@@ -117,8 +121,8 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
           sender: { name: 'ClearCareer Bookings', email: 'izzy@joinclearcareer.com' },
           to: [{ email: NOTIFY_TO }],
           replyTo: { email: data.email, name: `${data.firstName} ${data.lastName || ''}`.trim() },
-          subject: `${verdict.qualified ? 'QUALIFIED' : 'Not yet'}: ${data.firstName} ${data.lastName || ''} wants a call`.trim(),
-          htmlContent: rows(data, verdict.qualified, verdict.reason),
+          subject: `${verdict.qualified ? 'QUALIFIED' : 'Not yet'} (${diagnosis.title}): ${data.firstName} ${data.lastName || ''}`.trim(),
+          htmlContent: rows(data, verdict.qualified, verdict.reason, diagnosis),
         }),
       });
       notified = mail.ok;
@@ -132,6 +136,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     return json({
       qualified: verdict.qualified,
       reason: verdict.reason,
+      diagnosis: { key: diagnosis.key, title: diagnosis.title, text: diagnosis.text },
       ...(verdict.qualified ? { bookingUrl: bookingUrl(data) } : {}),
     });
   } catch (err) {

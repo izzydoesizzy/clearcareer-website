@@ -46,23 +46,24 @@ export const PAYMENT = ['Credit card in full', 'Klarna (monthly)', "I'd want to 
 
 export interface BookCallAnswers {
   firstName: string;
-  lastName?: string;
+  lastName: string;
   email: string;
-  phone?: string;
+  phone: string;
   consent?: boolean;
-  jobTitles?: string;
-  targetSalary?: number | null;
+  jobTitles: string;
+  targetSalary: number;
   yearsExperience: number;
   searchLength: string;
   appsPerWeek: string;
   totalApplications: number;
   interviews: number;
+  offers: number;
   situation: string;
   country: string;
   struggles: string[];
   challenge: string;
   milestones: string;
-  motivation?: number | null;
+  motivation: number;
   callGoal: string;
   decider: string;
   start: string;
@@ -97,18 +98,19 @@ export function cleanAnswers(raw: Record<string, unknown>): { data: BookCallAnsw
     phone: str(raw.phone, 40),
     consent: raw.consent === true,
     jobTitles: str(raw.jobTitles, 500),
-    targetSalary: Number.isNaN(num(raw.targetSalary)) ? null : num(raw.targetSalary),
+    targetSalary: num(raw.targetSalary),
     yearsExperience: num(raw.yearsExperience),
     searchLength: pick(raw.searchLength, SEARCH_LENGTH),
     appsPerWeek: pick(raw.appsPerWeek, APPS_PER_WEEK),
     totalApplications: num(raw.totalApplications),
     interviews: num(raw.interviews),
+    offers: num(raw.offers),
     situation: pick(raw.situation, SITUATION),
     country: pick(raw.country, COUNTRY),
     struggles: pickMany(struggles),
     challenge: str(raw.challenge),
     milestones: str(raw.milestones),
-    motivation: Number.isNaN(num(raw.motivation)) ? null : num(raw.motivation),
+    motivation: num(raw.motivation),
     callGoal: str(raw.callGoal),
     decider: pick(raw.decider, DECIDER),
     start: pick(raw.start, START),
@@ -118,12 +120,18 @@ export function cleanAnswers(raw: Record<string, unknown>): { data: BookCallAnsw
   };
 
   need('firstName', !!data.firstName, 'Please enter your first name.');
+  need('lastName', !!data.lastName, 'Please enter your last name.');
+  need('phone', (data.phone || '').replace(/\D/g, '').length >= 7, 'Please enter a phone number I can reach you on.');
+  need('jobTitles', (data.jobTitles || '').length >= 2, 'Please tell me which roles.');
+  need('targetSalary', data.targetSalary >= 0, 'Please enter a number.');
   need('email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email), 'Please enter a valid email address.');
   need('yearsExperience', data.yearsExperience >= 0 && data.yearsExperience <= 60, 'Please enter your years of experience.');
   need('searchLength', !!data.searchLength, 'Please choose one.');
   need('appsPerWeek', !!data.appsPerWeek, 'Please choose one.');
   need('totalApplications', data.totalApplications >= 0, 'Please enter a number.');
   need('interviews', data.interviews >= 0, 'Please enter a number.');
+  need('offers', data.offers >= 0 && data.offers <= data.interviews, 'Offers can\'t be more than interviews. Please check.');
+  need('motivation', data.motivation >= 1 && data.motivation <= 5, 'Please choose 1 to 5.');
   need('situation', !!data.situation, 'Please choose one.');
   need('country', !!data.country, 'Please choose one.');
   need('struggles', data.struggles.length >= 1 && data.struggles.length <= 3, 'Please pick 1 to 3.');
@@ -136,6 +144,69 @@ export function cleanAnswers(raw: Record<string, unknown>): { data: BookCallAnsw
   need('ready', !!data.ready, 'Please choose one.');
 
   return { data, errors };
+}
+
+/**
+ * Diagnosis: what is most likely holding this search back, from the numbers.
+ * Edit DIAGNOSE to tune the thresholds.
+ */
+export const DIAGNOSE = {
+  /** Applying "a lot": this many per week, or this many in total. */
+  highPerWeek: ['4-5', '6-10', '10-20'],
+  highTotal: 40,
+  /** Interviews per application below this means the applications aren't landing. */
+  lowInterviewRate: 0.1,
+  /** At least this many interviews before we blame interviewing. */
+  minInterviewsForInterviewing: 3,
+  /** Offers per interview below this means interviews aren't converting. */
+  lowOfferRate: 0.2,
+};
+
+export type DiagnosisKey = 'clarity' | 'positioning' | 'interviewing' | 'tuning';
+export interface Diagnosis {
+  key: DiagnosisKey;
+  title: string;
+  /** Shown to the person. */
+  text: string;
+  /** Shown to Izzy, as a suggested focus for the call. */
+  callFocus: string;
+}
+
+const DIAGNOSES: Record<DiagnosisKey, Omit<Diagnosis, 'key'>> = {
+  clarity: {
+    title: 'Clarity first',
+    text: "You're applying a little right now. That usually means the next step isn't clear yet: which roles, which industry, and what story to tell. Clarity first, then volume.",
+    callFocus: 'Low volume. Help them choose a target role and industry, then build a weekly application habit.',
+  },
+  positioning: {
+    title: 'Targeting, your resume, or both',
+    text: "You're applying a lot and hearing little. That points to one of two things, or both: you're aiming at the wrong roles, or your resume isn't showing your value. We'd test both.",
+    callFocus: 'High volume, few interviews. Check target roles first, then resume and LinkedIn. Likely both.',
+  },
+  interviewing: {
+    title: 'An interviewing problem',
+    text: "You're getting interviews but not offers. That's an interviewing problem, not a resume problem. Your story and your answers are where the gains are.",
+    callFocus: 'Getting interviews, not offers. Focus on interview stories, follow-ups and negotiation. The resume is working.',
+  },
+  tuning: {
+    title: 'Fine-tuning',
+    text: "Your numbers look healthy. The gains from here are in fine-tuning, and in negotiating the offer when it comes.",
+    callFocus: 'Numbers look healthy. Focus on fine-tuning and salary negotiation.',
+  },
+};
+
+export function diagnose(a: Pick<BookCallAnswers, 'appsPerWeek' | 'totalApplications' | 'interviews' | 'offers'>): Diagnosis {
+  const apps = a.totalApplications;
+  const highVolume = DIAGNOSE.highPerWeek.includes(a.appsPerWeek) || apps >= DIAGNOSE.highTotal;
+  const lowRate = apps > 0 && a.interviews / apps < DIAGNOSE.lowInterviewRate;
+  const notConverting = a.interviews >= DIAGNOSE.minInterviewsForInterviewing && a.offers / a.interviews < DIAGNOSE.lowOfferRate;
+  let key: DiagnosisKey;
+  // Order matters. Applying a lot with almost no interviews is the biggest bottleneck, so it comes first.
+  if (highVolume && lowRate) key = 'positioning';
+  else if (notConverting) key = 'interviewing';
+  else if (!highVolume) key = 'clarity';
+  else key = 'tuning';
+  return { key, ...DIAGNOSES[key] };
 }
 
 export type Verdict = { qualified: boolean; reason: 'ok' | 'not-ready' | 'experience' };
