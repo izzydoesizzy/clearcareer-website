@@ -125,3 +125,14 @@ describe('payment wording', () => {
     for (const f of files) expect(readFileSync(f, 'utf8'), f).not.toMatch(/3 payments|three payments|split it into payments/);
   });
 });
+
+describe('email gallery page', () => {
+  it('shows all 31 emails and tells search engines to stay away', async () => {
+    const { buildGallery } = await import('../../src/lib/email/gallery');
+    const html = buildGallery();
+    expect((html.match(/<section id="e/g) || []).length).toBe(31);
+    expect(html).toContain('<meta name="robots" content="noindex, nofollow">');
+    expect(html).toContain('https://joinclearcareer.com/images/email/izzy-144.jpg');
+    expect(buildGallery({ previewImages: true })).toContain('raw.githubusercontent.com');
+  });
+});
