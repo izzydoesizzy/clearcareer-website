@@ -1,4 +1,4 @@
-import { COLORS, FONTS, SITE_URL, SOCIAL, LOGO } from './constants.js';
+import { COLORS, FONTS, SITE_URL, SOCIAL, LOGO, BUSINESS_ADDRESS } from './constants.js';
 
 /**
  * Wraps email content in a full HTML document with dark mode support,
@@ -218,6 +218,10 @@ export function footer(
     textColor?: string;
     linkColor?: string;
     style?: 'light' | 'dark';
+    /** HTML for a short P.S. shown above the social links. Only for people who opted in. */
+    postscript?: string;
+    /** Why the person is getting this email. */
+    reason?: string;
   } = {},
 ): string {
   const {
@@ -225,6 +229,8 @@ export function footer(
     textColor = COLORS.slate500,
     linkColor = COLORS.blue,
     style: footerStyle = 'light',
+    postscript = '',
+    reason = "You're getting this because you asked for a free resource from ClearCareer.",
   } = options;
 
   const isDark = footerStyle === 'dark';
@@ -238,6 +244,7 @@ export function footer(
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:${bg};border-radius:0 0 12px 12px;" class="email-footer-bg">
 <tr><td style="padding:28px 40px;text-align:center;" class="email-padding">
 
+${postscript}
 <!-- Social Links -->
 <table role="presentation" cellpadding="0" cellspacing="0" align="center" style="margin-bottom:16px;">
 <tr>
@@ -256,7 +263,8 @@ export function footer(
 
 <p style="margin:0 0 4px;color:${text};font-size:13px;">Izzy Piyale-Sheard | <a href="${SITE_URL}" style="color:${link};text-decoration:none;">ClearCareer</a></p>
 <p style="margin:0 0 12px;color:${text};font-size:12px;line-height:1.5;">Helping professionals land jobs they love, faster.</p>
-<p style="margin:0;color:${text};font-size:11px;opacity:0.7;">You're getting this because you downloaded a resource or purchased a product. <a href="${unsubscribeUrl}" style="color:${text};text-decoration:underline;">Unsubscribe</a></p>
+<p style="margin:0 0 6px;color:${text};font-size:11px;opacity:0.85;">${BUSINESS_ADDRESS}</p>
+<p style="margin:0;color:${text};font-size:11px;opacity:0.85;">${reason} <a href="${unsubscribeUrl}" style="color:${text};text-decoration:underline;">Unsubscribe</a></p>
 </td></tr>
 </table>
 </td></tr>`;

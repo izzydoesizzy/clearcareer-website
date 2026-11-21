@@ -61,3 +61,6 @@ export const SENDER = {
   name: 'Izzy from ClearCareer',
   email: 'izzy@joinclearcareer.com',
 };
+
+/** Required in marketing emails (CASL, CAN-SPAM). */
+export const BUSINESS_ADDRESS = 'ClearCareer, 710-20 Tubman Ave, Toronto, ON M5A 0M8, Canada';

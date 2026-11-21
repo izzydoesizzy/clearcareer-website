@@ -1,4 +1,5 @@
 ---
+import { CONSENT_TEXT } from '../lib/consent';
 import BaseLayout from "@layouts/BaseLayout.astro";
 
 interface Props {
@@ -82,7 +83,11 @@ const currentYear = new Date().getFullYear();
             {ctaText}
           </button>
         </form>
-        <p class="mt-2 text-xs text-text-muted">Plus weekly career tips from ClearCareer. Unsubscribe anytime.</p>
+        <label class="mx-auto mt-3 flex max-w-md items-start gap-2 text-left">
+  <input type="checkbox" class="marketing-consent mt-1 h-4 w-4 shrink-0 accent-blue" />
+  <span class="consent-text text-xs text-text-muted">{CONSENT_TEXT}</span>
+</label>
+<p class="mx-auto mt-2 max-w-md text-xs text-text-muted">Your free resource is sent either way.</p>
 
         <!-- Social Proof -->
         <p class="mt-6 text-sm font-medium text-text-muted">
@@ -123,7 +128,11 @@ const currentYear = new Date().getFullYear();
             {ctaText}
           </button>
         </form>
-        <p class="mt-2 text-xs text-text-muted">Plus weekly career tips from ClearCareer. Unsubscribe anytime.</p>
+        <label class="mx-auto mt-3 flex max-w-md items-start gap-2 text-left">
+  <input type="checkbox" class="marketing-consent mt-1 h-4 w-4 shrink-0 accent-blue" />
+  <span class="consent-text text-xs text-text-muted">{CONSENT_TEXT}</span>
+</label>
+<p class="mx-auto mt-2 max-w-md text-xs text-text-muted">Your free resource is sent either way.</p>
       </div>
     </section>
 
@@ -182,13 +191,16 @@ const currentYear = new Date().getFullYear();
 
       function handleSubmit(email, btn) {
         if (!email || !btn) return;
+        var f = btn.closest('form');
+        var cb = f ? f.querySelector('.marketing-consent') : null;
+        var consent = !!(cb && cb.checked);
         btn.textContent = 'Sending...';
         btn.setAttribute('disabled', 'true');
 
         fetch('/api/subscribe', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: email, source: source }),
+          body: JSON.stringify({ email: email, source: source, consent: consent }),
         })
         .then(function(res) {
           if (res.ok) {

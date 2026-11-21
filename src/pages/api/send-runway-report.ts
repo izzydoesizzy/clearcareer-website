@@ -1,6 +1,8 @@
 import type { APIRoute } from 'astro';
+import { withNurture, consentAttributes } from '../../lib/brevo.js';
 import { Resend } from 'resend';
 import { COLORS, FONTS, LOGO, SENDER, SITE_URL, DISCOVERY_CALL_URL } from '../../lib/email/constants.js';
+import { dealPostscriptRow } from '../../lib/email/deal.js';
 
 export const prerender = false;
 
@@ -179,7 +181,9 @@ export const POST: APIRoute = async ({ request }) => {
     // 1. Send the report email via Resend
     if (RESEND_API_KEY) {
       const resend = new Resend(RESEND_API_KEY);
-      const html = buildReportEmail(reportData);
+      const baseHtml = buildReportEmail(reportData);
+      // Promotional P.S. only for people who ticked the opt-in box.
+      const html = subscribe === true ? baseHtml.replace('<!-- Footer -->', dealPostscriptRow('tool-report') + '<!-- Footer -->') : baseHtml;
       await resend.emails.send({
         from: `${SENDER.name} <${SENDER.email}>`,
         to: email,
@@ -199,9 +203,9 @@ export const POST: APIRoute = async ({ request }) => {
         },
         body: JSON.stringify({
           email,
-          listIds: [RUNWAY_LIST_ID],
+          listIds: withNurture(RUNWAY_LIST_ID),
           updateEnabled: true,
-          attributes: { SOURCE: 'runway-calculator' },
+          attributes: consentAttributes('runway-calculator'),
         }),
       }).catch((err) => console.error('Brevo error:', err));
     }

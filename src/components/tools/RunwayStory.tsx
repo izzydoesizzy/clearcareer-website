@@ -162,7 +162,7 @@ export default function RunwayStory() {
   const [sideIncome, setSideIncome] = useState("0");
   const [revealed, setRevealed] = useState(false);
   const [email, setEmail] = useState("");
-  const [subscribe, setSubscribe] = useState(true);
+  const [subscribe, setSubscribe] = useState(false);
   const [emailSending, setEmailSending] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
   const [honeypot, setHoneypot] = useState("");
@@ -566,7 +566,7 @@ export default function RunwayStory() {
                       <input type="checkbox" checked={subscribe} onChange={(e) => setSubscribe(e.target.checked)}
                         className="mt-0.5 accent-blue" />
                       <span className="text-[11px] text-white/40 leading-relaxed">
-                        Send me career tips and job search strategies from ClearCareer. Unsubscribe anytime.
+                        Also send me career tips and a short series this week about the cost of a long search and ClearCareer's Land and Level Up group. I can unsubscribe at any time.
                       </span>
                     </label>
                     {email.includes("@") ? (

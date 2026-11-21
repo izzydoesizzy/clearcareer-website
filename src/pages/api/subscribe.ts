@@ -1,10 +1,13 @@
 import type { APIRoute } from 'astro';
 import { buildBoldConversion, SITE_URL, DISCOVERY_CALL_URL } from '../../lib/email/index.js';
 import type { EmailData } from '../../lib/email/types.js';
+import { CONSENT_TEXT, NEWSLETTER_CONSENT_TEXT, CONSENT_VERSION } from '../../lib/consent.js';
 
 export const prerender = false;
 
 const BREVO_API_KEY = import.meta.env.BREVO_API_KEY;
+// Brevo list that starts the week-long nurture automation. Only people who ticked the box go on it.
+const NURTURE_LIST_ID = Number(import.meta.env.BREVO_NURTURE_LIST_ID) || 0;
 
 const LIST_IDS: Record<string, number> = {
   'make-it-count': 3,
@@ -42,7 +45,8 @@ const TESTIMONIALS: { quote: string; name: string; outcome: string }[] = [
   { quote: '12 months searching. Got an offer + $6K negotiated increase.', name: 'Jorge Garboza', outcome: 'Offer + $6K negotiated increase' },
 ];
 
-// ── Upsell Blocks (no Community — ever) ──────────────────────────────────
+// ── Upsell Blocks ─────────────────────────────────────────────────────────
+// Land and Level Up (community) is now promoted by a one-line P.S., and only to people who opted in.
 
 type UpsellGroup = 'vault' | 'jsis' | 'layoff-kit';
 
@@ -216,7 +220,7 @@ const LEAD_MAGNETS: Record<string, {
 
 // ── Email Sending ──────────────────────────────────────────────────────────
 
-function buildEmailData(magnet: typeof LEAD_MAGNETS[string], index: number): EmailData {
+function buildEmailData(magnet: typeof LEAD_MAGNETS[string], index: number, consent: boolean): EmailData {
   const upsellGroup = CTA_TO_UPSELL[magnet.ctaGroup] || 'vault';
   const upsell = UPSELL_BLOCKS[upsellGroup];
   const testimonial = TESTIMONIALS[index % TESTIMONIALS.length];
@@ -252,16 +256,21 @@ function buildEmailData(magnet: typeof LEAD_MAGNETS[string], index: number): Ema
       url: DISCOVERY_CALL_URL,
     },
     unsubscribeUrl: '{{unsubscribe}}',
+    // The Black Friday P.S. is promotional, so it only goes to people who opted in.
+    dealPostscript: consent,
+    footerReason: consent
+      ? "You're getting this because you asked for a free resource and agreed to get emails from ClearCareer."
+      : "You're getting this one email because you asked for a free resource from ClearCareer.",
   };
 }
 
-async function sendDeliveryEmail(email: string, source: string): Promise<void> {
+async function sendDeliveryEmail(email: string, source: string, consent: boolean): Promise<void> {
   const magnet = LEAD_MAGNETS[source];
   if (!magnet) return;
 
   const magnetKeys = Object.keys(LEAD_MAGNETS);
   const index = magnetKeys.indexOf(source);
-  const emailData = buildEmailData(magnet, index >= 0 ? index : 0);
+  const emailData = buildEmailData(magnet, index >= 0 ? index : 0, consent);
   const html = buildBoldConversion(emailData);
 
   await fetch('https://api.brevo.com/v3/smtp/email', {
@@ -284,6 +293,8 @@ export const POST: APIRoute = async ({ request }) => {
   try {
     const body = await request.json();
     const { email, source, website: honeypot } = body;
+    // Consent must be an explicit true from an unticked box. Anything else counts as no consent.
+    const consent = body.consent === true;
 
     // Honeypot: bots fill this hidden field, real users don't
     if (honeypot) {
@@ -310,35 +321,51 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
 
-    // 1. Add contact to Brevo list
-    const brevoRes = await fetch('https://api.brevo.com/v3/contacts', {
-      method: 'POST',
-      headers: {
-        'api-key': BREVO_API_KEY,
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-      body: JSON.stringify({
-        email,
-        listIds: [listId],
-        updateEnabled: true,
-        attributes: {
-          SOURCE: source || 'website',
-        },
-      }),
-    });
+    // 1. Add contact to Brevo. The resource list always; the nurture list only with consent.
+    const brevoHeaders = {
+      'api-key': BREVO_API_KEY,
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    };
+    const listIds = consent && NURTURE_LIST_ID ? [listId, NURTURE_LIST_ID] : [listId];
+    const consentWording = source === 'newsletter' ? NEWSLETTER_CONSENT_TEXT : CONSENT_TEXT;
+    const attributes: Record<string, string | boolean> = {
+      SOURCE: source || 'website',
+      MARKETING_CONSENT: consent,
+    };
+    if (consent) {
+      attributes.CONSENT_DATE = new Date().toISOString();
+      attributes.CONSENT_SOURCE = source || 'website';
+      attributes.CONSENT_VERSION = CONSENT_VERSION;
+      attributes.CONSENT_WORDING = consentWording;
+    }
 
-    // Accept success or duplicate contact
-    const contactOk = brevoRes.ok || brevoRes.status === 204;
-    if (!contactOk) {
+    const postContact = (withAttributes: boolean) =>
+      fetch('https://api.brevo.com/v3/contacts', {
+        method: 'POST',
+        headers: brevoHeaders,
+        body: JSON.stringify({
+          email,
+          listIds,
+          updateEnabled: true,
+          ...(withAttributes ? { attributes } : {}),
+        }),
+      });
+
+    let brevoRes = await postContact(true);
+    if (!brevoRes.ok && brevoRes.status !== 204) {
       const brevoBody = await brevoRes.text();
-      if (!(brevoRes.status === 400 && brevoBody.includes('already exist'))) {
+      if (brevoRes.status === 400 && brevoBody.toLowerCase().includes('attribute')) {
+        // A contact field has not been created in Brevo yet. Never lose the signup over it.
+        console.error('Brevo attribute error (run scripts/brevo-setup.mjs):', brevoBody);
+        brevoRes = await postContact(false);
+      } else if (!(brevoRes.status === 400 && brevoBody.includes('already exist'))) {
         console.error('Brevo contact error:', brevoRes.status, brevoBody);
       }
     }
 
     // 2. Send delivery email (fire and forget, don't block the response)
-    sendDeliveryEmail(email, source).catch((err) => {
+    sendDeliveryEmail(email, source, consent).catch((err) => {
       console.error('Delivery email error:', err);
     });
 

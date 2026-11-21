@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import { withNurture, consentAttributes } from '../../lib/brevo.js';
 import { Resend } from 'resend';
 import { buildBoldConversion, SENDER, SITE_URL, DISCOVERY_CALL_URL } from '../../lib/email/index.js';
 import type { EmailData } from '../../lib/email/types.js';
@@ -79,6 +80,11 @@ export const POST: APIRoute = async ({ request }) => {
         url: DISCOVERY_CALL_URL,
       },
       extraContent: resultHtml,
+      // Promotional P.S. only for people who ticked the opt-in box.
+      dealPostscript: subscribe === true,
+      footerReason: subscribe === true
+        ? "You're getting this because you used a free ClearCareer tool and agreed to get emails."
+        : "You're getting this one email because you used a free ClearCareer tool.",
     };
 
     // Send via Resend
@@ -98,7 +104,7 @@ export const POST: APIRoute = async ({ request }) => {
       await fetch('https://api.brevo.com/v3/contacts', {
         method: 'POST',
         headers: { 'api-key': BREVO_API_KEY, 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({ email, listIds: [TOOLS_LIST_ID], updateEnabled: true, attributes: { SOURCE: `tool-${tool}` } }),
+        body: JSON.stringify({ email, listIds: withNurture(TOOLS_LIST_ID), updateEnabled: true, attributes: consentAttributes(`tool-${tool}`) }),
       }).catch((err) => console.error('Brevo error:', err));
     }
 

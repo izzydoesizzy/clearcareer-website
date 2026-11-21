@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CONSENT_TEXT } from "../../lib/consent";
 
 interface EmailCaptureFormProps {
   productSlug: string;
@@ -14,6 +15,7 @@ export default function EmailCaptureForm({
   ctaText = "Get Free Access",
 }: EmailCaptureFormProps) {
   const [email, setEmail] = useState("");
+  const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
   async function handleSubmit(e: React.FormEvent) {
@@ -24,7 +26,7 @@ export default function EmailCaptureForm({
       const res = await fetch("/api/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, source: productSlug }),
+        body: JSON.stringify({ email, source: productSlug, consent }),
       });
 
       if (res.ok) {
@@ -72,9 +74,16 @@ export default function EmailCaptureForm({
           Something went wrong. Please try again.
         </p>
       )}
-      <p className="text-center text-xs text-gray-500">
-        No spam. Unsubscribe anytime.
-      </p>
+      <label className="flex items-start gap-2 text-left">
+        <input
+          type="checkbox"
+          checked={consent}
+          onChange={(e) => setConsent(e.target.checked)}
+          className="mt-1 h-4 w-4 shrink-0"
+        />
+        <span className="text-xs text-gray-500">{CONSENT_TEXT}</span>
+      </label>
+      <p className="text-center text-xs text-gray-500">Your free resource is sent either way.</p>
     </form>
   );
 }
