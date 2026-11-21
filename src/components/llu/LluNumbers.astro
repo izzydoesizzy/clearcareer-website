@@ -1,0 +1,91 @@
+---
+import { survey, SURVEY_SOURCE } from "@/data/llu";
+import LluButton from "./LluButton.astro";
+
+const max = Math.max(...survey.timeToLand.map((t) => t.count));
+---
+
+<section class="llu-section llu-section--flush-top" id="numbers">
+  <div class="llu-wrap">
+    <hr class="llu-rule" />
+    <div class="llu-grid llu-grid--split-even llu-mt-72">
+      <div>
+        <p class="llu-eyebrow">The numbers</p>
+        <h2 class="llu-h2 llu-mt-16">I asked 58 past members what happened.</h2>
+        <p class="llu-measure llu-mt-24">
+          In December 2024 I surveyed 58 people from my programs. Here is what they reported, including the ones still
+          searching.
+        </p>
+        <dl class="llu-grid llu-grid--2 llu-mt-32">
+          <div>
+            <dt class="llu-stat__fig">{survey.landed} of {survey.n}</dt>
+            <dd class="llu-stat__label">had landed a role. {survey.stillSearching} were still searching.</dd>
+          </div>
+          <div>
+            <dt class="llu-stat__fig">{survey.withinTwoMonths} of {survey.landed}</dt>
+            <dd class="llu-stat__label">of those landed within two months.</dd>
+          </div>
+          <div>
+            <dt class="llu-stat__fig">{survey.fiveStar} of {survey.n}</dt>
+            <dd class="llu-stat__label">rated the program 5 out of 5.</dd>
+          </div>
+          <div>
+            <dt class="llu-stat__fig">{survey.confidenceBefore.toFixed(2)} to {survey.confidenceAfter.toFixed(2)}</dt>
+            <dd class="llu-stat__label">average confidence out of 5, before and after.</dd>
+          </div>
+        </dl>
+        <p class="llu-cap llu-mt-24">{SURVEY_SOURCE}</p>
+      </div>
+
+      <div class="llu-stack">
+        <figure class="llu-card">
+          <figcaption>
+            <p class="llu-title">How long it took the {survey.landed} who landed</p>
+            <p class="llu-cap llu-mt-8">Number of members, by time from joining to a role.</p>
+          </figcaption>
+          <div class="llu-bars llu-mt-24" role="list">
+            {
+              survey.timeToLand.map((t) => (
+                <div class="llu-bars__row" role="listitem" aria-label={`${t.label}: ${t.count} members`}>
+                  <span class="llu-bars__label">{t.label}</span>
+                  <span class="llu-bars__track">
+                    <span class="llu-bars__bar" style={`width:${(t.count / max) * 100}%`} />
+                  </span>
+                  <span class="llu-bars__val">{t.count}</span>
+                </div>
+              ))
+            }
+          </div>
+          <p class="llu-cap llu-mt-24">{SURVEY_SOURCE} n = {survey.landed}.</p>
+        </figure>
+
+        <figure class="llu-card">
+          <figcaption>
+            <p class="llu-title">Confidence in their search, out of 5</p>
+          </figcaption>
+          <div class="llu-bars llu-mt-24" role="list">
+            <div class="llu-bars__row" role="listitem" aria-label={`Before joining: ${survey.confidenceBefore.toFixed(2)} out of 5`}>
+              <span class="llu-bars__label">Before joining</span>
+              <span class="llu-bars__track">
+                <span class="llu-bars__bar llu-bars__bar--before" style={`width:${(survey.confidenceBefore / 5) * 100}%`} />
+              </span>
+              <span class="llu-bars__val">{survey.confidenceBefore.toFixed(2)}</span>
+            </div>
+            <div class="llu-bars__row" role="listitem" aria-label={`After: ${survey.confidenceAfter.toFixed(2)} out of 5`}>
+              <span class="llu-bars__label">After</span>
+              <span class="llu-bars__track">
+                <span class="llu-bars__bar" style={`width:${(survey.confidenceAfter / 5) * 100}%`} />
+              </span>
+              <span class="llu-bars__val">{survey.confidenceAfter.toFixed(2)}</span>
+            </div>
+          </div>
+          <p class="llu-cap llu-mt-24">{SURVEY_SOURCE} n = {survey.n}.</p>
+        </figure>
+      </div>
+    </div>
+
+    <div class="llu-mt-48">
+      <LluButton />
+    </div>
+  </div>
+</section>

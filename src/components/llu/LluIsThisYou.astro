@@ -1,0 +1,87 @@
+---
+import LluImg from "./LluImg.astro";
+import { befores, reviews, survey, SURVEY_SOURCE } from "@/data/llu";
+import { faces, izzy } from "./images";
+
+const signs = [
+  {
+    title: "You did the work.",
+    body: "You tailored the resume. You fixed your LinkedIn. You applied to hundreds of roles. Silence.",
+  },
+  {
+    title: "You were good at your job.",
+    body: "You still are. But months of no replies have you questioning it.",
+  },
+  {
+    title: "The clock is running.",
+    body: "Severance ends. Every month without a paycheque costs real money.",
+  },
+];
+---
+
+<section class="llu-section llu-dark" id="is-this-you">
+  <div class="llu-wrap">
+    <p class="llu-eyebrow">Is this you?</p>
+    <h2 class="llu-h2 llu-mt-16">You did everything right. You still heard nothing.</h2>
+
+    <div class="llu-grid llu-grid--3 llu-mt-48">
+      {
+        signs.map((s) => (
+          <div class="llu-panel">
+            <h3 class="llu-title">{s.title}</h3>
+            <p class="llu-mt-8">{s.body}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <p class="llu-eyebrow llu-mt-72">Where four of my clients started, in their own numbers</p>
+    <div class="llu-grid llu-grid--4 llu-mt-24">
+      {
+        befores.map((b) => (
+          <div class="llu-panel">
+            <p class="llu-stat__fig">{b.figure}</p>
+            <p class="llu-stat__label">{b.unit}</p>
+            <p class="llu-strong llu-mt-8">{b.then}</p>
+            <hr class="llu-rule llu-mt-24" />
+            <div class="llu-review__who llu-mt-24">
+              <LluImg class="llu-face" img={faces[b.key]} alt={reviews[b.key].name} size={56} />
+              <p class="llu-cap">
+                <span class="llu-strong llu-block">{b.who}</span>
+                LinkedIn review, {reviews[b.key].date}
+              </p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="llu-grid llu-grid--split llu-mt-72">
+      <div>
+        <p class="llu-h3">
+          “Talented people grinding alone, convinced the silence is their fault. It isn't.”
+        </p>
+        <div class="llu-review__who llu-mt-24">
+          <LluImg class="llu-face" img={izzy.face} alt="Izzy Piyale-Sheard" size={56} />
+          <p class="llu-cap">
+            <span class="llu-strong llu-block">Izzy Piyale-Sheard</span>
+            The pattern I see in every search I coach.
+          </p>
+        </div>
+      </div>
+      <div>
+        <dl class="llu-grid llu-grid--2">
+        <div>
+          <dt class="llu-stat__fig">{survey.fiveOrFewerInterviewsBefore} of {survey.n}</dt>
+          <dd class="llu-stat__label">had 5 or fewer interviews before they joined</dd>
+        </div>
+        <div>
+          <dt class="llu-stat__fig">{survey.searching7PlusMonthsBefore} of {survey.n}</dt>
+          <dd class="llu-stat__label">had been searching for 7 months or more</dd>
+        </div>
+        </dl>
+        <p class="llu-cap llu-mt-16">{SURVEY_SOURCE}</p>
+      </div>
+    </div>
+  </div>
+</section>

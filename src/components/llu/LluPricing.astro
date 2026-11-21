@@ -1,0 +1,90 @@
+---
+import {
+  offer,
+  quotes,
+  CTA_LABEL,
+  LAUNCH_PACK_CHECKOUT_URL,
+  CONCIERGE_APPLICATION_URL,
+  RESULTS_VARY,
+} from "@/data/llu";
+import LluReviewCard from "./LluReviewCard.astro";
+
+const { launchPack, concierge } = offer;
+---
+
+<section class="llu-section llu-dark" id="pricing">
+  <div class="llu-wrap">
+    <p class="llu-eyebrow">Founding group</p>
+    <h2 class="llu-h2 llu-mt-16">Choose your room.</h2>
+    <p class="llu-lead llu-measure llu-mt-24">
+      {offer.seatsTotal} founding seats. {launchPack.seatsTotal} in the Launch Pack, {concierge.seatsTotal} in Concierge.
+      We start {offer.startDateLong}.
+    </p>
+
+    <div class="llu-grid llu-grid--2 llu-mt-48">
+      <div class="llu-panel llu-tier llu-tier--lead">
+        <div>
+          <p class="llu-status">
+            <span class="llu-tag"><span class="llu-num">{launchPack.seatsLeft} of {launchPack.seatsTotal}</span>&nbsp;seats left</span>
+          </p>
+          <h3 class="llu-h3 llu-mt-16">{launchPack.name}</h3>
+          <p class="llu-mt-8">Your rebuild, the room and the weekly call.</p>
+        </div>
+        <div>
+          <p class="llu-tier__price">{launchPack.price}</p>
+          <p class="llu-cap llu-mt-8">{launchPack.priceNote}</p>
+        </div>
+        <ul class="llu-list llu-tier__grow">
+          {launchPack.includes.map((i) => <li>{i}</li>)}
+        </ul>
+        <a class="llu-btn" href={LAUNCH_PACK_CHECKOUT_URL} target="_blank" rel="noopener">{CTA_LABEL}</a>
+      </div>
+
+      <div class="llu-panel llu-tier">
+        <div>
+          <p class="llu-status">
+            <span class="llu-tag"><span class="llu-num">{concierge.seatsLeft} of {concierge.seatsTotal}</span>&nbsp;seats left</span>
+          </p>
+          <h3 class="llu-h3 llu-mt-16">{concierge.name}</h3>
+          <p class="llu-mt-8">Everything above, plus I work your search with you each week.</p>
+        </div>
+        <div>
+          <p class="llu-tier__price">{concierge.price}</p>
+          <p class="llu-cap llu-mt-8">{concierge.priceNote}</p>
+        </div>
+        <ul class="llu-list llu-tier__grow">
+          {concierge.includes.map((i) => <li>{i}</li>)}
+        </ul>
+        <a class="llu-link" href={CONCIERGE_APPLICATION_URL} target="_blank" rel="noopener">Apply for a Concierge seat</a>
+      </div>
+    </div>
+
+    <div class="llu-grid llu-grid--3 llu-mt-32">
+      <div>
+        <p class="llu-title">After 3 months</p>
+        <p class="llu-mt-8">{offer.afterThreeMonths}</p>
+      </div>
+      <div>
+        <p class="llu-title">The guarantee</p>
+        <p class="llu-mt-8">
+          7 days, money back, as long as we haven't started your rebuild.
+          <a class="llu-link llu-link--inline" href="#guarantee">Read the terms</a>
+        </p>
+      </div>
+      <div>
+        <p class="llu-title">Seats are real</p>
+        <p class="llu-mt-8">
+          I count them by hand. When {offer.seatsTotal} people have joined, the founding group is closed.
+        </p>
+      </div>
+    </div>
+
+    <hr class="llu-rule llu-mt-72" />
+
+    <div class="llu-grid llu-grid--2 llu-mt-72">
+      <LluReviewCard item={quotes.chris} tone="dark" />
+      <LluReviewCard item={quotes.septembre} tone="dark" />
+    </div>
+    <p class="llu-cap llu-measure llu-mt-32">{RESULTS_VARY}</p>
+  </div>
+</section>

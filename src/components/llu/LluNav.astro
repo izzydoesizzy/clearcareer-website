@@ -1,0 +1,20 @@
+---
+import { offer } from "@/data/llu";
+import LluButton from "./LluButton.astro";
+---
+
+<header class="llu-nav">
+  <div class="llu-wrap llu-nav__row">
+    <a class="llu-nav__brand" href="#top" aria-label="ClearCareer, Land and Level Up">
+      <span class="llu-nav__mark">ClearCareer</span>
+      <span class="llu-nav__sub">Land and Level Up</span>
+    </a>
+    <div class="llu-nav__right">
+      <p class="llu-status">
+        <span class="llu-dot" aria-hidden="true"></span>
+        <span>Founding group open, <span class="llu-num">{offer.seatsLeft} of {offer.seatsTotal}</span> seats left</span>
+      </p>
+      <LluButton class="llu-nav__cta" />
+    </div>
+  </div>
+</header>

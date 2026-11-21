@@ -1,0 +1,59 @@
+---
+import LluImg from "./LluImg.astro";
+import { offer, reviews, survey, SURVEY_SOURCE, NEW_PROGRAM_NOTE } from "@/data/llu";
+import LluButton from "./LluButton.astro";
+import LluReviewCard from "./LluReviewCard.astro";
+import { izzy } from "./images";
+---
+
+<section class="llu-hero" id="top">
+  <div class="llu-wrap">
+    <div class="llu-grid llu-grid--split">
+      <div>
+        <p class="llu-eyebrow">For experienced professionals between roles, in Canada and the US</p>
+        <h1 class="llu-display llu-mt-16">You shouldn't have to job search alone.</h1>
+        <p class="llu-lead llu-measure llu-mt-24">
+          Land and Level Up is a small, paid room for experienced professionals between roles. I rebuild your resume
+          and LinkedIn with you. Then we work your search together, live, every Wednesday.
+        </p>
+        <div class="llu-mt-32">
+          <LluButton />
+        </div>
+        <p class="llu-cap llu-hero__meta">
+          Starts {offer.startDateLong}. <span class="llu-num">{offer.seatsTotal}</span> founding seats. 7-day money-back
+          guarantee, <a class="llu-link llu-link--cap llu-link--inline" href="#guarantee">see the terms</a>.
+        </p>
+      </div>
+      <div>
+        <LluReviewCard item={reviews.kristin} />
+        <div class="llu-hero__by">
+          <LluImg class="llu-face" img={izzy.face} alt="Izzy Piyale-Sheard" size={56} />
+          <p class="llu-cap">
+            <span class="llu-strong llu-block">Run by Izzy Piyale-Sheard</span>
+            Founder of ClearCareer. Supporting job seekers since 2016.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="llu-hero__stats">
+      <dl class="llu-grid llu-grid--3">
+        <div>
+          <dt class="llu-stat__fig">{survey.landed} of {survey.n}</dt>
+          <dd class="llu-stat__label">past members landed a role</dd>
+        </div>
+        <div>
+          <dt class="llu-stat__fig">{survey.withinOneMonth} of {survey.landed}</dt>
+          <dd class="llu-stat__label">of those landed within a month</dd>
+        </div>
+        <div>
+          <dt class="llu-stat__fig">8 of 8</dt>
+          <dd class="llu-stat__label">LinkedIn reviews are 5.0 stars</dd>
+        </div>
+      </dl>
+      <p class="llu-cap llu-mt-16">
+        {SURVEY_SOURCE} Reviews are public on LinkedIn, January to March 2025. {NEW_PROGRAM_NOTE} Results vary.
+      </p>
+    </div>
+  </div>
+</section>

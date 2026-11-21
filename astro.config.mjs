@@ -10,7 +10,12 @@ const isProduction = process.env.NODE_ENV === 'production' || process.argv.inclu
 export default defineConfig({
   site: 'https://joinclearcareer.com',
   adapter: isProduction ? (await import('@astrojs/vercel')).default() : undefined,
-  integrations: [mdx(), sitemap(), react()],
+  integrations: [
+    mdx(),
+    // /land-and-level-up is noindex until launch. Remove this filter when it goes live.
+    sitemap({ filter: (page) => new URL(page).pathname.replace(/\/$/, '') !== '/land-and-level-up' }),
+    react(),
+  ],
   redirects: {
     '/blog/build-your-target-company-list-with-chatgpt': '/blog/build-your-target-company-list-with-ai',
   },

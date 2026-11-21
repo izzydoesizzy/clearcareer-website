@@ -1,0 +1,46 @@
+---
+import LluImg from "./LluImg.astro";
+import type { Review, Quote, ReviewKey } from "@/data/llu";
+import { faces, originals } from "./images";
+
+interface Props {
+  /** A LinkedIn review (has a face and an original screenshot) or a stored client quote. */
+  item: Review | Quote;
+  tone?: "light" | "dark";
+  tag?: string;
+  class?: string;
+}
+const { item, tone = "light", tag, class: className = "" } = Astro.props;
+const key = "key" in item ? (item.key as ReviewKey) : undefined;
+const isLinkedIn = Boolean(key);
+const source = isLinkedIn
+  ? `${(item as Review).context}. LinkedIn review, 5.0 stars, ${(item as Review).date}.`
+  : item.context;
+---
+
+<figure class:list={[tone === "dark" ? "llu-panel" : "llu-card", "llu-review", className]}>
+  {tag && <span class="llu-tag">{tag}</span>}
+  <blockquote class="llu-review__quote">
+    “{item.before}<mark class="llu-mark">{item.mark}</mark>{item.after}”
+  </blockquote>
+  <figcaption class="llu-review__who">
+    {
+      key ? (
+        <LluImg class="llu-face" img={faces[key]} alt={`${item.name}, from their LinkedIn review`} size={56} />
+      ) : (
+        <span class="llu-face llu-face--initial" aria-hidden="true">{item.name.charAt(0)}</span>
+      )
+    }
+    <span>
+      <span class="llu-review__name">{item.name}</span>
+      <span class="llu-cap llu-block">{source}{item.isExcerpt ? " Excerpt." : ""}</span>
+    </span>
+  </figcaption>
+  {
+    key && (
+      <a class="llu-link llu-link--cap" href={originals[key]} target="_blank" rel="noopener">
+        See {item.name.split(" ")[0]}'s original review
+      </a>
+    )
+  }
+</figure>

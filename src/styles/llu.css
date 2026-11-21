@@ -1,0 +1,883 @@
+/*
+ * Land and Level Up: page-scoped styles. See /design.md.
+ * Plain CSS on purpose (no @apply, no theme()), unlayered so it wins over Tailwind's layers.
+ * Every class is prefixed llu- and only used inside the .llu root.
+ */
+
+html:has(.llu),
+body:has(> .llu) {
+  background: #f7f6f2;
+  color: #2b3040;
+}
+
+.llu {
+  --llu-paper: #f7f6f2;
+  --llu-card: #ffffff;
+  --llu-ink: #030620;
+  --llu-blue: #0161ef;
+  --llu-body: #2b3040;
+  --llu-caption: #565c6b;
+  --llu-hairline: #e2dfd6;
+  --llu-panel: #0b1030;
+  --llu-panel-border: #262c52;
+
+  --llu-serif: "DM Serif Display", Georgia, serif;
+  --llu-sans: "Inter Variable", "Inter", system-ui, -apple-system, sans-serif;
+
+  /* Phone values. Desktop values are set at 768px. */
+  --llu-fs-display: 52px;
+  --llu-fs-h2: 34px;
+  --llu-fs-h3: 34px;
+  --llu-fs-lead: 20px;
+  --llu-fs-body: 17px;
+  --llu-fs-cap: 15px;
+  --llu-lh-h2: 1.1;
+  --llu-pad: 56px;
+  --llu-card-pad: 24px;
+  --llu-gap: 24px;
+
+  --llu-shadow: 0 1px 2px rgb(3 6 32 / 0.06);
+
+  background: var(--llu-paper);
+  color: var(--llu-body);
+  font-family: var(--llu-sans);
+  font-size: var(--llu-fs-body);
+  line-height: 1.55;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (min-width: 768px) {
+  .llu {
+    --llu-fs-display: 76px;
+    --llu-fs-h2: 52px;
+    --llu-fs-cap: 14px;
+    --llu-lh-h2: 1.06;
+    --llu-pad: 96px;
+    --llu-card-pad: 32px;
+    --llu-gap: 32px;
+  }
+}
+
+/* ── Layout ─────────────────────────────────────────────────────────────── */
+.llu-wrap {
+  width: 100%;
+  max-width: 1168px; /* 1120 content + 24 gutters */
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.llu-section {
+  padding: var(--llu-pad) 0;
+  scroll-margin-top: 80px;
+}
+.llu-section--flush-top {
+  padding-top: 0;
+}
+.llu-dark {
+  background: var(--llu-ink);
+  color: var(--llu-paper);
+}
+.llu-stack > * + * {
+  margin-top: 16px;
+}
+.llu-measure {
+  max-width: 600px;
+}
+.llu-mt-8 { margin-top: 8px; }
+.llu-mt-16 { margin-top: 16px; }
+.llu-mt-24 { margin-top: 24px; }
+.llu-mt-32 { margin-top: 32px; }
+.llu-mt-48 { margin-top: 48px; }
+.llu-mt-72 { margin-top: 72px; }
+
+.llu-grid {
+  display: grid;
+  gap: var(--llu-gap);
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 768px) {
+  .llu-grid--2,
+  .llu-grid--4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .llu-grid--3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1024px) {
+  .llu-grid--4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .llu-grid--split {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    align-items: start;
+  }
+  .llu-grid--split-even {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+  .llu-grid--split-rev {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    align-items: start;
+  }
+}
+
+/* ── Type ───────────────────────────────────────────────────────────────── */
+.llu-display,
+.llu-h2,
+.llu-h3 {
+  font-family: var(--llu-serif);
+  font-weight: 400;
+  font-synthesis: none;
+  color: var(--llu-ink);
+  text-wrap: balance;
+}
+.llu-display {
+  font-size: var(--llu-fs-display);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+}
+.llu-h2 {
+  font-size: var(--llu-fs-h2);
+  line-height: var(--llu-lh-h2);
+  letter-spacing: -0.01em;
+}
+.llu-h3 {
+  font-size: var(--llu-fs-h3);
+  line-height: 1.1;
+}
+.llu-dark .llu-display,
+.llu-dark .llu-h2,
+.llu-dark .llu-h3 {
+  color: var(--llu-card);
+}
+.llu-lead {
+  font-size: var(--llu-fs-lead);
+  line-height: 1.5;
+}
+.llu-title {
+  font-size: var(--llu-fs-lead);
+  line-height: 1.3;
+  font-weight: 600;
+  color: var(--llu-ink);
+}
+.llu-dark .llu-title {
+  color: var(--llu-card);
+}
+.llu-cap {
+  font-size: var(--llu-fs-cap);
+  line-height: 1.5;
+  color: var(--llu-caption);
+}
+.llu-dark .llu-cap {
+  color: var(--llu-hairline);
+}
+.llu-eyebrow {
+  font-size: var(--llu-fs-cap);
+  line-height: 1.5;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--llu-caption);
+}
+.llu-dark .llu-eyebrow {
+  color: var(--llu-hairline);
+}
+.llu-strong {
+  font-weight: 600;
+  color: var(--llu-ink);
+}
+.llu-dark .llu-strong {
+  color: var(--llu-card);
+}
+.llu-num {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Highlighted phrase inside a quote */
+.llu-mark {
+  background: none;
+  color: var(--llu-blue);
+  font-weight: 600;
+}
+.llu-dark .llu-mark {
+  color: var(--llu-card);
+  text-decoration: underline;
+  text-decoration-color: var(--llu-blue);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+/* ── Button and links ───────────────────────────────────────────────────── */
+.llu-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 56px;
+  padding: 0 32px;
+  border-radius: 999px;
+  border: 1px solid var(--llu-blue);
+  background: var(--llu-blue);
+  color: var(--llu-card);
+  font-size: var(--llu-fs-body);
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 120ms, border-color 120ms;
+}
+@media (min-width: 768px) {
+  .llu-btn {
+    width: auto;
+  }
+}
+.llu-btn:hover {
+  background: var(--llu-ink);
+  border-color: var(--llu-ink);
+}
+.llu-dark .llu-btn:hover {
+  background: var(--llu-card);
+  border-color: var(--llu-card);
+  color: var(--llu-ink);
+}
+.llu-btn:focus-visible,
+.llu-link:focus-visible,
+.llu-details summary:focus-visible {
+  outline: 2px solid var(--llu-blue);
+  outline-offset: 2px;
+}
+.llu-dark .llu-btn:focus-visible,
+.llu-dark .llu-link:focus-visible {
+  outline-color: var(--llu-card);
+}
+
+.llu-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--llu-blue);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+.llu-link:hover {
+  text-decoration-thickness: 2px;
+}
+.llu-dark .llu-link {
+  color: var(--llu-card);
+}
+.llu-link--cap {
+  font-size: var(--llu-fs-cap);
+}
+/* A link inside a sentence: padding widens the hit area to 44px without moving the line. */
+.llu-link--inline {
+  display: inline;
+  min-height: 0;
+  padding: 16px 0;
+}
+
+/* ── Nav ────────────────────────────────────────────────────────────────── */
+.llu-nav {
+  background: var(--llu-paper);
+  border-bottom: 1px solid var(--llu-hairline);
+}
+.llu-nav__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 24px;
+  min-height: 72px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+.llu-nav__brand {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 44px;
+  color: var(--llu-ink);
+  text-decoration: none;
+}
+.llu-nav__mark {
+  font-family: var(--llu-serif);
+  font-synthesis: none;
+  font-size: 20px;
+  line-height: 1.1;
+}
+.llu-nav__sub {
+  font-size: var(--llu-fs-cap);
+  line-height: 1.5;
+  color: var(--llu-caption);
+}
+.llu-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--llu-fs-cap);
+  line-height: 1.5;
+  font-weight: 600;
+  color: var(--llu-ink);
+}
+.llu-dot {
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--llu-blue);
+  animation: llu-dot-pulse 3.5s ease-in-out infinite;
+}
+@keyframes llu-dot-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .llu-dot {
+    animation: none;
+  }
+}
+.llu-nav__cta {
+  display: none;
+}
+@media (min-width: 1024px) {
+  .llu-nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .llu-nav__row {
+    flex-wrap: nowrap;
+    min-height: 80px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  .llu-nav__right {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+  .llu-nav__cta {
+    display: inline-flex;
+  }
+}
+
+/* ── Cards and panels ───────────────────────────────────────────────────── */
+.llu-card {
+  background: var(--llu-card);
+  border: 1px solid var(--llu-hairline);
+  border-radius: 20px;
+  box-shadow: var(--llu-shadow);
+  padding: var(--llu-card-pad);
+  color: var(--llu-body);
+}
+.llu-panel {
+  background: var(--llu-panel);
+  border: 1px solid var(--llu-panel-border);
+  border-radius: 20px;
+  padding: var(--llu-card-pad);
+  color: var(--llu-paper);
+}
+.llu-rule {
+  border: 0;
+  border-top: 1px solid var(--llu-hairline);
+}
+.llu-dark .llu-rule {
+  border-top-color: var(--llu-panel-border);
+}
+.llu-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  border: 1px solid var(--llu-hairline);
+}
+.llu-dark .llu-img {
+  border-color: var(--llu-panel-border);
+}
+
+/* ── Review card ────────────────────────────────────────────────────────── */
+.llu-review {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.llu-review__who {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.llu-face {
+  flex: none;
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  object-fit: cover;
+  border: 1px solid var(--llu-hairline);
+}
+.llu-dark .llu-face {
+  border-color: var(--llu-panel-border);
+}
+.llu-face--initial {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--llu-paper);
+  color: var(--llu-ink);
+  font-family: var(--llu-serif);
+  font-synthesis: none;
+  font-size: 20px;
+  line-height: 1;
+}
+.llu-review__name {
+  font-weight: 600;
+  color: var(--llu-ink);
+  line-height: 1.3;
+}
+.llu-panel .llu-review__name {
+  color: var(--llu-card);
+}
+.llu-review__quote {
+  flex: 1;
+  color: var(--llu-ink);
+}
+.llu-panel .llu-review__quote {
+  color: var(--llu-paper);
+}
+.llu-tag {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid var(--llu-hairline);
+  background: var(--llu-paper);
+  font-size: var(--llu-fs-cap);
+  line-height: 1.5;
+  font-weight: 600;
+  color: var(--llu-ink);
+}
+.llu-panel .llu-tag,
+.llu-dark .llu-tag {
+  background: var(--llu-ink);
+  border-color: var(--llu-panel-border);
+  color: var(--llu-card);
+}
+
+/* Untouched LinkedIn screenshot: desktop only, where its text is readable */
+.llu-shot {
+  display: none;
+}
+@media (min-width: 960px) {
+  .llu-shot {
+    display: block;
+    max-width: 880px;
+  }
+  .llu-shot img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+    border: 1px solid var(--llu-hairline);
+  }
+  .llu-dark .llu-shot img {
+    border-color: var(--llu-panel-border);
+  }
+  .llu-shot-fallback {
+    display: none;
+  }
+}
+
+/* ── Stats ──────────────────────────────────────────────────────────────── */
+.llu-stat__fig {
+  font-size: var(--llu-fs-h3);
+  line-height: 1.1;
+  font-weight: 600;
+  color: var(--llu-ink);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+.llu-stat__fig--xl {
+  font-size: var(--llu-fs-h2);
+  line-height: 1.04;
+}
+.llu-dark .llu-stat__fig {
+  color: var(--llu-card);
+}
+.llu-stat__label {
+  margin-top: 8px;
+  color: var(--llu-ink);
+}
+.llu-dark .llu-stat__label {
+  color: var(--llu-paper);
+}
+
+/* ── Hero ───────────────────────────────────────────────────────────────── */
+.llu-hero {
+  padding: 48px 0 var(--llu-pad);
+}
+.llu-hero__meta {
+  margin-top: 16px;
+}
+.llu-hero__stats {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid var(--llu-hairline);
+}
+.llu-hero__by {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+@media (min-width: 1024px) {
+  .llu-hero {
+    padding: 72px 0;
+  }
+}
+
+/* ── Chart (static, single series) ──────────────────────────────────────── */
+.llu-bars {
+  display: grid;
+  gap: 8px;
+}
+.llu-bars__row {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr) 32px;
+  align-items: center;
+  gap: 16px;
+  min-height: 32px;
+}
+.llu-bars__label {
+  font-size: var(--llu-fs-cap);
+  line-height: 1.3;
+  color: var(--llu-ink);
+}
+.llu-bars__track {
+  display: block;
+  height: 16px;
+  border-left: 1px solid var(--llu-ink);
+}
+.llu-bars__bar {
+  display: block;
+  height: 100%;
+  min-width: 4px;
+  background: var(--llu-blue);
+  border-radius: 0 4px 4px 0;
+}
+.llu-bars__bar--before {
+  background: var(--llu-caption);
+}
+.llu-bars__val {
+  font-size: var(--llu-fs-cap);
+  line-height: 1.3;
+  font-weight: 600;
+  color: var(--llu-ink);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* ── Interface views ────────────────────────────────────────────────────── */
+.llu-ui {
+  padding: 0;
+  overflow: hidden;
+}
+.llu-ui__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  padding: 16px var(--llu-card-pad);
+  border-bottom: 1px solid var(--llu-hairline);
+  background: var(--llu-paper);
+}
+.llu-ui__body {
+  padding: var(--llu-card-pad);
+}
+.llu-ui__row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 0;
+  border-top: 1px solid var(--llu-hairline);
+}
+.llu-ui__row:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+.llu-ui__row:last-child {
+  padding-bottom: 0;
+}
+.llu-chip {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid var(--llu-hairline);
+  background: var(--llu-card);
+  font-size: var(--llu-fs-cap);
+  line-height: 1.5;
+  font-weight: 600;
+  color: var(--llu-ink);
+  white-space: nowrap;
+}
+.llu-chip--solid {
+  background: var(--llu-ink);
+  border-color: var(--llu-ink);
+  color: var(--llu-card);
+}
+.llu-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.llu-bubble {
+  max-width: 85%;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid var(--llu-hairline);
+  background: var(--llu-paper);
+  color: var(--llu-ink);
+}
+.llu-bubble--you {
+  margin-left: auto;
+  background: var(--llu-card);
+}
+.llu-bubble--out {
+  max-width: 100%;
+  background: var(--llu-ink);
+  border-color: var(--llu-ink);
+  color: var(--llu-card);
+}
+.llu-bubble--out .llu-cap {
+  color: var(--llu-hairline);
+}
+.llu-list {
+  display: grid;
+  gap: 8px;
+}
+.llu-list li {
+  position: relative;
+  padding-left: 24px;
+}
+.llu-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--llu-blue);
+}
+.llu-list--no li::before {
+  width: 12px;
+  height: 2px;
+  top: 0.75em;
+  border-radius: 0;
+  background: var(--llu-caption);
+}
+
+/* Feature rows in "What you get" */
+.llu-feature {
+  display: grid;
+  gap: var(--llu-gap);
+  grid-template-columns: minmax(0, 1fr);
+  padding-top: 48px;
+  margin-top: 48px;
+  border-top: 1px solid var(--llu-hairline);
+}
+@media (min-width: 1024px) {
+  .llu-feature {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    gap: 72px;
+  }
+}
+.llu-pair {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 768px) {
+  .llu-pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ── Timeline (first week) ──────────────────────────────────────────────── */
+.llu-steps {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 768px) {
+  .llu-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px;
+  }
+}
+.llu-step__when {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--llu-hairline);
+}
+.llu-step__n {
+  font-size: var(--llu-fs-h3);
+  line-height: 1.1;
+  font-weight: 600;
+  color: var(--llu-blue);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* ── Ledger (price anchor) ──────────────────────────────────────────────── */
+.llu-ledger__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 16px 0;
+  border-top: 1px solid var(--llu-hairline);
+}
+.llu-ledger__row:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+.llu-ledger__val {
+  flex: none;
+  font-size: var(--llu-fs-lead);
+  line-height: 1.3;
+  font-weight: 600;
+  color: var(--llu-ink);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  text-align: right;
+}
+.llu-ledger__row--total {
+  border-top: 1px solid var(--llu-ink);
+}
+.llu-ledger__row--total .llu-ledger__val {
+  font-size: var(--llu-fs-h3);
+  line-height: 1.1;
+  color: var(--llu-blue);
+}
+
+/* ── Pricing ────────────────────────────────────────────────────────────── */
+.llu-tier {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.llu-tier--lead {
+  border-color: var(--llu-card);
+}
+.llu-tier__price {
+  font-size: var(--llu-fs-h2);
+  line-height: 1.04;
+  font-weight: 600;
+  color: var(--llu-card);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+.llu-tier__grow {
+  flex: 1;
+}
+
+/* ── Objections ─────────────────────────────────────────────────────────── */
+.llu-details {
+  border-top: 1px solid var(--llu-hairline);
+}
+.llu-details:last-child {
+  border-bottom: 1px solid var(--llu-hairline);
+}
+.llu-details summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 72px;
+  padding: 16px 0;
+  cursor: pointer;
+  list-style: none;
+  font-size: var(--llu-fs-lead);
+  line-height: 1.3;
+  font-weight: 600;
+  color: var(--llu-ink);
+}
+.llu-details summary::-webkit-details-marker {
+  display: none;
+}
+.llu-details summary::after {
+  content: "+";
+  flex: none;
+  width: 24px;
+  text-align: center;
+  font-size: 20px;
+  line-height: 1;
+  font-weight: 400;
+  color: var(--llu-blue);
+}
+.llu-details[open] summary::after {
+  content: "\2212";
+}
+.llu-details summary:hover {
+  color: var(--llu-blue);
+}
+.llu-details__body {
+  padding: 0 0 32px;
+  max-width: 600px;
+}
+.llu-details__proof {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--llu-hairline);
+  color: var(--llu-ink);
+}
+
+/* ── Close and footer ───────────────────────────────────────────────────── */
+.llu-sign {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.llu-sign .llu-face {
+  width: 72px;
+  height: 72px;
+}
+.llu-footer {
+  padding: 48px 0;
+  border-top: 1px solid var(--llu-panel-border);
+}
+.llu-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 24px;
+}
+
+.llu-block {
+  display: block;
+}
+.llu-ui__foot {
+  padding: 0 var(--llu-card-pad) var(--llu-card-pad);
+}
+.llu-stack-32 > * + * {
+  margin-top: 32px;
+}

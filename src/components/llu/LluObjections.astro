@@ -1,0 +1,37 @@
+---
+import { objections, objectionsForSchema } from "@/data/llu";
+import { generateFAQSchema } from "@utils/seo";
+
+const schema = generateFAQSchema(objectionsForSchema);
+---
+
+<section class="llu-section llu-section--flush-top" id="doubts">
+  <div class="llu-wrap">
+    <hr class="llu-rule" />
+    <div class="llu-grid llu-grid--split-even llu-mt-72">
+      <div>
+        <p class="llu-eyebrow">Your doubts</p>
+        <h2 class="llu-h2 llu-mt-16">The questions I'd ask too.</h2>
+        <p class="llu-measure llu-mt-24">
+          You've been burned before. So here are the honest answers, each with a real result beside it.
+        </p>
+      </div>
+      <div>
+        {
+          objections.map((o, i) => (
+            <details class="llu-details" open={i === 0}>
+              <summary>{o.q}</summary>
+              <div class="llu-details__body llu-stack">
+                {o.a.map((p) => (
+                  <p>{p}</p>
+                ))}
+                <p class="llu-details__proof">{o.proof}</p>
+              </div>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />
+</section>

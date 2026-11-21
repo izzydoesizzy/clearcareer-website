@@ -1,0 +1,48 @@
+---
+import LluImg from "./LluImg.astro";
+import { offer } from "@/data/llu";
+import LluButton from "./LluButton.astro";
+import { izzy } from "./images";
+---
+
+<section class="llu-section llu-dark" id="join">
+  <div class="llu-wrap">
+    <div class="llu-grid llu-grid--split">
+      <div>
+        <p class="llu-status">
+          <span class="llu-tag">
+            <span class="llu-num">{offer.seatsLeft} of {offer.seatsTotal}</span>&nbsp;founding seats left
+          </span>
+        </p>
+        <h2 class="llu-h2 llu-mt-16">{offer.seatsTotal} seats. We start {offer.startDateShort}.</h2>
+        <div class="llu-stack llu-measure llu-mt-24">
+          <p class="llu-lead">You've done this alone for long enough.</p>
+          <p>
+            Come do it with a coach and a small group who get it. You bring the effort. I bring the system and the
+            people.
+          </p>
+        </div>
+        <div class="llu-mt-32">
+          <LluButton />
+        </div>
+        <p class="llu-cap llu-mt-16">
+          Starts {offer.startDateLong}. Launch Pack {offer.launchPack.price} CAD. 7-day money-back guarantee, terms above.
+        </p>
+      </div>
+      <div class="llu-panel">
+        <p>
+          One last thing. I can't promise you a job. Nobody honest can. What I can promise is that you won't be
+          guessing alone anymore.
+        </p>
+        <p class="llu-mt-16">See you Wednesday.</p>
+        <div class="llu-sign llu-mt-24">
+          <LluImg class="llu-face" img={izzy.face} alt="Izzy Piyale-Sheard" size={72} />
+          <p class="llu-cap">
+            <span class="llu-strong llu-block">Izzy Piyale-Sheard</span>
+            Founder, ClearCareer
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

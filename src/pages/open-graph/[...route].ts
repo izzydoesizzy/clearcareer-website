@@ -23,6 +23,10 @@ const pages: Record<string, { title: string; description: string }> = {
     title: "Free Career Tools",
     description: "Calculators, builders, and planners to power your job search.",
   },
+  "land-and-level-up": {
+    title: "Land and Level Up",
+    description: "A job search community for experienced professionals between roles. Founding group starts December 7, 2026.",
+  },
   // Blog post OG images
   ...Object.fromEntries(
     blogPosts.map(({ id, data }) => [
