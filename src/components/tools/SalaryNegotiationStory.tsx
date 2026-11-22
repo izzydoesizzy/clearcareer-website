@@ -312,10 +312,10 @@ export default function SalaryNegotiationStory() {
                 Book a Free Call
               </a>
               <a
-                href="/jsis"
+                href="/land-and-level-up"
                 className="inline-flex items-center justify-center rounded-lg border-2 border-white/30 text-white px-8 py-3.5 text-base font-semibold hover:bg-white/10 transition-colors"
               >
-                Explore the Program
+                See Land and Level Up
               </a>
             </div>
           </div>

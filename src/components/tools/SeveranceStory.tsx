@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { LLU_PITCH } from "../../data/llu-pitch";
 import {
   PROVINCES,
   calculateEsa,
@@ -828,15 +829,15 @@ export default function SeveranceStory() {
             </div>
           </div>
 
-          {/* CTA 2: JSIS */}
+          {/* CTA 2: Land and Level Up */}
           <div className="section" style={{ padding: "24px", background: "#f8fafc", borderRadius: "12px", marginBottom: "20px", border: "1px solid #e5e7eb" }}>
-            <div style={{ fontSize: "16px", fontWeight: 700, color: "#030620" }}>Need help landing your next role?</div>
+            <div style={{ fontSize: "16px", fontWeight: 700, color: "#030620" }}>{LLU_PITCH.headline}</div>
             <div style={{ fontSize: "13px", color: "#6b7280", marginTop: "6px", lineHeight: 1.6 }}>
-              8-week group coaching. Done-for-you resume, LinkedIn, outreach templates. Three 1:1 sessions with Izzy. Cohorts capped at 10.
+              {LLU_PITCH.description}
             </div>
             <div style={{ marginTop: "12px" }}>
               <a href="https://joinclearcareer.com/land-and-level-up" style={{ display: "inline-block", background: "#030620", color: "white", padding: "10px 24px", borderRadius: "8px", fontSize: "13px", fontWeight: 600, textDecoration: "none" }}>
-                Explore the Program &rarr;
+                {LLU_PITCH.button} &rarr;
               </a>
             </div>
           </div>

@@ -3,6 +3,7 @@ import { withNurture, consentAttributes } from '../../lib/brevo.js';
 import { Resend } from 'resend';
 import { buildBoldConversion, SENDER, SITE_URL, DISCOVERY_CALL_URL } from '../../lib/email/index.js';
 import type { EmailData } from '../../lib/email/types.js';
+import { LLU_PITCH } from '../../data/llu-pitch.js';
 
 export const prerender = false;
 
@@ -64,14 +65,10 @@ export const POST: APIRoute = async ({ request }) => {
         text: config.quickTip,
       },
       upsell: {
-        headline: 'Want the full job search system?',
-        description: 'The Job Search Ignition System builds your complete toolkit in 8 weeks. Resume, LinkedIn, outreach templates, interview prep, salary negotiation scripts.',
-        bullets: [
-          '20+ done-for-you career assets',
-          '3 private 1:1 coaching sessions with Izzy',
-          'Weekly group calls and WhatsApp support',
-        ],
-        buttonText: 'Learn About the Program',
+        headline: LLU_PITCH.headline,
+        description: LLU_PITCH.description,
+        bullets: LLU_PITCH.bullets,
+        buttonText: LLU_PITCH.button,
         buttonUrl: `${SITE_URL}/land-and-level-up`,
       },
       testimonial,
