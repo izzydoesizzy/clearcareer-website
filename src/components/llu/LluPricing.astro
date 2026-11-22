@@ -49,6 +49,7 @@ const tiers = [
             </div>
             <ul class="llu-list llu-tier__grow">
               {t.includes.map((i) => <li>{i}</li>)}
+              {lead && <li>The full toolkit: call recordings, 30+ AI prompts, templates, scripts and trackers. <a class="llu-link" href="#everything">See it all</a></li>}
             </ul>
             <div>
               <a class="llu-btn llu-btn--wide" href={href} {...(href.startsWith("http") ? { target: "_blank", rel: "noopener" } : {})}>{CTA_LABEL}</a>
@@ -77,11 +78,11 @@ const tiers = [
     </div>
 
     <div class="llu-head llu-mt-72">
-      <p class="llu-eyebrow">What past members got out of it</p>
+      <p class="llu-eyebrow">What past clients got out of it</p>
     </div>
     <dl class="llu-ruled llu-ruled--3 llu-mt-32">
       <div>
-        <dt class="llu-stat__fig">{survey.raises20kPlus} members</dt>
+        <dt class="llu-stat__fig">{survey.raises20kPlus} people</dt>
         <dd class="llu-stat__label">got raises of $20K or more. {survey.raises50kPlus} went past $50K, and {survey.raises100kPlus} past $100K.</dd>
       </div>
       <div>
@@ -89,8 +90,8 @@ const tiers = [
         <dd class="llu-stat__label">of the {survey.stuck6PlusMonths} who'd been stuck for over six months landed after joining.</dd>
       </div>
       <div>
-        <dt class="llu-stat__fig">{survey.confidentAfterPct}%</dt>
-        <dd class="llu-stat__label">felt confident in their search afterwards (4 or 5 out of 5), up from {survey.confidentBeforePct}% before.</dd>
+        <dt class="llu-stat__fig">{Math.round((survey.raisedPay / survey.landed) * 100)}%</dt>
+        <dd class="llu-stat__label">of those who landed a role raised their pay.</dd>
       </div>
     </dl>
     <p class="llu-cap llu-center llu-mt-24">{SURVEY_SOURCE} From my earlier programs and 1:1 coaching. Results vary. <a class="llu-link" href="/outcomes">See the full outcomes report</a></p>

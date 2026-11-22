@@ -329,6 +329,7 @@ export const survey = {
   stuckLandedPct: 64,
   confidentAfterPct: 93,
   confidentBeforePct: 10,
+  savesHourPct: 88, // "88% of members save 1+ hours per week"
   timeToLand: [
     { label: "Under 2 weeks", short: "Under 2 wk", count: 3 },
     { label: "2 to 4 weeks", short: "2 to 4 wk", count: 7 },
