@@ -24,16 +24,16 @@ import ProofBar from "@components/proof/ProofBar.astro";
     <div class="llu-hero__stats">
       <dl class="llu-ruled llu-ruled--3">
         <div>
-          <dt class="llu-stat__fig llu-stat__fig--xl">{survey.landed} of {survey.n}</dt>
-          <dd class="llu-stat__label">past members landed a role</dd>
-        </div>
-        <div>
-          <dt class="llu-stat__fig llu-stat__fig--xl">{survey.withinOneMonth} of {survey.landed}</dt>
-          <dd class="llu-stat__label">of those landed within a month</dd>
-        </div>
-        <div>
           <dt class="llu-stat__fig llu-stat__fig--xl">${(survey.avgRaise / 1000).toFixed(1)}K</dt>
-          <dd class="llu-stat__label">average raise for those who landed</dd>
+          <dd class="llu-stat__label">average raise for those who landed a role</dd>
+        </div>
+        <div>
+          <dt class="llu-stat__fig llu-stat__fig--xl">{survey.confidentAfterPct}%</dt>
+          <dd class="llu-stat__label">felt confident in their search after, up from {survey.confidentBeforePct}%</dd>
+        </div>
+        <div>
+          <dt class="llu-stat__fig llu-stat__fig--xl">{survey.avgRating.toFixed(2)} / 5</dt>
+          <dd class="llu-stat__label">average rating of my programs</dd>
         </div>
       </dl>
       <p class="llu-cap llu-mt-24">{SURVEY_SOURCE} {NEW_PROGRAM_NOTE} Results vary.</p>

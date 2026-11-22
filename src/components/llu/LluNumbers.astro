@@ -15,16 +15,16 @@ const minis = [
   <div class="llu-wrap">
     <div class="llu-head">
       <p class="llu-eyebrow">By the numbers</p>
-      <h2 class="llu-h2">I asked 58 past members what happened.</h2>
+      <h2 class="llu-h2">I surveyed 58 past clients. Here's what happened.</h2>
       <p class="llu-lead">Including the {survey.stillSearching} who were still searching.</p>
     </div>
 
     <div class="llu-card llu-dots-card llu-mt-72" data-reveal>
       <div class="llu-dots-card__head">
         <p class="llu-dots-card__fig"><span data-count-to={survey.landed}>{survey.landed}</span> <span class="llu-dots-card__of">of {survey.n}</span></p>
-        <p class="llu-dots-card__label">past members had landed a role when I asked.</p>
+        <p class="llu-dots-card__label">of them had landed a role when I asked.</p>
       </div>
-      <ol class="llu-dots" role="img" aria-label={`${survey.landed} of ${survey.n} past members had landed a role. ${survey.stillSearching} were still searching.`}>
+      <ol class="llu-dots" role="img" aria-label={`${survey.landed} of ${survey.n} survey respondents had landed a role. ${survey.stillSearching} were still searching.`}>
         {dots.map((on, i) => <li class:list={["llu-dots__dot", on && "is-on"]} style={`--i:${i}`} />)}
       </ol>
       <p class="llu-dots-card__legend">
