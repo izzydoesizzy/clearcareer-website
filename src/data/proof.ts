@@ -28,6 +28,8 @@ export const proofStats = {
   raises: stats.collectiveRaises, // "$1.2M+"
   rating: String(stats.linkedInRating).split("/")[0], // "5.0"
   reviews: stats.linkedInReviews, // 8
+  avgRating: "4.84", // outcomes report: average rating out of 5
+  surveyed: 58,
 };
 
 export interface Win {

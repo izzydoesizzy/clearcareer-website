@@ -317,6 +317,10 @@ export const survey = {
   weeklyCallsRating: 4.17,
   resumeSupportRating: 4.53,
   aiPromptsRating: 4.22,
+  /** Of the 37 who landed, 84% increased their pay. Average increase $21,742 (outcomes report, /outcomes). */
+  raisedPay: 31,
+  avgRaise: 21742,
+  avgRating: 4.84,
   timeToLand: [
     { label: "Under 2 weeks", short: "Under 2 wk", count: 3 },
     { label: "2 to 4 weeks", short: "2 to 4 wk", count: 7 },
