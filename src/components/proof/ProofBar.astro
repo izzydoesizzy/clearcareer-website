@@ -11,7 +11,7 @@ const { tone = "dark", align = "start", class: className = "" } = Astro.props;
     <span class="pb__face pb__face--count">{proofStats.coached}</span>
   </div>
   <div class="pb__text">
-    <span class="pb__stars" role="img" aria-label={`Rated ${proofStats.rating} out of 5 on LinkedIn`}>
+    <span class="pb__stars" role="img" aria-label={`Rated ${proofStats.avgRating} out of 5 by ${proofStats.surveyed} surveyed members`}>
       {[0, 1, 2, 3, 4].map(() => <svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M10 1.5l2.6 5.3 5.9.9-4.25 4.1 1 5.8L10 14.9l-5.25 2.7 1-5.8L1.5 7.7l5.9-.9z" /></svg>)}
     </span>
     <span class="pb__line"><strong>{proofStats.coached} professionals coached</strong> · {proofStats.raises} in raises</span>

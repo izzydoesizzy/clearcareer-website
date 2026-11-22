@@ -32,8 +32,8 @@ import ProofBar from "@components/proof/ProofBar.astro";
           <dd class="llu-stat__label">of those landed within a month</dd>
         </div>
         <div>
-          <dt class="llu-stat__fig llu-stat__fig--xl">8 of 8</dt>
-          <dd class="llu-stat__label">LinkedIn reviews are 5.0 stars</dd>
+          <dt class="llu-stat__fig llu-stat__fig--xl">${(survey.avgRaise / 1000).toFixed(1)}K</dt>
+          <dd class="llu-stat__label">average raise for those who landed</dd>
         </div>
       </dl>
       <p class="llu-cap llu-mt-24">{SURVEY_SOURCE} {NEW_PROGRAM_NOTE} Results vary.</p>
