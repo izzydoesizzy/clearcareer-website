@@ -1,45 +1,71 @@
 ---
 /**
- * Everything a member gets, in one place. Support first (accountability, not alone, recharge,
- * applications that land), then the toolkit. Only things past programs included, or that this
- * program includes (src/data/llu.ts). No paid shop kits.
+ * Everything a member gets. Support first, then the toolkit.
+ * Every item comes from a past ClearCareer group program (old community page, 2024 membership,
+ * 2024 network) or this program's own offer (src/data/llu.ts). No 1:1 or done-for-you items:
+ * those belong to the private rebuild only.
  */
 import { offer, survey } from "@/data/llu";
 
 const support = [
   {
     icon: "check",
-    title: "Group accountability",
-    body: "Every Wednesday you tell the group what you'll get done this week. The next Wednesday, we ask how it went. It's a lot harder to drift when people are expecting you.",
+    title: "Accountability",
+    body: "Every week you share your top 3 priorities with the group. On Wednesday, we check in.",
   },
   {
     icon: "people",
-    title: "You stop doing this alone",
-    body: `${offer.seatsTotal} people at most, all working on their next role. Share a win, ask for feedback, vent when a rejection stings. Someone always gets it.`,
+    title: "People in your corner",
+    body: `${offer.seatsTotal} people at most, all searching right now. Share wins, vent, ask "is this normal?"`,
   },
   {
     icon: "battery",
-    title: "Your batteries, recharged",
-    body: `The search drains you. The room fills you back up. Past members rated their confidence ${survey.confidenceBefore.toFixed(2)} out of 5 before joining and ${survey.confidenceAfter.toFixed(2)} after.`,
+    title: "Energy back",
+    body: `Leave every call with a plan and your batteries recharged. Confidence went from ${survey.confidenceBefore.toFixed(1)} to ${survey.confidenceAfter.toFixed(1)} out of 5.`,
   },
   {
     icon: "target",
-    title: "Applications that land interviews",
-    body: `${survey.fiveOrFewerInterviewsBefore} of the ${survey.n} past clients I surveyed had 5 or fewer interviews before joining. We fix the resume and LinkedIn, then point them at real people instead of the black hole.`,
+    title: "Interviews, not silence",
+    body: "A resume and LinkedIn that show your value, aimed at hiring managers instead of the black hole.",
   },
 ];
 
-const toolkit = [
-  { title: "6 live group calls with me", body: `Wednesdays: ${offer.callDates}. Bring what happened this week. Leave knowing what to do next.` },
-  { title: "Recordings of every call", body: "Miss a Wednesday? Catch the replay in the community." },
-  { title: "The rebuild workshop", body: "Your resume and LinkedIn, rebuilt live, with hot seats." },
-  { title: "Tools and strategies to work faster and smarter", body: `${survey.savesHourPct}% of past clients I surveyed save an hour or more a week.` },
-  { title: "AI tactics that do your research while you sleep", body: "Set up the research once. Wake up to companies, people and roles worth your time." },
-  { title: "My AI prompt library", body: "Tested prompts for your resume, company research, interview prep and negotiation." },
-  { title: "The AI Achievement Interviewer", body: "It asks you one question at a time until your wins have numbers on them." },
-  { title: "The templates library", body: "Resume and cover letter templates, cold email and LinkedIn connection templates, the thank-you email, and a job search tracker." },
-  { title: "Every ClearCareer tool, walked through", body: "STAR Story Builder, Resume Bullet Scorer, Networking Message Builder, LinkedIn Recruiter Finder, Weekly Job Search Planner, the salary negotiation calculator and more. You'll know exactly when to use each one." },
-  { title: "The community, 24/7", body: "Ask a question at 11 pm. Post your win at 9 am. It lives on Mighty Networks." },
+const kit = [
+  {
+    label: "Live with me",
+    items: [
+      `6 Wednesday group calls (${offer.callDates.replace(", then", ",")})`,
+      "Resume and LinkedIn rebuild workshop, with hot seats",
+      "Every call recorded, summarized and searchable",
+    ],
+  },
+  {
+    label: "AI that does the heavy lifting",
+    items: [
+      "The AI Achievement Interviewer",
+      "30+ tested AI prompts",
+      "AI tools to research salaries, find target companies and prep for interviews",
+      "AI research that runs while you sleep",
+    ],
+  },
+  {
+    label: "Templates and scripts",
+    items: [
+      "Resume templates",
+      "Outreach scripts and hiring manager emails",
+      "Follow-ups and the \"silver bullet\" thank-you email",
+      "Salary negotiation frameworks",
+    ],
+  },
+  {
+    label: "Systems to work faster",
+    items: [
+      "Job search tracker",
+      "Weekly priorities and progress system",
+      "Resource library of guides, calculators and frameworks",
+      "Every ClearCareer tool, and when to use it",
+    ],
+  },
 ];
 
 const icons: Record<string, string> = {
@@ -54,8 +80,8 @@ const icons: Record<string, string> = {
   <div class="llu-wrap">
     <div class="llu-head">
       <p class="llu-eyebrow">Everything you get</p>
-      <h2 class="llu-h2">Support first. Then every tool I've got.</h2>
-      <p class="llu-lead">Templates don't get people hired. People who keep showing up do. So that's where we start.</p>
+      <h2 class="llu-h2">You won't do this alone. Or from scratch.</h2>
+      <p class="llu-lead">The support comes first. Then every template, prompt and tool I've built for my clients.</p>
     </div>
 
     <div class="ev-support llu-mt-72">
@@ -63,7 +89,7 @@ const icons: Record<string, string> = {
         support.map((s) => (
           <div class="ev-support__card">
             <span class="ev-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={icons[s.icon]} />
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={icons[s.icon]} />
             </span>
             <h3 class="ev-support__title">{s.title}</h3>
             <p>{s.body}</p>
@@ -72,56 +98,83 @@ const icons: Record<string, string> = {
       }
     </div>
 
-    <div class="llu-card ev-kit llu-mt-48">
-      <div class="ev-kit__head">
+    <div class="ev-kit llu-mt-48">
+      <div class="ev-kit__main">
         <p class="llu-eyebrow">Your toolkit</p>
-        <h3 class="llu-h3 llu-mt-8">Everything that comes with your seat.</h3>
+        <h3 class="llu-h3 llu-mt-8">What comes with your seat</h3>
+        <div class="ev-kit__groups">
+          {
+            kit.map((g) => (
+              <div>
+                <p class="ev-kit__label">{g.label}</p>
+                <ul class="ev-kit__list">
+                  {g.items.map((i) => (
+                    <li>
+                      <span class="ev-tick" aria-hidden="true">✓</span>
+                      {i}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))
+          }
+        </div>
+        <p class="llu-cap ev-kit__foot">
+          {survey.savesHourPct}% of past clients I surveyed save an hour or more a week. Choose the
+          private rebuild and you also get your resume and LinkedIn rebuilt 1:1 with me.
+          <a class="llu-link" href="#pricing">Compare options</a>
+        </p>
       </div>
-      <ul class="ev-kit__list">
-        {
-          toolkit.map((t) => (
-            <li>
-              <span class="ev-tick" aria-hidden="true">✓</span>
-              <span>
-                <span class="ev-kit__title">{t.title}</span>
-                <span class="ev-kit__body">{t.body}</span>
-              </span>
-            </li>
-          ))
-        }
-      </ul>
-      <p class="llu-cap ev-kit__foot">
-        In the group plus private rebuild, you also get your 1:1 resume and LinkedIn rebuild with me.
-        <a class="llu-link" href="#pricing">See both options</a>
-      </p>
+
+      <figure class="ev-shot">
+        <img
+          src="/images/llu/community-wins-560.webp"
+          srcset="/images/llu/community-wins-560.webp 560w, /images/llu/community-wins-1024.webp 1024w"
+          sizes="(min-width: 1024px) 400px, calc(100vw - 48px)"
+          width="1024"
+          height="1024"
+          loading="lazy"
+          decoding="async"
+          alt="A past ClearCareer community: a 'Share your wins' feed with posts titled 'Landed an interview yesterday', 'Job offer, signed!' and 'Yippeee!'"
+        />
+        <figcaption class="llu-cap">A past ClearCareer community, 2024. Names and faces blurred for privacy.</figcaption>
+      </figure>
     </div>
   </div>
 </section>
 
 <style>
   .ev-support { display: grid; gap: var(--llu-gap); grid-template-columns: minmax(0, 1fr); }
-  @media (min-width: 768px) { .ev-support { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 640px) { .ev-support { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @media (min-width: 1024px) { .ev-support { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
   .ev-support__card {
-    display: flex; flex-direction: column; gap: 12px; padding: 28px 24px;
+    display: flex; flex-direction: column; gap: 10px; padding: 24px;
     border-radius: 20px; background: var(--llu-white); border: 1px solid var(--llu-hairline);
   }
   .ev-support__card p { margin: 0; color: var(--llu-body); }
-  .ev-support__title { margin: 4px 0 0; font-size: 20px; line-height: 1.25; font-weight: 700; color: var(--llu-ink); }
+  .ev-support__title { margin: 6px 0 0; font-size: 20px; line-height: 1.25; font-weight: 700; color: var(--llu-ink); }
   .ev-icon {
-    display: grid; place-items: center; width: 52px; height: 52px; border-radius: 14px;
+    display: grid; place-items: center; width: 48px; height: 48px; border-radius: 14px;
     background: #e8f0ff; color: var(--llu-blue);
   }
-  .ev-kit { padding: 32px; }
-  @media (min-width: 1024px) { .ev-kit { padding: 48px; } }
-  .ev-kit__list { display: grid; gap: 20px 40px; margin: 32px 0 0; padding: 0; list-style: none; grid-template-columns: minmax(0, 1fr); }
-  @media (min-width: 768px) { .ev-kit__list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  .ev-kit__list li { display: flex; gap: 14px; align-items: flex-start; }
-  .ev-tick {
-    flex: none; display: grid; place-items: center; width: 26px; height: 26px; margin-top: 1px;
-    border-radius: 999px; background: var(--llu-blue); color: #fff; font-size: 14px; font-weight: 700;
+
+  .ev-kit {
+    display: grid; gap: 40px; grid-template-columns: minmax(0, 1fr); align-items: center;
+    padding: 32px; border-radius: 24px; background: var(--llu-white); border: 1px solid var(--llu-hairline);
   }
-  .ev-kit__title { display: block; font-weight: 650; color: var(--llu-ink); }
-  .ev-kit__body { display: block; margin-top: 2px; color: var(--llu-body); font-size: var(--llu-fs-cap); line-height: 1.5; }
+  @media (min-width: 1024px) { .ev-kit { grid-template-columns: minmax(0, 1fr) 400px; padding: 48px; gap: 56px; } }
+  .ev-kit__groups { display: grid; gap: 28px 40px; margin-top: 32px; grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 640px) { .ev-kit__groups { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .ev-kit__label {
+    margin: 0 0 12px; font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--llu-blue);
+  }
+  .ev-kit__list { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+  .ev-kit__list li { display: flex; gap: 10px; align-items: flex-start; color: var(--llu-ink); line-height: 1.45; }
+  .ev-tick {
+    flex: none; display: grid; place-items: center; width: 20px; height: 20px; margin-top: 2px;
+    border-radius: 999px; background: var(--llu-blue); color: #fff; font-size: 11px; font-weight: 700;
+  }
   .ev-kit__foot { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--llu-hairline); }
+  .ev-shot { margin: 0; display: grid; gap: 12px; }
+  .ev-shot img { width: 100%; height: auto; border-radius: 20px; }
 </style>
