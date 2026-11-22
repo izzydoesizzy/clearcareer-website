@@ -10,12 +10,26 @@ const receipts = [
   { src: "septembre", w: 640, h: 609, title: "Two interview requests overnight", alt: "A tweet: I applied for a few jobs last night and I woke up to two emails in my inbox asking for interviews. This new resume is getting noticed." },
   { src: "annie", w: 640, h: 214, title: "200% more, after learning to negotiate", alt: "A message: I'm making over 200% more since learning how to negotiate." },
   { src: "victor", w: 640, h: 1017, title: "3 interviews in 2 weeks", alt: "WhatsApp: a client forwards a screening invite, then writes: your changes to my resume and LinkedIn profile have made a significant impact. 3 interviews in 2 week span." },
-  { src: "danica", w: 640, h: 249, title: "The interviewer noticed the numbers", alt: "A Discord message: during the interview she said she really appreciated how I included in my resume how much money and time I saved my companies." },
+  { src: "danica", lg: true, w: 640, h: 249, title: "The interviewer noticed the numbers", alt: "A Discord message: during the interview she said she really appreciated how I included in my resume how much money and time I saved my companies." },
   { src: "blake", w: 640, h: 1012, title: "+$5,000 just by asking", alt: "WhatsApp: a client says they said 83,250 won't work but 80,000 will, the job search is over after 9 months, and an extra 5 grand just by asking for it." },
   { src: "tiana", w: 640, h: 527, title: "A next-step email within an hour", alt: "Chat: I updated my resume yesterday to your feedback and got a next step email this morning for a manager level role. Within an hour. Izzy replies: No fucking way! Hell yes. Screenshotting this." },
   { src: "jorge", w: 640, h: 853, title: "A third interview, an hour after one email", alt: "Text messages: an hour after I sent the email I got a reply for a third interview tomorrow with the General Manager. Izzy reminds the client to come prepared with salary." },
-  { src: "views", w: 640, h: 449, title: "LinkedIn profile views up 300%", alt: "A LinkedIn chart: average profile views went from 16 to 65 or more a week after a new banner, headshot, About section and headline." },
+  { src: "views", lg: true, w: 640, h: 449, title: "LinkedIn profile views up 300%", alt: "A LinkedIn chart: average profile views went from 16 to 65 or more a week after a new banner, headshot, About section and headline." },
   { src: "mazia", w: 640, h: 459, title: "Still quoting her follow-up email", alt: "Text messages: a hiring manager says I still reference your follow-up email in internal meetings all the time. They still want me to interview with them." },
+  { src: "septembre-offer", w: 640, h: 840, title: "+$10K, just by asking", alt: "Text messages: the final offer came in at $82K. Izzy: bet that was the easiest $10K you've ever made. Client: I said $80K and a salary review at one year instead of $72K and a review at four months." },
+  { src: "jorge-offer", lg: true, w: 640, h: 130, title: "12 months, 160 applications, then an offer", alt: "Slack post from Izzy: we have our first job offer. 12 months of job searching, 160 applications, 16 interviews, and today we've got our offer." },
+  { src: "julian", w: 640, h: 1027, title: "Straight to the hiring manager, with the template", alt: "Discord: a client decided to contact the hiring manager directly instead of waiting for HR, and sent an email using the prompt and template for Write an Email to the Hiring Manager." },
+  { src: "annie-interview", lg: true, w: 640, h: 335, title: "First interview from outside a job board", alt: "Slack: got my first interview from outside of a job board. Izzy reminds the group to contact 3 people this week. The client explains following up with a senior person on the team on LinkedIn until talent reached out." },
+  { src: "fairy", w: 640, h: 501, title: "The hiring manager loved the email", alt: "Text messages: she was impressed about the email, very professional, looks like you spent a lot of time writing it. It's my fairy Izzy." },
+  { src: "leanne", lg: true, w: 640, h: 104, title: "One email, opened 4 times, then forwarded", alt: "Slack: I've sent ONE reach out email. The guy I sent it to opened it 4 times and then forwarded it to a colleague to schedule a conversation about the position." },
+  { src: "septembre-role", w: 640, h: 862, title: "A new role, above the salary target", alt: "Email: I just accepted a permanent position at a digital agency, above the salary range that I set for myself. Thank you for refreshing my outlook, my resume, my interview skills and my confidence." },
+  { src: "annie-offer", w: 640, h: 266, title: "Two offers within weeks", alt: "LinkedIn recommendation: if you're on the fence, go for it. I joined Izzy's course and within weeks got 2 offers." },
+  { src: "blake-landed", w: 640, h: 882, title: "Reference checks done. Offer in.", alt: "Slack DM: just wrote you an email. They moved fast, completed all the reference checks today. The job is likely the one I'm going for." },
+  { src: "sarvesh", lg: true, w: 640, h: 91, title: "An email that got noticed", alt: "Slack: just got off the call with a person I had an informational interview with. She was admiring the professionalism of my email." },
+  { src: "septembre-resume", w: 640, h: 499, title: "Impostor syndrome, named", alt: "Tweet: I had a wonderful resume session that really helped me as a developer. He named my impostor syndrome and helped me realize I have a lot more skills than I give myself credit for." },
+  { src: "sparsh-thanks", w: 640, h: 613, title: "Clarity after one call", alt: "Email: thank you so much for today's call, it has helped me a lot to focus on my strengths and clear my mind as to what I want." },
+  { src: "achievable", w: 640, h: 334, title: "\"So much more achievable\"", alt: "Text message: honestly though this all sounds so much more achievable with your confidence in what I have to do. I already feel so much better about my prospects." },
+  { src: "puppy", w: 640, h: 342, title: "The email works on everything", alt: "Slack: today I used Izzy's informational interview email structure to convince someone to let me adopt a puppy." },
 ];
 ---
 
@@ -27,28 +41,70 @@ const receipts = [
       <p class="llu-lead">Texts, DMs and emails they sent me the day it happened.</p>
     </div>
 
-    <div class="rc llu-mt-72" role="list">
+    <div class="rc llu-mt-72" role="list" data-receipts data-initial="9">
       {
         receipts.map((r) => (
           <figure class="rc__card" role="listitem">
             <figcaption class="rc__title">{r.title}</figcaption>
-            <img
-              src={`/images/llu/receipts/${r.src}.webp`}
-              width={r.w}
-              height={r.h}
-              alt={r.alt}
-              loading="lazy"
-              decoding="async"
-            />
+            <button type="button" class="rc__zoom" data-receipt-zoom data-full={r.lg ? `/images/llu/receipts/${r.src}-lg.webp` : undefined} aria-label={`Enlarge: ${r.title}`}>
+              <img
+                src={`/images/llu/receipts/${r.src}.webp`}
+                width={r.w}
+                height={r.h}
+                alt={r.alt}
+                loading="lazy"
+                decoding="async"
+              />
+            </button>
           </figure>
         ))
       }
     </div>
+    <p class="llu-center llu-mt-32"><button type="button" class="rc__more" data-receipts-more hidden>Show all {receipts.length} receipts</button></p>
+    <dialog class="rc__dialog" data-receipt-dialog aria-label="Screenshot, enlarged">
+      <button type="button" class="rc__close" data-receipt-close aria-label="Close">×</button>
+      <img data-receipt-full alt="" />
+    </dialog>
     <p class="llu-cap llu-center llu-mt-24">
-      Screenshots from 2020 to 2024. Names, faces and contact details blurred for privacy. Results vary.
+      Screenshots from 2020 to 2024, from texts, email, Slack, Discord and LinkedIn. Names, faces and contact details blurred for privacy. Results vary.
     </p>
   </div>
 </section>
+
+<script>
+  // Larger screens: show the first 9, then the rest on request. Phones swipe through all of them.
+  // Without JavaScript, everything shows.
+  // Tap or click a screenshot to see it full size.
+  const dialog = document.querySelector<HTMLDialogElement>("[data-receipt-dialog]");
+  const full = dialog?.querySelector<HTMLImageElement>("[data-receipt-full]");
+  if (dialog && full && typeof dialog.showModal === "function") {
+    document.querySelectorAll<HTMLButtonElement>("[data-receipt-zoom]").forEach((b) =>
+      b.addEventListener("click", () => {
+        const img = b.querySelector("img")!;
+        full.src = b.dataset.full || img.currentSrc || img.src;
+        full.classList.toggle("is-wide", Boolean(b.dataset.full) && img.naturalWidth / img.naturalHeight > 2.5);
+        full.alt = img.alt;
+        dialog.showModal();
+      }),
+    );
+    dialog.querySelector("[data-receipt-close]")!.addEventListener("click", () => dialog.close());
+    dialog.addEventListener("click", (e) => { if (e.target === dialog) dialog.close(); });
+  }
+
+  document.querySelectorAll<HTMLElement>("[data-receipts]").forEach((list) => {
+    const btn = document.querySelector<HTMLButtonElement>("[data-receipts-more]");
+    if (!btn || !window.matchMedia("(min-width: 768px)").matches) return;
+    const cards = [...list.querySelectorAll<HTMLElement>(".rc__card")];
+    const n = Number(list.dataset.initial) || 9;
+    if (cards.length <= n) return;
+    cards.slice(n).forEach((c) => (c.hidden = true));
+    btn.hidden = false;
+    btn.addEventListener("click", () => {
+      cards.forEach((c) => (c.hidden = false));
+      btn.remove();
+    });
+  });
+</script>
 
 <style>
   /* Phones: one swipeable row. Larger screens: a staggered grid. */
@@ -68,5 +124,28 @@ const receipts = [
     box-shadow: 0 1px 2px rgb(3 6 32 / 0.06);
   }
   .rc__title { font-weight: 700; font-size: 17px; line-height: 1.3; color: var(--llu-ink); padding: 4px 4px 0; }
+  .rc__card[hidden] { display: none; }
+  .rc__more {
+    padding: 12px 22px; border-radius: 10px; font-weight: 600; font-size: 15px; cursor: pointer;
+    background: transparent; color: var(--llu-ink); border: 2px solid var(--llu-hairline);
+  }
+  .rc__more:hover { border-color: var(--llu-blue); color: var(--llu-blue); }
+  .rc__more[hidden] { display: none; }
+  .rc__zoom { display: block; padding: 0; border: 0; background: none; cursor: zoom-in; width: 100%; }
+  .rc__zoom:focus-visible { outline: 3px solid var(--llu-blue); outline-offset: 3px; border-radius: 12px; }
+  .rc__dialog {
+    position: fixed; inset: 0; margin: auto; width: fit-content; height: fit-content;
+    max-width: min(94vw, 1100px); max-height: 92vh; padding: 0; border: 0; border-radius: 16px;
+    background: #fff; overflow: auto; box-shadow: 0 20px 60px rgb(3 6 32 / 0.4);
+  }
+  .rc__dialog::backdrop { background: rgb(3 6 32 / 0.72); }
+  .rc__dialog img { display: block; max-width: min(94vw, 1100px); width: auto; height: auto; }
+  /* Wide chat screenshots on phones: show bigger and let them scroll sideways. */
+  @media (max-width: 767px) { .rc__dialog img.is-wide { max-width: none; width: 760px; } }
+  .rc__close {
+    position: sticky; top: 8px; float: right; margin: 8px 8px -48px 0; z-index: 1;
+    width: 40px; height: 40px; border-radius: 999px; border: 0; cursor: pointer;
+    background: rgb(3 6 32 / 0.75); color: #fff; font-size: 24px; line-height: 1;
+  }
   .rc__card img { display: block; width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--llu-hairline); }
 </style>
