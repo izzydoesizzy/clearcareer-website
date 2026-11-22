@@ -1,0 +1,127 @@
+---
+/**
+ * Everything a member gets, in one place. Support first (accountability, not alone, recharge,
+ * applications that land), then the toolkit. Only things past programs included, or that this
+ * program includes (src/data/llu.ts). No paid shop kits.
+ */
+import { offer, survey } from "@/data/llu";
+
+const support = [
+  {
+    icon: "check",
+    title: "Group accountability",
+    body: "Every Wednesday you tell the group what you'll get done this week. The next Wednesday, we ask how it went. It's a lot harder to drift when people are expecting you.",
+  },
+  {
+    icon: "people",
+    title: "You stop doing this alone",
+    body: `${offer.seatsTotal} people at most, all working on their next role. Share a win, ask for feedback, vent when a rejection stings. Someone always gets it.`,
+  },
+  {
+    icon: "battery",
+    title: "Your batteries, recharged",
+    body: `The search drains you. The room fills you back up. Past members rated their confidence ${survey.confidenceBefore.toFixed(2)} out of 5 before joining and ${survey.confidenceAfter.toFixed(2)} after.`,
+  },
+  {
+    icon: "target",
+    title: "Applications that land interviews",
+    body: `${survey.fiveOrFewerInterviewsBefore} of ${survey.n} past members had 5 or fewer interviews before joining. We fix the resume and LinkedIn, then point them at real people instead of the black hole.`,
+  },
+];
+
+const toolkit = [
+  { title: "6 live group calls with me", body: `Wednesdays: ${offer.callDates}. Bring what happened this week. Leave knowing what to do next.` },
+  { title: "Recordings of every call", body: "Miss a Wednesday? Catch the replay in the community." },
+  { title: "The rebuild workshop", body: "Your resume and LinkedIn, rebuilt live, with hot seats." },
+  { title: "Tools and strategies to work faster and smarter", body: `${survey.savesHourPct}% of past members save an hour or more a week.` },
+  { title: "AI tactics that do your research while you sleep", body: "Set up the research once. Wake up to companies, people and roles worth your time." },
+  { title: "My AI prompt library", body: "Tested prompts for your resume, company research, interview prep and negotiation." },
+  { title: "The AI Achievement Interviewer", body: "It asks you one question at a time until your wins have numbers on them." },
+  { title: "The templates library", body: "Resume and cover letter templates, cold email and LinkedIn connection templates, the thank-you email, and a job search tracker." },
+  { title: "Every ClearCareer tool, walked through", body: "STAR Story Builder, Resume Bullet Scorer, Networking Message Builder, LinkedIn Recruiter Finder, Weekly Job Search Planner, the salary negotiation calculator and more. You'll know exactly when to use each one." },
+  { title: "The community, 24/7", body: "Ask a question at 11 pm. Post your win at 9 am. It lives on Mighty Networks." },
+];
+
+const icons: Record<string, string> = {
+  check: '<path d="M20 6 9 17l-5-5" />',
+  people: '<circle cx="9" cy="8" r="3.2" /><path d="M2.5 20c.6-3.6 3.2-5.5 6.5-5.5s5.9 1.9 6.5 5.5" /><circle cx="17.5" cy="9" r="2.6" /><path d="M16.5 14.6c2.6.2 4.4 1.9 5 5.4" />',
+  battery: '<rect x="2" y="7" width="17" height="10" rx="2" /><path d="M22 11v2" /><path d="M10 9.5 8 12h4l-2 2.5" />',
+  target: '<circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="5" /><circle cx="12" cy="12" r="1.5" />',
+};
+---
+
+<section class="llu-band" id="everything">
+  <div class="llu-wrap">
+    <div class="llu-head">
+      <p class="llu-eyebrow">Everything you get</p>
+      <h2 class="llu-h2">Support first. Then every tool I've got.</h2>
+      <p class="llu-lead">Templates don't get people hired. People who keep showing up do. So that's where we start.</p>
+    </div>
+
+    <div class="ev-support llu-mt-72">
+      {
+        support.map((s) => (
+          <div class="ev-support__card">
+            <span class="ev-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={icons[s.icon]} />
+            </span>
+            <h3 class="ev-support__title">{s.title}</h3>
+            <p>{s.body}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="llu-card ev-kit llu-mt-48">
+      <div class="ev-kit__head">
+        <p class="llu-eyebrow">Your toolkit</p>
+        <h3 class="llu-h3 llu-mt-8">Everything that comes with your seat.</h3>
+      </div>
+      <ul class="ev-kit__list">
+        {
+          toolkit.map((t) => (
+            <li>
+              <span class="ev-tick" aria-hidden="true">✓</span>
+              <span>
+                <span class="ev-kit__title">{t.title}</span>
+                <span class="ev-kit__body">{t.body}</span>
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="llu-cap ev-kit__foot">
+        In the group plus private rebuild, you also get your 1:1 resume and LinkedIn rebuild with me.
+        <a class="llu-link" href="#pricing">See both options</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ev-support { display: grid; gap: var(--llu-gap); grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 768px) { .ev-support { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 1024px) { .ev-support { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  .ev-support__card {
+    display: flex; flex-direction: column; gap: 12px; padding: 28px 24px;
+    border-radius: 20px; background: var(--llu-white); border: 1px solid var(--llu-hairline);
+  }
+  .ev-support__card p { margin: 0; color: var(--llu-body); }
+  .ev-support__title { margin: 4px 0 0; font-size: 20px; line-height: 1.25; font-weight: 700; color: var(--llu-ink); }
+  .ev-icon {
+    display: grid; place-items: center; width: 52px; height: 52px; border-radius: 14px;
+    background: #e8f0ff; color: var(--llu-blue);
+  }
+  .ev-kit { padding: 32px; }
+  @media (min-width: 1024px) { .ev-kit { padding: 48px; } }
+  .ev-kit__list { display: grid; gap: 20px 40px; margin: 32px 0 0; padding: 0; list-style: none; grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 768px) { .ev-kit__list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .ev-kit__list li { display: flex; gap: 14px; align-items: flex-start; }
+  .ev-tick {
+    flex: none; display: grid; place-items: center; width: 26px; height: 26px; margin-top: 1px;
+    border-radius: 999px; background: var(--llu-blue); color: #fff; font-size: 14px; font-weight: 700;
+  }
+  .ev-kit__title { display: block; font-weight: 650; color: var(--llu-ink); }
+  .ev-kit__body { display: block; margin-top: 2px; color: var(--llu-body); font-size: var(--llu-fs-cap); line-height: 1.5; }
+  .ev-kit__foot { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--llu-hairline); }
+</style>
