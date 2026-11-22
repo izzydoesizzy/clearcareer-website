@@ -1,13 +1,14 @@
 ---
 /** The big numbers: raises, offers and time to hire, each in the client's own words. */
 import { wins, faceSrc, splitMark } from "@data/proof";
-interface Props { tone?: "dark" | "light"; limit?: number; class?: string }
-const { tone = "light", limit = wins.length, class: className = "" } = Astro.props;
+interface Props { tone?: "dark" | "light"; limit?: number; exclude?: string[]; class?: string }
+const { tone = "light", limit, exclude = [], class: className = "" } = Astro.props;
+const list = wins.filter((w) => !exclude.includes(w.name)).slice(0, limit);
 ---
 
 <div class:list={["wg", `wg--${tone}`, className]}>
   {
-    wins.slice(0, limit).map((w) => {
+    list.map((w) => {
       const [a, m, b] = splitMark(w.quote, w.mark);
       return (
         <figure class="wg__card">

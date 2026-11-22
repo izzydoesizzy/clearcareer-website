@@ -4,17 +4,19 @@
  * Shows after the visitor scrolls a little, changes every 7 seconds, pauses on hover,
  * and stays closed for the visit once closed.
  */
-import { wins, faceSrc, splitMark } from "@data/proof";
+import { wins, splitMark } from "@data/proof";
+/** Only wins without a photo, so no face repeats here: those people already have a card on the page. */
+const slides = wins.filter((w) => !w.face);
 ---
 
 <aside class="pt" data-proof-toast aria-label="What clients say" hidden>
   <button type="button" class="pt__close" data-pt-close aria-label="Close">×</button>
   {
-    wins.map((w, i) => {
+    slides.map((w, i) => {
       const [a, m, b] = splitMark(w.quote, w.mark);
       return (
         <figure class="pt__slide" data-pt-slide hidden={i !== 0}>
-          {w.face ? <img src={faceSrc(w.face)} alt="" width="64" height="64" loading="lazy" decoding="async" /> : <span class="pt__fig">{w.figure}</span>}
+          <span class="pt__fig">{w.figure}</span>
           <div>
             <span class="pt__stars" aria-hidden="true">★★★★★</span>
             <blockquote>“{a}<mark>{m}</mark>{b}”</blockquote>

@@ -1,7 +1,5 @@
 ---
 import { befores, reviews } from "@/data/llu";
-import LluImg from "./LluImg.astro";
-import { faces } from "./images";
 ---
 
 <section class="llu-band llu-band--join" id="why">
@@ -29,7 +27,6 @@ import { faces } from "./images";
           {
             befores.map((b) => (
               <li class="llu-ui__row">
-                <LluImg class="llu-face llu-face--sm" img={faces[b.key]} alt="" size={48} />
                 <div class="llu-ui__grow">
                   <p class="llu-strong">
                     <span class="llu-num">{b.figure}</span> {b.unit}
