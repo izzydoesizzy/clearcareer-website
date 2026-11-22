@@ -1,5 +1,6 @@
 ---
 import { roles } from "@/data/llu";
+import LluFitArt from "./LluFitArt.astro";
 ---
 
 <section class="llu-band llu-band--white" id="who">
@@ -18,18 +19,20 @@ import { roles } from "@/data/llu";
     </p>
 
     <div class="llu-row llu-row--top llu-mt-72">
-      <div class="llu-surface">
-        <p class="llu-eyebrow">This is for you if</p>
-        <ul class="llu-list llu-mt-16">
+      <div class="llu-fit llu-fit--yes">
+        <LluFitArt kind="yes" />
+        <h3 class="llu-fit__title">This is for you if</h3>
+        <ul class="llu-fit__list">
           <li>You've applied a lot and heard little back.</li>
           <li>You were laid off, or you're between roles.</li>
           <li>You'll give your search a few focused hours a week.</li>
           <li>You'd rather do this with people than alone.</li>
         </ul>
       </div>
-      <div class="llu-surface">
-        <p class="llu-eyebrow">It's not for you if</p>
-        <ul class="llu-list llu-list--no llu-mt-16">
+      <div class="llu-fit llu-fit--no">
+        <LluFitArt kind="no" />
+        <h3 class="llu-fit__title">It's not for you if</h3>
+        <ul class="llu-fit__list">
           <li>You want someone to run your search for you.</li>
           <li>You'd rather go solo, at your own pace.</li>
           <li>You can't make time for your search right now.</li>
