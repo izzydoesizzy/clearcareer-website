@@ -3,25 +3,18 @@ import PageLayout from "@layouts/PageLayout.astro";
 import Hero from "@components/Hero.astro";
 import StatsBar from "@components/StatsBar.astro";
 import TrustBar from "@components/TrustBar.astro";
-import TestimonialCard from "@components/TestimonialCard.astro";
-import TestimonialOutcomeCard from "@components/TestimonialOutcomeCard.astro";
-import TestimonialCarousel from "@components/TestimonialCarousel.astro";
-import TestimonialModal from "@components/TestimonialModal.astro";
+import ProofBar from "@components/proof/ProofBar.astro";
+import WinsGrid from "@components/proof/WinsGrid.astro";
+import ReviewWall from "@components/proof/ReviewWall.astro";
+import ProofToast from "@components/proof/ProofToast.astro";
+import { winNames } from "@data/proof";
 import PricingCard from "@components/PricingCard.astro";
 import { offer } from "@data/llu";
 import CTASection from "@components/CTASection.astro";
 import { getCollection } from "astro:content";
 
 import IndustryStatCard from "@components/IndustryStatCard.astro";
-import { formatName } from "@utils/format-name";
 import SourceCitations from "@components/SourceCitations.astro";
-import allTestimonials from "@data/testimonials.json";
-
-// Sort by sortPriority to get top transformations first (ones with taglines for outcome cards)
-const careerTestimonials = [...allTestimonials]
-  .filter((t: any) => t.category === "career-outcome" && t.tagline)
-  .sort((a: any, b: any) => (a.sortPriority ?? Infinity) - (b.sortPriority ?? Infinity))
-  .slice(0, 9);
 
 // Get latest blog posts for homepage
 const now = new Date();
@@ -44,11 +37,13 @@ const latestPosts = (await getCollection("blog", ({ data }) => {
     photoAlt="Izzy Piyale-Sheard, career coach"
     eyebrow="Career Coaching That Actually Works"
     headline="Stop Grinding Alone. Start Getting <span class='bg-gradient-to-r from-blue to-blue-light bg-clip-text text-transparent'>Results.</span>"
-    subheadline="200+ professionals coached. $1.2M+ in collective raises. Land and Level Up is my 6-week group program: we rebuild your resume and LinkedIn together, then work your real search live every Wednesday."
+    subheadline="Land and Level Up is my 6-week group program: we rebuild your resume and LinkedIn together, then work your real search live every Wednesday."
     primaryCTA={{ text: "Book a Free Call", href: "/book-a-call" }}
     secondaryCTA={{ text: "See Land and Level Up", href: "/land-and-level-up" }}
     trustText="Free 20-minute call · No commitment · No pressure"
-  />
+  >
+    <ProofBar slot="proof" tone="dark" />
+  </Hero>
 
   {/* ── 2. Stats Bar ── */}
   <StatsBar />
@@ -252,36 +247,16 @@ const latestPosts = (await getCollection("blog", ({ data }) => {
       </div>
 
       <div class="mt-12">
-        <TestimonialCarousel id="homepage-testimonials" visibleCount={3}>
-          {careerTestimonials.map((t: any, i: number) => {
-            const initials = t.name.split(" ").map((n: string) => n[0]).join("").toUpperCase().slice(0, 2);
-            return (
-              <div>
-                <TestimonialOutcomeCard
-                  name={t.name}
-                  role={t.role}
-                  quote={t.quote}
-                  tagline={t.tagline}
-                  outcome={t.outcome}
-                  image={t.imagePath}
-                  index={i}
-                  showReadMore={t.quote.length > 150}
-                />
-                <div
-                  class="hidden"
-                  data-testimonial-full={i}
-                  data-quote={t.quote}
-                  data-name={formatName(t.name)}
-                  data-role={t.role}
-                  data-outcome={t.outcome || ''}
-                  data-image={t.imagePath || ''}
-                  data-initials={initials}
-                ></div>
-              </div>
-            );
-          })}
-        </TestimonialCarousel>
+        <WinsGrid tone="light" />
       </div>
+
+      <div class="mt-16 text-center">
+        <h3 class="font-display text-[clamp(1.25rem,2.5vw,1.75rem)] text-navy">In their own words</h3>
+      </div>
+      <div class="mt-8">
+        <ReviewWall tone="light" exclude={winNames} />
+      </div>
+      <p class="mt-6 text-center text-sm text-gray-500">Real reviews from clients, colleagues and workshop attendees. Results vary.</p>
 
       <div class="mt-10 text-center">
         <a
@@ -397,5 +372,5 @@ const latestPosts = (await getCollection("blog", ({ data }) => {
     variant="gradient"
   />
 
-  <TestimonialModal />
+  <ProofToast />
 </PageLayout>

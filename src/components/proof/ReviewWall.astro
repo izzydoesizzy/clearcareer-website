@@ -1,0 +1,118 @@
+---
+/**
+ * Every review, in columns. Shows `initial` first, then loads more as you scroll (two batches),
+ * then a "Show more" button, so nobody gets stuck in an endless scroll before the pricing.
+ * Without JavaScript, every review shows.
+ */
+import { wallReviews, faceSrc } from "@data/proof";
+interface Props { tone?: "dark" | "light"; exclude?: string[]; initial?: number; batch?: number; class?: string }
+const { tone = "light", exclude = [], initial = 9, batch = 9, class: className = "" } = Astro.props;
+const items = wallReviews(exclude);
+---
+
+<div class:list={["rw", `rw--${tone}`, className]} data-review-wall data-initial={initial} data-batch={batch}>
+  <div class="rw__cols">
+    {
+      items.map((r) => (
+        <figure class="rw__card" data-rw-item>
+          <blockquote class="rw__quote" data-rw-quote>“{r.quote}”</blockquote>
+          <button type="button" class="rw__more" data-rw-expand hidden>Read more</button>
+          <figcaption class="rw__who">
+            {r.face ? <img src={faceSrc(r.face)} alt="" width="36" height="36" loading="lazy" decoding="async" /> : <span class="rw__initial" aria-hidden="true">{r.name.charAt(0)}</span>}
+            <span><strong>{r.name}</strong><span class="rw__ctx">{r.context}</span></span>
+          </figcaption>
+        </figure>
+      ))
+    }
+  </div>
+  <div class="rw__foot">
+    <p class="rw__count" data-rw-count aria-live="polite"></p>
+    <button type="button" class="rw__btn" data-rw-btn hidden>Show more reviews</button>
+  </div>
+  <div data-rw-sentinel aria-hidden="true"></div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-review-wall]").forEach((wall) => {
+    const items = [...wall.querySelectorAll<HTMLElement>("[data-rw-item]")];
+    const initial = Number(wall.dataset.initial) || 9;
+    const batch = Number(wall.dataset.batch) || 9;
+    const btn = wall.querySelector<HTMLButtonElement>("[data-rw-btn]")!;
+    const count = wall.querySelector<HTMLElement>("[data-rw-count]")!;
+    const sentinel = wall.querySelector<HTMLElement>("[data-rw-sentinel]")!;
+    let shown = 0;
+    let autoLoads = 0;
+    const MAX_AUTO = 2;
+
+    const reveal = (n: number) => {
+      shown = Math.min(items.length, n);
+      items.forEach((el, i) => (el.hidden = i >= shown));
+      const left = items.length - shown;
+      count.textContent = `Showing ${shown} of ${items.length} reviews`;
+      btn.hidden = left === 0 || autoLoads < MAX_AUTO;
+      btn.textContent = `Show ${Math.min(batch, left)} more reviews`;
+      if (left === 0) io?.disconnect();
+      clamp();
+    };
+
+    // Long reviews get a "Read more".
+    const clamp = () =>
+      items.forEach((el) => {
+        if (el.hidden || el.dataset.clamped) return;
+        el.dataset.clamped = "1";
+        const q = el.querySelector<HTMLElement>("[data-rw-quote]")!;
+        const more = el.querySelector<HTMLButtonElement>("[data-rw-expand]")!;
+        if (q.textContent!.length > 320) {
+          q.classList.add("is-clamped");
+          more.hidden = false;
+          more.addEventListener("click", () => {
+            const open = q.classList.toggle("is-clamped");
+            more.textContent = open ? "Read more" : "Show less";
+          });
+        }
+      });
+
+    const io = "IntersectionObserver" in window
+      ? new IntersectionObserver((entries) => {
+          if (!entries.some((e) => e.isIntersecting) || autoLoads >= MAX_AUTO || shown >= items.length) return;
+          autoLoads++;
+          reveal(shown + batch);
+        }, { rootMargin: "300px 0px" })
+      : null;
+
+    btn.addEventListener("click", () => reveal(shown + batch));
+    if (!io) autoLoads = MAX_AUTO;
+    reveal(initial);
+    io?.observe(sentinel);
+  });
+</script>
+
+<style>
+  .rw__cols { columns: 1; column-gap: 20px; }
+  @media (min-width: 768px) { .rw__cols { columns: 2; } }
+  @media (min-width: 1024px) { .rw__cols { columns: 3; } }
+  .rw__card {
+    break-inside: avoid; margin: 0 0 20px; padding: 22px; border-radius: 16px;
+    background: var(--rw-bg); border: 1px solid var(--rw-border); animation: rw-in 300ms ease-out;
+  }
+  .rw__card[hidden] { display: none; }
+  @keyframes rw-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .rw__card { animation: none; } }
+  .rw__quote { margin: 0; font-size: 15px; line-height: 1.6; color: var(--rw-text); }
+  .rw__quote.is-clamped { display: -webkit-box; -webkit-line-clamp: 7; -webkit-box-orient: vertical; overflow: hidden; }
+  .rw__more { margin-top: 6px; padding: 0; border: 0; background: none; color: var(--rw-link); font-size: 14px; font-weight: 600; cursor: pointer; }
+  .rw__who { display: flex; align-items: center; gap: 10px; margin-top: 16px; font-size: 14px; color: var(--rw-strong); }
+  .rw__who img, .rw__initial { width: 36px; height: 36px; border-radius: 999px; object-fit: cover; flex: none; }
+  .rw__initial { display: grid; place-items: center; background: var(--rw-initial); color: var(--rw-link); font-weight: 700; }
+  .rw__ctx { display: block; font-size: 13px; color: var(--rw-muted); }
+  .rw__foot { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 8px; }
+  .rw__count { margin: 0; font-size: 13px; color: var(--rw-muted); }
+  .rw__btn {
+    padding: 12px 22px; border-radius: 10px; font-weight: 600; font-size: 15px; cursor: pointer;
+    background: transparent; color: var(--rw-strong); border: 2px solid var(--rw-border-strong);
+  }
+  .rw__btn:hover { border-color: var(--rw-link); color: var(--rw-link); }
+  .rw__btn[hidden] { display: none; }
+  .rw--light { --rw-bg: #fff; --rw-border: #e5e7eb; --rw-border-strong: #d1d5db; --rw-text: #374151; --rw-strong: #030620; --rw-muted: #6b7280; --rw-link: #0161ef; --rw-initial: #eff5ff; }
+  .rw--dark { --rw-bg: rgba(255, 255, 255, 0.04); --rw-border: rgba(255, 255, 255, 0.14); --rw-border-strong: rgba(255, 255, 255, 0.3); --rw-text: rgba(255, 255, 255, 0.82); --rw-strong: #fff; --rw-muted: rgba(255, 255, 255, 0.6); --rw-link: #8fb8ff; --rw-initial: rgba(255, 255, 255, 0.1); }
+</style>
