@@ -4,7 +4,7 @@
  * then a "Show more" button, so nobody gets stuck in an endless scroll before the pricing.
  * Without JavaScript, every review shows.
  */
-import { wallReviews, faceSrc } from "@data/proof";
+import { wallReviews, faceSrc, splitMark } from "@data/proof";
 interface Props { tone?: "dark" | "light"; exclude?: string[]; initial?: number; batch?: number; class?: string }
 const { tone = "light", exclude = [], initial = 9, batch = 9, class: className = "" } = Astro.props;
 const items = wallReviews(exclude);
@@ -14,8 +14,20 @@ const items = wallReviews(exclude);
   <div class="rw__cols">
     {
       items.map((r) => (
-        <figure class="rw__card" data-rw-item>
-          <blockquote class="rw__quote" data-rw-quote>“{r.quote}”</blockquote>
+        <figure class:list={["rw__card", r.quote.length <= 160 && "rw__card--short"]} data-rw-item>
+          {r.quote.length > 160 && <p class="rw__head">“{/^[a-z]/.test(r.mark) ? "…" : ""}{r.mark}”</p>}
+          {(() => {
+            const [x, m, y] = splitMark(r.quote, r.mark);
+            // Collapsed, the review starts at the sentence with the highlight, so it's always in view.
+            const cut = Math.max(x.lastIndexOf(". "), x.lastIndexOf("! "), x.lastIndexOf("? "));
+            const pre = cut >= 0 ? x.slice(0, cut + 2) : "";
+            const lead = cut >= 0 ? x.slice(cut + 2) : x;
+            return (
+              <blockquote class="rw__quote" data-rw-quote>
+                “<span class="rw__pre">{pre}</span>{pre && <span class="rw__ell">…</span>}{lead}<mark>{m}</mark>{y}”
+              </blockquote>
+            );
+          })()}
           <button type="button" class="rw__more" data-rw-expand hidden>Read more</button>
           <figcaption class="rw__who">
             {r.face ? <img src={faceSrc(r.face)} alt="" width="36" height="36" loading="lazy" decoding="async" /> : <span class="rw__initial" aria-hidden="true">{r.name.charAt(0)}</span>}
@@ -62,7 +74,7 @@ const items = wallReviews(exclude);
         el.dataset.clamped = "1";
         const q = el.querySelector<HTMLElement>("[data-rw-quote]")!;
         const more = el.querySelector<HTMLButtonElement>("[data-rw-expand]")!;
-        if (q.textContent!.length > 320) {
+        if (q.textContent!.length > 240) {
           q.classList.add("is-clamped");
           more.hidden = false;
           more.addEventListener("click", () => {
@@ -98,8 +110,14 @@ const items = wallReviews(exclude);
   .rw__card[hidden] { display: none; }
   @keyframes rw-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
   @media (prefers-reduced-motion: reduce) { .rw__card { animation: none; } }
-  .rw__quote { margin: 0; font-size: 15px; line-height: 1.6; color: var(--rw-text); }
-  .rw__quote.is-clamped { display: -webkit-box; -webkit-line-clamp: 7; -webkit-box-orient: vertical; overflow: hidden; }
+  .rw__head { margin: 0 0 12px; font-size: 19px; line-height: 1.35; font-weight: 650; letter-spacing: -0.01em; color: var(--rw-strong); }
+  .rw__quote { margin: 0; font-size: 14.5px; line-height: 1.6; color: var(--rw-muted-text); }
+  .rw__card--short .rw__quote { font-size: 17px; line-height: 1.5; color: var(--rw-strong); }
+  .rw__ell { display: none; }
+  .rw__quote.is-clamped .rw__pre { display: none; }
+  .rw__quote.is-clamped .rw__ell { display: inline; }
+  .rw__quote mark { background: var(--rw-mark); color: inherit; padding: 0 2px; border-radius: 3px; }
+  .rw__quote.is-clamped { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
   .rw__more { margin-top: 6px; padding: 0; border: 0; background: none; color: var(--rw-link); font-size: 14px; font-weight: 600; cursor: pointer; }
   .rw__who { display: flex; align-items: center; gap: 10px; margin-top: 16px; font-size: 14px; color: var(--rw-strong); }
   .rw__who img, .rw__initial { width: 36px; height: 36px; border-radius: 999px; object-fit: cover; flex: none; }
@@ -113,6 +131,6 @@ const items = wallReviews(exclude);
   }
   .rw__btn:hover { border-color: var(--rw-link); color: var(--rw-link); }
   .rw__btn[hidden] { display: none; }
-  .rw--light { --rw-bg: #fff; --rw-border: #e5e7eb; --rw-border-strong: #d1d5db; --rw-text: #374151; --rw-strong: #030620; --rw-muted: #6b7280; --rw-link: #0161ef; --rw-initial: #eff5ff; }
-  .rw--dark { --rw-bg: rgba(255, 255, 255, 0.04); --rw-border: rgba(255, 255, 255, 0.14); --rw-border-strong: rgba(255, 255, 255, 0.3); --rw-text: rgba(255, 255, 255, 0.82); --rw-strong: #fff; --rw-muted: rgba(255, 255, 255, 0.6); --rw-link: #8fb8ff; --rw-initial: rgba(255, 255, 255, 0.1); }
+  .rw--light { --rw-bg: #fff; --rw-border: #e5e7eb; --rw-border-strong: #d1d5db; --rw-text: #374151; --rw-strong: #030620; --rw-muted: #6b7280; --rw-link: #0161ef; --rw-initial: #eff5ff; --rw-muted-text: #4b5563; --rw-mark: #fff1c2; }
+  .rw--dark { --rw-bg: rgba(255, 255, 255, 0.04); --rw-border: rgba(255, 255, 255, 0.14); --rw-border-strong: rgba(255, 255, 255, 0.3); --rw-text: rgba(255, 255, 255, 0.82); --rw-strong: #fff; --rw-muted: rgba(255, 255, 255, 0.6); --rw-link: #8fb8ff; --rw-initial: rgba(255, 255, 255, 0.1); --rw-muted-text: rgba(255, 255, 255, 0.7); --rw-mark: rgba(255, 209, 92, 0.24); }
 </style>
