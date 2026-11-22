@@ -2,10 +2,9 @@
 /**
  * Land and Level Up: founding-group sales page.
  * Visual system: /design.md. Every number and quote: src/data/llu.ts.
- * No client JavaScript. No data-animate. One primary action.
- *
- * LAUNCH CHECKLIST: remove `noindex` here, remove the sitemap filter in astro.config.mjs,
- * and paste the live Stripe links into src/data/llu.ts.
+ * Small scripts only (video player, review wall, review card), and the page works without them.
+ * No data-animate. One primary action. Indexed and in the sitemap since Nov 22, 2026.
+ * Stripe links come from Vercel (PUBLIC_*_CHECKOUT_URL, see src/lib/checkout.ts).
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
 import "@/styles/llu.css";
@@ -34,7 +33,7 @@ const description =
   "A small, paid room for experienced professionals between roles. Rebuild your resume and LinkedIn with Izzy and a group, plus a live call every Wednesday. 16 founding seats. Starts December 7, 2026.";
 ---
 
-<BaseLayout title={title} description={description} image="/open-graph/land-and-level-up.png" noindex>
+<BaseLayout title={title} description={description} image="/open-graph/land-and-level-up.png">
   <div class="llu">
     <LluDealBar />
     <LluNav />

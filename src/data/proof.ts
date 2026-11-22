@@ -19,6 +19,8 @@ export const proofFaces: { key: FaceKey; name: string }[] = [
   { key: "tamara", name: "Tamara G." },
   { key: "sparsh", name: "Sparsh K." },
   { key: "raunika", name: "Raunika L." },
+  { key: "kristin", name: "Kristin D." },
+  { key: "blake", name: "Blake M." },
 ];
 
 export const proofStats = {

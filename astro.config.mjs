@@ -12,8 +12,7 @@ export default defineConfig({
   adapter: isProduction ? (await import('@astrojs/vercel')).default() : undefined,
   integrations: [
     mdx(),
-    // /land-and-level-up is noindex until launch. Remove this filter when it goes live.
-    sitemap({ filter: (page) => { const p = new URL(page).pathname.replace(/\/$/, ''); return !['/land-and-level-up', '/book-a-call', '/booked', '/welcome', '/onboarding', '/roi', '/testimonial-variations'].includes(p) && !p.startsWith('/team/') && !p.endsWith('-old'); } }),
+    sitemap({ filter: (page) => { const p = new URL(page).pathname.replace(/\/$/, ''); return !['/book-a-call', '/booked', '/welcome', '/onboarding', '/roi', '/testimonial-variations'].includes(p) && !p.startsWith('/team/') && !p.endsWith('-old'); } }),
     react(),
   ],
   redirects: {
