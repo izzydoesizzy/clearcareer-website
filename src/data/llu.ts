@@ -73,8 +73,9 @@ export const offer = {
     forWho: "You want all of that, and me rebuilding it with you 1:1.",
     includes: [
       "Everything in the group cohort",
-      "A 1:1 resume and LinkedIn rebuild with me",
+      "A 1:1 resume and LinkedIn rebuild with me, done before the holidays",
       "2 to 3 hours together, just the two of us",
+      "Help building your first hiring manager list",
     ],
   },
   paying: "Pay in full by card. In Canada, you can also spread it out monthly with Klarna (up to 12 months). Klarna is for Canadian clients only, so from the US it's one payment by card.",
@@ -421,7 +422,8 @@ export const objectionsForSchema = objections.map((o) => ({
 // ════════════════════════════════════════════════════════════════════════════
 
 export const navLinks = [
-  { href: "#inside", label: "What's inside" },
+  { href: "#method", label: "How it works" },
+  { href: "#plan", label: "Your 6 weeks" },
   { href: "#results", label: "Results" },
   { href: "#pricing", label: "Pricing" },
 ];

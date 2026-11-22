@@ -52,7 +52,7 @@ const tiers = [
               {lead && <li>The full toolkit: call recordings, 30+ AI prompts, templates, scripts and trackers. <a class="llu-link" href="#everything">See it all</a></li>}
             </ul>
             <div>
-              <a class="llu-btn llu-btn--wide" href={href} {...(href.startsWith("http") ? { target: "_blank", rel: "noopener" } : {})}>{CTA_LABEL}</a>
+              <a class="llu-btn llu-btn--wide" href={href} {...(href.startsWith("http") ? { target: "_blank", rel: "noopener" } : {})}>{href.startsWith("http") ? CTA_LABEL : "Book your free fit call"}</a>
               <p class="llu-cap llu-mt-16">
                 <span class="llu-num">{t.seatsLeft} of {t.seatsTotal}</span> seats left.{offer.dealLive && <> {t.regular} plus HST from December 1.</>}
               </p>
@@ -94,7 +94,7 @@ const tiers = [
         <dd class="llu-stat__label">of those who landed a role raised their pay.</dd>
       </div>
     </dl>
-    <p class="llu-cap llu-center llu-mt-24">{SURVEY_SOURCE} From my earlier programs and 1:1 coaching. Results vary. <a class="llu-link" href="/outcomes">See the full outcomes report</a></p>
+    <p class="llu-cap llu-center llu-mt-24">{SURVEY_SOURCE} Results vary. <a class="llu-link" href="/outcomes">See the full outcomes report</a></p>
 
     <div class="llu-card llu-mt-72" id="guarantee">
       <div class="llu-row llu-row--top">

@@ -1,0 +1,96 @@
+---
+/**
+ * The 6 weeks: December is preparation (clarity, resume, LinkedIn, private rebuilds before the
+ * holidays), January is execution (direct outreach every week, interviews, offers).
+ */
+import { offer } from "@/data/llu";
+import LluButton from "./LluButton.astro";
+
+const december = [
+  { when: "Mon, Dec 7", title: "The room opens", body: "Your intake, the community, and the AI Achievement Interviewer pulling the numbers out of your work." },
+  { when: "Wed, Dec 9", title: "Clarity and targeting", body: "What you want next, the roles that fit, and your target company list." },
+  { when: "Wed, Dec 16", title: "The rebuild", body: "Resume and LinkedIn workshop, with hot seats. We keep going until your work has numbers on it." },
+  { when: "By Dec 22", title: "Private rebuilds done", body: "If you chose the private rebuild, we finish your 1:1 sessions before the holidays." },
+];
+const january = [
+  { when: "Wed, Jan 6", title: "Go direct", body: "Find the hiring managers at your target companies, find their emails, and write emails they'll answer. Outreach starts this week." },
+  { when: "Wed, Jan 13", title: "Outreach hot seats", body: "What got replies, what didn't, your follow-ups, and the next round." },
+  { when: "Wed, Jan 20", title: "Interviews", body: "Your stories, the follow-up, and the \"silver bullet\" thank-you email." },
+  { when: "Wed, Jan 27", title: "Offers and what's next", body: "My negotiation frameworks for when the offer comes, and your plan from here." },
+];
+const haveList = [
+  "A clear target: the roles you want and the companies you're going after",
+  "A rebuilt resume, with numbers on your work",
+  "A LinkedIn profile that gets found",
+  "A list of named hiring managers at your target companies, with their emails",
+  "Emails written and sent to them, plus your follow-ups",
+  "Interview stories ready to tell",
+  "A negotiation framework for when the offer comes",
+];
+---
+
+<section class="llu-band" id="plan">
+  <div class="llu-wrap">
+    <div class="llu-head">
+      <p class="llu-eyebrow">Your 6 weeks</p>
+      <h2 class="llu-h2">December, get ready. January, go get it.</h2>
+      <p class="llu-lead">
+        We do the heavy lifting before the holidays, so you start January with everything ready, right when hiring picks
+        back up.
+      </p>
+    </div>
+
+    <div class="pl llu-mt-72">
+      <div class="pl__col">
+        <p class="pl__label">Before the holidays: get ready</p>
+        <ol class="pl__list">
+          {december.map((d) => (
+            <li><span class="pl__when">{d.when}</span><span><strong>{d.title}</strong><br />{d.body}</span></li>
+          ))}
+        </ol>
+        <p class="pl__break">No calls December 23 and 30. Rest, and start your hiring manager list at your own pace. The community stays open.</p>
+      </div>
+      <div class="pl__col pl__col--go">
+        <p class="pl__label">January: go get it</p>
+        <ol class="pl__list">
+          {january.map((d) => (
+            <li><span class="pl__when">{d.when}</span><span><strong>{d.title}</strong><br />{d.body}</span></li>
+          ))}
+        </ol>
+      </div>
+    </div>
+
+    <div class="pl__have llu-mt-48">
+      <h3 class="llu-h3">By January 27, you'll have:</h3>
+      <ul class="pl__checks">
+        {haveList.map((h) => <li><span aria-hidden="true">✓</span>{h}</li>)}
+      </ul>
+      <div class="llu-mt-32"><LluButton /></div>
+      <p class="llu-cap llu-mt-16">We start {offer.startDateLong}. Six live calls, about 60 minutes each.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .pl { display: grid; gap: var(--llu-gap); grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 1024px) { .pl { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .pl__col { padding: 28px; border-radius: 20px; background: var(--llu-white); border: 1px solid var(--llu-hairline); }
+  .pl__col--go { border-color: rgb(1 97 239 / 0.35); background: #f4f8ff; }
+  .pl__label { margin: 0 0 20px; font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--llu-blue); }
+  .pl__list { display: grid; gap: 18px; margin: 0; padding: 0; list-style: none; }
+  .pl__list li { display: grid; grid-template-columns: 104px minmax(0, 1fr); gap: 12px; color: var(--llu-body); line-height: 1.5; }
+  .pl__list strong { color: var(--llu-ink); }
+  .pl__when { font-weight: 700; color: var(--llu-ink); font-size: 15px; }
+  @media (max-width: 639px) { .pl__list li { grid-template-columns: minmax(0, 1fr); gap: 2px; } .pl__col { padding: 22px; } }
+  .pl__break { margin: 20px 0 0; padding-top: 16px; border-top: 1px dashed var(--llu-hairline); font-size: var(--llu-fs-cap); color: var(--llu-caption); }
+  .pl__have { padding: 32px; border-radius: 24px; background: var(--llu-ink); color: #fff; }
+  .pl__have :global(.llu-h3) { color: #fff; margin: 0; }
+  .pl__have :global(.llu-cap) { color: rgb(255 255 255 / 0.7); }
+  .pl__checks { display: grid; gap: 12px 32px; margin: 24px 0 0; padding: 0; list-style: none; grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 768px) { .pl__checks { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .pl__checks li { display: flex; gap: 12px; align-items: flex-start; line-height: 1.45; }
+  .pl__checks span {
+    flex: none; display: grid; place-items: center; width: 22px; height: 22px; margin-top: 1px;
+    border-radius: 999px; background: var(--llu-blue); color: #fff; font-size: 12px; font-weight: 700;
+  }
+</style>

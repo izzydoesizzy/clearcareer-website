@@ -12,12 +12,11 @@ import "@/styles/llu.css";
 import LluDealBar from "@components/llu/LluDealBar.astro";
 import LluNav from "@components/llu/LluNav.astro";
 import LluHero from "@components/llu/LluHero.astro";
+import LluMethod from "@components/llu/LluMethod.astro";
+import LluPlan from "@components/llu/LluPlan.astro";
 import LluWhy from "@components/llu/LluWhy.astro";
 import LluQuestions from "@components/llu/LluQuestions.astro";
-import LluInside from "@components/llu/LluInside.astro";
 import LluEverything from "@components/llu/LluEverything.astro";
-import LluPrivate from "@components/llu/LluPrivate.astro";
-import LluFirstWeek from "@components/llu/LluFirstWeek.astro";
 import LluResults from "@components/llu/LluResults.astro";
 import LluReceipts from "@components/llu/LluReceipts.astro";
 import LluProfiles from "@components/llu/LluProfiles.astro";
@@ -31,7 +30,7 @@ import ProofToast from "@components/proof/ProofToast.astro";
 
 const title = "Land and Level Up | A job search community by ClearCareer";
 const description =
-  "A small, paid room for experienced professionals between roles. Rebuild your resume and LinkedIn with Izzy and a group, plus a live call every Wednesday. 16 founding seats. Starts December 7, 2026.";
+  "A 6-week small group with Izzy for experienced professionals between roles. Get clear on your next role, rebuild your resume and LinkedIn, then go straight to hiring managers. 16 seats. Starts December 7, 2026.";
 ---
 
 <BaseLayout title={title} description={description} image="/open-graph/land-and-level-up.png">
@@ -41,18 +40,17 @@ const description =
     <main id="main-content">
       <LluHero />
       <LluWhy />
-      <LluQuestions />
-      <LluInside />
+      <LluMethod />
+      <LluWho />
+      <LluHost />
+      <LluPlan />
       <LluEverything />
-      <LluPrivate />
-      <LluFirstWeek />
+      <LluQuestions />
       <LluResults />
       <LluReceipts />
       <LluProfiles />
-      <LluWho />
       <LluNumbers />
       <LluPricing />
-      <LluHost />
       <LluFaq />
       <LluClose />
     </main>
