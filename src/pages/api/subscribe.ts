@@ -2,6 +2,7 @@ import type { APIRoute } from 'astro';
 import { buildBoldConversion, SITE_URL, DISCOVERY_CALL_URL } from '../../lib/email/index.js';
 import type { EmailData } from '../../lib/email/types.js';
 import { CONSENT_TEXT, NEWSLETTER_CONSENT_TEXT, CONSENT_VERSION } from '../../lib/consent.js';
+import { LLU_PITCH } from '../../data/llu-pitch.js';
 
 export const prerender = false;
 
@@ -74,14 +75,10 @@ const UPSELL_BLOCKS: Record<UpsellGroup, UpsellBlock> = {
   },
   jsis: {
     quickWinTip: 'Most job seekers apply to 50+ roles and hear back from 2. The ones who land interviews fast do the opposite: they pick 10-15 companies, research the decision makers, and reach out directly.',
-    headline: 'Want all 21 career assets built for you?',
-    description: 'The Job Search Ignition System builds your complete job search toolkit in 8 weeks. Resume, LinkedIn, outreach templates, interview prep, salary negotiation scripts, and more.',
-    bullets: [
-      '20+ done-for-you career assets (resume, LinkedIn, outreach, interview prep)',
-      '3 private 1:1 coaching sessions with Izzy',
-      'Weekly group calls and WhatsApp support for 8 weeks',
-    ],
-    buttonText: 'Learn About the Program',
+    headline: LLU_PITCH.headline,
+    description: LLU_PITCH.description,
+    bullets: LLU_PITCH.bullets,
+    buttonText: LLU_PITCH.button,
     buttonUrl: `${SITE_URL}/land-and-level-up`,
   },
   'layoff-kit': {

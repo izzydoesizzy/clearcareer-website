@@ -19,6 +19,7 @@ export default defineConfig({
     // Old programs, hidden while Land and Level Up runs. Blog posts and old links still work.
     '/programs': '/land-and-level-up',
     '/programs/jsis': '/land-and-level-up',
+    '/jsis': '/land-and-level-up',
     '/programs/community': '/land-and-level-up',
     '/community': '/land-and-level-up',
     '/blog/build-your-target-company-list-with-chatgpt': '/blog/build-your-target-company-list-with-ai',

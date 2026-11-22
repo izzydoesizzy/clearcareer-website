@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { LLU_PITCH } from "../../data/llu-pitch";
 
 /* ── Formatting ── */
 
@@ -767,15 +768,15 @@ export default function RunwayStory() {
             </div>
           </div>
 
-          {/* CTA 2: JSIS */}
+          {/* CTA 2: Land and Level Up */}
           <div className="section" style={{ padding: "24px", background: "#f8fafc", borderRadius: "12px", marginBottom: "20px", border: "1px solid #e5e7eb" }}>
-            <div style={{ fontSize: "16px", fontWeight: 700, color: "#030620" }}>Want a structured job search? Join the next cohort.</div>
+            <div style={{ fontSize: "16px", fontWeight: 700, color: "#030620" }}>{LLU_PITCH.headline}</div>
             <div style={{ fontSize: "13px", color: "#6b7280", marginTop: "6px", lineHeight: 1.6 }}>
-              The Job Search Ignition System: 8 weeks of group coaching for senior professionals. Done-for-you resume, LinkedIn profile, outreach templates, and three 1:1 sessions with Izzy. Cohorts capped at 10.
+              {LLU_PITCH.description}
             </div>
             <div style={{ marginTop: "12px" }}>
               <a href="https://joinclearcareer.com/land-and-level-up" style={{ display: "inline-block", background: "#030620", color: "white", padding: "10px 24px", borderRadius: "8px", fontSize: "13px", fontWeight: 600, textDecoration: "none" }}>
-                Explore the Program &rarr; joinclearcareer.com/land-and-level-up
+                {LLU_PITCH.button} &rarr; joinclearcareer.com/land-and-level-up
               </a>
             </div>
           </div>

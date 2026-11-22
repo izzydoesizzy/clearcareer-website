@@ -3,6 +3,7 @@ import { withNurture, consentAttributes } from '../../lib/brevo.js';
 import { Resend } from 'resend';
 import { COLORS, FONTS, LOGO, SENDER, SITE_URL, DISCOVERY_CALL_URL } from '../../lib/email/constants.js';
 import { dealPostscriptRow } from '../../lib/email/deal.js';
+import { LLU_PITCH } from '../../data/llu-pitch.js';
 
 export const prerender = false;
 
@@ -121,15 +122,14 @@ function buildReportEmail(data: {
           </div>
         </td></tr>
 
-        <!-- CTA 2: JSIS -->
+        <!-- CTA 2: Land and Level Up -->
         <tr><td style="padding:24px 32px; background:white; border-bottom:1px solid ${COLORS.grey200};">
-          <div style="font-size:16px; font-weight:700; color:${COLORS.navy};">Want a structured job search? Join the next cohort.</div>
+          <div style="font-size:16px; font-weight:700; color:${COLORS.navy};">${LLU_PITCH.headline}</div>
           <div style="font-size:13px; color:${COLORS.grey500}; margin-top:6px; line-height:1.6;">
-            The Job Search Ignition System: 8 weeks of group coaching for senior professionals. Done-for-you resume, LinkedIn, outreach templates, and three 1:1 sessions with Izzy. Cohorts capped at 10.
+            ${LLU_PITCH.description}
           </div>
           <div style="margin-top:16px;">
-            <a href="${SITE_URL}/land-and-level-up" style="display:inline-block; background:${COLORS.navy}; color:white; padding:12px 28px; border-radius:8px; font-size:14px; font-weight:600; text-decoration:none;">
-              Explore the Program &rarr;
+            <a href="${SITE_URL}/land-and-level-up" style="display:inline-block; background:${COLORS.navy}; color:white; padding:12px 28px; border-radius:8px; font-size:14px; font-weight:600; text-decoration:none;">${LLU_PITCH.button} &rarr;
             </a>
           </div>
         </td></tr>

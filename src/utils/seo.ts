@@ -77,8 +77,8 @@ export function generateCourseSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'Course',
-    name: 'Job Search Ignition System',
-    description: 'An 8-week done-with-you job search accelerator for senior professionals targeting $100K+ roles. Includes AI-powered career toolkit, resume writing, LinkedIn optimization, and salary negotiation coaching.',
+    name: 'Land and Level Up',
+    description: 'A 6-week group program for experienced professionals between roles. Rebuild your resume and LinkedIn with Izzy and a small group, then work your real search live every Wednesday.',
     provider: {
       '@type': 'Organization',
       name: 'ClearCareer',
@@ -89,25 +89,13 @@ export function generateCourseSchema() {
       name: 'Iskender "Izzy" Piyale-Sheard',
     },
     offers: [
-      {
-        '@type': 'Offer',
-        price: '2997',
-        priceCurrency: 'CAD',
-        name: 'JSIS Standard',
-        availability: 'https://schema.org/LimitedAvailability',
-      },
-      {
-        '@type': 'Offer',
-        price: '4997',
-        priceCurrency: 'CAD',
-        name: 'JSIS VIP',
-        availability: 'https://schema.org/LimitedAvailability',
-      },
+      { '@type': 'Offer', price: '1200', priceCurrency: 'CAD', name: 'Group cohort', availability: 'https://schema.org/LimitedAvailability' },
+      { '@type': 'Offer', price: '2297', priceCurrency: 'CAD', name: 'Group plus private rebuild', availability: 'https://schema.org/LimitedAvailability' },
     ],
     hasCourseInstance: {
       '@type': 'CourseInstance',
       courseMode: 'Online',
-      duration: 'P8W',
+      duration: 'P6W',
     },
   };
 }
