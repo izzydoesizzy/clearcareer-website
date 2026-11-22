@@ -123,7 +123,7 @@ export default function BookCallForm() {
             <p>{result.diagnosis.text}</p>
           </div>
         )}
-        <p className="llu-cap">The call is where we decide together whether the program is right for you. Come with your questions, bring anyone who's part of the decision, and have your card or Klarna handy so a yes doesn't have to wait.</p>
+        <p className="llu-cap">The call is where we decide together whether the program is right for you. Come with your questions, bring anyone who's part of the decision, and have your card{v.country === 'Canada' ? ' or Klarna' : ''} handy so a yes doesn't have to wait.</p>
         <p><a className="llu-btn" href={result.bookingUrl}>Pick a time</a></p>
         {result.checkout && (
           <div className="llu-surface llu-stack">
@@ -198,7 +198,7 @@ export default function BookCallForm() {
       {step === 2 && (
         <div className="llu-stack">
           <Field id="situation" label="Where are you right now?" error={errors.situation}><Choices name="situation" options={SITUATION} value={v.situation} onChange={(x) => set('situation', x)} /></Field>
-          <Field id="country" label="Where are you based?" error={errors.country}><Choices name="country" options={COUNTRY} value={v.country} onChange={(x) => set('country', x)} /></Field>
+          <Field id="country" label="Where are you based?" error={errors.country}><Choices name="country" options={COUNTRY} value={v.country} onChange={(x) => { set('country', x); if (x !== 'Canada' && String(v.payment || '').startsWith('Klarna')) set('payment', ''); }} /></Field>
           <Field id="struggles" label="What are your biggest struggles? Pick up to 3." error={errors.struggles}><Choices name="struggles" multi max={3} options={STRUGGLES} value={v.struggles} onChange={(x) => set('struggles', x)} /></Field>
           <Field id="challenge" label="What's your biggest challenge right now, and why?" error={errors.challenge}><textarea {...text('challenge', { rows: 4 })} className="llu-input" /></Field>
           <Field id="milestones" label="Besides landing a job, what else would make this a success?" error={errors.milestones}><textarea {...text('milestones', { rows: 3 })} className="llu-input" /></Field>
@@ -213,7 +213,7 @@ export default function BookCallForm() {
           <Field id="callGoal" label="What do you most want from our call?" error={errors.callGoal}><textarea {...text('callGoal', { rows: 3 })} className="llu-input" /></Field>
           <Field id="decider" label="Who else is part of this decision?" error={errors.decider} hint="If someone else helps you decide, bring them to the call. You'll both hear the same answers."><Choices name="decider" options={DECIDER} value={v.decider} onChange={(x) => set('decider', x)} /></Field>
           <Field id="start" label="If it's a fit, when could you start?" error={errors.start}><Choices name="start" options={START} value={v.start} onChange={(x) => set('start', x)} /></Field>
-          <Field id="payment" label="How would you want to pay?" error={errors.payment}><Choices name="payment" options={PAYMENT} value={v.payment} onChange={(x) => set('payment', x)} /></Field>
+          <Field id="payment" label="How would you want to pay?" error={errors.payment} hint={v.country && v.country !== 'Canada' ? "Klarna monthly payments are only available in Canada, so from outside Canada it's one payment by card." : undefined}><Choices name="payment" options={v.country && v.country !== 'Canada' ? PAYMENT.filter((p) => !p.startsWith('Klarna')) : PAYMENT} value={v.payment} onChange={(x) => set('payment', x)} /></Field>
         </div>
       )}
 

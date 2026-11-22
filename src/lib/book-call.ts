@@ -141,7 +141,8 @@ export function cleanAnswers(raw: Record<string, unknown>): { data: BookCallAnsw
     callGoal: str(raw.callGoal),
     decider: pick(raw.decider, DECIDER),
     start: pick(raw.start, START),
-    payment: pick(raw.payment, PAYMENT),
+    // Klarna is only offered in Canada. Outside Canada it's one card payment.
+    payment: pick(raw.country, COUNTRY) && pick(raw.country, COUNTRY) !== 'Canada' && String(pick(raw.payment, PAYMENT)).startsWith('Klarna') ? 'Not sure yet' : pick(raw.payment, PAYMENT),
     program: pick(raw.program, PROGRAM_CHOICES),
     commit: pick(raw.commit, COMMIT),
     ready: pick(raw.ready, [READY, NOT_READY]),

@@ -75,7 +75,7 @@ export const offer = {
       "2 to 3 hours together, just the two of us",
     ],
   },
-  paying: "Pay by card, or spread it out monthly with Klarna (up to 12 months). Both at checkout.",
+  paying: "Pay in full by card. In Canada, you can also spread it out monthly with Klarna (up to 12 months). Klarna is for Canadian clients only, so from the US it's one payment by card.",
   afterProgram: "After the 6 weeks, you can stay on for $49 a month. Leave any time.",
   guarantee: "7-day money-back guarantee. It ends once your rebuild work has started.",
 };
@@ -353,7 +353,7 @@ export const objections: { q: string; a: string[]; proof: string }[] = [
     a: [
       "I get it. You're watching every dollar, and that's the right instinct.",
       `So do the math with me. At a $100,000 salary, one month without a paycheque is $8,333 before tax. The group cohort is ${dealLive ? "$949" : "$1,200"} plus HST, for the full 6 weeks.`,
-      "You can spread it out with Klarna. And there's a 7-day money-back guarantee, as long as your rebuild work hasn't started.",
+      "In Canada, you can spread it out monthly with Klarna. From the US, it's one payment by card. Either way, there's a 7-day money-back guarantee, as long as your rebuild work hasn't started.",
     ],
     proof:
       "Annie B. was “blown away by the $1500+ price tags with zero promises” elsewhere. Annie joined my course and got 2 offers within weeks.",

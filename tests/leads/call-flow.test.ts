@@ -191,3 +191,21 @@ describe('goal line in the follow-up', async () => {
     expect(goalLine('x '.repeat(150))).toBe('');
   });
 });
+
+describe('Klarna is Canada only', () => {
+  it('offers Klarna to Canadians and one card payment to the US', () => {
+    const base = { firstName: 'Sam', email: 's@example.com', callAt: new Date('2026-11-26T17:00:00Z') };
+    const ca = { ...base, answers: { ...data, country: 'Canada' } };
+    const us = { ...base, answers: { ...data, country: 'United States' } };
+    expect(dayBeforeEmail(ca).html).toContain('spread it out monthly with Klarna');
+    const usDay = dayBeforeEmail(us).html;
+    expect(usDay).toContain('only available in Canada');
+    expect(usDay).not.toContain('card or Klarna');
+    expect(followUp1Email(us).html).toContain("one payment by card");
+    expect(morningOfEmail(us).html).not.toContain('Klarna');
+  });
+  it('drops a Klarna answer from outside Canada', () => {
+    expect(cleanAnswers({ country: 'United States', payment: 'Klarna (monthly, up to 12 months)' }).data.payment).toBe('Not sure yet');
+    expect(cleanAnswers({ country: 'Canada', payment: 'Klarna (monthly, up to 12 months)' }).data.payment).toBe('Klarna (monthly, up to 12 months)');
+  });
+});

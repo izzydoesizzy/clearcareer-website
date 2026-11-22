@@ -1,6 +1,7 @@
 ---
 import { offer, survey, SURVEY_SOURCE, NEW_PROGRAM_NOTE } from "@/data/llu";
 import LluButton from "./LluButton.astro";
+import ProofBar from "@components/proof/ProofBar.astro";
 ---
 
 <section class="llu-band llu-band--navy llu-hero" id="top">
@@ -17,6 +18,7 @@ import LluButton from "./LluButton.astro";
         {offer.dealLive && <>Black Friday pricing ends {offer.dealEndsLong}. </>}We start {offer.startDateShort}.
         <span class="llu-num">{offer.seatsTotal}</span> seats.
       </p>
+      <ProofBar tone="dark" />
     </div>
 
     <div class="llu-hero__stats">

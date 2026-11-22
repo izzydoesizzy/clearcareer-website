@@ -1,0 +1,45 @@
+---
+/** The big numbers: raises, offers and time to hire, each in the client's own words. */
+import { wins, faceSrc, splitMark } from "@data/proof";
+interface Props { tone?: "dark" | "light"; limit?: number; class?: string }
+const { tone = "light", limit = wins.length, class: className = "" } = Astro.props;
+---
+
+<div class:list={["wg", `wg--${tone}`, className]}>
+  {
+    wins.slice(0, limit).map((w) => {
+      const [a, m, b] = splitMark(w.quote, w.mark);
+      return (
+        <figure class="wg__card">
+          <p class="wg__fig">{w.figure}</p>
+          <p class="wg__label">{w.label}</p>
+          <blockquote class="wg__quote">“{a}<mark>{m}</mark>{b}”</blockquote>
+          <figcaption class="wg__who">
+            {w.face ? <img src={faceSrc(w.face)} alt="" width="40" height="40" loading="lazy" decoding="async" /> : <span class="wg__initial" aria-hidden="true">{w.name.charAt(0)}</span>}
+            <span><strong>{w.name}</strong><span class="wg__ctx">{w.context}</span></span>
+          </figcaption>
+        </figure>
+      );
+    })
+  }
+</div>
+
+<style>
+  .wg { display: grid; gap: 20px; grid-template-columns: 1fr; }
+  @media (min-width: 640px) { .wg { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .wg { grid-template-columns: repeat(3, 1fr); } }
+  .wg__card {
+    margin: 0; display: flex; flex-direction: column; gap: 10px; padding: 24px; border-radius: 16px;
+    background: var(--wg-bg); border: 1px solid var(--wg-border);
+  }
+  .wg__fig { margin: 0; font-size: clamp(2rem, 4vw, 2.6rem); line-height: 1; font-weight: 700; letter-spacing: -0.02em; color: var(--wg-fig); font-variant-numeric: tabular-nums; }
+  .wg__label { margin: 0; font-size: 15px; font-weight: 600; color: var(--wg-strong); }
+  .wg__quote { margin: 4px 0 0; font-size: 15px; line-height: 1.55; color: var(--wg-text); flex: 1; }
+  .wg__quote mark { background: var(--wg-mark); color: inherit; padding: 0 2px; border-radius: 3px; }
+  .wg__who { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--wg-strong); }
+  .wg__who img, .wg__initial { width: 40px; height: 40px; border-radius: 999px; object-fit: cover; flex: none; }
+  .wg__initial { display: grid; place-items: center; background: var(--wg-initial); color: var(--wg-fig); font-weight: 700; }
+  .wg__ctx { display: block; font-size: 13px; color: var(--wg-muted); }
+  .wg--light { --wg-bg: #fff; --wg-border: #e5e7eb; --wg-fig: #0161ef; --wg-strong: #030620; --wg-text: #374151; --wg-muted: #6b7280; --wg-mark: #fff1c2; --wg-initial: #eff5ff; }
+  .wg--dark { --wg-bg: rgba(255, 255, 255, 0.04); --wg-border: rgba(255, 255, 255, 0.14); --wg-fig: #ffd15c; --wg-strong: #fff; --wg-text: rgba(255, 255, 255, 0.8); --wg-muted: rgba(255, 255, 255, 0.6); --wg-mark: rgba(255, 209, 92, 0.22); --wg-initial: rgba(255, 255, 255, 0.1); }
+</style>

@@ -73,6 +73,7 @@ const isSplit = variant === "split";
               {subheadline}
             </p>
           )}
+          <slot name="proof" />
 
           {(primaryCTA || secondaryCTA) && (
             <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row md:justify-start">
@@ -134,6 +135,7 @@ const isSplit = variant === "split";
             {subheadline}
           </p>
         )}
+        <slot name="proof" />
 
         {(primaryCTA || secondaryCTA) && (
           <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">

@@ -1,0 +1,90 @@
+---
+/**
+ * A small rotating review card, bottom left. Desktop only (it would cover content on a phone).
+ * Shows after the visitor scrolls a little, changes every 7 seconds, pauses on hover,
+ * and stays closed for the visit once closed.
+ */
+import { wins, faceSrc, splitMark } from "@data/proof";
+---
+
+<aside class="pt" data-proof-toast aria-label="What clients say" hidden>
+  <button type="button" class="pt__close" data-pt-close aria-label="Close">×</button>
+  {
+    wins.map((w, i) => {
+      const [a, m, b] = splitMark(w.quote, w.mark);
+      return (
+        <figure class="pt__slide" data-pt-slide hidden={i !== 0}>
+          {w.face ? <img src={faceSrc(w.face)} alt="" width="64" height="64" loading="lazy" decoding="async" /> : <span class="pt__fig">{w.figure}</span>}
+          <div>
+            <span class="pt__stars" aria-hidden="true">★★★★★</span>
+            <blockquote>“{a}<mark>{m}</mark>{b}”</blockquote>
+            <figcaption>{w.name} / {w.context}</figcaption>
+          </div>
+        </figure>
+      );
+    })
+  }
+</aside>
+
+<script>
+  const toast = document.querySelector<HTMLElement>("[data-proof-toast]");
+  const desktop = window.matchMedia("(min-width: 1024px)");
+  const KEY = "cc-proof-toast-closed";
+  if (toast && desktop.matches && !sessionStorage.getItem(KEY)) {
+    const slides = [...toast.querySelectorAll<HTMLElement>("[data-pt-slide]")];
+    const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let i = 0;
+    let timer: number | undefined;
+    const show = (n: number) => { slides[i].hidden = true; i = n % slides.length; slides[i].hidden = false; };
+    const start = () => { if (!still) timer = window.setInterval(() => show(i + 1), 7000); };
+    const stop = () => window.clearInterval(timer);
+    const open = () => {
+      if (window.scrollY < 600) return;
+      window.removeEventListener("scroll", open);
+      toast.hidden = false;
+      requestAnimationFrame(() => toast.classList.add("is-in"));
+      start();
+    };
+    window.addEventListener("scroll", open, { passive: true });
+    toast.addEventListener("mouseenter", stop);
+    toast.addEventListener("mouseleave", start);
+    toast.addEventListener("focusin", stop);
+    toast.querySelector("[data-pt-close]")!.addEventListener("click", () => {
+      stop();
+      toast.remove();
+      sessionStorage.setItem(KEY, "1");
+    });
+  }
+</script>
+
+<style>
+  .pt {
+    position: fixed; left: 24px; bottom: 24px; z-index: 40; width: 420px; max-width: calc(100vw - 48px);
+    padding: 18px 40px 18px 18px; border-radius: 18px; background: #fff; color: #1f2937;
+    box-shadow: 0 12px 40px rgba(3, 6, 32, 0.18), 0 2px 6px rgba(3, 6, 32, 0.08); border: 1px solid #e5e7eb;
+    opacity: 0; transform: translateY(16px); transition: opacity 300ms ease, transform 300ms ease;
+  }
+  .pt.is-in { opacity: 1; transform: none; }
+  .pt[hidden] { display: none; }
+  @media (max-width: 1023px) { .pt { display: none !important; } }
+  @media (prefers-reduced-motion: reduce) { .pt { transition: none; } }
+  .pt__slide { margin: 0; display: flex; gap: 14px; align-items: flex-start; }
+  .pt__slide[hidden] { display: none; }
+  .pt__slide img { width: 64px; height: 64px; border-radius: 12px; object-fit: cover; flex: none; }
+  .pt__fig {
+    flex: none; display: grid; place-items: center; width: 64px; height: 64px; border-radius: 12px;
+    background: #eff5ff; color: #0161ef; font-weight: 800; font-size: 13px; text-align: center; line-height: 1.1; padding: 4px;
+  }
+  .pt__stars { color: #f6bf3b; letter-spacing: 2px; font-size: 15px; }
+  .pt blockquote {
+    margin: 4px 0 6px; font-size: 14px; line-height: 1.5;
+    display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .pt mark { background: #fff1c2; color: inherit; padding: 0 2px; border-radius: 3px; }
+  .pt figcaption { font-size: 12.5px; color: #6b7280; }
+  .pt__close {
+    position: absolute; top: 8px; right: 10px; width: 28px; height: 28px; border: 0; border-radius: 999px;
+    background: transparent; color: #6b7280; font-size: 20px; line-height: 1; cursor: pointer;
+  }
+  .pt__close:hover { background: #f3f4f6; color: #111827; }
+</style>

@@ -966,6 +966,44 @@ body:has(> .llu) {
   display: block;
   padding: 24px;
 }
+.llu-video__media {
+  position: relative;
+  display: block;
+}
+.llu-video__play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  margin: -36px 0 0 -36px;
+  border-radius: 999px;
+  background: rgba(10, 20, 40, 0.78);
+  color: #fff;
+  transition: transform 120ms, background-color 120ms;
+}
+.llu-video:hover .llu-video__play,
+.llu-video:focus-visible .llu-video__play {
+  transform: scale(1.08);
+  background: var(--llu-blue);
+}
+.llu-video__frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+.llu-video__frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .llu-video__play { transition: none; }
+}
 
 /* ── Pricing ────────────────────────────────────────────────────────────── */
 .llu-tier {

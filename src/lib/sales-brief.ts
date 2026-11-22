@@ -64,10 +64,10 @@ export function predictObjections(a: BookCallAnswers, d: Diagnosis): Objection[]
       monthly > 0
         ? `You're aiming for ${money(a.targetSalary)}. That's about ${money(monthly)} a month before tax.${!employed && MONTHS[a.searchLength] ? ` You've been searching ${a.searchLength}, so roughly ${money(monthly * MONTHS[a.searchLength])} so far.` : ''} The ${rec.program.toLowerCase()} is ${money(recPrice)} plus HST for the full 6 weeks. That's ${daysLabel(recPrice / (a.targetSalary / WORKING_DAYS))} of your target pay. And if we negotiate even 5% more in your next offer, that's ${money(a.targetSalary * 0.05)} a year, every year. Laura got $22,000 more. Chris got $25k more.`
         : `The ${rec.program.toLowerCase()} is ${money(recPrice)} plus HST for the full 6 weeks. What's one month of your next salary worth?`,
-      `If we get you hired even a few weeks sooner, it pays for itself. And you can spread it out: Klarna at checkout splits it into monthly payments for up to 12 months.`,
+      a.country === 'Canada' ? `If we get you hired even a few weeks sooner, it pays for itself. And you can spread it out: Klarna at checkout splits it into monthly payments for up to 12 months.` : `If we get you hired even a few weeks sooner, it pays for itself.` /* Klarna is Canada only: outside Canada it's one card payment. */,
       `${offer.guarantee}`,
     ],
-    fallback: rec.program === PROGRAMS.private.name ? `Downsell to the group cohort at ${money(g)}. Same community, calls and workshop, without the 1:1 rebuild.` : 'Point to Klarna at checkout for monthly payments. Do not lower the price.',
+    fallback: rec.program === PROGRAMS.private.name ? `Downsell to the group cohort at ${money(g)}. Same community, calls and workshop, without the 1:1 rebuild.` : a.country === 'Canada' ? 'Point to Klarna at checkout for monthly payments. Do not lower the price.' : `Klarna is Canada only, so for ${a.country === 'United States' ? 'the US' : 'them'} it's one card payment. Do not lower the price: lean on the guarantee and the math instead.`,
   });
 
   // Think about it
