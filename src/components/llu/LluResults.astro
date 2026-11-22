@@ -1,5 +1,5 @@
 ---
-import { cases, reviews, quotes, moreQuotes, RESULTS_VARY, NEW_PROGRAM_NOTE, VIDEO_URL } from "@/data/llu";
+import { cases, reviews, RESULTS_VARY, NEW_PROGRAM_NOTE, VIDEO_URL } from "@/data/llu";
 import LluImg from "./LluImg.astro";
 import LluButton from "./LluButton.astro";
 import LluReviewCard from "./LluReviewCard.astro";
@@ -11,20 +11,11 @@ import { winNames } from "@data/proof";
 /** The YouTube ID, for the in-page player. */
 const videoId = new URL(VIDEO_URL).searchParams.get("v") ?? VIDEO_URL.split("/").pop();
 
-/** Everyone already quoted on this page, so the wall below doesn't repeat them. */
-const shown = [...Object.values(reviews), ...Object.values(quotes), ...Object.values(moreQuotes)].map((r) => r.name).concat(winNames);
-
-const wall = [
-  reviews.kira,
-  quotes.chris,
-  moreQuotes.jorge,
-  reviews.raunika,
-  quotes.annie,
-  moreQuotes.wil,
-  quotes.septembre,
-  quotes.victor,
-  quotes.andrew,
-];
+/**
+ * One appearance per person on this page. Cases: Darin, Laura, Blake. "What's inside": Sparsh, Tamara.
+ * Beside the video: Kristin. About Izzy: Heidi. Everyone else appears once, below.
+ */
+const featured = ["Darin M.", "Laura S.", "Blake M.", "Sparsh K.", "Tamara G.", "Kristin D.", "Heidi P."];
 ---
 
 <section class="llu-band llu-band--navy" id="results">
@@ -66,7 +57,7 @@ const wall = [
       <p class="llu-eyebrow">The numbers</p>
       <h2 class="llu-h3">Raises, offers and time to hire, in their words.</h2>
     </div>
-    <WinsGrid tone="dark" class="llu-mt-48" />
+    <WinsGrid tone="dark" exclude={featured} class="llu-mt-48" />
 
     <div class="llu-row llu-mt-72">
       <a class="llu-card llu-video" href={VIDEO_URL} target="_blank" rel="noopener" data-llu-video={videoId} aria-label="Play the client video">
@@ -88,15 +79,7 @@ const wall = [
       <p class="llu-eyebrow">In their words</p>
       <h2 class="llu-h3">More from people I've coached.</h2>
     </div>
-    <div class="llu-wall llu-mt-48">
-      {wall.map((q) => <LluReviewCard item={q} />)}
-    </div>
-
-    <div class="llu-head llu-mt-72">
-      <p class="llu-eyebrow">Keep reading</p>
-      <h2 class="llu-h3">Even more reviews.</h2>
-    </div>
-    <ReviewWall tone="dark" exclude={shown} initial={6} batch={9} class="llu-mt-48" />
+    <ReviewWall tone="dark" exclude={[...featured, ...winNames]} initial={9} batch={9} class="llu-mt-48" />
 
     <p class="llu-cap llu-center llu-mt-32">{NEW_PROGRAM_NOTE} {RESULTS_VARY}</p>
     <div class="llu-center-row llu-mt-48">
