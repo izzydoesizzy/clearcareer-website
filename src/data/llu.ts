@@ -322,7 +322,7 @@ export const survey = {
   avgRaise: 21742,
   avgRating: 4.84,
   /** More from the outcomes report (/outcomes). */
-  raises20kPlus: 14,
+  raises20kPlus: 17, // outcomes chart: 8 ($20-25K) + 6 ($25-30K) + 2 ($50-75K) + 1 ($100K+)
   raises50kPlus: 2,
   raises100kPlus: 1,
   stuck6PlusMonths: 25,
