@@ -2,13 +2,12 @@
 import { survey, SURVEY_SOURCE } from "@/data/llu";
 
 const max = Math.max(...survey.timeToLand.map((t) => t.count));
-const tiles = [
-  { fig: `${survey.landed} of ${survey.n}`, label: "had landed a role" },
-  { fig: `${survey.withinOneMonth} of ${survey.landed}`, label: "of those, within a month" },
-  { fig: `${survey.withinTwoMonths} of ${survey.landed}`, label: "of those, within two months" },
-  { fig: `${survey.fiveStar} of ${survey.n}`, label: "rated the program 5 out of 5" },
-  { fig: `${survey.fiveOrFewerInterviewsBefore} of ${survey.n}`, label: "had 5 or fewer interviews before" },
-  { fig: `${survey.searching7PlusMonthsBefore} of ${survey.n}`, label: "had searched 7 months or more" },
+const dots = Array.from({ length: survey.n }, (_, i) => i < survey.landed);
+const pct = (a: number, b: number) => Math.round((a / b) * 100);
+const minis = [
+  { count: survey.fiveStar, of: survey.n, label: "rated the program 5 out of 5" },
+  { count: survey.fiveOrFewerInterviewsBefore, of: survey.n, label: "had 5 or fewer interviews before joining" },
+  { count: survey.searching7PlusMonthsBefore, of: survey.n, label: "had searched 7 months or more before joining" },
 ];
 ---
 
@@ -20,19 +19,51 @@ const tiles = [
       <p class="llu-lead">Including the {survey.stillSearching} who were still searching.</p>
     </div>
 
-    <dl class="llu-grid llu-grid--3 llu-mt-72">
-      {
-        tiles.map((t) => (
-          <div class="llu-card">
-            <dt class="llu-stat__fig">{t.fig}</dt>
-            <dd class="llu-stat__label">{t.label}</dd>
-          </div>
-        ))
-      }
-    </dl>
+    <div class="llu-card llu-dots-card llu-mt-72" data-reveal>
+      <div class="llu-dots-card__head">
+        <p class="llu-dots-card__fig"><span data-count-to={survey.landed}>{survey.landed}</span> <span class="llu-dots-card__of">of {survey.n}</span></p>
+        <p class="llu-dots-card__label">past members had landed a role when I asked.</p>
+      </div>
+      <ol class="llu-dots" role="img" aria-label={`${survey.landed} of ${survey.n} past members had landed a role. ${survey.stillSearching} were still searching.`}>
+        {dots.map((on, i) => <li class:list={["llu-dots__dot", on && "is-on"]} style={`--i:${i}`} />)}
+      </ol>
+      <p class="llu-dots-card__legend">
+        <span><i class="llu-dots__dot is-on" /> Landed a role</span>
+        <span><i class="llu-dots__dot" /> Still searching</span>
+      </p>
+    </div>
 
     <div class="llu-grid llu-grid--2 llu-mt-32">
-      <figure class="llu-card">
+      <div class="llu-card" data-reveal>
+        <p class="llu-title">Of the {survey.landed} who landed</p>
+        <div class="llu-speed llu-mt-24">
+          <div class="llu-speed__row">
+            <p><span class="llu-speed__fig" data-count-to={survey.withinOneMonth}>{survey.withinOneMonth}</span> within a month</p>
+            <span class="llu-speed__track"><span class="llu-speed__bar" style={`--w:${pct(survey.withinOneMonth, survey.landed)}%`} /></span>
+          </div>
+          <div class="llu-speed__row">
+            <p><span class="llu-speed__fig" data-count-to={survey.withinTwoMonths}>{survey.withinTwoMonths}</span> within two months</p>
+            <span class="llu-speed__track"><span class="llu-speed__bar" style={`--w:${pct(survey.withinTwoMonths, survey.landed)}%`} /></span>
+          </div>
+        </div>
+      </div>
+      <div class="llu-card" data-reveal>
+        <p class="llu-title">Out of all {survey.n}</p>
+        <div class="llu-minis llu-mt-24">
+          {
+            minis.map((m) => (
+              <div class="llu-mini">
+                <p><span class="llu-speed__fig" data-count-to={m.count}>{m.count}</span> {m.label}</p>
+                <span class="llu-speed__track"><span class="llu-speed__bar" style={`--w:${pct(m.count, m.of)}%`} /></span>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="llu-grid llu-grid--2 llu-mt-32">
+      <figure class="llu-card" data-reveal>
         <figcaption class="llu-title">How long it took the {survey.landed} who landed</figcaption>
         <div class="llu-bars llu-mt-24" role="list">
           {
@@ -49,7 +80,7 @@ const tiles = [
         </div>
       </figure>
 
-      <figure class="llu-card">
+      <figure class="llu-card" data-reveal>
         <figcaption class="llu-title">Confidence in their search, out of 5</figcaption>
         <div class="llu-bars llu-mt-24" role="list">
           <div class="llu-bars__row" role="listitem" aria-label={`Before joining: ${survey.confidenceBefore.toFixed(2)} out of 5`}>
@@ -78,3 +109,33 @@ const tiles = [
     <p class="llu-cap llu-center llu-mt-32">{SURVEY_SOURCE} Land and Level Up is new, so these come from my earlier programs.</p>
   </div>
 </section>
+
+<script>
+  // Fill the dots, grow the bars and count up the numbers when each card scrolls into view.
+  // Without JavaScript, or with reduced motion, everything shows in its final state.
+  const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const cards = document.querySelectorAll<HTMLElement>("#numbers [data-reveal]");
+  if (!still && "IntersectionObserver" in window && cards.length) {
+    document.getElementById("numbers")!.classList.add("is-animated");
+    const countUp = (el: HTMLElement) => {
+      const to = Number(el.dataset.countTo) || 0;
+      const t0 = performance.now();
+      const tick = (t: number) => {
+        const k = Math.min(1, (t - t0) / 1200);
+        el.textContent = String(Math.round(to * (1 - Math.pow(1 - k, 3))));
+        if (k < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        const card = e.target as HTMLElement;
+        card.classList.add("is-in");
+        card.querySelectorAll<HTMLElement>("[data-count-to]").forEach(countUp);
+        io.unobserve(card);
+      });
+    }, { threshold: 0.35 });
+    cards.forEach((c) => io.observe(c));
+  }
+</script>

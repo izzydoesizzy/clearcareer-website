@@ -1,5 +1,22 @@
 ---
 import { roles } from "@/data/llu";
+import LluFitArt from "./LluFitArt.astro";
+
+const forYou = [
+  "You've sent out a pile of applications and heard almost nothing back.",
+  "You have years of real experience, but your resume and LinkedIn don't show it.",
+  "You're ready to start now, not \"sometime in the new year.\"",
+  "You'll do the work: show up live on Wednesdays and put in a few focused hours between calls.",
+  "You want a real partner. You'll bring your questions, try things and take honest feedback, even when it stings a little.",
+  "You want people in your corner, and you'll show up in theirs too. We help each other here.",
+];
+const notForYou = [
+  "You want someone to run your search for you. I work alongside you, not instead of you.",
+  "You're after a few quick tips to try on your own. This works because we do it together, week after week.",
+  "You can't carve out a few hours a week for the next 6 weeks.",
+  "You want a guarantee. No one can promise you a job, and I won't either.",
+  "You're still in \"maybe someday\" mode. That's okay. Come back when you're ready.",
+];
 ---
 
 <section class="llu-band llu-band--white" id="who">
@@ -18,24 +35,24 @@ import { roles } from "@/data/llu";
     </p>
 
     <div class="llu-row llu-row--top llu-mt-72">
-      <div class="llu-surface">
-        <p class="llu-eyebrow">This is for you if</p>
-        <ul class="llu-list llu-mt-16">
-          <li>You've applied a lot and heard little back.</li>
-          <li>You were laid off, or you're between roles.</li>
-          <li>You'll give your search a few focused hours a week.</li>
-          <li>You'd rather do this with people than alone.</li>
+      <div class="llu-fit llu-fit--yes">
+        <LluFitArt kind="yes" />
+        <h3 class="llu-fit__title">This is for you if</h3>
+        <ul class="llu-fit__list">
+          {forYou.map((t) => <li>{t}</li>)}
         </ul>
       </div>
-      <div class="llu-surface">
-        <p class="llu-eyebrow">It's not for you if</p>
-        <ul class="llu-list llu-list--no llu-mt-16">
-          <li>You want someone to run your search for you.</li>
-          <li>You'd rather go solo, at your own pace.</li>
-          <li>You can't make time for your search right now.</li>
-          <li>You want a guaranteed job. No one can promise that.</li>
+      <div class="llu-fit llu-fit--no">
+        <LluFitArt kind="no" />
+        <h3 class="llu-fit__title">It's not for you if</h3>
+        <ul class="llu-fit__list">
+          {notForYou.map((t) => <li>{t}</li>)}
         </ul>
       </div>
     </div>
+    <p class="llu-lead llu-center llu-mt-48">
+      Not sure which side you're on? That's what the free call is for. Bring your questions, and you'll leave with a
+      clear yes or no. <a class="llu-link" href="/book-a-call">Book a free call</a>
+    </p>
   </div>
 </section>

@@ -22,5 +22,6 @@ describe('social proof is real', () => {
     const some = wallReviews(['Chris C.']);
     expect(some.find((r) => r.name === 'Chris C.')).toBeUndefined();
     expect(new Set(all.map((r) => r.quote)).size).toBe(all.length);
+    for (const r of all) { expect(r.mark, r.name).not.toBe(''); expect(r.quote.includes(r.mark), r.name).toBe(true); }
   });
 });
