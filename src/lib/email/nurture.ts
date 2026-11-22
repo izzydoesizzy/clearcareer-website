@@ -181,7 +181,7 @@ ${SIGN()}`,
     },
     {
       n: 6, templateId: 7, name: 'LLU Launch 6 - Black Friday, honest version', sendAt: '2026-11-27 09:12',
-      ps: `Pay by card, or spread it out monthly with Klarna (up to 12 months). Black Friday pricing ends Monday at 11:59 pm ET. ${A('See the prices', page(6, '#pricing'))}.`,
+      ps: `Pay in full by card, or in Canada, spread it out monthly with Klarna (up to 12 months). Black Friday pricing ends Monday at 11:59 pm ET. ${A('See the prices', page(6, '#pricing'))}.`,
       subject: "It's Black Friday. Here's the honest version.",
       preheader: 'The doubts I hear most, answered straight. Plus the price.',
       eyebrow: 'Black Friday', headline: 'The honest version',

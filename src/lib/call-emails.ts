@@ -85,8 +85,9 @@ const DECIDE_ON_CALL = "By the end, you'll have a clear answer: yes or no. Both 
 const HOW_TO_PREPARE = [
   "<strong>Write down your questions and doubts.</strong> All of them, especially the awkward ones: money, timing, \"will this actually work for me?\" I'd much rather hear them on the call than have them nag at you after.",
   "<strong>Bring anyone who's part of the decision.</strong> A partner, a family member. Same link. Big decisions are easier when everyone hears the same answers.",
-  "<strong>Know how you'd pay if it's a yes.</strong> Card, or Klarna monthly for up to 12 months. Both at checkout.",
 ];
+/** How-to-prepare list, with the payment line that fits where they live. */
+const howToPrepare = (a?: Partial<BookCallAnswers>) => [...HOW_TO_PREPARE, `<strong>Know how you'd pay if it's a yes.</strong> ${payFor(a)}`];
 
 /** Free next steps for people who aren't a fit right now. */
 const FREE_STEPS: Record<DiagnosisKey, [string, string, string][]> = {
@@ -179,7 +180,15 @@ ${footer(unsub, { reason })}
 const sign = (close = 'Chat soon,') => P(`${close}<br><strong>Izzy</strong>`);
 const hey = (c: { firstName: string }) => P(`Hey ${esc(c.firstName)},`);
 const joinLine = (c: CallInfo) => (c.joinUrl ? button('Join the call', c.joinUrl) : '');
-const payLine = 'Pay by card, or spread it out monthly with Klarna (up to 12 months). Both at checkout.';
+/** Klarna is only offered in Canada. Outside Canada, including the US, it's one card payment. */
+const payLine = 'Pay in full by card at checkout. In Canada, you can also spread it out monthly with Klarna (up to 12 months).';
+const abroad = (a?: Partial<BookCallAnswers>) => !!a?.country && a.country !== 'Canada';
+function payFor(a?: Partial<BookCallAnswers>): string {
+  if (a?.country === 'Canada') return 'Pay by card, or spread it out monthly with Klarna (up to 12 months). Both at checkout.';
+  if (abroad(a)) return "It's one payment by card at checkout. Klarna monthly payments are only available to clients in Canada.";
+  return payLine;
+}
+const cardHandy = (a?: Partial<BookCallAnswers>) => (a?.country === 'Canada' ? 'your card or Klarna' : 'your card');
 
 /** "120 applications, 3 interviews and 0 offers over 6-7 months." Only the numbers they gave us. */
 function numbers(a?: Partial<BookCallAnswers>): string {
@@ -302,7 +311,7 @@ ${list([
   "Whether Land and Level Up closes that gap. If it's a yes, we get you set up before we hang up. If it's a no, I'll tell you straight and point you somewhere better.",
 ], true)}
 ${H('How to get the most out of it')}
-${list(HOW_TO_PREPARE)}
+${list(howToPrepare(c.answers))}
 ${P("And if one question is already on your mind, hit reply and send it now. I'll make sure we cover it.")}
 ${P(`Want to look around first? ${link('Both programs and the common questions are on one page', utm(`${SITE_URL}/booked`, 'booked'))}.`)}
 ${c.rescheduleUrl ? P(`Need a different time? ${link('Reschedule here', c.rescheduleUrl)}, no stress. It frees the slot for someone else.`) : ''}
@@ -329,7 +338,7 @@ export function dayBeforeEmail(c: CallInfo) {
 
   const rows = [
     partner,
-    qa('Can I pay over time?', `Yes. ${payLine} Pick whatever works for your budget. No judgement, I've been between jobs too.`),
+    qa('Can I pay over time?', abroad(a) ? `Klarna monthly payments are only available in Canada, so from ${a.country === 'United States' ? 'the US' : 'outside Canada'} it's one payment by card at checkout. ${esc(offer.guarantee)}` : `Yes. ${payFor(a)} Pick whatever works for your budget. No judgement, I've been between jobs too.`),
     qa("What if it's not for me?", `${esc(offer.guarantee)} Email me inside those 7 days and I'll refund you, no awkward conversation.`),
     qa('How much time does it take?', employed
       ? 'One live hour a week with the group, for 6 weeks. The rest is your search, done smarter. You told me you\'re still employed, so we\'ll build a plan that fits around your job, not on top of it.'
@@ -355,7 +364,7 @@ ${P(DECIDE_ON_CALL)}
 ${H('Questions people ask me before they join')}
 ${P("Here are the straight answers, so tomorrow we can spend the whole call on you. If yours isn't here, hit reply.")}
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 20px;">${rows}</table>
-${P("If you already know you're in, tell me at the start and we'll go straight to getting you set up. Either way, have your card or Klarna handy, so a yes doesn't have to wait.")}
+${P("If you already know you're in, tell me at the start and we'll go straight to getting you set up. Either way, have ${cardHandy(a)} handy, so a yes doesn't have to wait.")}
 ${joinLine(c)}
 ${sign('See you tomorrow,')}`);
   return { subject, html };
@@ -367,7 +376,7 @@ export function morningOfEmail(c: CallInfo) {
   const html = shell('Today', `See you at ${callTime(c.callAt, false)}`, `
 ${hey(c)}
 ${P("Today's the day. I'm genuinely looking forward to this one. Today we decide together whether Land and Level Up is right for you, so bring:")}
-${list(['Your list of questions and doubts (all of them)', "Anyone who's part of the decision", 'Your card or Klarna handy, so a yes can happen right away'])}
+${list(['Your list of questions and doubts (all of them)', "Anyone who's part of the decision", `${cardHandy(c.answers).replace(/^y/, 'Y')} handy, so a yes can happen right away`])}
 ${joinLine(c)}
 ${c.rescheduleUrl ? P(`Something came up? ${link('Pick another time', c.rescheduleUrl)}. Life happens, no stress.`) : ''}
 ${sign('See you soon,')}`);
@@ -435,7 +444,7 @@ ${key ? P(esc(PROGRAM_FIX[key])) : ''}
 ${(() => { const sal = Number(c.answers?.targetSalary) || 0; const isP = (c.answers && c.answers.totalApplications !== undefined ? recommend(c.answers as BookCallAnswers).program : c.answers?.program) === PROGRAMS.private.name; const pr = dealIsLive() ? (isP ? PROGRAMS.private.price : PROGRAMS.group.price) : (isP ? PROGRAMS.private.regular : PROGRAMS.group.regular); const r = roi(sal, pr); return r ? P(`And the math from yesterday: at ${money(sal)}, the ${isP ? esc(PROGRAMS.private.name.toLowerCase()) : 'group cohort'} costs ${daysLabel(r.daysOfPay)} of your target pay. Landing even 2 weeks sooner is worth ${money(r.rows[0].value)}, and negotiating ${r.raise.pct}% more in your next offer is worth ${money(r.raise.perYear.value)} every year after.`) : ''; })()}
 ${P("If you're ready, here's where to claim your seat:")}
 ${joinLinks(k, c.answers)}
-${P(`${payLine} ${esc(offer.guarantee)}${deadlineLine()}`)}
+${P(`${payFor(c.answers)} ${esc(offer.guarantee)}${deadlineLine()}`)}
 ${P('Still on the fence? Reply with one word: <strong>money</strong>, <strong>timing</strong>, or <strong>fit</strong>. I\'ll answer that one thing, honestly. If the answer is "not now", I\'ll tell you that too.')}
 ${sign()}`);
   return { subject, html };
