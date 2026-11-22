@@ -1,5 +1,5 @@
 ---
-import { offer, CTA_LABEL, GROUP_CHECKOUT_URL, PRIVATE_CHECKOUT_URL } from "@/data/llu";
+import { offer, CTA_LABEL, GROUP_CHECKOUT_URL, PRIVATE_CHECKOUT_URL, survey, SURVEY_SOURCE } from "@/data/llu";
 
 const tiers = [
   { t: offer.group, href: GROUP_CHECKOUT_URL, lead: true },
@@ -75,6 +75,25 @@ const tiers = [
         <p class="llu-mt-8">{offer.afterProgram}</p>
       </div>
     </div>
+
+    <div class="llu-head llu-mt-72">
+      <p class="llu-eyebrow">What past members got out of it</p>
+    </div>
+    <dl class="llu-ruled llu-ruled--3 llu-mt-32">
+      <div>
+        <dt class="llu-stat__fig">{survey.raises20kPlus} members</dt>
+        <dd class="llu-stat__label">got raises of $20K or more. {survey.raises50kPlus} went past $50K, and {survey.raises100kPlus} past $100K.</dd>
+      </div>
+      <div>
+        <dt class="llu-stat__fig">{survey.stuckLandedPct}%</dt>
+        <dd class="llu-stat__label">of the {survey.stuck6PlusMonths} who'd been stuck for over six months landed after joining.</dd>
+      </div>
+      <div>
+        <dt class="llu-stat__fig">{survey.confidentAfterPct}%</dt>
+        <dd class="llu-stat__label">felt confident in their search afterwards (4 or 5 out of 5), up from {survey.confidentBeforePct}% before.</dd>
+      </div>
+    </dl>
+    <p class="llu-cap llu-center llu-mt-24">{SURVEY_SOURCE} From my earlier programs and 1:1 coaching. Results vary. <a class="llu-link" href="/outcomes">See the full outcomes report</a></p>
 
     <div class="llu-card llu-mt-72" id="guarantee">
       <div class="llu-row llu-row--top">
