@@ -321,6 +321,14 @@ export const survey = {
   raisedPay: 31,
   avgRaise: 21742,
   avgRating: 4.84,
+  /** More from the outcomes report (/outcomes). */
+  raises20kPlus: 14,
+  raises50kPlus: 2,
+  raises100kPlus: 1,
+  stuck6PlusMonths: 25,
+  stuckLandedPct: 64,
+  confidentAfterPct: 93,
+  confidentBeforePct: 10,
   timeToLand: [
     { label: "Under 2 weeks", short: "Under 2 wk", count: 3 },
     { label: "2 to 4 weeks", short: "2 to 4 wk", count: 7 },
