@@ -105,7 +105,7 @@ ${P("Money is tight when you're between roles. I've been there. So let's do the 
 ${P('Grab your target salary. Divide it by 12.')}
 ${BIG('At $100,000, that\'s $8,333. Every month.')}
 ${P("That's what one more month of searching costs. Not in theory. In groceries, in rent, in the quiet stress of watching your savings go down a little more every time you check.")}
-${P(`Now put the price next to it. The group cohort is <strong>${g.price} plus HST</strong> for the full 6 weeks${offer.dealLive ? ` (the Black Friday price, regular ${g.regular})` : ''}. If it helps you land even a few weeks sooner, it pays for itself.`)}
+${P(`Now put the price next to it. The group cohort is <strong>${g.price} plus HST</strong> for the full 6 weeks${offer.dealLive ? ` (20% off with code BLACKFRIDAY, regular ${g.regular})` : ''}. If it helps you land even a few weeks sooner, it pays for itself.`)}
 ${QUOTE(STORIES.annie.quote, STORIES.annie.who)}
 ${P(`${esc(STORIES.annie.story)} I get that. That's exactly why the price is what it is, and why there's a guarantee.`)}
 ${LIST([esc(offer.paying), esc(offer.guarantee)])}
@@ -187,7 +187,7 @@ ${SIGN()}`,
       eyebrow: 'Black Friday', headline: 'The honest version',
       body: `
 ${P("Your inbox is full of Black Friday right now. Mine too. So I'll keep this honest and useful.")}
-${BIG(`Group cohort: ${g.price}, regular ${g.regular}.<br>Group plus private rebuild: ${p.price}, regular ${p.regular}.`)}
+${BIG(`Code <strong>BLACKFRIDAY</strong> takes 20% off at checkout.<br>Group cohort: ${g.price}, regular ${g.regular}.<br>Group plus private rebuild: ${p.price}, regular ${p.regular}.`)}
 ${P(`CAD plus HST, for the full 6 weeks. ${esc(offer.dealLine)} It ends ${offer.dealEndsLong}.`)}
 ${P("But price isn't really the question, is it? The question is whether this will actually work for you. Here are the doubts I hear most:")}
 ${P('<strong>"I already paid for a coach. It went nowhere."</strong>')}
@@ -231,7 +231,7 @@ ${SIGN()}`,
       eyebrow: 'Last day', headline: 'Black Friday pricing ends tonight',
       body: `
 ${P("Short one, because you've got a life.")}
-${P(`Black Friday pricing on Land and Level Up ends <strong>tonight at 11:59 pm ET</strong>. Tomorrow the group cohort goes from ${g.price} to ${g.regular}, and the private rebuild from ${p.price} to ${p.regular}. No extensions, not even for my friends. (Sorry, friends.)`)}
+${P(`Code <strong>BLACKFRIDAY</strong> (20% off Land and Level Up) stops working <strong>tonight at 11:59 pm ET</strong>. Tomorrow the group cohort goes from ${g.price} to ${g.regular}, and the private rebuild from ${p.price} to ${p.regular}. No extensions, not even for my friends. (Sorry, friends.)`)}
 ${P(`We start ${offer.startDateLong}. ${offer.seatsTotal} founding seats.`)}
 ${P("Let me ask you something. How are you doing with this job search madness? Really?")}
 ${P("If the honest answer is \"tired\", that's exactly who this room is for. You don't need more grit. You need a plan, a better resume, and people in your corner on Wednesday.")}

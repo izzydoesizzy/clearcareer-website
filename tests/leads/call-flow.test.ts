@@ -175,7 +175,7 @@ describe('call email consistency', () => {
   });
   it('follow-up math uses the same program as the first button', () => {
     const h = followUp1Email(c, { group: 'https://buy.stripe.com/g', private: 'https://buy.stripe.com/p' }).html;
-    const first = h.indexOf('Group plus private 1:1 rebuild, $1,797');
+    const first = h.indexOf('Group plus private 1:1 rebuild, $1,837.60');
     expect(first).toBeGreaterThan(-1);
     expect(h).toContain('the group plus private 1:1 rebuild costs about 4 working days');
   });

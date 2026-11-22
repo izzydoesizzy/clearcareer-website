@@ -43,12 +43,14 @@ export const offer = {
   dealLine: "I haven't priced it this low since 2021.",
   /** Text for the sticky bar. Built from the same prices, so one edit changes everything. */
   dealBarLabel: "Black Friday",
-  dealBarLong: "Group cohort $949, regular $1,200. Ends Monday, November 30 at 11:59 pm ET.",
-  dealBarShort: "From $949. Ends Nov 30.",
+  promoCode: "BLACKFRIDAY",
+  promoLine: "20% off with code BLACKFRIDAY at checkout.",
+  dealBarLong: "20% off with code BLACKFRIDAY. Group cohort $960, regular $1,200. Ends Monday, November 30 at 11:59 pm ET.",
+  dealBarShort: "20% off: code BLACKFRIDAY. Ends Nov 30.",
   regularFrom: "On December 1 they go back to $1,200 and $2,297.",
   group: {
     name: "Group cohort",
-    price: dealLive ? "$949" : "$1,200",
+    price: dealLive ? "$960" : "$1,200",
     regular: "$1,200",
     priceNote: "CAD plus HST. One payment covers the full 6 weeks.",
     seatsTotal: 12,
@@ -63,7 +65,7 @@ export const offer = {
   },
   private: {
     name: "Group plus private rebuild",
-    price: dealLive ? "$1,797" : "$2,297",
+    price: dealLive ? "$1,837.60" : "$2,297",
     regular: "$2,297",
     priceNote: "CAD plus HST. One payment covers the full 6 weeks.",
     seatsTotal: 4,
@@ -365,7 +367,7 @@ export const objections: { q: string; a: string[]; proof: string }[] = [
     q: "“Money is tight right now.”",
     a: [
       "I get it. You're watching every dollar, and that's the right instinct.",
-      `So do the math with me. At a $100,000 salary, one month without a paycheque is $8,333 before tax. The group cohort is ${dealLive ? "$949" : "$1,200"} plus HST, for the full 6 weeks.`,
+      `So do the math with me. At a $100,000 salary, one month without a paycheque is $8,333 before tax. The group cohort is ${dealLive ? "$960 with code BLACKFRIDAY" : "$1,200"} plus HST, for the full 6 weeks.`,
       "In Canada, you can spread it out monthly with Klarna. From the US, it's one payment by card. Either way, there's a 7-day money-back guarantee, as long as your rebuild work hasn't started.",
     ],
     proof:

@@ -1491,3 +1491,13 @@ textarea.llu-input {
 #numbers.is-animated [data-reveal] .llu-bars__bar { transform: scaleX(0); transform-origin: left; }
 #numbers.is-animated [data-reveal].is-in .llu-speed__bar,
 #numbers.is-animated [data-reveal].is-in .llu-bars__bar { transform: scaleX(1); transition: transform 1100ms cubic-bezier(0.22, 1, 0.36, 1) 150ms; }
+
+/* Promo code, set like something to type */
+.llu-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: 0.04em;
+  padding: 1px 6px;
+  border-radius: 6px;
+  border: 1px dashed currentColor;
+  white-space: nowrap;
+}

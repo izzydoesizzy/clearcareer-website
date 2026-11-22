@@ -4,7 +4,7 @@
  * every "why" line points at something they told us.
  */
 import type { BookCallAnswers, Diagnosis } from './book-call.js';
-import { PROGRAMS, QUALIFY, leadScore, programValue, scoreLead, diagnose } from './book-call.js';
+import { PROGRAMS, QUALIFY, leadScore, programValue, scoreLead, diagnose, cad } from './book-call.js';
 import { CALL_PLAN, esc } from './lead-email.js';
 import { dealIsLive } from './email/deal.js';
 import { offer, objections, RESULTS_VARY } from '../data/llu.js';
@@ -19,7 +19,7 @@ const C = {
 };
 const FONT = "Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif";
 const SERIF = "'DM Serif Display',Georgia,'Times New Roman',serif";
-const money = (n: number) => `$${Math.round(n).toLocaleString('en-CA')}`;
+const money = (n: number) => (Number.isInteger(n) || n >= 10000 ? `$${Math.round(n).toLocaleString('en-CA')}` : cad(n));
 const q = (s: string) => `"${s.replace(/\s+/g, ' ').trim()}"`;
 const proof = (i: number) => (objections[i]?.proof || '').replace(/[“”]/g, '"');
 

@@ -12,7 +12,7 @@ const tiers = [
     <div class="llu-head">
       <p class="llu-eyebrow">{offer.dealLive ? `Black Friday pricing, until ${offer.dealEndsShort}` : "Pricing"}</p>
       <h2 class="llu-h2">Choose your room.</h2>
-      {offer.dealLive && <p class="llu-lead">These are Black Friday prices. {offer.regularFrom}</p>}
+      {offer.dealLive && <p class="llu-lead">Use code <strong class="llu-code">{offer.promoCode}</strong> at checkout for 20% off. {offer.regularFrom}</p>}
       {offer.dealLive && <p class="llu-lead">“{offer.dealLine}”</p>}
     </div>
 
@@ -27,7 +27,7 @@ const tiers = [
       </div>
       <div>
         <dt class="llu-stat__fig">{offer.group.price}</dt>
-        <dd class="llu-stat__label">{offer.dealLive ? "The group cohort at the Black Friday price, for the full 6 weeks." : "The group cohort, for the full 6 weeks."} CAD plus HST.</dd>
+        <dd class="llu-stat__label">{offer.dealLive ? "The group cohort with code BLACKFRIDAY, for the full 6 weeks." : "The group cohort, for the full 6 weeks."} CAD plus HST.</dd>
       </div>
     </dl>
 
@@ -40,7 +40,7 @@ const tiers = [
               <p class="llu-tier__price llu-mt-16">
                 {t.price} {offer.dealLive && <s class="llu-strike">{t.regular}</s>}
               </p>
-              {offer.dealLive && <p class="llu-bf llu-mt-8">Black Friday price, regular {t.regular}</p>}
+              {offer.dealLive && <p class="llu-bf llu-mt-8">20% off with code <strong class="llu-code">{offer.promoCode}</strong>. Regular {t.regular}.</p>}
               <p class="llu-cap llu-mt-8">{t.priceNote}</p>
             </div>
             <div class="llu-tier__for">

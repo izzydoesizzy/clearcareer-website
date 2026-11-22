@@ -18,9 +18,9 @@ describe('onboarding links', () => {
 
 describe('program and intake', () => {
   it('tells the programs apart by price before tax', () => {
-    expect(programFromAmount(94900)).toBe('Group cohort');
+    expect(programFromAmount(96000)).toBe('Group cohort');
     expect(programFromAmount(120000)).toBe('Group cohort');
-    expect(programFromAmount(179700)).toBe('Group plus private 1:1 rebuild');
+    expect(programFromAmount(183760)).toBe('Group plus private 1:1 rebuild');
     expect(programFromAmount(229700)).toBe('Group plus private 1:1 rebuild');
   });
   it('requires the essentials', () => {

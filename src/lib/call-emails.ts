@@ -18,7 +18,7 @@
 import { COLORS, FONTS, SITE_URL } from './email/constants.js';
 import { wrapDocument, outerTable, footer } from './email/components.js';
 import { dealIsLive } from './email/deal.js';
-import { PROGRAMS, ALTERNATIVE, QUALIFY, diagnose } from './book-call.js';
+import { PROGRAMS, ALTERNATIVE, QUALIFY, diagnose, cad } from './book-call.js';
 import type { BookCallAnswers, DiagnosisKey } from './book-call.js';
 import { offer, RESULTS_VARY } from '../data/llu.js';
 import { storyFor, recommend, IZZY, STORIES, type Story } from './stories.js';
@@ -40,7 +40,7 @@ export interface Checkout { group?: string; private?: string }
 
 const esc = (s: unknown) =>
   String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] as string));
-const money = (n: number) => `$${Math.round(n).toLocaleString('en-CA')}`;
+const money = (n: number) => (Number.isInteger(n) || n >= 10000 ? `$${Math.round(n).toLocaleString('en-CA')}` : cad(n));
 const utm = (url: string, campaign: string) => `${url}${url.includes('?') ? '&' : '?'}utm_source=email&utm_medium=call-journey&utm_campaign=${campaign}`;
 const PAGE = `${SITE_URL}/land-and-level-up`;
 

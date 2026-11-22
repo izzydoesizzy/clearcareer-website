@@ -15,7 +15,7 @@ import ProofBar from "@components/proof/ProofBar.astro";
       </p>
       <LluButton />
       <p class="llu-cap">
-        {offer.dealLive && <>Black Friday pricing ends {offer.dealEndsLong}. </>}We start {offer.startDateShort}.
+        {offer.dealLive && <>20% off with code <strong>{offer.promoCode}</strong> until {offer.dealEndsLong}. </>}We start {offer.startDateShort}.
         <span class="llu-num">{offer.seatsTotal}</span> seats.
       </p>
       <ProofBar tone="dark" />
