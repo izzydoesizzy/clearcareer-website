@@ -5,6 +5,9 @@ import LluButton from "./LluButton.astro";
 import LluReviewCard from "./LluReviewCard.astro";
 import { faces, originals, videoThumb } from "./images";
 
+/** The YouTube ID, for the in-page player. */
+const videoId = new URL(VIDEO_URL).searchParams.get("v") ?? VIDEO_URL.split("/").pop();
+
 const wall = [
   reviews.kira,
   quotes.chris,
@@ -54,11 +57,16 @@ const wall = [
     </div>
 
     <div class="llu-row llu-mt-72">
-      <a class="llu-card llu-video" href={VIDEO_URL} target="_blank" rel="noopener">
-        <LluImg img={videoThumb} alt="A ClearCareer client speaking on video" sizes="(min-width: 1024px) 524px, calc(100vw - 48px)" />
+      <a class="llu-card llu-video" href={VIDEO_URL} target="_blank" rel="noopener" data-llu-video={videoId} aria-label="Play the client video">
+        <span class="llu-video__media">
+          <LluImg img={videoThumb} alt="A ClearCareer client speaking on video" sizes="(min-width: 1024px) 524px, calc(100vw - 48px)" />
+          <span class="llu-video__play" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="28" height="28"><path d="M8 5v14l11-7z" fill="currentColor" /></svg>
+          </span>
+        </span>
         <span class="llu-video__body">
           <span class="llu-who__name">Hear it from clients, on video</span>
-          <span class="llu-cap llu-block">Opens on YouTube. Nothing plays until you press play.</span>
+          <span class="llu-cap llu-block">Plays right here. Nothing loads from YouTube until you press play.</span>
         </span>
       </a>
       <LluReviewCard item={reviews.kristin} variant="big" />
@@ -78,3 +86,35 @@ const wall = [
     </div>
   </div>
 </section>
+
+<script>
+  // Click-to-load player: swap the thumbnail for YouTube's no-cookie player, in place.
+  // Without JavaScript, the link still opens the video on YouTube.
+  document.querySelectorAll<HTMLAnchorElement>("a[data-llu-video]").forEach((link) => {
+    link.addEventListener("click", (e) => {
+      const id = link.dataset.lluVideo;
+      if (!id || e.metaKey || e.ctrlKey || e.shiftKey) return;
+      e.preventDefault();
+      const card = document.createElement("div");
+      card.className = "llu-card llu-video llu-video--playing";
+      const frame = document.createElement("div");
+      frame.className = "llu-video__frame";
+      const iframe = document.createElement("iframe");
+      iframe.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?autoplay=1&rel=0&playsinline=1&modestbranding=1`;
+      iframe.title = "ClearCareer clients on video";
+      iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      iframe.allowFullscreen = true;
+      iframe.referrerPolicy = "strict-origin-when-cross-origin";
+      frame.appendChild(iframe);
+      const body = link.querySelector(".llu-video__body");
+      card.appendChild(frame);
+      if (body) {
+        const copy = body.cloneNode(true) as HTMLElement;
+        copy.querySelector(".llu-cap")?.remove();
+        card.appendChild(copy);
+      }
+      link.replaceWith(card);
+      iframe.focus();
+    });
+  });
+</script>
