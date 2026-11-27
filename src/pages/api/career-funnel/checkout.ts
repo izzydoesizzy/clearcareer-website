@@ -1,29 +1,28 @@
 import type { APIRoute } from "astro";
-import Stripe from "stripe";
-
+import { sandbox, allowedOrigin, offers, COOKIE, FLOW } from "../../../lib/career-funnel-test";
+import { offer } from "../../../data/llu";
 export const prerender = false;
-
-export const POST: APIRoute = async ({ request, url }) => {
-  const site = url.origin;
-  const allowed = site === "https://joinclearcareer.com" || (url.protocol === "https:" && /^clearcareer-website-[a-z0-9-]+-izzydoesizzys-projects\.vercel\.app$/.test(url.hostname));
-  if (!allowed || request.headers.get("origin") !== site) return new Response("Use the ClearCareer website.", { status: 403 });
-  const failure = () => new Response(null, { status: 303, headers: { Location: site + "/career-funnel-preview?checkout=unavailable", "Cache-Control": "no-store" } });
-  const secret = import.meta.env.STRIPE_FUNNEL_TEST_SECRET_KEY || import.meta.env.STRIPE_SECRET_KEY || "";
-  // Never accept a live key, even if a production environment is configured.
-  if (!/^(sk|rk)_test_/.test(secret)) return failure();
+export const POST: APIRoute = async ({ request, url, cookies }) => {
+  if (!allowedOrigin(url) || request.headers.get("origin") !== url.origin) return new Response("Preview only", {status:403});
+  const back = (reason:string) => new Response(null,{status:303,headers:{Location:"/career-funnel-preview?checkout="+reason,"Cache-Control":"no-store"}});
   try {
-    const stripe = new Stripe(secret);
+    const stripe = sandbox();
+    if (!stripe) return back("unavailable");
+    const form = await request.formData();
+    const key = form.get("variant");
+    if ((key !== "a" && key !== "b") || form.get("consent") !== "yes") return back("consent");
+    const item = offers[key], bump = form.get("bump") === "yes";
     const session = await stripe.checkout.sessions.create({
-      mode: "payment",
-      payment_method_types: ["card"],
-      line_items: [{ price_data: { currency: "cad", unit_amount: 900, product_data: { name: "Career Prompt Vault (sandbox test)" } }, quantity: 1 }],
-      metadata: { product: "vault_test", funnel: "career-funnel-v1" },
-      success_url: site + "/career-funnel-preview?session_id={CHECKOUT_SESSION_ID}",
-      cancel_url: site + "/career-funnel-preview?checkout=cancelled",
+      mode:"payment", payment_method_types:["card"], customer_creation:"always",
+      payment_intent_data:{setup_future_usage:"off_session",metadata:{funnel:FLOW}},
+      line_items:[{price_data:{currency:"cad",unit_amount:item.amount,product_data:{name:item.name+" (sandbox)"}},quantity:1},
+        ...(bump ? [{price_data:{currency:"cad",unit_amount:900,product_data:{name:"Salary Number Generator (sandbox)"}},quantity:1}] : [])],
+      metadata:{funnel:FLOW,variant:key,bump:bump?"yes":"no",group:offer.dealLive?"94900":"120000"},
+      success_url:url.origin+"/career-funnel-preview?checkout=success",
+      cancel_url:url.origin+"/career-funnel-preview?checkout=cancelled",
     });
-    if (session.livemode || !session.url) return failure();
-    return new Response(null, { status: 303, headers: { Location: session.url, "Cache-Control": "no-store" } });
-  } catch {
-    return failure();
-  }
+    if (session.livemode || !session.url) return back("unavailable");
+    cookies.set(COOKIE,session.id,{path:"/",httpOnly:true,secure:true,sameSite:"lax",maxAge:7200});
+    return new Response(null,{status:303,headers:{Location:session.url,"Cache-Control":"no-store"}});
+  } catch { return back("unavailable"); }
 };
