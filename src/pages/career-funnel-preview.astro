@@ -5,7 +5,7 @@ import { offer } from "@data/llu";
 import { sandbox, allowedOrigin, state, COOKIE, offers, format } from "../lib/career-funnel-test";
 export const prerender = false;
 Astro.response.headers.set("Cache-Control","private, no-store");
-Astro.response.headers.set("Referrer-Policy","no-referrer");
+Astro.response.headers.set("Referrer-Policy","same-origin");
 const stripe = allowedOrigin(Astro.url) ? sandbox() : null;
 const cookie = Astro.cookies.get(COOKIE)?.value;
 let x: Awaited<ReturnType<typeof state>> = null;
@@ -124,6 +124,46 @@ const unableToStart = !stripe || verificationFailed || (status==="success"&&!x);
   const bump = document.querySelector<HTMLInputElement>("#bump");
   const total = document.querySelector<HTMLElement>("#checkout-total");
   if (bump && total) bump.addEventListener("change",()=>{total.textContent=new Intl.NumberFormat("en-CA",{style:"currency",currency:"CAD"}).format((Number(total.dataset.base)+(bump.checked?900:0))/100);});
-  const form=document.querySelector<HTMLFormElement>("#checkout-form");
-  form?.addEventListener("submit",()=>{const button=form.querySelector("button");if(button)button.disabled=true;});
+  const forms = document.querySelectorAll<HTMLFormElement>('form[action^="/api/career-funnel/"]');
+  for (const form of forms) {
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (form.dataset.busy === "yes") return;
+      const submitter = event.submitter;
+      const payload = Object.fromEntries(new FormData(form));
+      if (submitter instanceof HTMLButtonElement && submitter.name) payload[submitter.name] = submitter.value;
+      const endpoint = new URL(form.action, window.location.origin);
+      if (endpoint.origin !== window.location.origin || !["/api/career-funnel/checkout","/api/career-funnel/upgrade"].includes(endpoint.pathname)) return;
+      const buttons = Array.from(form.querySelectorAll<HTMLButtonElement>("button:not(:disabled)"));
+      form.dataset.busy = "yes";
+      buttons.forEach(button => button.disabled = true);
+      let message = form.querySelector<HTMLParagraphElement>("[data-request-error]");
+      if (!message) {
+        message = document.createElement("p");
+        message.dataset.requestError = "yes";
+        message.setAttribute("role", "alert");
+        form.append(message);
+      }
+      message.textContent = "Connecting to Stripe sandbox…";
+      try {
+        const response = await fetch(endpoint.pathname, {
+          method: "POST", mode: "cors", credentials: "same-origin",
+          headers: {"Content-Type": "application/json", "Accept": "application/json"},
+          body: JSON.stringify(payload), redirect: "error", cache: "no-store",
+        });
+        if (!response.ok) throw new Error("Request rejected (HTTP " + response.status + ").");
+        const result = await response.json();
+        if (typeof result.next !== "string") throw new Error("Invalid server response.");
+        const next = new URL(result.next, window.location.origin);
+        const internal = next.origin === window.location.origin && next.pathname === "/career-funnel-preview";
+        const hosted = endpoint.pathname.endsWith("/checkout") && next.origin === "https://checkout.stripe.com";
+        if (!internal && !hosted) throw new Error("Unexpected checkout destination.");
+        window.location.assign(next.href);
+      } catch (error) {
+        message.textContent = (error instanceof Error ? error.message : "Unable to connect.") + " Refresh the funnel before trying again to check whether a test payment was recorded.";
+        form.dataset.busy = "no";
+        buttons.forEach(button => button.disabled = false);
+      }
+    });
+  }
 </script>
