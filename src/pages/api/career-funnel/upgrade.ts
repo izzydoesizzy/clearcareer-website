@@ -2,12 +2,12 @@ import type { APIRoute } from "astro";
 import { sandbox, allowedOrigin, COOKIE, FLOW, state } from "../../../lib/career-funnel-test";
 export const prerender = false;
 export const POST: APIRoute = async ({request,url,cookies}) => {
-  if (!allowedOrigin(url) || request.headers.get("origin") !== url.origin) return new Response("Preview only",{status:403});
-  const back=(reason:string)=>new Response(null,{status:303,headers:{Location:"/career-funnel-preview?checkout="+reason,"Cache-Control":"no-store"}});
+  if (!allowedOrigin(url) || request.headers.get("origin") !== url.origin || (request.headers.get("sec-fetch-site") && request.headers.get("sec-fetch-site") !== "same-origin") || request.headers.get("content-type")?.split(";")[0].trim().toLowerCase() !== "application/json") return new Response("Preview only",{status:403});
+  const back = (reason:string) => Response.json({next:"/career-funnel-preview?checkout="+reason},{headers:{"Cache-Control":"no-store"}});
   try {
     const stripe=sandbox();
     if(!stripe) return back("unavailable");
-    const choice=(await request.formData()).get("choice");
+    const choice=(await request.json()).choice;
     if(choice==="restart"){cookies.delete(COOKIE,{path:"/"});return back("restart");}
     const x=await state(stripe,cookies.get(COOKIE)?.value);
     if(!x) return back("unavailable");
