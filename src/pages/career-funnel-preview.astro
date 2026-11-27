@@ -2,19 +2,41 @@
 import BaseLayout from "@layouts/BaseLayout.astro";
 import "@/styles/llu.css";
 import { offer, SURVEY_SOURCE } from "@data/llu";
+import Stripe from "stripe";
+
+export const prerender = false;
+Astro.response.headers.set("Cache-Control", "private, no-store");
+Astro.response.headers.set("Referrer-Policy", "no-referrer");
+const sessionId = Astro.url.searchParams.get("session_id");
+const checkoutState = Astro.url.searchParams.get("checkout");
+const liveHost = Astro.url.origin === "https://joinclearcareer.com";
+let verified = false;
+if (liveHost && sessionId && /^cs_live_[A-Za-z0-9_]+$/.test(sessionId) && import.meta.env.STRIPE_SECRET_KEY) {
+  try {
+    const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY);
+    const session = await stripe.checkout.sessions.retrieve(sessionId);
+    verified = session.livemode && session.status === "complete" && session.payment_status === "paid" && session.metadata?.product === "vault" && session.metadata?.funnel === "career-funnel-v1" && session.currency === "cad" && session.amount_total === 900;
+  } catch { /* Never show a paid state without confirmation from Stripe. */ }
+}
+const accessHref = verified ? "/tools/career-prompt-vault/access?session_id=" + encodeURIComponent(sessionId!) : "";
+
 
 const groupPrice = offer.dealLive ? 949 : 1200;
 const money = (n: number) => "$" + n.toLocaleString("en-CA");
 ---
 <BaseLayout title="Career Toolkit | ClearCareer funnel preview" description="An isolated preview of the ClearCareer digital product and coaching funnel." noindex>
-  <div class="llu funnel" id="career-funnel" data-group-price={groupPrice}>
+  <div class="llu funnel" id="career-funnel" data-group-price={groupPrice} data-paid={String(verified)} data-live={String(liveHost)}>
     <header class="llu-nav">
       <div class="llu-wrap llu-nav__row">
         <a class="llu-nav__brand" href="/land-and-level-up"><span class="llu-nav__mark">ClearCareer</span></a>
-        <span class="preview-tag">Private review concept · no real payments</span>
+        <span class="preview-tag">Unlisted preview · $9 live purchase only</span>
       </div>
     </header>
     <main id="main-content">
+      {verified && <section class="llu-band llu-band--white chooser"><div class="llu-wrap llu-stack"><p><strong>Stripe confirmed your real $9 CAD Prompt Vault purchase.</strong> All remaining offers are simulations only; no further charges will occur.</p><a class="llu-link" href={accessHref}>Access your purchased Prompt Vault now</a></div></section>}
+      {(checkoutState === "unavailable" || (sessionId && !verified)) && <section class="llu-band llu-band--white chooser"><div class="llu-wrap"><p role="alert">The live checkout or payment confirmation could not be verified. If you already paid, contact ClearCareer before attempting another purchase.</p></div></section>}
+      {checkoutState === "cancelled" && <section class="llu-band llu-band--white chooser"><div class="llu-wrap"><p role="status">Checkout cancelled. No new payment has been confirmed.</p></div></section>}
+
       <section class="llu-band llu-band--white chooser">
         <div class="llu-wrap">
           <p class="llu-cap">Choose a funnel to preview</p>
@@ -25,7 +47,7 @@ const money = (n: number) => "$" + n.toLocaleString("en-CA");
           <p class="llu-cap" id="progress" role="status">Step 1 of 5 · Offer</p>
         </div>
       </section>
-      <noscript><p class="llu-band llu-center">Enable JavaScript to explore the simulated checkout. No real payments are accepted.</p></noscript>
+      <noscript><p class="llu-band llu-center">Enable JavaScript to explore the funnel and access the checkout.</p></noscript>
       <section data-stage="0">
         <div class="llu-band llu-band--navy">
           <div class="llu-wrap llu-row">
@@ -79,7 +101,8 @@ const money = (n: number) => "$" + n.toLocaleString("en-CA");
             <div class="line"><span data-field="name">Career Prompt Vault</span><strong data-field="base">$9</strong></div>
             <label class="bump"><input id="bump" type="checkbox" /><span><strong>Also add The Salary Number Generator for $9</strong><br /><span class="llu-cap">Calculate your target, anchor and walk-away numbers, with word-for-word scripts.</span></span></label>
             <div class="line"><strong>Subtotal before tax</strong><strong id="checkout-total">$9 CAD</strong></div>
-            <p class="llu-cap">Simulation only. The production checkout would use Stripe to collect payment and obtain appropriate consent for separately accepted future offers.</p>
+            <p class="llu-cap">The simulation never charges you. The separate real checkout is available for the $9 Prompt Vault alone; the bump and other offers are not live.</p>
+            {liveHost && !verified && <form id="live-form" method="POST" action="/api/career-funnel/checkout" class="llu-stack" hidden><button class="llu-btn llu-btn--wide" type="submit">Buy for real · $9 CAD</button><p class="llu-cap">Opens secure Stripe Checkout. Card or Apple Pay if available. This is an actual purchase, not a simulation. Only the Prompt Vault is included.</p></form>}
             <button class="llu-btn llu-btn--wide" type="button" data-action="pay" id="pay-button">Simulate payment · $9</button>
             <button class="skip" type="button" data-action="back">Back to offer</button>
           </div>
@@ -88,7 +111,7 @@ const money = (n: number) => "$" + n.toLocaleString("en-CA");
       <section class="llu-band" data-stage="2" hidden>
         <div class="llu-wrap narrow">
           <div class="llu-card llu-stack">
-            <p class="llu-cap">✓ Initial purchase simulated successfully.</p>
+            <p class="llu-cap">{verified ? "✓ Real $9 payment confirmed by Stripe. The next offers are simulated." : "✓ Initial purchase simulated successfully."}</p>
             <p class="llu-eyebrow">Optional upgrade · 1 of 2</p>
             <h1 class="llu-h2" tabindex="-1" data-field="upsellHeadline">Now you have the prompts. Get the words, too.</h1>
             <h2 class="llu-title" data-field="upsellName">The Job Search Script Vault</h2>
@@ -133,7 +156,7 @@ const money = (n: number) => "$" + n.toLocaleString("en-CA");
           <div class="llu-card llu-stack">
             <p class="llu-eyebrow">Simulation complete</p>
             <h1 class="llu-h2" tabindex="-1">Your next step starts here.</h1>
-            <p>No real orders, payments or enrollments were created.</p>
+            <p>{verified ? "Only your original $9 Prompt Vault purchase is real. The following summary includes hypothetical upgrades; no other charges or enrollments were created." : "No real orders, payments or enrollments were created."}</p>
             <div id="summary" aria-live="polite"></div>
             <div class="line"><strong>Simulated subtotal before tax</strong><strong id="final-total"></strong></div>
             <p class="llu-cap">In production, digital purchases would be delivered whether or not additional offers are accepted.</p>
@@ -153,7 +176,7 @@ const money = (n: number) => "$" + n.toLocaleString("en-CA");
         </div>
       </section>
     </main>
-    <footer class="llu-band llu-band--navy preview-footer"><div class="llu-wrap"><p class="llu-cap">ClearCareer · Unlisted review concept. No real payments or customer data collected by the funnel. The existing site analytics may still run. The $49 bundle and purchase credits are proposed; taxes, fulfillment and live inventory are not connected.</p></div></footer>
+    <footer class="llu-band llu-band--navy preview-footer"><div class="llu-wrap"><p class="llu-cap">ClearCareer · Unlisted review concept. Only the separately labelled $9 Stripe checkout is real. All other offers, totals and enrollments are simulated. The existing site analytics may still run. The $49 bundle and purchase credits are proposed; taxes and live inventory for upgrades are not connected.</p></div></footer>
   </div>
 </BaseLayout>
 <style>
@@ -186,7 +209,8 @@ const money = (n: number) => "$" + n.toLocaleString("en-CA");
   };
   const groupPrice = Number(root.dataset.groupPrice);
   const stages = ["Offer","Checkout","Upsell 1","Upsell 2","Confirmation"];
-  let key = "a", stage = 0, bump = false, upsell = false, group = false;
+  const realPaid = root.dataset.paid === "true";
+  let key = "a", stage = realPaid ? 2 : 0, bump = false, upsell = false, group = false;
   const $ = (id) => document.getElementById(id);
   const money = (n) => "$" + n.toLocaleString("en-CA");
   const digital = () => variants[key].price + (bump ? 9 : 0) + (upsell ? variants[key].upsellPrice : 0);
@@ -211,6 +235,9 @@ const money = (n: number) => "$" + n.toLocaleString("en-CA");
     root.querySelectorAll('[data-action="checkout"]').forEach(el=>el.textContent="Get instant access · "+money(v.price));
     $("progress").textContent="Step "+(stage+1)+" of 5 · "+stages[stage];
     $("bump").checked=bump;
+    const liveForm = $("live-form");
+    if (liveForm) liveForm.hidden = key !== "a" || bump;
+    if (realPaid) root.querySelectorAll("[data-variant]").forEach(el => el.disabled = true);
     $("checkout-total").textContent=money(v.price+(bump?9:0))+" CAD";
     $("pay-button").textContent="Simulate payment · "+money(v.price+(bump?9:0));
     $("accept-up").textContent="Simulate adding "+v.upsellName+" · "+money(v.upsellPrice);
@@ -230,8 +257,10 @@ const money = (n: number) => "$" + n.toLocaleString("en-CA");
     window.scrollTo({top:0,behavior:"auto"});
     root.querySelector('[data-stage="'+stage+'"] h1')?.focus({preventScroll:true});
   }
-  function restart() { bump=upsell=group=false;go(0); }
-  root.querySelectorAll("[data-variant]").forEach(el=>el.addEventListener("click",()=>{key=el.dataset.variant;restart();}));
+  function restart() { bump=upsell=group=false;go(realPaid ? 2 : 0); }
+  root.querySelectorAll("[data-variant]").forEach(el=>el.addEventListener("click",()=>{if(realPaid)return;key=el.dataset.variant;restart();}));
+  const liveForm = $("live-form");
+  if (liveForm) liveForm.addEventListener("submit",()=>{ const button=liveForm.querySelector("button"); if(button)button.disabled=true; });
   $("bump").addEventListener("change",()=>{bump=$("bump").checked;render();});
   root.querySelectorAll("[data-action]").forEach(el=>el.addEventListener("click",()=>{
     switch(el.dataset.action){
