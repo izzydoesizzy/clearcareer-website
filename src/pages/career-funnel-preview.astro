@@ -1,0 +1,250 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import "@/styles/llu.css";
+import { offer, SURVEY_SOURCE } from "@data/llu";
+
+const groupPrice = offer.dealLive ? 949 : 1200;
+const money = (n: number) => "$" + n.toLocaleString("en-CA");
+---
+<BaseLayout title="Career Toolkit | ClearCareer funnel preview" description="An isolated preview of the ClearCareer digital product and coaching funnel." noindex>
+  <div class="llu funnel" id="career-funnel" data-group-price={groupPrice}>
+    <header class="llu-nav">
+      <div class="llu-wrap llu-nav__row">
+        <a class="llu-nav__brand" href="/land-and-level-up"><span class="llu-nav__mark">ClearCareer</span></a>
+        <span class="preview-tag">Private review concept · no real payments</span>
+      </div>
+    </header>
+    <main id="main-content">
+      <section class="llu-band llu-band--white chooser">
+        <div class="llu-wrap">
+          <p class="llu-cap">Choose a funnel to preview</p>
+          <div class="choices" aria-label="Funnel variation">
+            <button type="button" data-variant="a" aria-pressed="true">$9 Prompt Vault</button>
+            <button type="button" data-variant="b" aria-pressed="false">$49 Toolkit bundle</button>
+          </div>
+          <p class="llu-cap" id="progress" role="status">Step 1 of 5 · Offer</p>
+        </div>
+      </section>
+      <noscript><p class="llu-band llu-center">Enable JavaScript to explore the simulated checkout. No real payments are accepted.</p></noscript>
+      <section data-stage="0">
+        <div class="llu-band llu-band--navy">
+          <div class="llu-wrap llu-row">
+            <div class="llu-stack">
+              <p class="llu-eyebrow" data-field="tag">50 AI career frameworks</p>
+              <h1 class="llu-display" tabindex="-1" data-field="headline">Stop asking AI for generic career advice.</h1>
+              <p class="llu-lead" data-field="lead">Turn ChatGPT, Claude or your favourite AI assistant into a practical career strategist with 50 structured frameworks for your job search.</p>
+              <p>Built from the frameworks used in ClearCareer coaching. No subscription.</p>
+              <button class="llu-btn" type="button" data-action="checkout">Get instant access · $9</button>
+            </div>
+            <div class="llu-card llu-stack">
+              <p class="llu-eyebrow">Your toolkit</p>
+              <h2 class="llu-h3" data-field="name">Career Prompt Vault</h2>
+              <ul class="llu-list" data-list="items">
+                <li>50 frameworks across six categories</li><li>Custom AI system prompt and setup guide</li><li>Quick-start guide and three bonus resources</li>
+              </ul>
+              <p class="price" data-field="price">$9 CAD</p>
+              <p class="llu-cap" data-field="guarantee">48-hour money-back guarantee on the Prompt Vault.</p>
+              <button class="llu-btn llu-btn--wide" type="button" data-action="checkout">Get instant access · $9</button>
+            </div>
+          </div>
+        </div>
+        <section class="llu-band">
+          <div class="llu-wrap">
+            <div class="llu-head"><p class="llu-eyebrow">Real people. Real results.</p><h2 class="llu-h2">The work behind the tools.</h2></div>
+            <div class="llu-grid llu-grid--3 llu-mt-48">
+              <div class="llu-card"><p class="price">200+</p><p>Professionals coached</p></div>
+              <div class="llu-card"><p class="price">$1.2M+</p><p>Collective client raises</p></div>
+              <div class="llu-card"><p class="price">$21.7K</p><p>Average raise in past outcomes report</p></div>
+            </div>
+            <p class="llu-cap llu-center llu-mt-24">Past ClearCareer coaching outcomes, not promises about these digital products. <a class="llu-link" href="/outcomes">See the outcomes report</a>.</p>
+          </div>
+        </section>
+        <section class="llu-band llu-band--white">
+          <div class="llu-wrap llu-row">
+            <div class="llu-stack">
+              <p class="llu-eyebrow">The receipts</p>
+              <h2 class="llu-h2">Three interviews in two weeks.</h2>
+              <p>After working on their resume and LinkedIn, a past ClearCareer client reported three interviews in two weeks.</p>
+              <p class="llu-cap">Individual coaching outcome. Results vary.</p>
+            </div>
+            <img class="receipt" src="/images/llu/receipts/victor.webp" alt="Anonymized client message reporting three interviews in two weeks" width="640" height="1017" loading="lazy" />
+          </div>
+        </section>
+      </section>
+      <section class="llu-band" data-stage="1" hidden>
+        <div class="llu-wrap narrow">
+          <div class="llu-card llu-stack">
+            <p class="llu-eyebrow">Checkout preview</p>
+            <h1 class="llu-h2" tabindex="-1">Get your toolkit.</h1>
+            <div class="line"><span data-field="name">Career Prompt Vault</span><strong data-field="base">$9</strong></div>
+            <label class="bump"><input id="bump" type="checkbox" /><span><strong>Also add The Salary Number Generator for $9</strong><br /><span class="llu-cap">Calculate your target, anchor and walk-away numbers, with word-for-word scripts.</span></span></label>
+            <div class="line"><strong>Subtotal before tax</strong><strong id="checkout-total">$9 CAD</strong></div>
+            <p class="llu-cap">Simulation only. The production checkout would use Stripe to collect payment and obtain appropriate consent for separately accepted future offers.</p>
+            <button class="llu-btn llu-btn--wide" type="button" data-action="pay" id="pay-button">Simulate payment · $9</button>
+            <button class="skip" type="button" data-action="back">Back to offer</button>
+          </div>
+        </div>
+      </section>
+      <section class="llu-band" data-stage="2" hidden>
+        <div class="llu-wrap narrow">
+          <div class="llu-card llu-stack">
+            <p class="llu-cap">✓ Initial purchase simulated successfully.</p>
+            <p class="llu-eyebrow">Optional upgrade · 1 of 2</p>
+            <h1 class="llu-h2" tabindex="-1" data-field="upsellHeadline">Now you have the prompts. Get the words, too.</h1>
+            <h2 class="llu-title" data-field="upsellName">The Job Search Script Vault</h2>
+            <p data-field="upsellText">100+ ready-to-use scripts for the conversations that matter.</p>
+            <ul class="llu-list" data-list="upsellItems"></ul>
+            <p class="price" data-field="upsellPrice">$29 CAD</p>
+            <p class="llu-cap">Your original purchase is yours either way. This is a separate optional charge; no real payment will be taken.</p>
+            <button class="llu-btn llu-btn--wide" type="button" data-action="accept-up" id="accept-up">Simulate adding the Script Vault · $29</button>
+            <button class="skip" type="button" data-action="skip-up">No thanks, continue</button>
+          </div>
+        </div>
+      </section>
+      <section class="llu-band llu-band--navy" data-stage="3" hidden>
+        <div class="llu-wrap narrow">
+          <div class="llu-stack">
+            <p class="llu-eyebrow">Optional upgrade · 2 of 2</p>
+            <h1 class="llu-h2" tabindex="-1">You have the tools. Want to do it together?</h1>
+            <p class="llu-lead">Land and Level Up is a six-week group coaching program where we rebuild your resume and LinkedIn together and work your real search live.</p>
+          </div>
+          <div class="llu-card llu-stack llu-mt-32">
+            <ul class="llu-list">{offer.group.includes.map((item) => <li>{item}</li>)}</ul>
+            <figure class="llu-stack">
+              <img class="community" src="/images/llu/community-wins-560.webp" alt="Anonymized screenshot of a past ClearCareer community sharing job search wins" width="560" height="560" loading="lazy" />
+              <figcaption class="llu-cap">A past ClearCareer community, 2024. Names and faces blurred for privacy.</figcaption>
+            </figure>
+            <p>Starts {offer.startDateLong}. {offer.holidayBreak}</p>
+            <div class="line"><span>Group program price</span><strong>{money(groupPrice)} CAD</strong></div>
+            <div class="line"><span>Proposed credit for digital purchases</span><strong id="credit"></strong></div>
+            <p class="price" id="group-due"></p>
+            <p class="llu-cap">Additional simulated charge, before HST. Credit is a proposed test, not an approved discount. {offer.group.priceNote} {offer.dealLive ? "Black Friday ends " + offer.dealEndsLong + "." : ""}</p>
+            <p class="llu-cap">{offer.afterProgram} Optional continuation is not included or automatically started in this demo. {offer.guarantee}</p>
+            <button class="llu-btn llu-btn--wide" type="button" id="accept-group" data-action="accept-group">Simulate enrollment</button>
+            <button class="skip" type="button" data-action="fit">Not sure yet? Explore a free fit call</button>
+            <button class="skip" type="button" data-action="skip-group">No thanks, take me to my purchases</button>
+            <p class="llu-cap">Production requires confirmed program availability, eligibility, exact tax-inclusive pricing and payment verification.</p>
+          </div>
+          <p class="llu-cap llu-mt-24">{SURVEY_SOURCE} Past program outcomes are not guarantees.</p>
+        </div>
+      </section>
+      <section class="llu-band" data-stage="4" hidden>
+        <div class="llu-wrap narrow">
+          <div class="llu-card llu-stack">
+            <p class="llu-eyebrow">Simulation complete</p>
+            <h1 class="llu-h2" tabindex="-1">Your next step starts here.</h1>
+            <p>No real orders, payments or enrollments were created.</p>
+            <div id="summary" aria-live="polite"></div>
+            <div class="line"><strong>Simulated subtotal before tax</strong><strong id="final-total"></strong></div>
+            <p class="llu-cap">In production, digital purchases would be delivered whether or not additional offers are accepted.</p>
+            <div class="fit llu-stack" id="fit-panel">
+              <p class="llu-eyebrow">Optional next step</p>
+              <h2 class="llu-h3">Want a second set of eyes on your job search?</h2>
+              <p>Tell me a little about your situation. If we're a good fit, let's spend 20 minutes figuring out your next move together.</p>
+              <a class="llu-btn llu-btn--wide" href="https://joinclearcareer.com/book-a-call" target="_blank" rel="noopener noreferrer">See if we're a good fit</a>
+              <p class="llu-cap">Opens the existing live qualification form. Nothing is submitted by this preview. Free call for qualified applicants; no obligation to join.</p>
+            </div>
+            <div class="fit llu-stack" id="member-panel" hidden>
+              <h2 class="llu-h3">Welcome to Land and Level Up.</h2>
+              <p>Confirmed members would receive onboarding and intake instructions, not another sales call.</p>
+            </div>
+            <button class="skip" type="button" data-action="restart">Restart demo</button>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="llu-band llu-band--navy preview-footer"><div class="llu-wrap"><p class="llu-cap">ClearCareer · Unlisted review concept. No real payments or customer data collected by the funnel. The existing site analytics may still run. The $49 bundle and purchase credits are proposed; taxes, fulfillment and live inventory are not connected.</p></div></footer>
+  </div>
+</BaseLayout>
+<style>
+  .funnel [hidden] { display: none !important; }
+  .funnel .preview-tag { color: #e2dfd6; font-size: 14px; text-align: right; }
+  .funnel .chooser { padding: 24px 0; }
+  .choices { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0; }
+  .choices button { border: 1px solid #e2dfd6; border-radius: 999px; padding: 8px 16px; min-height: 44px; cursor: pointer; color: #030620; }
+  .choices button[aria-pressed="true"] { background: #0161ef; color: white; border-color: #0161ef; }
+  .funnel .narrow { max-width: 760px; }
+  .funnel .price { font-size: 34px; font-weight: 600; font-variant-numeric: tabular-nums; color: #030620; line-height: 1.1; }
+  .line { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 12px 0; border-bottom: 1px solid #e2dfd6; }
+  .line strong { white-space: nowrap; }
+  .bump { display: flex; align-items: flex-start; gap: 12px; border: 1px solid #e2dfd6; border-radius: 20px; background: #f7f6f2; padding: 24px; cursor: pointer; }
+  .bump input { width: 20px; height: 20px; flex: none; accent-color: #0161ef; margin-top: 4px; }
+  .skip { display: block; width: 100%; min-height: 44px; color: #0161ef; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
+  .fit { background: #f7f6f2; border: 1px solid #e2dfd6; border-radius: 20px; padding: 24px; }
+  .receipt { width: min(100%, 320px); height: auto; justify-self: center; border-radius: 20px; }
+  .community { width: min(100%, 320px); height: auto; border-radius: 20px; }
+  .preview-footer { padding: 32px 0; }
+  @media(max-width:767px) { .funnel .preview-tag { font-size: 15px; } .funnel .llu-display { font-size: clamp(38px, 11vw, 52px); } }
+</style>
+<script is:inline>
+(function () {
+  const root = document.getElementById("career-funnel");
+  if (!root) return;
+  const variants = {
+    a: {name:"Career Prompt Vault", price:9, tag:"50 AI career frameworks", headline:"Stop asking AI for generic career advice.", lead:"Turn ChatGPT, Claude or your favourite AI assistant into a practical career strategist with 50 structured frameworks for your job search.", items:["50 frameworks across six categories","Custom AI system prompt and setup guide","Quick-start guide and three bonus resources"], guarantee:"48-hour money-back guarantee on the Prompt Vault.", upsellName:"The Job Search Script Vault", upsellPrice:29, upsellHeadline:"Now you have the prompts. Get the words, too.", upsellText:"100+ copy-paste scripts for hiring managers, interviews, follow-ups, referrals and salary negotiation.", upsellItems:["100+ scripts across seven categories","Personalization brackets and guidance","Outreach, interviews and negotiation"]},
+    b: {name:"Job Search Toolkit Bundle", price:49, tag:"Proposed bundle of existing resources", headline:"Build a job search system you can actually use.", lead:"Start with AI prompts, interview preparation and ready-to-send scripts in one self-serve toolkit.", items:["Career Prompt Vault ($9)","Interview Confidence System ($19)","Job Search Script Vault ($29)"], guarantee:"Proposed bundle; terms and fulfillment to be confirmed.", upsellName:"Career Change Command Center", upsellPrice:47, upsellHeadline:"Thinking about changing direction, too?", upsellText:"Add a complete career-change system if your next move is a pivot, not simply another job.", upsellItems:["Seven career-change modules","Self-serve framework for planning a pivot","Skip if you already know your direction"]}
+  };
+  const groupPrice = Number(root.dataset.groupPrice);
+  const stages = ["Offer","Checkout","Upsell 1","Upsell 2","Confirmation"];
+  let key = "a", stage = 0, bump = false, upsell = false, group = false;
+  const $ = (id) => document.getElementById(id);
+  const money = (n) => "$" + n.toLocaleString("en-CA");
+  const digital = () => variants[key].price + (bump ? 9 : 0) + (upsell ? variants[key].upsellPrice : 0);
+  const due = () => Math.max(0, groupPrice - digital());
+  function fill(name, value) { root.querySelectorAll('[data-field="' + name + '"]').forEach(el => el.textContent = value); }
+  function list(name, values) {
+    root.querySelectorAll('[data-list="' + name + '"]').forEach(el => el.replaceChildren(...values.map(value => { const li=document.createElement("li"); li.textContent=value; return li; })));
+  }
+  function row(name, amount) {
+    const line=document.createElement("div"); line.className="line";
+    const label=document.createElement("span"); label.textContent=name;
+    const price=document.createElement("strong"); price.textContent=money(amount);
+    line.append(label, price); return line;
+  }
+  function render() {
+    const v = variants[key];
+    for (const field of ["name","tag","headline","lead","guarantee","upsellName","upsellHeadline","upsellText"]) fill(field,v[field]);
+    fill("price",money(v.price)+" CAD"); fill("base",money(v.price)); fill("upsellPrice",money(v.upsellPrice)+" CAD");
+    list("items",v.items); list("upsellItems",v.upsellItems);
+    root.querySelectorAll("[data-variant]").forEach(el => el.setAttribute("aria-pressed",String(el.dataset.variant===key)));
+    root.querySelectorAll("[data-stage]").forEach(el => el.hidden=Number(el.dataset.stage)!==stage);
+    root.querySelectorAll('[data-action="checkout"]').forEach(el=>el.textContent="Get instant access · "+money(v.price));
+    $("progress").textContent="Step "+(stage+1)+" of 5 · "+stages[stage];
+    $("bump").checked=bump;
+    $("checkout-total").textContent=money(v.price+(bump?9:0))+" CAD";
+    $("pay-button").textContent="Simulate payment · "+money(v.price+(bump?9:0));
+    $("accept-up").textContent="Simulate adding "+v.upsellName+" · "+money(v.upsellPrice);
+    $("credit").textContent="−"+money(digital());
+    $("group-due").textContent=money(due())+" CAD";
+    $("accept-group").textContent="Simulate enrollment · "+money(due())+" + HST";
+    const rows=[row(v.name,v.price)];
+    if(bump)rows.push(row("Salary Number Generator",9));
+    if(upsell)rows.push(row(v.upsellName,v.upsellPrice));
+    if(group)rows.push(row("Land and Level Up (after proposed credit)",due()));
+    $("summary").replaceChildren(...rows);
+    $("final-total").textContent=money(digital()+(group?due():0))+" CAD";
+    $("fit-panel").hidden=group; $("member-panel").hidden=!group;
+  }
+  function go(next) {
+    stage=next;render();
+    window.scrollTo({top:0,behavior:"auto"});
+    root.querySelector('[data-stage="'+stage+'"] h1')?.focus({preventScroll:true});
+  }
+  function restart() { bump=upsell=group=false;go(0); }
+  root.querySelectorAll("[data-variant]").forEach(el=>el.addEventListener("click",()=>{key=el.dataset.variant;restart();}));
+  $("bump").addEventListener("change",()=>{bump=$("bump").checked;render();});
+  root.querySelectorAll("[data-action]").forEach(el=>el.addEventListener("click",()=>{
+    switch(el.dataset.action){
+      case "checkout": if(stage===0)go(1); break;
+      case "back": if(stage===1)go(0); break;
+      case "pay": if(stage===1)go(2); break;
+      case "accept-up": if(stage===2){upsell=true;go(3);} break;
+      case "skip-up": if(stage===2){upsell=false;go(3);} break;
+      case "accept-group": if(stage===3){group=true;go(4);} break;
+      case "fit": case "skip-group": if(stage===3){group=false;go(4);if(el.dataset.action==="fit")$("fit-panel").scrollIntoView({block:"center"});} break;
+      case "restart": restart(); break;
+    }
+  }));
+  render();
+})();
+</script>
