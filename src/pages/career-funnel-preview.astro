@@ -165,8 +165,8 @@ const money = (n: number) => "$" + n.toLocaleString("en-CA");
   .choices button[aria-pressed="true"] { background: #0161ef; color: white; border-color: #0161ef; }
   .funnel .narrow { max-width: 760px; }
   .funnel .price { font-size: 34px; font-weight: 600; font-variant-numeric: tabular-nums; color: #030620; line-height: 1.1; }
-  .line { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 12px 0; border-bottom: 1px solid #e2dfd6; }
-  .line strong { white-space: nowrap; }
+  .funnel :global(.line) { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 12px 0; border-bottom: 1px solid #e2dfd6; }
+  .funnel :global(.line strong) { white-space: nowrap; }
   .bump { display: flex; align-items: flex-start; gap: 12px; border: 1px solid #e2dfd6; border-radius: 20px; background: #f7f6f2; padding: 24px; cursor: pointer; }
   .bump input { width: 20px; height: 20px; flex: none; accent-color: #0161ef; margin-top: 4px; }
   .skip { display: block; width: 100%; min-height: 44px; color: #0161ef; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
