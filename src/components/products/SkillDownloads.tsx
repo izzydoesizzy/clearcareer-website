@@ -2,6 +2,9 @@ import { useState } from "react";
 
 export interface SkillSummary { name: string; description: string; zipName: string; files: { path: string; bytes: number }[] }
 
+/** The description is written for Claude; buyers only need its first sentence. */
+const firstSentence = (d: string) => (d.match(/^.*?[.!?](?=\s|$)/)?.[0] || d).replace(/^Helps a job seeker /, "Helps you ");
+
 const kb = (n: number) => (n < 1024 ? `${n} B` : `${(n / 1024).toFixed(1)} KB`);
 
 /** One card per Claude skill: what it does, a download button, and the exact files inside. */
@@ -20,7 +23,7 @@ export default function SkillDownloads({ skills, downloadBase }: { skills: Skill
             <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
               <div className="min-w-0">
                 <p className="font-mono text-sm font-semibold text-[#0161EF]">{s.name}</p>
-                <p className="mt-1 text-sm leading-relaxed text-gray-700">{s.description}</p>
+                <p className="mt-1 text-sm leading-relaxed text-gray-700">{firstSentence(s.description)}</p>
               </div>
               <a
                 href={downloadBase(s.zipName)}

@@ -37,7 +37,7 @@ describe('product files', () => {
   it('every product in the first release has skills and a Start Here guide', () => {
     for (const slug of NEW_PACKS) expect(skillsFor(slug).length, slug).toBeGreaterThan(0);
     for (const slug of WITH_START_HERE) expect(startHere(slug), slug).toBeTruthy();
-    expect(skillsFor('vault').map((s) => s.name)).toEqual(['cc-interview', 'cc-linkedin', 'cc-offer', 'cc-outreach', 'cc-research', 'cc-resume']);
+    expect(skillsFor('vault').map((s) => s.name)).toEqual(['cc-resume', 'cc-linkedin', 'cc-interview', 'cc-outreach', 'cc-research', 'cc-offer']);
   });
 
   it('skills hold text files only', () => {

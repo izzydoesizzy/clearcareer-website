@@ -39,9 +39,13 @@ export function productFiles(slug: string): Record<string, string> {
   return Object.fromEntries(Object.entries(FILES).filter(([k]) => k.startsWith(prefix)).map(([k, v]) => [k.slice(prefix.length), v]));
 }
 
+/** The order buyers should meet the skills in (the job search order). Others follow, A to Z. */
+const SKILL_ORDER = ['cc-resume', 'cc-linkedin', 'cc-interview', 'cc-outreach', 'cc-research', 'cc-offer'];
+
 export function skillsFor(slug: string): SkillInfo[] {
   const files = productFiles(slug);
-  const names = [...new Set(Object.keys(files).filter((k) => /^skills\/[^/]+\/SKILL\.md$/.test(k)).map((k) => k.split('/')[1]))].sort();
+  const rank = (n: string) => { const i = SKILL_ORDER.indexOf(n); return i === -1 ? 99 : i; };
+  const names = [...new Set(Object.keys(files).filter((k) => /^skills\/[^/]+\/SKILL\.md$/.test(k)).map((k) => k.split('/')[1]))].sort((a, b) => rank(a) - rank(b) || a.localeCompare(b));
   return names.map((name) => {
     const fm = frontmatter(files[`skills/${name}/SKILL.md`]);
     const own = Object.keys(files)
