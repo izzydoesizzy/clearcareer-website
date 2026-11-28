@@ -341,23 +341,23 @@ const latestPosts = (await getCollection("blog", ({ data }) => {
 
       <div class="mx-auto mt-12 grid max-w-[760px] grid-cols-1 gap-8 md:grid-cols-2">
         <PricingCard
-          tier={offer.group.name}
+          tier={`${offer.group.name}: ${offer.group.mode}`}
           price={offer.group.price}
           originalPrice={offer.dealLive ? offer.group.regular : undefined}
           features={offer.group.includes}
           ctaText="See the details"
           ctaHref="/land-and-level-up#pricing"
           featured={true}
-          paymentPlan="Or monthly with Klarna (Canada only)"
+          paymentPlan={offer.dealLive ? "20% off with code BLACKFRIDAY. Or monthly with Klarna (Canada only)" : "Or monthly with Klarna (Canada only)"}
         />
         <PricingCard
-          tier={offer.private.name}
+          tier={`${offer.private.name}: ${offer.private.mode}`}
           price={offer.private.price}
           originalPrice={offer.dealLive ? offer.private.regular : undefined}
           features={offer.private.includes}
           ctaText="See the details"
           ctaHref="/land-and-level-up#pricing"
-          paymentPlan="Or monthly with Klarna (Canada only)"
+          paymentPlan={offer.dealLive ? "20% off with code BLACKFRIDAY. Or monthly with Klarna (Canada only)" : "Or monthly with Klarna (Canada only)"}
         />
       </div>
     </div>

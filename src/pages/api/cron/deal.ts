@@ -6,11 +6,12 @@
  * Needs VERCEL_DEPLOY_HOOK_URL (Vercel > Project > Settings > Git > Deploy Hooks) and CRON_SECRET.
  */
 import type { APIRoute } from 'astro';
+import { serverEnv } from '../../../lib/server-env.js';
 import { dealIsLive } from '../../../lib/email/deal.js';
 
 export const prerender = false;
 
-const env = import.meta.env;
+const env = serverEnv() as any;
 const json = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json' } });
 
 /** Turn off the Black Friday payment links so an old link can't be used after the deadline. */

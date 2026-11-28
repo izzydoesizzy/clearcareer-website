@@ -51,8 +51,8 @@ describe('lead brief email', () => {
     const top = { ready: READY, yearsExperience: 10, start: 'This month', decider: 'Just me', payment: 'Credit card in full', motivation: 5, program: 'Group plus private 1:1 rebuild', commit: "Yes, I'll have my card ready" };
     expect(leadScore(top)).toEqual({ score: 100, grade: 'Hot' });
     expect(leadScore({ ...top, ready: NOT_READY })).toEqual({ score: 49, grade: 'Cool' });
-    expect(programValue('Group cohort', new Date('2026-11-25T12:00:00Z')).label).toBe('$949');
+    expect(programValue('Group cohort', new Date('2026-11-25T12:00:00Z')).label).toBe('$960');
     expect(programValue('Group cohort', new Date('2026-12-02T12:00:00Z')).label).toBe('$1,200');
-    expect(programValue('Not sure yet', new Date('2026-11-25T12:00:00Z')).label).toBe('$949 to $1,797');
+    expect(programValue('Not sure yet', new Date('2026-11-25T12:00:00Z')).label).toBe('$960 to $1,837.60');
   });
 });

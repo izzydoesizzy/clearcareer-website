@@ -6,13 +6,13 @@ The interview is over. You walked out (or closed your laptop) and now your brain
 
 This guide gives you a clear post-interview protocol: send the right thank-you note, follow up at the right time, read the signals correctly, and debrief so you keep getting better.
 
-**Time:** 20-30 minutes for the thank-you note. 10 minutes for the debrief. **What you'll need:** The interviewer's name and email, notes from the conversation, and a clear head.
+**Time:** 20 to 30 minutes for the thank-you note. 10 minutes for the debrief. **What you'll need:** The interviewer's name and email, notes from the conversation, and a clear head.
 
 ---
 
 ## Step 1: The Thank-You Note (Send Within 24 Hours)
 
-Not 48 hours. Not "when I get around to it." Within 24 hours. Ideally within 4-6 hours of the interview.
+Not 48 hours. Not "when I get around to it." Within 24 hours. Ideally within 4 to 6 hours of the interview.
 
 ### Template 1: Standard Thank-You (Works for Most Interviews)
 
@@ -42,7 +42,7 @@ Hi [INTERVIEWER NAME],
 
 Thank you for the conversation today about the [ROLE TITLE] position. I walked away energized about the opportunity, especially [SPECIFIC THING DISCUSSED].
 
-One thing I did not get to mention: [BRIEF, RELEVANT POINT YOU WISH YOU HAD MADE. Keep it to 2-3 sentences. Tie it to something they said they needed.]
+One thing I did not get to mention: [BRIEF, RELEVANT POINT YOU WISH YOU HAD MADE. Keep it to 2 to 3 sentences. Tie it to something they said they needed.]
 
 I am very excited about this opportunity and would welcome the chance to continue the conversation. Please let me know if there is anything else you need from my end.
 
@@ -74,7 +74,7 @@ Best,
 - **Email, not LinkedIn message.** Email is professional. LinkedIn is casual. Use email.
 - **Spell their name correctly.** Check twice.
 - **Reference something specific.** Generic thank-you notes go in the trash. Show that you were listening.
-- **Keep it short.** 4-6 sentences maximum. Nobody wants a post-interview essay.
+- **Keep it short.** 4 to 6 sentences maximum. Nobody wants a post-interview essay.
 - **Do not ask about timeline or next steps.** They will tell you when they are ready.
 - **Proofread.** Read it out loud before hitting send. Typos in a thank-you note are worse than no note at all.
 
@@ -86,11 +86,11 @@ Best,
 
 | Time Since Interview | What to Do |
 |---------------------|-----------|
-| 0-24 hours | Send thank-you note |
-| 1-7 days | Do nothing. Wait for their timeline. |
-| 7-10 days (if they gave a timeline and it has passed) | Send a polite check-in (see template below) |
-| 10-14 days (no timeline was given) | Send a polite check-in |
-| 14-21 days (after your check-in, no response) | Send one final follow-up |
+| 0 to 24 hours | Send thank-you note |
+| 1 to 7 days | Do nothing. Wait for their timeline. |
+| 7 to 10 days (if they gave a timeline and it has passed) | Send a polite check-in (see template below) |
+| 10 to 14 days (no timeline was given) | Send a polite check-in |
+| 14 to 21 days (after your check-in, no response) | Send one final follow-up |
 | 21+ days (still nothing) | Move on. Keep them warm but assume no. |
 
 ### The Check-In Email
@@ -199,7 +199,7 @@ Complete this within 24 hours of every interview, while the details are fresh. T
 - ________________
 - ________________
 
-**My overall impression (1-10):** _____
+**My overall impression (1 to 10):** _____
 
 **Would I accept this role if offered?** Yes / No / Need more info
 
@@ -234,13 +234,13 @@ Reasons to keep searching after a great interview:
 
 Do not accept on the spot. Always ask for time.
 
-"I'm really excited about this. Thank you. I'd like to take 24-48 hours to review the full details. Can you send me the offer in writing?"
+"I'm really excited about this. Thank you. I'd like to take 24 to 48 hours to review the full details. Can you send me the offer in writing?"
 
 Then: review the offer against your three salary numbers (from the Salary Number Generator). Negotiate if appropriate. Get everything in writing.
 
 ## When You Get Rejected
 
-Send a gracious response (see Cold Outreach Scripts, Thank You #4). Ask if they would be open to keeping you in mind for future roles. Then move on. Every rejection is data, not a verdict on your worth.
+Send a gracious response (Guide 08 has a short template for this). Ask if they would be open to keeping you in mind for future roles. Then move on. Every rejection is data, not a verdict on your worth.
 
 ---
 
@@ -249,3 +249,5 @@ Send a gracious response (see Cold Outreach Scripts, Thank You #4). Ask if they 
 The interview does not end when you walk out the door. The thank-you note, the follow-up timing, and the debrief are all part of the process. They take 30 minutes total and they separate the candidates who get offers from the ones who get ghosted.
 
 Send the note. Do the debrief. Keep searching. Repeat.
+
+*Results vary. A great thank-you note won't rescue a poor fit, and a quiet inbox doesn't always mean no.*

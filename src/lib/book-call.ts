@@ -22,9 +22,17 @@ export const QUALIFY = {
 };
 
 /** The two programs. Prices in CAD, before HST. Black Friday prices apply until the deal ends. */
+/** "$1,200", or "$1,837.60" when there are cents. */
+export const cad = (n: number) =>
+  `$${n.toLocaleString('en-CA', Number.isInteger(n) ? { maximumFractionDigits: 0 } : { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+/** Black Friday promotion code (Stripe). */
+export const PROMO = { code: 'BLACKFRIDAY', percentOff: 20 };
+
 export const PROGRAMS = {
-  group: { name: 'Group cohort', price: 949, regular: 1200 },
-  private: { name: 'Group plus private 1:1 rebuild', price: 1797, regular: 2297 },
+  // Black Friday: 20% off with code BLACKFRIDAY (Stripe promotion code, ends Nov 30 at 11:59 pm ET).
+  group: { name: 'Group cohort', price: 960, regular: 1200 },
+  private: { name: 'Group plus private 1:1 rebuild', price: 1837.6, regular: 2297 },
 } as const;
 export const PROGRAM_CHOICES = [PROGRAMS.group.name, PROGRAMS.private.name, 'Not sure yet'];
 
@@ -32,7 +40,7 @@ export const PROGRAM_CHOICES = [PROGRAMS.group.name, PROGRAMS.private.name, 'Not
 export function programValue(program: string, now: Date = new Date()): { low: number; high: number; label: string } {
   const live = dealIsLive(now);
   const price = (p: { price: number; regular: number }) => (live ? p.price : p.regular);
-  const fmt = (n: number) => `$${n.toLocaleString('en-CA')}`;
+  const fmt = cad;
   if (program === PROGRAMS.group.name) { const n = price(PROGRAMS.group); return { low: n, high: n, label: fmt(n) }; }
   if (program === PROGRAMS.private.name) { const n = price(PROGRAMS.private); return { low: n, high: n, label: fmt(n) }; }
   const lo = price(PROGRAMS.group); const hi = price(PROGRAMS.private);

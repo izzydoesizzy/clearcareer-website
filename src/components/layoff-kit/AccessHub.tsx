@@ -233,9 +233,12 @@ function toggleGuideComplete(id: string): Set<string> {
 export function AccessHub({
   buyerName,
   buyerEmail,
+  accessToken,
 }: {
   buyerName: string;
   buyerEmail: string;
+  /** The token from this page's URL, sent with each guide request. */
+  accessToken: string;
 }) {
   const [activeTab, setActiveTab] = useState("start");
   const [guideContent, setGuideContent] = useState<GuideContent>({});
@@ -254,7 +257,7 @@ export function AccessHub({
     if (guideContent[id]) return;
     setLoading(id);
     try {
-      const res = await fetch(`/api/layoff-kit/guide/${id}`);
+      const res = await fetch(`/api/layoff-kit/guide/${id}?t=${encodeURIComponent(accessToken)}`);
       if (res.ok) {
         const { markdown } = await res.json();
         setGuideContent((prev) => ({ ...prev, [id]: markdown }));

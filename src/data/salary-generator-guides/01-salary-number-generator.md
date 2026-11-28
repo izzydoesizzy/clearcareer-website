@@ -4,9 +4,11 @@
 
 Most people walk into salary conversations with zero preparation. They Google "average salary for [job title]" five minutes before the call, pick a number that feels reasonable, and hope for the best. That approach leaves money on the table every single time.
 
-This guide gives you a system. You will calculate three specific numbers, back them up with real data, and practice three scripts for the moment someone asks "What are your salary expectations?"
+This guide gives you a system. You will calculate three specific numbers, back them up with real data, and practise three scripts for the moment someone asks "What are your salary expectations?"
 
 **Time:** About 45 minutes to complete. **What you'll need:** Your most recent pay stub or offer letter, a computer, and a calculator.
+
+*This is general guidance, not legal or financial advice. Results vary.*
 
 ---
 
@@ -16,13 +18,13 @@ Walking into a negotiation with one number is like playing poker with your cards
 
 | Number | What It Is | Purpose |
 |--------|-----------|---------|
-| **Anchor** | The high end of your realistic range | Your opening number. Always go first when possible. |
+| **Anchor** | The high end of your realistic range | Your opening number when you have to say one. Let them share their range first when you can. |
 | **Target** | The number you would be genuinely happy with | Your real goal. You negotiate toward this. |
 | **Walk-away** | The lowest you will accept | Below this, you decline or keep looking. |
 
 Your anchor is not a fantasy number. It is the top of what the market will bear for your skills, experience, and location. Your walk-away is not your desperation number. It is the minimum that makes the role financially viable for you.
 
-The gap between your anchor and walk-away is your negotiation space. If that gap is narrow, you have less room to maneuver but more certainty. If it is wide, you have more flexibility but need stronger data to justify your anchor.
+The gap between your anchor and walk-away is your negotiation space. If that gap is narrow, you have less room to manoeuvre but more certainty. If it is wide, you have more flexibility but need stronger data to justify your anchor.
 
 ---
 
@@ -42,7 +44,7 @@ Work through each line:
 | Food (groceries + dining out, be honest) | $_____ | $_____ |
 | Insurance (health, dental, life, disability) | $_____ | $_____ |
 | Debt payments (student loans, credit cards, other) | $_____ | $_____ |
-| Childcare/dependents | $_____ | $_____ |
+| Childcare/dependants | $_____ | $_____ |
 | Savings (minimum: emergency fund contribution) | $_____ | $_____ |
 | Everything else (subscriptions, clothing, personal) | $_____ | $_____ |
 | **Total Monthly Minimum** | **$_____** | |
@@ -51,6 +53,8 @@ Work through each line:
 Now add a 15% buffer. Life costs more than you think it does.
 
 **Your walk-away number:** Annual minimum x 1.15 = $_____
+
+One catch: your expenses are paid with after-tax money, but salaries are quoted before tax. Run your number through a take-home pay calculator for your province or state, and use the before-tax salary that covers it.
 
 This is your floor. You do not go below this number. If a role cannot meet this, it is not the right role right now.
 
@@ -76,15 +80,15 @@ Levels.fyi has the best crowdsourced data for tech roles. Payscale covers most i
 **Your Levels/Payscale range:** $_____ to $_____
 
 ### Source 3: LinkedIn Salary Insights
-When viewing job postings, many now show salary ranges. Look at 5-10 similar postings.
+When viewing job postings, many now show salary ranges. Look at 5 to 10 similar postings.
 - Note which ones show employer-provided ranges vs. LinkedIn estimates
 - Employer-provided ranges are more reliable
 
 **Your LinkedIn range:** $_____ to $_____
 
 ### Source 4: Job Postings with Published Ranges
-Search job boards (Indeed, LinkedIn, company career pages) for roles matching your title and level. Many jurisdictions now require salary transparency.
-- Collect 5-10 postings with published ranges
+Search job boards (Indeed, LinkedIn, company career pages) for roles matching your title and level. Several provinces and US states now require pay ranges in job posts (for example British Columbia and Ontario in Canada, and California, Colorado, New York and Washington in the US). Rules change, so check the current ones where you live.
+- Collect 5 to 10 postings with published ranges
 - Note the overlap zone (where most ranges agree)
 
 **Your job posting range:** $_____ to $_____
@@ -102,6 +106,8 @@ Plot all four ranges and find where they agree:
 | **Market Consensus Range** | **$_____** | **$_____** |
 
 The market consensus range is where at least 3 of your 4 sources overlap. This is reality.
+
+**Free government data to cross-check:** in Canada, Job Bank (jobbank.gc.ca) shows wages by occupation and region. In the US, the Bureau of Labor Statistics (bls.gov/oes) does the same.
 
 ---
 
@@ -126,7 +132,7 @@ Salary is only part of the picture. Use this worksheet to compare offers or eval
 | Other (gym, transit, phone) | $_____ | |
 | **Total Annual Compensation** | **$_____** | |
 
-Two jobs with the same base salary can differ by $20,000-$40,000 in total comp. Always compare the full picture.
+Two jobs with the same base salary can differ by $20,000 to $40,000 in total comp. Always compare the full picture.
 
 ---
 
@@ -138,7 +144,7 @@ Now bring it all together.
 |--------|-----------------|-------------|
 | **Walk-away** | Your minimum viable salary (Step 1) | $_____ |
 | **Target** | Midpoint of your market consensus range (Step 2) | $_____ |
-| **Anchor** | 75th percentile of your market range, or 10-15% above target | $_____ |
+| **Anchor** | 75th percentile of your market range, or 10 to 15% above target | $_____ |
 
 **Reality check:** If your walk-away is higher than the market consensus range, you have a mismatch. Either the role is below your financial needs, or your expenses need adjustment. This is important information.
 
@@ -160,7 +166,7 @@ If they push back:
 
 > "I'm flexible within the market range for [TITLE] at the [LEVEL] level in [CITY/REGION]. Based on my research, I'd expect that to be in the [ANCHOR MINUS 10%] to [ANCHOR] range. Does that align with what you're working with?"
 
-### Script 2: Anchor High (Best when you have leverage)
+### Script 2: Anchor High (Best when you have bargaining power)
 
 Use this when you have competing offers, specialized skills, or they recruited you.
 
@@ -188,9 +194,9 @@ This script works because it gives a range (you look reasonable), starts at your
 
 4. **Ignoring total comp.** A $120K offer with 20% bonus, full health coverage, and 4 weeks PTO beats a $135K offer with no bonus and 2 weeks PTO.
 
-5. **Not accounting for taxes by location.** A $150K offer in a no-income-tax state is very different from $150K in California or New York.
+5. **Not accounting for taxes by location.** A $150K offer in a no-income-tax state is very different from $150K in California or New York. In Canada, provincial tax rates differ too, so compare take-home pay, not just the salary.
 
-6. **Accepting on the spot.** Always ask for 24-48 hours to review. "I'm excited about this. Can I take a day to review the full details and get back to you?" Nobody reasonable will say no.
+6. **Accepting on the spot.** Always ask for 24 to 48 hours to review. "I'm excited about this. Can I take a day to review the full details and get back to you?" Nobody reasonable will say no.
 
 ---
 
@@ -198,4 +204,4 @@ This script works because it gives a range (you look reasonable), starts at your
 
 Salary negotiation is not about being aggressive or playing games. It is about knowing your numbers and stating them clearly. The person who has done their research has the advantage in every negotiation.
 
-Calculate your three numbers. Practice your scripts out loud (seriously, say them to a wall). Walk in prepared. That is the difference between accepting whatever you get and getting what you are worth.
+Calculate your three numbers. Practise your scripts out loud (seriously, say them to a wall). Walk in prepared. That is the difference between accepting whatever you get and getting what you are worth.

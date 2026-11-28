@@ -2,9 +2,13 @@
 import BaseLayout from "@layouts/BaseLayout.astro";
 import ProductAccessHub from "@components/products/ProductAccessHub";
 import { PRODUCTS } from "../../../../data/product-config";
-import Stripe from "stripe";
+import { verifyAccess } from "../../../../lib/product-access";
+import { serverEnv } from "../../../../lib/server-env";
+import { skillsFor, startHere, promptCards, projectInstructions, platformsFor, PLATFORMS } from "../../../../lib/product-files";
 
 export const prerender = false;
+Astro.response.headers.set("Cache-Control", "private, no-store");
+Astro.response.headers.set("Referrer-Policy", "same-origin");
 
 const { slug, token } = Astro.params;
 
@@ -14,29 +18,25 @@ if (!slug || !token || !PRODUCTS[slug]) {
 
 const product = PRODUCTS[slug];
 
-let buyerName = "Reader";
-let buyerEmail = "";
-let isValid = false;
-
-try {
-  const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY);
-  const session = await stripe.checkout.sessions.retrieve(token);
-
-  if (
-    session.payment_status === "paid" &&
-    session.metadata?.product === slug
-  ) {
-    buyerName = session.customer_details?.name || "Reader";
-    buyerEmail = session.customer_details?.email || "";
-    isValid = true;
-  }
-} catch {
-  isValid = false;
-}
-
-if (!isValid) {
+// A signed access link (for this product or a bundle that includes it) or a paid Checkout Session.
+const access = await verifyAccess(slug, token, serverEnv(), Astro.url);
+if (!access.ok) {
   return Astro.redirect("/404");
 }
+
+// Bundles link to each product's own page, opened with the same token.
+const includedNames: Record<string, { name: string; description: string }> = {
+  vault: { name: "Career Prompt Vault", description: "6 Claude skills (including the Achievement Interviewer) and 50 copy-paste prompts." },
+};
+const linkFor = (s: string) =>
+  s === "vault"
+    ? `/tools/career-prompt-vault/access?${token.startsWith("cs_") ? "session_id" : "t"}=${encodeURIComponent(token)}`
+    : `/products/${s}/access/${encodeURIComponent(token)}`;
+const included = (product.includes || []).map((s) => ({
+  name: PRODUCTS[s]?.name.replace(/^The /, "") || includedNames[s]?.name || s,
+  description: PRODUCTS[s]?.description || includedNames[s]?.description || "",
+  url: linkFor(s),
+}));
 ---
 
 <BaseLayout
@@ -48,8 +48,17 @@ if (!isValid) {
     client:load
     productName={product.name}
     productSlug={product.slug}
-    buyerName={buyerName}
-    buyerEmail={buyerEmail}
+    buyerName={access.name || ""}
+    buyerEmail={access.email || ""}
     guides={product.guides}
+    accessToken={token}
+    startHere={startHere(slug)}
+    skills={skillsFor(slug)}
+    prompts={promptCards(slug)}
+    included={included}
+    extraDownloads={[
+      ...(projectInstructions(slug) ? [{ label: "Setup text for Claude Projects, GPTs and Gems", file: "project-instructions.md" }] : []),
+      ...platformsFor(slug).map((p) => ({ label: `${PLATFORMS[p]} version (setup steps inside each folder)`, file: `${p}.zip` })),
+    ]}
   />
 </BaseLayout>

@@ -90,7 +90,7 @@ const UPSELL_BLOCKS: Record<UpsellGroup, UpsellBlock> = {
       'Employment lawyer directory (30+ Canadian firms)',
       'Financial runway worksheet and tax planning strategies',
     ],
-    buttonText: 'Get the Full Kit for $67',
+    buttonText: 'Get the Full Kit for $9',
     buttonUrl: `${SITE_URL}/layoff-survival-kit`,
   },
 };

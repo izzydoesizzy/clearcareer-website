@@ -28,7 +28,7 @@ Group 5: Logistics
 13. Industries you'd love, and industries you'd rule out.
 14. Any dealbreakers (travel, commute, on-call, specific companies, management or not)?
 
-If the client wants to go fast, ask only 1, 9, 11 and 13 and infer the rest from the resume. Say what you inferred so they can correct it.
+Quick Start questions (and the "go fast" option): ask only 1, 9, 11 and 13, plus "Any titles you're curious about?", and infer the rest from the resume. Say what you inferred so they can correct it.
 
 ## B. The values list (30)
 
@@ -172,3 +172,21 @@ Don't rewrite the resume here. Point to the fix and send them to the achievement
 ## G. Test before you commit (for career changers or anyone unsure)
 
 For any option scored under 12: an informational interview with someone in the role, a small freelance or volunteer project, a short course, or an industry event. The key question: "Do I enjoy doing this work, or do I just enjoy the idea of doing this work?"
+
+## H. Target companies (Full Report and Refresh)
+
+Build 20 to 30 real companies that hire for the client's target titles in their market. Use web search. Never invent a company, a fact about one, or a link.
+
+Criteria, from the intake and profile:
+- Industry (target industries in, avoided industries out)
+- Location: has an office in their city, or hires remote in their country
+- Size and stage: their preference across enterprise, mid-size, startup or scale-up
+- Values signals: what the company says and shows about their top 5 values (flexibility, mission, growth, stability)
+- Hiring signals: open roles for their titles now, recent funding, expansion, a new leader in their function
+
+Mix, unless they asked for one size only: about a third enterprise, a third mid-size, a third startup or scale-up. Include 3 to 5 "hidden" companies they likely haven't heard of: suppliers, competitors and customers of their past employers often hire for the same skills.
+
+| Company | Size | Why it fits you | Hiring signal | Careers page |
+|---|---|---|---|---|
+
+Rank the top 10 by fit. These go into the profile's `target_companies` field, where the job alerts and job search autopilot tools pick them up.

@@ -11,11 +11,8 @@ export function setupGaps(env: Record<string, string | undefined>): string[] {
   need('BREVO_CALL_LIST_ID', 'call reminders and sales briefs are off.');
   need('BREVO_CLIENTS_LIST_ID', 'onboarding reminders, seat counts and renewals are off.');
   need('CALENDLY_QUALIFIED_URL', 'approved leads are getting the public booking link.');
-  need('PUBLIC_GROUP_CHECKOUT_URL', 'the group "Claim my seat" button goes to the form instead of Stripe.');
-  need('PUBLIC_PRIVATE_CHECKOUT_URL', 'the private "Claim my seat" button goes to the form instead of Stripe.');
-  need('PUBLIC_GROUP_CHECKOUT_URL_REGULAR', 'after Black Friday, the group button falls back to the form.');
-  need('PUBLIC_PRIVATE_CHECKOUT_URL_REGULAR', 'after Black Friday, the private button falls back to the form.');
-  need('STRIPE_DEAL_LINK_IDS', 'the Black Friday payment links will not switch off on their own after Nov 30.');
+  if (!env.PUBLIC_GROUP_CHECKOUT_URL && !env.PUBLIC_GROUP_CHECKOUT_URL_REGULAR) out.push('PUBLIC_GROUP_CHECKOUT_URL is not set in Vercel: the group "Claim my seat" button goes to the form instead of Stripe.');
+  if (!env.PUBLIC_PRIVATE_CHECKOUT_URL && !env.PUBLIC_PRIVATE_CHECKOUT_URL_REGULAR) out.push('PUBLIC_PRIVATE_CHECKOUT_URL is not set in Vercel: the private "Claim my seat" button goes to the form instead of Stripe.');
   need('STRIPE_WEBHOOK_SECRET', 'payments do not trigger welcome emails or onboarding.');
   need('STRIPE_SECRET_KEY', 'the thank-you page cannot show the onboarding button right away, and Black Friday links cannot switch off on their own.');
   need('ONBOARD_SECRET', 'welcome emails cannot include the onboarding link.');

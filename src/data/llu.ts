@@ -43,36 +43,45 @@ export const offer = {
   dealLine: "I haven't priced it this low since 2021.",
   /** Text for the sticky bar. Built from the same prices, so one edit changes everything. */
   dealBarLabel: "Black Friday",
-  dealBarLong: "Group cohort $949, regular $1,200. Ends Monday, November 30 at 11:59 pm ET.",
-  dealBarShort: "From $949. Ends Nov 30.",
+  promoCode: "BLACKFRIDAY",
+  promoLine: "20% off with code BLACKFRIDAY at checkout.",
+  dealBarLong: "20% off with code BLACKFRIDAY. Group cohort $960, regular $1,200. Ends Monday, November 30 at 11:59 pm ET.",
+  dealBarShort: "20% off: code BLACKFRIDAY. Ends Nov 30.",
   regularFrom: "On December 1 they go back to $1,200 and $2,297.",
   group: {
     name: "Group cohort",
-    price: dealLive ? "$949" : "$1,200",
+    price: dealLive ? "$960" : "$1,200",
     regular: "$1,200",
     priceNote: "CAD plus HST. One payment covers the full 6 weeks.",
     seatsTotal: 12,
     seatsLeft: 12, // hand-set
-    forWho: "You want the room, the weekly call and the rebuild workshop.",
+    /** Izzy's labels (Nov 28): the group cohort is DIY, the private tier is done with you plus done for you. */
+    mode: "DIY",
+    modeLine: "You do the work. I give you the system, every tool I've built, and a room that checks in every Wednesday.",
+    forWho: "You want the room, the weekly call, the rebuild workshop and every tool.",
     includes: [
       "6 weeks in the Land and Level Up community",
       "6 live group calls on Wednesdays (with a holiday break)",
       "Resume and LinkedIn rebuild workshop, with hot seats",
-      "The AI Achievement Interviewer",
+      "Every ClearCareer AI tool: 17 Claude skills and the 6-tool Career Suite, sent to you the day you join",
     ],
   },
   private: {
     name: "Group plus private rebuild",
-    price: dealLive ? "$1,797" : "$2,297",
+    price: dealLive ? "$1,837.60" : "$2,297",
     regular: "$2,297",
     priceNote: "CAD plus HST. One payment covers the full 6 weeks.",
     seatsTotal: 4,
     seatsLeft: 4, // hand-set
-    forWho: "You want all of that, and me rebuilding it with you 1:1.",
+    mode: "Done with you + done for you",
+    modeLine: "I do the first drafts and the research for you. Then we finish it together, 1:1, before the holidays.",
+    forWho: "You want all of that, plus me doing the heavy lifting with you.",
     includes: [
       "Everything in the group cohort",
-      "A 1:1 resume and LinkedIn rebuild with me",
-      "2 to 3 hours together, just the two of us",
+      "Done for you: I draft your resume, LinkedIn headline and About section from your intake",
+      "Done for you: your list of 50+ target companies and your first named hiring managers",
+      "Done for you: your salary research report, with your anchor, target and walk-away numbers",
+      "Done with you: 2 to 3 hours 1:1 with me to polish it all, finished before the holidays",
     ],
   },
   paying: "Pay in full by card. In Canada, you can also spread it out monthly with Klarna (up to 12 months). Klarna is for Canadian clients only, so from the US it's one payment by card.",
@@ -365,7 +374,7 @@ export const objections: { q: string; a: string[]; proof: string }[] = [
     q: "“Money is tight right now.”",
     a: [
       "I get it. You're watching every dollar, and that's the right instinct.",
-      `So do the math with me. At a $100,000 salary, one month without a paycheque is $8,333 before tax. The group cohort is ${dealLive ? "$949" : "$1,200"} plus HST, for the full 6 weeks.`,
+      `So do the math with me. At a $100,000 salary, one month without a paycheque is $8,333 before tax. The group cohort is ${dealLive ? "$960 with code BLACKFRIDAY" : "$1,200"} plus HST, for the full 6 weeks.`,
       "In Canada, you can spread it out monthly with Klarna. From the US, it's one payment by card. Either way, there's a 7-day money-back guarantee, as long as your rebuild work hasn't started.",
     ],
     proof:
@@ -419,7 +428,9 @@ export const objectionsForSchema = objections.map((o) => ({
 // ════════════════════════════════════════════════════════════════════════════
 
 export const navLinks = [
-  { href: "#inside", label: "What's inside" },
+  { href: "#method", label: "How it works" },
+  { href: "#plan", label: "Your 6 weeks" },
+  { href: "#toolkit", label: "Your tools" },
   { href: "#results", label: "Results" },
   { href: "#pricing", label: "Pricing" },
 ];
@@ -559,3 +570,84 @@ export const roles = [
 ];
 
 export const VIDEO_URL = "https://www.youtube.com/watch?v=xyDUx1ji3io";
+
+// ── Your AI career team (src/components/llu/LluToolkit.astro) ────────────────
+// Every tool here is real, and every member gets all of them the day they join (product
+// "llu-toolkit" in src/data/product-config.ts). `skill` is the tool's real folder name. Tests check
+// that the cc- skills are exactly the All-Access Pass skills, the suite tools are exactly the Career
+// Suite, and the $201 matches the single prices.
+export interface ToolkitTool { skill: string; name: string; what: string; suite?: boolean }
+export interface ToolkitStep { n: string; title: string; from: string; to: string; tools: ToolkitTool[] }
+
+export const toolkit = {
+  skillCount: 17,
+  suiteCount: 6,
+  productCount: 9,
+  soldSeparately: "$201",
+  allAccessPrice: "$99",
+  steps: [
+    {
+      n: "1",
+      title: "Get clear on what's next",
+      from: "Applying to anything that sounds close.",
+      to: "5 titles you fit, what they pay where you live, and a ranked list of companies.",
+      tools: [
+        { skill: "career-clarity", name: "Career Clarity", suite: true, what: "Your resume and a short intake become 5 target titles, fit scores and local pay. Every number links to its source." },
+        { skill: "job-match-rubric", name: "Job Match Scorer", suite: true, what: "Paste a job post. Get a score out of 100 on your real chances, and the proof to lead with." },
+        { skill: "cc-research", name: "Market Research", what: "Company snapshots, job post breakdowns, salary ranges and alternative job titles." },
+        { skill: "cc-company-scorecards", name: "Company Scorecards", what: "Score 10 to 20 companies on what matters to you, then rank your top 3." },
+      ],
+    },
+    {
+      n: "2",
+      title: "Tell your story with numbers",
+      from: "Bullets that list what you were responsible for.",
+      to: "Numbers on every role, and a career profile you never have to rebuild.",
+      tools: [
+        { skill: "achievement-interviewer", name: "AI Achievement Interviewer", suite: true, what: "A voice interview that digs into every role until it finds the numbers. Then it writes your bullets and 8 summaries." },
+        { skill: "cc-resume", name: "Resume Writer", what: "Achievement bullets, summaries, skills and keyword fixes for a specific job post." },
+        { skill: "cc-resume-review", name: "Resume Audit", what: "My 6-area rubric, your top 3 fixes, and rewrites that use only your real facts." },
+      ],
+    },
+    {
+      n: "3",
+      title: "Get found",
+      from: "A LinkedIn profile nobody finds.",
+      to: "A headline and About section that bring recruiters and hiring managers to you.",
+      tools: [
+        { skill: "linkedin-profile-builder", name: "LinkedIn Profile Builder", suite: true, what: "Rebuilds your headline, About, experience and skills from your numbers, then walks you through pasting it in." },
+        { skill: "cc-linkedin-launch", name: "LinkedIn Launch", what: "My own formats: 10 headlines to test, the 4-part About, and posts from your stories." },
+        { skill: "cc-linkedin-audit", name: "LinkedIn Audit", what: "Photo, banner, headline, About and Experience, checked against my 5-area rubric." },
+        { skill: "cc-linkedin", name: "LinkedIn Writer", what: "Experience sections, banner lines, search strings, connection notes and weekly posts." },
+      ],
+    },
+    {
+      n: "4",
+      title: "Go direct",
+      from: "Hundreds of applications into the black hole.",
+      to: "New roles scored for you every weekday, and emails out to named hiring managers.",
+      tools: [
+        { skill: "job-search-autopilot", name: "Job Search Autopilot", suite: true, what: "Scheduled searches that find, check and score new roles for you, every weekday morning." },
+        { skill: "job-alerts-setup", name: "Job Alerts Setup", suite: true, what: "LinkedIn, Google and Indeed alerts built from your titles, click by click." },
+        { skill: "cc-job-scan", name: "Job Post Scan", what: "Postings from the last 7 days, links checked, each scored out of 12." },
+        { skill: "cc-outreach-campaign", name: "Outreach Campaign", what: "One real person at each target company, something of theirs to mention, and a short email." },
+        { skill: "cc-email-writer", name: "Email Writer", what: "Fits my 80+ templates to you: cold emails, follow-ups, referrals and LinkedIn messages." },
+        { skill: "cc-outreach", name: "Outreach Writer", what: "Informational interviews, coffee chats, cover letters and the \"silver bullet\" thank-you." },
+      ],
+    },
+    {
+      n: "5",
+      title: "Get paid what you're worth",
+      from: "Winging the interview, then taking the first number.",
+      to: "Stories ready, a prep pack for every interview, and a counter you've rehearsed.",
+      tools: [
+        { skill: "cc-interview-dossier", name: "Interview Dossier", what: "A 12-section prep pack for one job: the company, the people you're meeting, your stories." },
+        { skill: "cc-interview-coach", name: "Interview Coach", what: "Your STAR story bank, mock interviews with feedback, and a debrief after the real one." },
+        { skill: "cc-interview", name: "Interview Prep", what: "Your \"Tell me about yourself\", practice questions, and a strict score of your interview transcripts." },
+        { skill: "cc-salary-number", name: "Salary Number", what: "Your anchor, target and walk-away numbers, with word-for-word scripts." },
+        { skill: "cc-negotiation-coach", name: "Negotiation Coach", what: "Reviews the offer, drafts your counter, then plays the recruiter so you can rehearse." },
+        { skill: "cc-offer", name: "Offer and Next Steps", what: "Offer comparisons, counter-offer calls, resignation letters and your first 90 days." },
+      ],
+    },
+  ] satisfies ToolkitStep[],
+};

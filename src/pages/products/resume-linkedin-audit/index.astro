@@ -1,0 +1,30 @@
+---
+import ProductLayout from "@layouts/ProductLayout.astro";
+---
+
+<ProductLayout
+  productSlug="resume-linkedin-audit"
+  mockups="resume-linkedin-audit"
+  title="Resume and LinkedIn Audit Kit | ClearCareer"
+  description="The resume and LinkedIn audits I run for clients, as two Claude skills: a quick snapshot, a full audit, or a Rewrite Guide that quotes your text and rewrites it."
+  headline="Find out exactly what's holding<br />your resume and LinkedIn back."
+  subheadline="These are the audits I run for my clients, scored against the same checklist. Pick a quick snapshot, a full section-by-section audit, or a Rewrite Guide that quotes your words and rewrites them."
+  bullets={[
+    "Resume audit: first impression, positioning, achievements vs duties, keywords, story and language",
+    "LinkedIn audit from screenshots: photo, banner, headline, About and experience",
+    "Three depths: a 2-minute snapshot, a full audit, or a Rewrite Guide",
+    "Rewrite Guide: 3 headline options, a new About section, and rewritten bullets for your recent roles",
+    "Never invents anything: missing numbers come back as [add a number] for you to fill in",
+    "Printable resume and LinkedIn checklists you can use without AI",
+  ]}
+  price="$29 CAD"
+  ctaHref="#checkout"
+  ctaText="Get the Audit Kit"
+  guaranteeText="One payment, yours to keep. Questions? Reply to your purchase email and I'll help."
+  faq={[
+    { q: "How does it read my LinkedIn?", a: "Upload screenshots of your profile, or save it as a PDF from LinkedIn (More, then Save to PDF). Claude reads both. The photo and banner are only judged from screenshots." },
+    { q: "Will it rewrite my resume for me?", a: "The Rewrite Guide does, section by section, using only what's in your resume. Where a number is missing, it asks you to add it rather than guessing." },
+    { q: "How often should I run it?", a: "Once before you start applying, then again after you've made changes. The second run shows what improved and what's left." },
+    { q: "Do I need Claude?", a: "No. The audits also come as copy-paste prompts for ChatGPT, Gemini or any AI. Claude users can install them as skills." },
+  ]}
+/>

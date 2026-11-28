@@ -11,18 +11,28 @@ export interface Product {
   name: string;
   price: number;
   currency: string;
-  tier: "free" | "$9" | "$19-29" | "$47-67";
+  tier: "free" | "$9" | "$19-29" | "$47-67" | "$97+";
   description: string;
   stripePriceEnvVar: string;
+  /** Default Stripe price ID, used when the env var above isn't set. Price IDs aren't secret. */
+  stripePriceId?: string;
   guidesDir: string;
   guides: ProductGuide[];
   badge?: string;
+  /** Bundles: the products this one unlocks (each keeps its own access page). */
+  includes?: string[];
+  /** No longer sold on its own: its page points to `replacedBy`, existing access links keep working. */
+  retired?: boolean;
+  /** Hidden for now: off the shop, its sales page redirects to /shop, existing access links keep working. */
+  hidden?: boolean;
+  replacedBy?: string;
 }
 
 export const PRODUCTS: Record<string, Product> = {
   // ── FREE TIER ──────────────────────────────────────────
   "adhd-cheat-sheet": {
     slug: "adhd-cheat-sheet",
+    hidden: true,
     name: "ADHD Job Search Survival Cheat Sheet",
     price: 0,
     currency: "CAD",
@@ -44,6 +54,7 @@ export const PRODUCTS: Record<string, Product> = {
   },
   "job-search-scorecard": {
     slug: "job-search-scorecard",
+    hidden: true,
     name: "Job Search Self-Diagnostic Scorecard",
     price: 0,
     currency: "CAD",
@@ -65,6 +76,7 @@ export const PRODUCTS: Record<string, Product> = {
   },
   "rejection-cards": {
     slug: "rejection-cards",
+    hidden: true,
     name: "Rejection Reframe Card Deck",
     price: 0,
     currency: "CAD",
@@ -86,6 +98,7 @@ export const PRODUCTS: Record<string, Product> = {
   },
   "ghost-job-checklist": {
     slug: "ghost-job-checklist",
+    hidden: true,
     name: "50 Ghost Job Red Flags Checklist",
     price: 0,
     currency: "CAD",
@@ -109,6 +122,7 @@ export const PRODUCTS: Record<string, Product> = {
   // ── $9 TIER ────────────────────────────────────────────
   "adhd-focus-kit": {
     slug: "adhd-focus-kit",
+    hidden: true,
     name: "ADHD Job Seeker's Focus Kit",
     price: 9,
     currency: "CAD",
@@ -158,6 +172,7 @@ export const PRODUCTS: Record<string, Product> = {
   },
   "linkedin-detox": {
     slug: "linkedin-detox",
+    hidden: true,
     name: "LinkedIn Detox + Comparison Recovery Guide",
     price: 9,
     currency: "CAD",
@@ -200,6 +215,8 @@ export const PRODUCTS: Record<string, Product> = {
   },
   "cold-outreach-pack": {
     slug: "cold-outreach-pack",
+    retired: true,
+    replacedBy: "outreach-templates",
     name: "Cold Outreach Script Pack",
     price: 9,
     currency: "CAD",
@@ -223,6 +240,7 @@ export const PRODUCTS: Record<string, Product> = {
   // ── $19-29 TIER ────────────────────────────────────────
   "emotional-survival-kit": {
     slug: "emotional-survival-kit",
+    hidden: true,
     name: "Job Search Emotional Survival Kit",
     price: 24,
     currency: "CAD",
@@ -293,6 +311,8 @@ export const PRODUCTS: Record<string, Product> = {
   },
   "script-vault": {
     slug: "script-vault",
+    retired: true,
+    replacedBy: "complete-toolkit",
     name: "The Job Search Script Vault",
     price: 29,
     currency: "CAD",
@@ -356,6 +376,7 @@ export const PRODUCTS: Record<string, Product> = {
   },
   "adhd-career-change": {
     slug: "adhd-career-change",
+    hidden: true,
     name: "ADHD Career Change Workbook",
     price: 24,
     currency: "CAD",
@@ -412,12 +433,12 @@ export const PRODUCTS: Record<string, Product> = {
   },
   "interview-confidence": {
     slug: "interview-confidence",
-    name: "The Interview Confidence System",
+    name: "The Interview Confidence Kit",
     price: 19,
     currency: "CAD",
     tier: "$19-29",
     description:
-      "STAR stories, anxiety management, and answer frameworks for 20 common questions.",
+      "STAR stories, a mock-interview coach for Claude, answer frameworks for 20 common questions, and the thank-you email that gets remembered.",
     stripePriceEnvVar: "STRIPE_INTERVIEW_CONFIDENCE_PRICE_ID",
     guidesDir: "interview-confidence-guides",
     badge: "New",
@@ -457,12 +478,406 @@ export const PRODUCTS: Record<string, Product> = {
         icon: "📝",
         type: "guide",
       },
+      {
+        id: "06-prep-package",
+        file: "06-interview-prep-package.md",
+        title: "Interview Prep Package",
+        icon: "🗂️",
+        type: "guide",
+      },
+      {
+        id: "07-scripts",
+        file: "07-interview-scripts.md",
+        title: "Interview Scripts",
+        icon: "💬",
+        type: "guide",
+      },
+      {
+        id: "08-thank-you",
+        file: "08-thank-you-and-follow-up.md",
+        title: "Thank-You and Follow-Up Emails",
+        icon: "✉️",
+        type: "guide",
+      },
     ],
   },
 
   // ── $47-67 TIER ────────────────────────────────────────
+  "outreach-templates": {
+    slug: "outreach-templates",
+    name: "Outreach and Email Templates",
+    price: 19,
+    currency: "CAD",
+    tier: "$19-29",
+    description:
+      "80+ templates to reach hiring managers directly: cold emails, follow-ups, LinkedIn messages, referrals, and the thank-you that gets remembered. With a Claude skill that personalizes them.",
+    stripePriceEnvVar: "STRIPE_OUTREACH_TEMPLATES_PRICE_ID",
+    guidesDir: "outreach-templates-guides",
+    badge: "New",
+    guides: [
+      {
+        id: "01-one-week",
+        file: "01-land-an-interview-in-1-week.md",
+        title: "Land an Interview in 1 Week",
+        icon: "🎯",
+        type: "guide",
+      },
+      {
+        id: "02-hiring-managers",
+        file: "02-hiring-manager-cold-emails.md",
+        title: "Hiring Manager Cold Emails",
+        icon: "📧",
+        type: "guide",
+      },
+      {
+        id: "03-follow-ups",
+        file: "03-follow-ups.md",
+        title: "Follow-Ups",
+        icon: "🔁",
+        type: "guide",
+      },
+      {
+        id: "04-linkedin",
+        file: "04-linkedin-requests-and-messages.md",
+        title: "LinkedIn Requests and Messages",
+        icon: "💼",
+        type: "guide",
+      },
+      {
+        id: "05-referrals",
+        file: "05-referrals-and-informational-interviews.md",
+        title: "Referrals and Informational Interviews",
+        icon: "🤝",
+        type: "guide",
+      },
+      {
+        id: "06-thank-you",
+        file: "06-thank-you-emails.md",
+        title: "Thank-You Emails",
+        icon: "🙏",
+        type: "guide",
+      },
+      {
+        id: "07-networking",
+        file: "07-networking-without-the-awkward.md",
+        title: "Networking Without the Awkward",
+        icon: "☕",
+        type: "guide",
+      },
+    ],
+  },
+  "salary-negotiation": {
+    slug: "salary-negotiation",
+    name: "Salary Negotiation Scripts and Advice",
+    price: 29,
+    currency: "CAD",
+    tier: "$19-29",
+    description:
+      "Word-for-word scripts for every stage of the offer, my advice on how to use them, and a Claude negotiation coach that drafts your counter and rehearses the call with you.",
+    stripePriceEnvVar: "STRIPE_SALARY_NEGOTIATION_PRICE_ID",
+    guidesDir: "salary-negotiation-guides",
+    badge: "New",
+    guides: [
+      {
+        id: "01-advice",
+        file: "01-how-to-negotiate-your-offer.md",
+        title: "How to Negotiate Your Offer",
+        icon: "🧭",
+        type: "guide",
+      },
+      {
+        id: "02-recruiter-call",
+        file: "02-recruiter-call-and-the-salary-question.md",
+        title: "The Recruiter Call and the Salary Question",
+        icon: "📞",
+        type: "guide",
+      },
+      {
+        id: "03-counter",
+        file: "03-counter-offer-scripts.md",
+        title: "Counter-Offer Scripts",
+        icon: "💬",
+        type: "guide",
+      },
+      {
+        id: "04-beyond-base",
+        file: "04-beyond-base-pay-scripts.md",
+        title: "Beyond Base Pay",
+        icon: "🎁",
+        type: "guide",
+      },
+      {
+        id: "05-tricky",
+        file: "05-tricky-moments.md",
+        title: "Tricky Moments",
+        icon: "⚠️",
+        type: "guide",
+      },
+      {
+        id: "06-worksheet",
+        file: "06-offer-evaluation-worksheet.md",
+        title: "Offer Evaluation Worksheet",
+        icon: "🧮",
+        type: "guide",
+      },
+    ],
+  },
+  "complete-toolkit": {
+    slug: "complete-toolkit",
+    name: "The Complete Job Search Toolkit",
+    price: 49,
+    currency: "CAD",
+    tier: "$47-67",
+    description:
+      "Everything in one bundle: the Career Prompt Vault, Salary Number Generator, Outreach and Email Templates, Interview Confidence Kit, and Salary Negotiation Scripts and Advice. Plus bonus rejection and resignation scripts.",
+    stripePriceEnvVar: "STRIPE_COMPLETE_TOOLKIT_PRICE_ID",
+    guidesDir: "complete-toolkit-guides",
+    badge: "Best value",
+    includes: ["vault", "salary-generator", "outreach-templates", "interview-confidence", "salary-negotiation"],
+    guides: [
+      {
+        id: "01-rejection",
+        file: "01-rejection-response-scripts.md",
+        title: "Bonus: Rejection Response Scripts",
+        icon: "🔄",
+        type: "guide",
+      },
+      {
+        id: "02-resignation",
+        file: "02-resignation-and-transition-scripts.md",
+        title: "Bonus: Resignation and Transition Scripts",
+        icon: "🚪",
+        type: "guide",
+      },
+    ],
+  },
+  "resume-linkedin-audit": {
+    slug: "resume-linkedin-audit",
+    name: "Resume and LinkedIn Audit Kit",
+    price: 29,
+    currency: "CAD",
+    tier: "$19-29",
+    description:
+      "The audits I run for clients, as two Claude skills: a quick snapshot, a full section-by-section audit, or a Rewrite Guide that quotes your resume and LinkedIn and rewrites them.",
+    stripePriceEnvVar: "STRIPE_RESUME_LINKEDIN_AUDIT_PRICE_ID",
+    guidesDir: "resume-linkedin-audit-guides",
+    badge: "New",
+    guides: [
+      {
+        id: "01-how",
+        file: "01-how-the-audits-work.md",
+        title: "How the Audits Work",
+        icon: "🔍",
+        type: "guide",
+      },
+      {
+        id: "02-resume",
+        file: "02-resume-checklist.md",
+        title: "Resume Checklist",
+        icon: "📄",
+        type: "guide",
+      },
+      {
+        id: "03-linkedin",
+        file: "03-linkedin-checklist.md",
+        title: "LinkedIn Checklist",
+        icon: "💼",
+        type: "guide",
+      },
+    ],
+  },
+  "interview-dossier": {
+    slug: "interview-dossier",
+    name: "Interview Prep Dossier",
+    price: 39,
+    currency: "CAD",
+    tier: "$19-29",
+    description:
+      "My flagship client deliverable, as a Claude skill: a full prep pack for one specific job, with company research, likely objections and your answers, custom questions, STAR stories mapped to the role, and questions to ask.",
+    stripePriceEnvVar: "STRIPE_INTERVIEW_DOSSIER_PRICE_ID",
+    guidesDir: "interview-dossier-guides",
+    badge: "New",
+    guides: [
+      {
+        id: "01-how",
+        file: "01-how-to-use-your-dossier.md",
+        title: "How to Use Your Dossier",
+        icon: "🗂️",
+        type: "guide",
+      },
+      {
+        id: "02-tips",
+        file: "02-interview-day-tips.md",
+        title: "Interview Day Tips",
+        icon: "✅",
+        type: "guide",
+      },
+    ],
+  },
+  "research-outreach": {
+    slug: "research-outreach",
+    name: "Research and Outreach Kit",
+    price: 29,
+    currency: "CAD",
+    tier: "$19-29",
+    description:
+      "Three Claude skills: find fresh jobs and score each one out of 12, research and rank your target companies, then email the people who hire with short, specific notes.",
+    stripePriceEnvVar: "STRIPE_RESEARCH_OUTREACH_PRICE_ID",
+    guidesDir: "research-outreach-guides",
+    badge: "New",
+    guides: [
+      {
+        id: "01-fit",
+        file: "01-the-fit-score.md",
+        title: "The Fit Score",
+        icon: "🎯",
+        type: "guide",
+      },
+      {
+        id: "02-scorecards",
+        file: "02-company-scorecards.md",
+        title: "Company Scorecards",
+        icon: "🏢",
+        type: "guide",
+      },
+      {
+        id: "03-campaign",
+        file: "03-cold-outreach-campaign.md",
+        title: "Cold Outreach Campaign",
+        icon: "📬",
+        type: "guide",
+      },
+      {
+        id: "04-tools",
+        file: "04-search-tools.md",
+        title: "Search Tools",
+        icon: "🔎",
+        type: "guide",
+      },
+    ],
+  },
+  "linkedin-launch": {
+    slug: "linkedin-launch",
+    name: "LinkedIn Launch Pack",
+    price: 19,
+    currency: "CAD",
+    tier: "$19-29",
+    description:
+      "My own LinkedIn formats, as a Claude skill: pipe-style headlines, the 4-part About section, messages for 5 situations, and posts from your own stories. Plus a build-from-scratch guide.",
+    stripePriceEnvVar: "STRIPE_LINKEDIN_LAUNCH_PRICE_ID",
+    guidesDir: "linkedin-launch-guides",
+    badge: "New",
+    guides: [
+      {
+        id: "01-headlines",
+        file: "01-headlines.md",
+        title: "Headlines",
+        icon: "✍️",
+        type: "guide",
+      },
+      {
+        id: "02-about",
+        file: "02-the-4-part-about.md",
+        title: "The 4-Part About",
+        icon: "📝",
+        type: "guide",
+      },
+      {
+        id: "03-dms",
+        file: "03-dms-for-5-situations.md",
+        title: "Messages for 5 Situations",
+        icon: "💬",
+        type: "guide",
+      },
+      {
+        id: "04-posts",
+        file: "04-posts-from-your-stories.md",
+        title: "Posts From Your Stories",
+        icon: "📣",
+        type: "guide",
+      },
+      {
+        id: "05-scratch",
+        file: "05-build-your-profile-from-scratch.md",
+        title: "Build Your Profile From Scratch",
+        icon: "🧱",
+        type: "guide",
+      },
+    ],
+  },
+  "career-clarity-audit": {
+    slug: "career-clarity-audit",
+    name: "Career Clarity Audit",
+    price: 0,
+    currency: "CAD",
+    tier: "free",
+    description:
+      "Free. From your resume: 5 job titles to target with fit and salary, ready LinkedIn searches, and your anchor, target and walk-away numbers.",
+    stripePriceEnvVar: "",
+    guidesDir: "career-clarity-audit-guides",
+    badge: "Free",
+    guides: [
+      {
+        id: "01-read",
+        file: "01-how-to-read-your-audit.md",
+        title: "How to Read Your Audit",
+        icon: "🧭",
+        type: "guide",
+      },
+    ],
+  },
+  "all-access": {
+    slug: "all-access",
+    name: "The All-Access Pass",
+    price: 99,
+    currency: "CAD",
+    tier: "$97+",
+    description:
+      "Every ClearCareer product in one: the Complete Job Search Toolkit plus the Resume and LinkedIn Audit Kit, Interview Prep Dossier, Research and Outreach Kit and LinkedIn Launch Pack. 17 Claude skills.",
+    stripePriceEnvVar: "STRIPE_ALL_ACCESS_PRICE_ID",
+    guidesDir: "all-access-guides",
+    badge: "Best value",
+    includes: ["vault", "salary-generator", "outreach-templates", "interview-confidence", "salary-negotiation", "resume-linkedin-audit", "interview-dossier", "research-outreach", "linkedin-launch", "complete-toolkit"],
+    guides: [
+    ],
+  },
+  // ── THE CAREER SUITE ($47 on its own, free for Land and Level Up members via "llu-toolkit") ──
+  "career-suite": {
+    slug: "career-suite",
+    name: "The ClearCareer Career Suite",
+    price: 47,
+    currency: "CAD",
+    tier: "$47-67",
+    description:
+      "6 AI tools for Claude, ChatGPT and Gemini: Career Clarity, the AI Achievement Interviewer, LinkedIn Profile Builder, Job Alerts Setup, Job Search Autopilot and Job Match Scorer. Free for Land and Level Up members.",
+    stripePriceEnvVar: "STRIPE_CAREER_SUITE_PRICE_ID",
+    // Live price for "The Career Suite" ($47 CAD, product prod_Vi4AcGrWXezw2D).
+    stripePriceId: "price_1Uge1zH8o32Pij57oewNOxw2",
+    guidesDir: "career-suite-guides",
+    badge: "New",
+    guides: [],
+  },
+  // ── LAND AND LEVEL UP MEMBERS ONLY (not sold, not in the shop) ─────────────
+  // Members get one access link for all of it the day they enrol (src/pages/api/stripe.ts).
+  // Its sales-page URL redirects to /land-and-level-up (src/data/product-redirects.mjs).
+  "llu-toolkit": {
+    slug: "llu-toolkit",
+    hidden: true,
+    name: "Your Land and Level Up Toolkit",
+    price: 0,
+    currency: "CAD",
+    tier: "free",
+    description:
+      "Every ClearCareer AI tool: the 6-tool Career Suite and all 17 Claude skills from the All-Access Pass, in the order you'll use them.",
+    stripePriceEnvVar: "",
+    guidesDir: "llu-toolkit-guides",
+    // Flat on purpose: a token for this opens each of these directly.
+    includes: ["career-suite", "vault", "salary-generator", "outreach-templates", "interview-confidence", "salary-negotiation", "resume-linkedin-audit", "interview-dossier", "research-outreach", "linkedin-launch", "complete-toolkit"],
+    guides: [],
+  },
   "career-change-command-center": {
     slug: "career-change-command-center",
+    hidden: true,
     name: "The Complete Career Change Command Center",
     price: 47,
     currency: "CAD",
@@ -526,6 +941,7 @@ export const PRODUCTS: Record<string, Product> = {
   },
   "over-40-toolkit": {
     slug: "over-40-toolkit",
+    hidden: true,
     name: "The Over-40 Career Toolkit",
     price: 47,
     currency: "CAD",
@@ -582,6 +998,7 @@ export const PRODUCTS: Record<string, Product> = {
   },
   "adhd-command-center": {
     slug: "adhd-command-center",
+    hidden: true,
     name: "The ADHD Job Search Command Center",
     price: 57,
     currency: "CAD",
@@ -658,6 +1075,14 @@ export function getProductsByTier(
 ): Product[] {
   return Object.values(PRODUCTS).filter((p) => p.tier === tier);
 }
+
+/** Bundles that include a product (so a bundle purchase opens it). */
+export function bundlesIncluding(slug: string): string[] {
+  return Object.values(PRODUCTS).filter((p) => p.includes?.includes(slug)).map((p) => p.slug);
+}
+
+/** Single prices for products not in PRODUCTS (sold on their own pages). */
+export const OTHER_PRICES: Record<string, number> = { vault: 9, "layoff-survival-kit": 9 };
 
 // Helper to get a product by slug (returns undefined if not found)
 export function getProduct(slug: string): Product | undefined {

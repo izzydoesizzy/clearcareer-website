@@ -11,6 +11,19 @@ import { hmacHex, safeEqual } from './brevo-api.js';
 import { PROGRAMS } from './book-call.js';
 import { welcome } from '../data/llu.js';
 import { torontoDay } from './call-flow.js';
+import { accessSecret, accessUrl, makeAccessToken } from './access.js';
+import { SITE_URL } from './email/constants.js';
+
+// ── The member toolkit ───────────────────────────────────────────────────────────
+/**
+ * The member's link to every AI tool (product "llu-toolkit": the Career Suite plus every
+ * All-Access product), or '' when no ACCESS_SECRET or ONBOARD_SECRET is set.
+ */
+export async function toolkitUrl(env: Record<string, unknown>, email: string): Promise<string> {
+  const secret = accessSecret(env);
+  if (!secret || !email) return '';
+  return accessUrl('llu-toolkit', await makeAccessToken('llu-toolkit', email, secret), SITE_URL);
+}
 
 // ── Private onboarding links ─────────────────────────────────────────────────────
 // The token is the email plus a signature, so nothing needs storing and links never expire.

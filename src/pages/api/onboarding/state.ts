@@ -5,6 +5,7 @@ import { agreementFor } from '../../../lib/clients.js';
 import { storedAnswers } from '../../../lib/call-flow.js';
 import { welcome, callTimeLabel } from '../../../data/llu.js';
 import { PROGRAMS } from '../../../lib/book-call.js';
+import { toolkitUrl } from '../../../lib/onboarding.js';
 
 export const prerender = false;
 
@@ -36,6 +37,7 @@ export const GET: APIRoute = async ({ url }) => {
         callTime: callTimeLabel(),
         callUrl: welcome.callUrl,
         privateBookingUrl: welcome.privateBookingUrl,
+        toolkitUrl: await toolkitUrl(env as unknown as Record<string, unknown>, c.email),
       },
     });
   } catch (e) {

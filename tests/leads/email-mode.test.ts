@@ -30,9 +30,10 @@ describe('checkout links', () => {
     PUBLIC_GROUP_CHECKOUT_URL: 'https://buy.stripe.com/bf-group', PUBLIC_PRIVATE_CHECKOUT_URL: 'https://buy.stripe.com/bf-private',
     PUBLIC_GROUP_CHECKOUT_URL_REGULAR: 'https://buy.stripe.com/reg-group', PUBLIC_PRIVATE_CHECKOUT_URL_REGULAR: 'https://buy.stripe.com/reg-private',
   };
-  it('uses the Black Friday links until the deadline, then the regular ones', () => {
+  it('uses one link per program before and after Black Friday (the code does the discount)', () => {
     expect(checkoutLinks(env, new Date('2026-11-30T23:00:00-05:00')).group).toBe('https://buy.stripe.com/bf-group');
-    expect(checkoutLinks(env, new Date('2026-12-01T00:30:00-05:00')).group).toBe('https://buy.stripe.com/reg-group');
+    expect(checkoutLinks(env, new Date('2026-12-01T00:30:00-05:00')).group).toBe('https://buy.stripe.com/bf-group');
+    expect(checkoutLinks({ PUBLIC_GROUP_CHECKOUT_URL_REGULAR: 'https://buy.stripe.com/reg-group' }).group).toBe('https://buy.stripe.com/reg-group');
     expect(checkoutLinks({}, new Date('2026-12-02T00:00:00Z'))).toEqual({ group: undefined, private: undefined });
   });
 });

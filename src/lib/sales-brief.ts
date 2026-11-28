@@ -4,7 +4,7 @@
  * every "why" line points at something they told us.
  */
 import type { BookCallAnswers, Diagnosis } from './book-call.js';
-import { PROGRAMS, QUALIFY, leadScore, programValue, scoreLead, diagnose } from './book-call.js';
+import { PROGRAMS, QUALIFY, leadScore, programValue, scoreLead, diagnose, cad } from './book-call.js';
 import { CALL_PLAN, esc } from './lead-email.js';
 import { dealIsLive } from './email/deal.js';
 import { offer, objections, RESULTS_VARY } from '../data/llu.js';
@@ -19,7 +19,7 @@ const C = {
 };
 const FONT = "Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif";
 const SERIF = "'DM Serif Display',Georgia,'Times New Roman',serif";
-const money = (n: number) => `$${Math.round(n).toLocaleString('en-CA')}`;
+const money = (n: number) => (Number.isInteger(n) || n >= 10000 ? `$${Math.round(n).toLocaleString('en-CA')}` : cad(n));
 const q = (s: string) => `"${s.replace(/\s+/g, ' ').trim()}"`;
 const proof = (i: number) => (objections[i]?.proof || '').replace(/[“”]/g, '"');
 
@@ -67,7 +67,7 @@ export function predictObjections(a: BookCallAnswers, d: Diagnosis): Objection[]
       a.country === 'Canada' ? `If we get you hired even a few weeks sooner, it pays for itself. And you can spread it out: Klarna at checkout splits it into monthly payments for up to 12 months.` : `If we get you hired even a few weeks sooner, it pays for itself.` /* Klarna is Canada only: outside Canada it's one card payment. */,
       `${offer.guarantee}`,
     ],
-    fallback: rec.program === PROGRAMS.private.name ? `Downsell to the group cohort at ${money(g)}. Same community, calls and workshop, without the 1:1 rebuild.` : a.country === 'Canada' ? 'Point to Klarna at checkout for monthly payments. Do not lower the price.' : `Klarna is Canada only, so for ${a.country === 'United States' ? 'the US' : 'them'} it's one card payment. Do not lower the price: lean on the guarantee and the math instead.`,
+    fallback: rec.program === PROGRAMS.private.name ? `Downsell to the group cohort at ${money(g)}. Same community, calls, workshop and every AI tool, without the done-for-you drafts, lists and salary report, or the 1:1 polish.` : a.country === 'Canada' ? 'Point to Klarna at checkout for monthly payments. Do not lower the price.' : `Klarna is Canada only, so for ${a.country === 'United States' ? 'the US' : 'them'} it's one card payment. Do not lower the price: lean on the guarantee and the math instead.`,
   });
 
   // Think about it

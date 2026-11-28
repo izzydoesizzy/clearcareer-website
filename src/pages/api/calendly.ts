@@ -10,13 +10,14 @@
  * Zapier can also post a simple body: { "event": "created" | "canceled", "email", "name", "start_time", "join_url", "reschedule_url" }
  */
 import type { APIRoute } from 'astro';
+import { serverEnv } from '../../lib/server-env.js';
 import { brevo, hmacHex, parseSigHeader, safeEqual } from '../../lib/brevo-api.js';
 import { dueSteps, torontoDay, type Step } from '../../lib/call-flow.js';
 import { runSteps, runnerEnv } from '../../lib/call-runner.js';
 
 export const prerender = false;
 
-const env = import.meta.env;
+const env = serverEnv() as any;
 const json = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json' } });
 
 async function authorised(request: Request, raw: string): Promise<boolean> {

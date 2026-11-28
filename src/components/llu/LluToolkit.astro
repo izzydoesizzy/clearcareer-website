@@ -1,0 +1,144 @@
+---
+/**
+ * Your AI career team: every tool a member gets, at the step of the method where they use it.
+ * The tools, counts and prices come from src/data/llu.ts (`toolkit`), checked against
+ * src/data/product-config.ts in tests/products. Navy band, so it breaks up the light bands around it.
+ */
+import { toolkit } from "@/data/llu";
+
+const total = toolkit.skillCount + toolkit.suiteCount;
+---
+
+<section class="llu-band llu-band--navy" id="toolkit">
+  <div class="llu-wrap">
+    <div class="llu-head">
+      <p class="llu-eyebrow">Your AI career team</p>
+      <h2 class="llu-h2">I built a tool for every step. You get all of them.</h2>
+      <p class="llu-lead">
+        {total} AI tools, built from the prompts and rubrics I use with my private clients. They work from your real
+        resume and your real wins. No made-up numbers.
+      </p>
+    </div>
+
+    <dl class="tk-value llu-mt-48">
+      <div>
+        <dt class="llu-stat__fig">{toolkit.skillCount}</dt>
+        <dd class="llu-stat__label">Claude skills from my shop, across {toolkit.productCount} toolkits.</dd>
+      </div>
+      <div>
+        <dt class="llu-stat__fig">{toolkit.suiteCount}</dt>
+        <dd class="llu-stat__label">Career Suite tools. Free for members.</dd>
+      </div>
+      <div>
+        <dt class="llu-stat__fig">{toolkit.soldSeparately}</dt>
+        <dd class="llu-stat__label">
+          What the skills cost bought one by one ({toolkit.allAccessPrice} as the All-Access Pass). Included in both tiers.
+        </dd>
+      </div>
+    </dl>
+
+    <ol class="tk-steps llu-mt-48">
+      {
+        toolkit.steps.map((s) => (
+          <li class="tk-step">
+            <div class="tk-step__side">
+              <div class="tk-step__head">
+                <span class="tk-step__n" aria-hidden="true">{s.n}</span>
+                <h3 class="tk-step__title">{s.title}</h3>
+              </div>
+              <dl class="tk-shift">
+                <div>
+                  <dt>Where you start</dt>
+                  <dd>{s.from}</dd>
+                </div>
+                <div>
+                  <dt>Where you end up</dt>
+                  <dd class="tk-shift__to">{s.to}</dd>
+                </div>
+              </dl>
+            </div>
+            <ul class="tk-tools" aria-label={`Tools for step ${s.n}`}>
+              {s.tools.map((t) => (
+                <li class="tk-tool">
+                  <p class="tk-tool__name">
+                    {t.name}
+                    {t.suite && <span class="tk-tag">Career Suite</span>}
+                  </p>
+                  <p class="tk-tool__what">{t.what}</p>
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="tk-thread llu-mt-48">
+      <p class="llu-eyebrow">The thread that ties it together</p>
+      <p class="tk-thread__text llu-mt-8">
+        <strong>Tell your story once.</strong> The AI Achievement Interviewer saves every role, win and number in your
+        Master Career Profile. Paste it into any of these tools and you never start from scratch again.
+      </p>
+    </div>
+
+    <p class="llu-cap llu-mt-24">
+      Sent to you the day you join, with a step-by-step install guide. They work in Claude, ChatGPT and Gemini.
+      <a class="llu-link" href="#pricing">Compare the two ways to join</a>
+    </p>
+  </div>
+</section>
+
+<style>
+  .tk-value {
+    display: grid; gap: 24px; margin-bottom: 0; padding: 28px; border-radius: 20px;
+    grid-template-columns: minmax(0, 1fr);
+    background: var(--llu-panel); border: 1px solid var(--llu-panel-border);
+  }
+  @media (min-width: 768px) { .tk-value { grid-template-columns: repeat(3, minmax(0, 1fr)); padding: 32px 40px; } }
+  .tk-value dd { margin: 6px 0 0; }
+
+  .tk-steps { display: grid; gap: 16px; margin-bottom: 0; padding: 0; list-style: none; }
+  .tk-step {
+    display: grid; gap: 24px; padding: 24px; border-radius: 20px;
+    grid-template-columns: minmax(0, 1fr);
+    background: var(--llu-panel); border: 1px solid var(--llu-panel-border);
+  }
+  @media (min-width: 1024px) { .tk-step { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.6fr); gap: 40px; padding: 32px; } }
+  .tk-step__head { display: flex; gap: 14px; align-items: center; }
+  .tk-step__n {
+    flex: none; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 999px;
+    background: var(--llu-blue); color: #fff; font-weight: 700; font-size: 18px;
+  }
+  .tk-step__title { margin: 0; font-size: 22px; line-height: 1.25; font-weight: 700; color: var(--llu-white); }
+  .tk-shift { display: grid; gap: 14px; margin: 20px 0 0; }
+  .tk-shift dt { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--llu-hairline); }
+  .tk-shift dd { margin: 4px 0 0; color: var(--llu-paper); line-height: 1.5; }
+  .tk-shift .tk-shift__to { color: var(--llu-white); font-weight: 600; }
+
+  .tk-tools { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 640px) { .tk-tools { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .tk-tool { padding: 16px 18px; border-radius: 14px; border: 1px solid var(--llu-panel-border); background: var(--llu-ink); }
+  .tk-tool__name {
+    display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+    margin: 0; font-weight: 700; color: var(--llu-white); line-height: 1.3;
+  }
+  .tk-tool__what { margin: 6px 0 0; font-size: 15px; line-height: 1.5; color: var(--llu-paper); }
+  .tk-tag {
+    display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 600;
+    color: var(--llu-white); border: 1px solid var(--llu-blue);
+  }
+
+  /* Phones: a plain divided list instead of 22 boxes, so the section stays short. */
+  @media (max-width: 639px) {
+    .tk-step { padding: 20px; gap: 16px; }
+    .tk-shift { gap: 10px; margin-top: 14px; }
+    .tk-tools { gap: 0; }
+    .tk-tool { padding: 12px 0; border: 0; border-top: 1px solid var(--llu-panel-border); border-radius: 0; background: none; }
+    .tk-tool__what { margin-top: 4px; font-size: 14px; }
+    .tk-value { padding: 20px; gap: 16px; }
+  }
+
+  .tk-thread { padding: 28px; border-radius: 20px; background: var(--llu-panel); border: 1px solid var(--llu-panel-border); }
+  .tk-thread__text { margin-bottom: 0; color: var(--llu-paper); font-size: 18px; line-height: 1.55; }
+  .tk-thread__text strong { color: var(--llu-white); }
+</style>

@@ -659,7 +659,7 @@ export default function SeveranceStory() {
               </ul>
               <a href="/layoff-survival-kit"
                 className="inline-flex items-center mt-4 rounded-lg bg-blue px-6 py-3 text-sm font-semibold text-white hover:bg-blue-dark transition-colors">
-                See the Full Kit — $67 CAD
+                See the Full Kit: $9 CAD
               </a>
             </div>
 
@@ -820,7 +820,7 @@ export default function SeveranceStory() {
           <div className="section" style={{ padding: "24px", background: "#EFF5FF", borderRadius: "12px", marginBottom: "20px", border: "1px solid rgba(1,97,239,0.15)" }}>
             <div style={{ fontSize: "16px", fontWeight: 700, color: "#030620" }}>Get the full severance negotiation playbook.</div>
             <div style={{ fontSize: "13px", color: "#6b7280", marginTop: "6px", lineHeight: 1.6 }}>
-              Email scripts, counter-offer templates, employment lawyer directory (30+ firms), tax strategies. 10 complete modules for $67 CAD.
+              Email scripts, counter-offer templates, employment lawyer directory (30+ firms), tax strategies. 10 complete modules for $9 CAD.
             </div>
             <div style={{ marginTop: "12px" }}>
               <a href="https://joinclearcareer.com/layoff-survival-kit" style={{ display: "inline-block", background: "#0161EF", color: "white", padding: "10px 24px", borderRadius: "8px", fontSize: "13px", fontWeight: 600, textDecoration: "none" }}>

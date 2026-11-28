@@ -5,7 +5,7 @@
  * 2024 network) or this program's own offer (src/data/llu.ts). No 1:1 or done-for-you items:
  * those belong to the private rebuild only.
  */
-import { offer, survey } from "@/data/llu";
+import { offer, survey, toolkit } from "@/data/llu";
 
 const support = [
   {
@@ -21,12 +21,12 @@ const support = [
   {
     icon: "battery",
     title: "Energy back",
-    body: `Leave every call with a plan and your batteries recharged. Confidence went from ${survey.confidenceBefore.toFixed(1)} to ${survey.confidenceAfter.toFixed(1)} out of 5.`,
+    body: "Leave every call with a plan and your batteries recharged. The search stops feeling like a weight you carry alone.",
   },
   {
     icon: "target",
     title: "Interviews, not silence",
-    body: "A resume and LinkedIn that show your value, aimed at hiring managers instead of the black hole.",
+    body: "Clear targets, a resume and LinkedIn that show your value, and emails to the people who actually hire.",
   },
 ];
 
@@ -40,30 +40,29 @@ const kit = [
     ],
   },
   {
-    label: "AI that does the heavy lifting",
+    label: "Go direct",
     items: [
-      "The AI Achievement Interviewer",
-      "30+ tested AI prompts",
-      "AI tools to research salaries, find target companies and prep for interviews",
-      "AI research that runs while you sleep",
+      "How to find the hiring managers at your target companies",
+      "How to find their email addresses",
+      "Email templates for hiring managers, follow-ups and the \"silver bullet\" thank-you",
+      "Feedback on your emails before you hit send",
     ],
   },
   {
-    label: "Templates and scripts",
+    label: "AI that does the heavy lifting",
     items: [
-      "Resume templates",
-      "Outreach scripts and hiring manager emails",
-      "Follow-ups and the \"silver bullet\" thank-you email",
-      "Salary negotiation frameworks",
+      `${toolkit.skillCount} Claude skills, one for every step of your search`,
+      `The ${toolkit.suiteCount}-tool Career Suite, including the AI Achievement Interviewer and Job Search Autopilot`,
+      "AI research on your target companies and the people who hire",
     ],
   },
   {
     label: "Systems to work faster",
     items: [
-      "Job search tracker",
+      "Target company list and job search tracker",
       "Weekly priorities and progress system",
-      "Resource library of guides, calculators and frameworks",
-      "Every ClearCareer tool, and when to use it",
+      "Resume templates and salary negotiation frameworks",
+      "Resource library, plus every ClearCareer tool and when to use it",
     ],
   },
 ];
@@ -77,6 +76,7 @@ const icons: Record<string, string> = {
 ---
 
 <section class="llu-band" id="everything">
+  <span id="inside" class="ev-anchor" aria-hidden="true"></span>
   <div class="llu-wrap">
     <div class="llu-head">
       <p class="llu-eyebrow">Everything you get</p>
@@ -121,8 +121,10 @@ const icons: Record<string, string> = {
         </div>
         <p class="llu-cap ev-kit__foot">
           {survey.savesHourPct}% of past clients I surveyed save an hour or more a week. Choose the
-          private rebuild and you also get your resume and LinkedIn rebuilt 1:1 with me.
-          <a class="llu-link" href="#pricing">Compare options</a>
+          private rebuild and I also do the heavy lifting for you: I draft your resume and LinkedIn, build your target
+          company and hiring manager lists, and research your salary numbers. Then we polish it all 1:1 before the
+          holidays. <a class="llu-link" href="#toolkit">See every tool</a> or
+          <a class="llu-link" href="#pricing">compare options</a>
         </p>
       </div>
 
@@ -144,6 +146,7 @@ const icons: Record<string, string> = {
 </section>
 
 <style>
+  .ev-anchor { display: block; position: relative; top: -72px; }
   .ev-support { display: grid; gap: var(--llu-gap); grid-template-columns: minmax(0, 1fr); }
   @media (min-width: 640px) { .ev-support { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @media (min-width: 1024px) { .ev-support { grid-template-columns: repeat(4, minmax(0, 1fr)); } }

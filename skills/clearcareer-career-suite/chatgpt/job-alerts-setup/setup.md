@@ -11,6 +11,6 @@
    - Build my job alert pack
    - My alerts are sending junk. Fix them.
 7. **Capabilities:** turn on Canvas, Web Search. Code Interpreter is optional (helps read PDF resumes and check math).
-8. Test it with a sample resume, then share the GPT link with members.
+8. Test it with your resume. The GPT is private to you unless you share it.
 
 Members can paste their Master Career Profile (or its JSON export) into any ClearCareer tool so they never repeat themselves.
