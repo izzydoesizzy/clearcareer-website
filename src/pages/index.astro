@@ -11,6 +11,7 @@ import { winNames } from "@data/proof";
 import PricingCard from "@components/PricingCard.astro";
 import { offer } from "@data/llu";
 import CTASection from "@components/CTASection.astro";
+import AiToolsGrid from "@components/AiToolsGrid.astro";
 import { getCollection } from "astro:content";
 
 import IndustryStatCard from "@components/IndustryStatCard.astro";
@@ -183,60 +184,67 @@ const latestPosts = (await getCollection("blog", ({ data }) => {
         </h2>
       </div>
 
-      <div class="relative mt-12">
-        {/* Connector line (desktop only) */}
-        <div class="absolute left-0 right-0 top-5 hidden h-0.5 border-t-2 border-dashed border-blue/20 md:block" style="margin-left: calc(12.5% + 20px); margin-right: calc(12.5% + 20px);"></div>
+      {/* Steps on the left, a real community win on the right (the 2024 site's layout). */}
+      <div class="mt-12 grid items-center gap-12 md:grid-cols-[1fr_auto] md:gap-16 lg:gap-24">
+        <ol class="mx-auto w-full max-w-xl" data-animate-stagger>
+            <li class="relative flex gap-5 pb-10 last:pb-0">
+              {/* Connector line to the next step */}
+              <span class="absolute left-5 top-10 -ml-px h-[calc(100%-2.5rem)] border-l-2 border-dashed border-blue/20" aria-hidden="true"></span>
+              <span class="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue text-sm font-bold text-white">1</span>
+              <div class="pt-1.5">
+                <h3 class="text-base font-bold text-navy">Book a Free Call</h3>
+                <p class="mt-2 text-sm leading-relaxed text-text-muted">20-minute call with Izzy to see where your search is stuck and whether we're the right fit.</p>
+              </div>
+            </li>
+            <li class="relative flex gap-5 pb-10 last:pb-0">
+              {/* Connector line to the next step */}
+              <span class="absolute left-5 top-10 -ml-px h-[calc(100%-2.5rem)] border-l-2 border-dashed border-blue/20" aria-hidden="true"></span>
+              <span class="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue text-sm font-bold text-white">2</span>
+              <div class="pt-1.5">
+                <h3 class="text-base font-bold text-navy">Join Your Cohort</h3>
+                <p class="mt-2 text-sm leading-relaxed text-text-muted">Pick the group cohort, or add a private 1:1 rebuild with Izzy. Small group, 16 seats.</p>
+              </div>
+            </li>
+            <li class="relative flex gap-5 pb-10 last:pb-0">
+              {/* Connector line to the next step */}
+              <span class="absolute left-5 top-10 -ml-px h-[calc(100%-2.5rem)] border-l-2 border-dashed border-blue/20" aria-hidden="true"></span>
+              <span class="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue text-sm font-bold text-white">3</span>
+              <div class="pt-1.5">
+                <h3 class="text-base font-bold text-navy">Rebuild and Work Your Search</h3>
+                <p class="mt-2 text-sm leading-relaxed text-text-muted">6 weeks of live Wednesday calls, a resume and LinkedIn rebuild workshop, and the AI Achievement Interviewer.</p>
+              </div>
+            </li>
+            <li class="relative flex gap-5 pb-10 last:pb-0">
+              {/* Connector line to the next step */}
+              
+              <span class="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue text-sm font-bold text-white">4</span>
+              <div class="pt-1.5">
+                <h3 class="text-base font-bold text-navy">Land Your Next Role</h3>
+                <p class="mt-2 text-sm leading-relaxed text-text-muted">Leave with a resume and LinkedIn that show your value, and a search that works. Stay on after for $49 a month.</p>
+              </div>
+            </li>
+        </ol>
 
-        <div class="grid grid-cols-1 gap-10 md:grid-cols-4 md:gap-6" data-animate-stagger>
-          {/* Step 1 */}
-          <div class="relative text-center">
-            <div class="relative z-10 mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-blue text-sm font-bold text-white">
-              1
-            </div>
-            <h3 class="mt-4 text-base font-bold text-navy">Book a Free Call</h3>
-            <p class="mt-2 text-sm leading-relaxed text-text-muted">
-              20-minute call with Izzy to see where your search is stuck and whether we're the right fit.
-            </p>
-          </div>
-
-          {/* Step 2 */}
-          <div class="relative text-center">
-            <div class="relative z-10 mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-blue text-sm font-bold text-white">
-              2
-            </div>
-            <h3 class="mt-4 text-base font-bold text-navy">Join Your Cohort</h3>
-            <p class="mt-2 text-sm leading-relaxed text-text-muted">
-              Pick the group cohort, or add a private 1:1 rebuild with Izzy. Small group, 16 seats.
-            </p>
-          </div>
-
-          {/* Step 3 */}
-          <div class="relative text-center">
-            <div class="relative z-10 mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-blue text-sm font-bold text-white">
-              3
-            </div>
-            <h3 class="mt-4 text-base font-bold text-navy">Rebuild and Work Your Search</h3>
-            <p class="mt-2 text-sm leading-relaxed text-text-muted">
-              6 weeks of live Wednesday calls, a resume and LinkedIn rebuild workshop, and the AI Achievement Interviewer.
-            </p>
-          </div>
-
-          {/* Step 4 */}
-          <div class="relative text-center">
-            <div class="relative z-10 mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-blue text-sm font-bold text-white">
-              4
-            </div>
-            <h3 class="mt-4 text-base font-bold text-navy">Land Your Next Role</h3>
-            <p class="mt-2 text-sm leading-relaxed text-text-muted">
-              Leave with a resume and LinkedIn that show your value, and a search that works. Stay on after for $49 a month.
-            </p>
-          </div>
-        </div>
+        <figure class="mx-auto w-full max-w-[260px] md:max-w-[300px]" data-animate="fade-up">
+          <img
+            src="/images/home/community-win.webp"
+            width="430"
+            height="876"
+            loading="lazy"
+            decoding="async"
+            alt="A post in the ClearCareer community on a phone: I received an offer and accepted! I will be a Customer Success Relationship Manager. Y'all! I love this community Izzy has helped us build here. It feels like family! Members reply with congratulations."
+            class="h-auto w-full drop-shadow-[0_24px_40px_rgba(3,6,32,0.25)]"
+          />
+          <figcaption class="mt-4 text-center text-sm text-text-muted">A real win, posted in the community.</figcaption>
+        </figure>
       </div>
     </div>
   </section>
 
   {/* ── 7. Featured Testimonials ── */}
+  <!-- AI Prompts, Tools, & Templates (the 2024 site's "utility belt" grid) -->
+  <AiToolsGrid />
+
   <section class="bg-blue-bg/30 py-16 md:py-24">
     <div class="mx-auto max-w-[1080px] px-4 sm:px-6 lg:px-8">
       <div class="text-center" data-animate="fade-up">

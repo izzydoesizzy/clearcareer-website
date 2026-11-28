@@ -1,0 +1,95 @@
+---
+/**
+ * "AI Prompts, Tools, & Templates": the 3x3 "utility belt" grid from the 2024 site
+ * (izzydoesizzy/clearcareerv2-2024, Features2 + ItemGrid2), same look and same Flat Color icons,
+ * with cards for the tools that exist now. Used on the homepage and the Land and Level Up page.
+ *
+ * Icons: Flat Color Icons (MIT), saved in src/icons/flat-color/ from the Iconify API.
+ */
+import approval from "../icons/flat-color/approval.svg?raw";
+import currency from "../icons/flat-color/currency-exchange.svg?raw";
+import calendar from "../icons/flat-color/calendar.svg?raw";
+import voice from "../icons/flat-color/voice-presentation.svg?raw";
+import documentIcon from "../icons/flat-color/document.svg?raw";
+import template from "../icons/flat-color/template.svg?raw";
+import gallery from "../icons/flat-color/gallery.svg?raw";
+import highPriority from "../icons/flat-color/high-priority.svg?raw";
+
+interface Props {
+  class?: string;
+}
+const { class: extraClass = "" } = Astro.props;
+
+// Size the icons with CSS, not the 1em the Iconify files ship with.
+const icon = (svg: string) => svg.replace(/\swidth="1em"\sheight="1em"/, ' width="40" height="40" aria-hidden="true"');
+
+const items = [
+  {
+    title: "Quantify Your Achievements",
+    description: "A voice interview that asks one question at a time until every role on your resume has a number on it.",
+    icon: approval,
+  },
+  {
+    title: "Instantly Research Salaries",
+    description: "Real pay data for your title in your city, with sources, plus your anchor, target and walk-away numbers.",
+    icon: currency,
+  },
+  {
+    title: "Put Your Job Search on Autopilot",
+    description: "Scheduled searches that find, check and score fresh roles for you every weekday morning.",
+    icon: calendar,
+  },
+  {
+    title: "Improve Your Networking",
+    description: "Find a real person at each target company, something of theirs to mention, and a short email they'll answer.",
+    icon: voice,
+  },
+  {
+    title: "Email Templates Galore",
+    description: "80+ templates for job seekers, including hiring manager emails and silver-bullet thank you emails.",
+    icon: documentIcon,
+  },
+  {
+    title: "Target Better Companies",
+    description: "Score and rank companies on what matters to you, so you stop applying to everything that sounds close.",
+    icon: template,
+  },
+  {
+    title: "Level-Up Interview Prep",
+    description: "Mock interviews with an AI coach, frameworks for the common questions, and your STAR stories ready to go.",
+    icon: documentIcon,
+  },
+  {
+    title: "Optimize Your LinkedIn",
+    description: "AI-written headlines and an About section built from your real wins, so recruiters find you.",
+    icon: gallery,
+  },
+  {
+    title: "Counter Objections",
+    description: "Pinpoint what an employer might worry about and walk in with an answer for each one.",
+    icon: highPriority,
+  },
+];
+---
+
+<section class={`py-16 md:py-24 ${extraClass}`} aria-labelledby="ai-tools-heading">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6">
+    <div class="mx-auto mb-10 max-w-3xl text-center md:mb-12">
+      <p class="text-base font-bold uppercase tracking-wide text-blue">Our favourite tools</p>
+      <h2 id="ai-tools-heading" class="mt-2 text-4xl font-bold leading-tight tracking-tighter text-navy md:text-5xl">
+        AI Prompts, Tools, &amp; Templates
+      </h2>
+      <p class="mt-4 text-xl text-text-muted">It's like Batman's Utility Belt, but for your job search</p>
+    </div>
+
+    <div class="grid gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-3">
+      {items.map((item) => (
+        <div class="relative flex flex-col rounded-lg border border-white/20 bg-white p-6 shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
+          <span class="mb-6 block h-10 w-10" set:html={icon(item.icon)} />
+          <h3 class="text-xl font-bold text-navy">{item.title}</h3>
+          <p class="mt-2 text-text-muted">{item.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
