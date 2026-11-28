@@ -7,18 +7,19 @@ import ProofBar from "@components/proof/ProofBar.astro";
 <section class="llu-band llu-band--navy llu-hero" id="top">
   <div class="llu-wrap">
     <div class="llu-hero__inner">
-      <p class="llu-pill">For experienced professionals between roles</p>
-      <h1 class="llu-display">Know what you want next. Then go get it.</h1>
+      {/* Same eyebrow, headline and subtext as the homepage hero (src/pages/index.astro) */}
+      <p class="llu-hero__eyebrow">Career Coaching That Actually Works</p>
+      <h1 class="llu-display">Stop Grinding Alone. Start Getting <span class="llu-hero__accent">Results.</span></h1>
       <p class="llu-lead llu-hero__sub">
-        Land and Level Up is a 6-week small group with me. We get clear on your next role and rebuild your resume and
-        LinkedIn before the holidays. In January, we go straight to the hiring managers. Live every Wednesday.
+        Land and Level Up is my 6-week group program: we rebuild your resume and LinkedIn together, then work your real
+        search live every Wednesday.
       </p>
       <LluButton />
       <p class="llu-cap">
         {offer.dealLive && <>20% off with code <strong>{offer.promoCode}</strong> until {offer.dealEndsLong}. </>}We start {offer.startDateShort}.
         <span class="llu-num">{offer.seatsTotal}</span> seats.
       </p>
-      <ProofBar tone="dark" />
+      <ProofBar tone="dark" align="center" />
     </div>
 
     <div class="llu-hero__stats">
