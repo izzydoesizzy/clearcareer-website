@@ -130,7 +130,9 @@ export function purchaseEmail(o: Order): { subject: string; html: string } {
     .map(({ l, c }) => {
       const img = coverImage(l.product, l.url);
       const head = `${one ? '' : H(c.name)}${img}${P(esc(c.blurb))}${button(c.open, l.url)}${c.start ? small(`<strong>Where to start:</strong> ${esc(c.start)}`) : ''}`;
+      // Products already listed as their own line (bought before the upgrade) aren't repeated.
       const inside = (l.includes || [])
+        .filter((i) => !o.lines.some((other) => other.product === i.product))
         .map((i) => ({ i, ic: catalogItem(i.product) }))
         .filter((x) => x.ic)
         .map(({ i, ic }) => `${P(`<strong>${esc(ic!.name)}</strong><br>${esc(ic!.blurb)}`, 'margin-bottom:8px;')}${button(ic!.open, i.url)}`)

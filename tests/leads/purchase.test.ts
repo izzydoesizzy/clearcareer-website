@@ -74,6 +74,27 @@ describe('purchase email', () => {
   });
 });
 
+describe('bundle emails', () => {
+  it('lists each product inside a bundle once, with its own button', () => {
+    const { html } = purchaseEmail({
+      email: 'sam@example.com',
+      lines: [
+        { product: 'vault', amount: 900, url: 'https://x.test/vault' },
+        { product: 'complete-toolkit', amount: 4000, url: 'https://x.test/toolkit', includes: [
+          { product: 'vault', url: 'https://x.test/vault-b' },
+          { product: 'outreach-templates', url: 'https://x.test/outreach' },
+          { product: 'salary-negotiation', url: 'https://x.test/negotiation' },
+        ] },
+      ],
+      subtotal: 4900, tax: 0, total: 4900,
+    });
+    expect(html).toContain('https://x.test/outreach');
+    expect(html).toContain('https://x.test/negotiation');
+    expect(html).not.toContain('https://x.test/vault-b'); // already its own line
+    expect(html).toMatch(/What(&#39;|&#x27;|')s inside/);
+  });
+});
+
 describe('orders from Stripe', () => {
   it('turns a paid Checkout Session into an order', async () => {
     const o = await orderFromSession(
