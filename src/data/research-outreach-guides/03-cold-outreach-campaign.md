@@ -227,10 +227,10 @@ Hi Morgan,
 I hope this email finds you well. I'm reaching out because I'm a results-driven operations professional with over 8 years of experience, and I'm confident I'd be a great fit for your team. Your career is genuinely impressive. I'd love to pick your brain about any openings you might have. I've attached my resume for your review.
 
 Thanks in advance!
-Alex
+Riley
 ~~~
 
-What's wrong with it: the subject line is a job ad. It's all about Alex. Nothing in it shows Alex knows who Morgan is. "Results-driven" and "genuinely impressive" mean nothing. There's an attachment from a stranger. And "any openings" is a big, vague ask.
+What's wrong with it: the subject line is a job ad. It's all about Riley. Nothing in it shows Riley knows who Morgan is. "Results-driven" and "genuinely impressive" mean nothing. There's an attachment from a stranger. And "any openings" is a big, vague ask.
 
 Here's the same email, rebuilt:
 
@@ -245,11 +245,11 @@ That matches what I saw at a regional distributor. I rebuilt our route planning 
 
 I'd love to hear more about how your team is approaching backhauls as the Ontario network grows. Would you be open to a 15-minute call in the next couple of weeks? No pressure at all if the timing doesn't work.
 
-Alex Chen
-alex.chen@email.example
+Riley Quinn
+riley.quinn@email.example
 ~~~
 
-93 words. It starts with Morgan. It proves Alex paid attention. One win, with a real number. One small ask. One easy out.
+93 words. It starts with Morgan. It proves Riley paid attention. One win, with a real number. One small ask. One easy out.
 
 ### The checklist before you hit send
 

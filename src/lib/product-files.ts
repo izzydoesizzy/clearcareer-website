@@ -40,7 +40,7 @@ export function productFiles(slug: string): Record<string, string> {
 }
 
 /** The order buyers should meet the skills in (the job search order). Others follow, A to Z. */
-const SKILL_ORDER = ['cc-resume', 'cc-linkedin', 'cc-interview', 'cc-outreach', 'cc-research', 'cc-offer'];
+const SKILL_ORDER = ['cc-resume', 'cc-linkedin', 'cc-interview', 'cc-outreach', 'cc-research', 'cc-offer', 'cc-resume-review', 'cc-linkedin-audit', 'cc-job-scan', 'cc-company-scorecards', 'cc-outreach-campaign'];
 
 export function skillsFor(slug: string): SkillInfo[] {
   const files = productFiles(slug);
