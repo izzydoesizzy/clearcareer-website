@@ -7,7 +7,7 @@ Use these as raw material. Always rephrase to fit what the client actually said 
 Ask all 8 for the most recent 2 to 3 roles, and Money, Scale and Projects for older roles. Offer the options as a short list the client can answer with a letter or a few words. Word it for their level:
 - **Individual contributor:** "your work"
 - **Lead / manager / senior:** "your team's work"
-- **Executive (VP, Director, Head of, Chief, Founder):** "your decisions"; show the biggest money bands first.
+- **Executive (VP, Director, Head of, Chief, or a Founder whose company had staff):** "your decisions"; show the biggest money bands first.
 
 1. **Scale:** Roughly how many people were affected by [your work / your team / your decisions] in this role?
    Under 10 / 10 to 50 / 50 to 250 / 250 to 1,000 / 1,000 to 10,000 / 10,000+ / Help me estimate
@@ -26,7 +26,7 @@ Every scan answer and resume bullet becomes a "lead" (a possible achievement). R
 
 | Signal | Points |
 |---|---|
-| Money touched | 30, plus up to 20 more for bigger money bands |
+| Money touched | 30, plus money band: under $50K 0, $50K to $250K 5, $250K to $1M 10, $1M to $10M 15, $10M+ 20 |
 | Growth | 22 |
 | Resume bullet that already has a number | 20 |
 | Time saved | 18 |
@@ -35,7 +35,7 @@ Every scan answer and resume bullet becomes a "lead" (a possible achievement). R
 | Projects | 12 |
 | Recognition | 10 |
 | Resume bullet with a trigger verb but no result (led, managed, implemented, launched, built, responsible for, oversaw, owned, created, drove, delivered, onboarded) | 8 |
-| Scale band (bigger = more) | up to 40 |
+| Scale band | under 10: 0, 10 to 50: 8, 50 to 250: 16, 250 to 1,000: 24, 1,000 to 10,000: 32, 10,000+: 40 |
 
 Note for the client when a bullet has no result: "This line describes responsibility without results. That gap is where achievements hide."
 

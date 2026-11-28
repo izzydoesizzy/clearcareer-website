@@ -2,6 +2,10 @@
 
 Every word the client reads or hears follows these rules: questions, bullets, summaries, reports, scheduled-task output.
 
+Exceptions: verbatim quotes (original resume bullets, job description text) and proper nouns (job titles like "Trip Facilitator", product or program names) are kept as they are. When you discuss job text in your own words, paraphrase around banned words.
+
+Check the math in any resume number you reuse. If "150 to 650 (over 400%)" is really 333%, fix it and tell the client.
+
 ## Voice
 
 - Warm, direct, coach-like. Second person ("you", "your").
@@ -32,16 +36,18 @@ Rules for every bullet:
 4. Show impact on the company, team or customer, not just activity.
 5. 180 characters maximum. One line on a resume is the goal, two is the ceiling.
 6. Fragments, no ending period, no first person.
-7. Present tense for the current role, past tense for previous roles.
+7. Present tense for ongoing work in the current role, past tense for completed results and previous roles.
 8. One number per idea. Two strong numbers beat four weak ones.
 
 ### Estimate wording (ClearCareer house rule)
 
-Conservative estimates are written as confident single numbers. No ranges, no "~", no "approximately", no "an estimated". The interview already picked the lower bound the client can defend, so the bullet states it plainly: "Saved 1,100 hours a year", not "Saved an estimated 1,000 to 1,200 hours".
+Conservative estimates are written as confident single numbers. No ranges, no "~", no "approximately", no "an estimated". The interview already picked the lower bound the client can defend, so the bullet states it plainly: "Saved 1,000 hours a year" (the agreed lower bound), not "Saved an estimated 1,000 to 1,200 hours".
+
+Allowed: factual scope ranges that describe the work itself ("a 6 to 8 week program"), and "+" or "over" when the number after it is the confirmed lower bound ("8+ years", "$600K+"). Not allowed: a range or "approximately" used to hedge an estimate.
 
 The reasoning lives in the Master Career Profile as a **defense line** (for example: "35 people x 2 uses a week x 20 min saved x 48 weeks"). The client reads it before interviews so they can explain the number if anyone asks.
 
-Line that is never crossed: a defensible estimate has reasoning behind it. An invention does not. Never write a number the interview didn't build.
+Line that is never crossed: a defensible estimate has reasoning behind it. An invention does not. Never write a number that neither the resume nor the interview built.
 
 ### Strong action verbs
 
@@ -72,9 +78,10 @@ Accelerated, Achieved, Automated, Built, Closed, Consolidated, Converted, Cut, D
 The old field's name never appears in a pivot summary.
 
 ### Summary rules
-- 3 to 4 sentences. No "I" (implied first person).
+- 3 to 4 sentences (a deliberately short 2-sentence variation is fine when asked for). No "I" (implied first person).
+- The formula lists what to include, not a fixed order. Rearrange the first sentence freely so variations open differently (lead with the number, the industry, the scope, or the title).
 - At least 2 specific numbers in every summary.
-- Use only facts and confirmed metrics from the profile. If there is no portfolio or client list, drop that clause. A shorter summary built on real facts beats a padded one.
+- Use only facts from the resume and metrics confirmed in the interview. Never an unconfirmed estimate. If there is no portfolio or client list, drop that clause. A shorter summary built on real facts beats a padded one.
 - Every variation genuinely differs: each leads with a different strength.
 - No two variations start with the same word.
 - A bold hook label in front of each one for the client to choose from, for example "**Saved Retailers $600K**".

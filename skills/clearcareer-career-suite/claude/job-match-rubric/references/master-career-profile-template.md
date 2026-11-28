@@ -22,7 +22,7 @@ The Master Career Profile is the single living document that holds everything th
 ## Template
 
 ```markdown
-# Master Career Profile: [Full Name]
+# Master Career Profile: [First Name] [Last Name]
 Last updated: [date] | Sessions: [n] | Quantification coverage: [xx%]
 
 ## 1. Snapshot
@@ -54,7 +54,7 @@ Last updated: [date] | Sessions: [n] | Quantification coverage: [xx%]
 - Raw notes and quotes:
 
 #### Achievement [n.a]: [short title]
-- Status: lead | in progress | quantified | complete | skipped
+- Status: lead (not yet discussed) | in progress | quantified (score 70+) | complete (70+ and bullet written) | skipped
 - Source: resume | scan | interview | mining prompt
 - Situation (baseline):
 - Scope:
@@ -74,7 +74,10 @@ Last updated: [date] | Sessions: [n] | Quantification coverage: [xx%]
 | Role | Bullets on resume | Achievements found | Quantified (70+) | Coverage % |
 |---|---|---|---|---|
 
-Coverage % = quantified achievements / max(target count, achievements found). Target count: 5 for the 2 most recent roles, 3 for the next, 1 to 2 for older roles.
+Target per role: 5 for each of the 2 most recent roles, 3 for the third, 2 for each older role (or 2 total for a combined "Earlier career" line).
+Role coverage % = min(quantified achievements, target) / target.
+Overall coverage % = sum of min(quantified, target) across roles / sum of targets.
+Finding more achievements never lowers coverage. Resume bullets are not counted as achievements until they've been interviewed.
 
 ## 5. Resume Bullets (final, per role)
 ## 6. Professional Summaries (8 variations, each with a hook label)
@@ -84,18 +87,22 @@ Coverage % = quantified achievements / max(target count, achievements found). Ta
 ## 10. Interview Defense Sheet
 A list of every non-verified number with its defense line, written so the client can say it out loud.
 
-## 11. Open Questions
+## 11. Scored Roles
+| Date | Company | Title | Score | Label | Applied? |
+|---|---|---|---|---|---|
+
+## 12. Open Questions
 Things to ask next session, numbers to look up, people to check with.
 
-## 12. Session Log
+## 13. Session Log
 | # | Date | Mode | What we covered | Changes |
 |---|---|---|---|---|
 
-## 13. Machine-readable export
+## 14. Machine-readable export
 (see below)
 ```
 
-## The JSON export (section 13)
+## The JSON export (section 14)
 
 Keep this block at the bottom and refresh it at every major update. The job search, match rubric and alerts skills read it, so the client can paste it into any AI tool.
 
@@ -126,6 +133,8 @@ Keep this block at the bottom and refresh it at every major update. The job sear
     { "role": "", "bullet": "", "metrics": [""], "skills": [""] }
   ],
   "keywords": [],
-  "best_summary": ""
+  "best_summary": "",
+  "summaries": [],
+  "already_seen_roles": []
 }
 ```

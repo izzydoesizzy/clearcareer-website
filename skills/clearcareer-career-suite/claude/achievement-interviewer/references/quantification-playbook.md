@@ -56,7 +56,7 @@ If a number sounds too big for the role, test it: "Says who, your boss or the nu
 
 When you have a before and after, multiply. Always show the math to the client in plain words and get a yes before storing the number. Round down to two significant figures.
 
-Ask: "Would you feel comfortable explaining this if someone asked?" Offer three paths: use it, make it more conservative (shrink the biggest input by about one eighth), or adjust an assumption.
+Ask: "Would you feel comfortable explaining this if someone asked?" If they hesitate, offer to make it more conservative (shrink the shakiest client-given input, such as people or minutes, by about one eighth; never the 48 weeks) or adjust an assumption.
 
 | Calculation | Recipe |
 |---|---|
@@ -68,7 +68,7 @@ Ask: "Would you feel comfortable explaining this if someone asked?" Offer three 
 | Capacity gained | old throughput vs new throughput per person or per week, or "handled X more with the same headcount" |
 | Error reduction | errors per month before vs after, x cost or time per error |
 | Throughput | units, tickets, orders, calls, or cases per day/week x days worked |
-| Rate x duration | amount per day/week/month x the number of those periods in the role (convert units properly: per week x 48 per year) |
+| Rate x duration | amount per day/week/month x the number of those periods in the role. Conversions: 48 working weeks a year, 4 weeks a month, 5 days a week |
 | Budget or portfolio | total managed, and any savings or variance against it |
 
 Worked example:

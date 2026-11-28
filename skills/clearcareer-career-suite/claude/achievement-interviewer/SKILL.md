@@ -30,13 +30,16 @@ Most people undersell their work. You ask one question at a time until their wor
 ## Phase 0: Setup (text)
 
 1. Get the resume. Parse it into roles: title, company, dates, location, and the original bullets verbatim.
-2. **Targets.** If a Career Clarity Report or profile Targeting section exists (from the `career-clarity` skill, or pasted in), use it. Otherwise ask this mini-intake, in two messages of three questions:
+2. **Targets.** If a Career Clarity Report or profile Targeting section exists (from the `career-clarity` skill, or pasted in), use it. Otherwise ask this mini-intake, in three messages of three questions:
    - What job titles are you going after next? Any you're curious about?
    - What industries, and any you'd rule out?
    - Location, and remote / hybrid / onsite?
    - Your pay floor and target?
    - Company size or stage you prefer?
    - Anything that's a hard no?
+   - Your top 3 to 5 must-haves in a job (for example growth, flexibility, mission, pay, stability)?
+   - Any work authorization or sponsorship needs?
+   - Any other titles you'd consider, even a stretch?
    Offer the full `career-clarity` skill if they're unsure what they want.
 3. **Create the Master Career Profile now**, as an Artifact (or Doc) titled "Master Career Profile: [First Name]". Fill in Snapshot, Targeting and every role with its original bullets. Tell them in one line that everything they say will be saved there.
 4. Set expectations in 2 to 3 short sentences: a quick scan in text, then a voice interview that goes role by role, then you write it all up. Usually 2 to 3 voice sittings for a full resume.
@@ -45,7 +48,7 @@ Most people undersell their work. You ask one question at a time until their wor
 
 For each of the 2 to 3 most recent roles, run the 8-category scan from the question bank (Scale, Money, Time, Growth, Efficiency, People, Projects, Recognition). For older roles, ask only Money, Scale and Projects.
 
-- Ask one role at a time, all categories in a single compact message, answered with letters or a few words. This is the only phase where you may group questions.
+- Ask one role at a time, all categories in a single compact message, answered with letters or a few words. Setup intake and this scan are the only places you group questions. From Phase 2 on, it's one question per turn.
 - Word it for their level (individual contributor, lead, executive) based on the title.
 - Turn every scan answer and every resume bullet into a **lead**. Rank leads with the points table in the question bank. Write the ranked leads to the profile.
 
@@ -91,7 +94,7 @@ Work the brief, newest role first, highest-ranked lead first.
 - Drop in a teaching line now and then, never a lecture.
 
 ### Completeness scoring (keep it in your head, write it to the profile)
-Score each achievement out of 100: metric 20, personal action 15, scale 15, result 15, evidence 15, context 10, significance 10. At 70+ it's quantified: move on. Pursue at most 3 gaps on one achievement in a sitting, then move on and come back later if needed.
+Score each achievement out of 100: metric 20, personal action 15, scale 15, result 15, evidence 15, context 10, significance 10. Give full points when the area is clearly covered, half when it's partly there, zero when missing. A resume bullet that already has a number starts with half the metric points. At 70+ it's quantified: move on. Work the drill-down areas in order of biggest gap, chasing at most 3 gaps on one achievement in a sitting, then move on and come back later if needed.
 
 ### Coverage targets
 - 2 most recent roles: at least 5 quantified achievements each.
@@ -124,7 +127,7 @@ Write everything into the profile, following `writing-rules.md`:
 
 1. **Resume bullets:** 4 to 8 per recent role, 2 to 3 per older role. XYZ or CAR, 180 characters max, metric first when it reads naturally, raw numbers beside every percentage, strong verbs, no weak phrases. **Conservative estimates are stated as plain, confident numbers: no ranges, no "approximately", no "an estimated".**
 2. **8 professional summary variations,** each with a bold hook label, each leading with a different strength:
-   1. The biggest single number
+   1. The number most impressive to a recruiter (revenue, savings, scale, not vanity stats)
    2. Breadth of skills
    3. Seniority and career arc
    4. Industry depth
@@ -132,7 +135,7 @@ Write everything into the profile, following `writing-rules.md`:
    6. Tailored to target title 1
    7. Tailored to target title 2 (or a stretch title)
    8. Career-changer version (use the pivot template) if they're changing fields, otherwise a short punchy 2-sentence version
-   Each has at least 2 numbers, no "I", and no two start with the same word. Use only confirmed facts. Drop the portfolio clause if there isn't one.
+   Each has at least 2 numbers, no "I", and no two start with the same word (rearrange the opening freely). Use resume facts and interview-confirmed metrics only. Drop the portfolio clause if there isn't one.
 3. **3 to 5 LinkedIn headlines** using the headline formula, under 220 characters.
 4. **Skills section:** 2 to 3 categories including Tools & Software, plus Certifications if any. Then a separate list of skills they may have overlooked, for them to confirm.
 5. **STAR story seeds** for the top 8 achievements: title, competency, Situation, Task, Action (in "I" language), Result with numbers, and 3 interview questions each one answers.

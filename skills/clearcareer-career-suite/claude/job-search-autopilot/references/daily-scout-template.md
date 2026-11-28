@@ -1,6 +1,8 @@
 # Scheduled-Task Prompt Templates
 
-Fill in every [bracket] from the client's Master Career Profile. Each prompt must stand alone: a scheduled run has no memory of the setup chat.
+Fill in every [bracket] from the client's Master Career Profile before handing the prompt over. Leave every {run: ...} placeholder as it is: the scheduled run fills those in each time. Each prompt must stand alone: a scheduled run has no memory of the setup chat.
+
+If the profile has fewer than 5 quantified achievements, use the strongest resume bullets in "My strongest proof", and tell the client matching will be sharper once they finish the achievement interview.
 
 ## Daily Job Scout template
 
@@ -8,46 +10,51 @@ Fill in every [bracket] from the client's Master Career Profile. Each prompt mus
 You are my daily job scout. Find NEW job postings I have a strong, realistic chance of getting an interview for, verify them, and score them.
 
 ## About me (source of truth)
-[Paste the JSON export: titles, location, arrangement, work authorization, pay floor and target, industries, dealbreakers, top skills, tools]
+[Paste the JSON export: titles, location, arrangement, work authorization, pay floor and target, industries, dealbreakers, top 5 values, top skills, tools]
 
 ## My strongest proof
 [8 to 10 quantified bullets from my profile, one per line]
 
+## My professional summaries
+[The 8 summaries, numbered 1 to 8 with their hook labels]
+
 ## Search
 Search the live web for postings from the last 24 hours. If fewer than 5 strong matches, expand to the last 72 hours.
-Run these searches:
-[LinkedIn string per cluster]
+Run these web searches (set results to the past 24 hours or past week):
 [Google X-ray strings per cluster for Greenhouse, Lever, Ashby, Workday]
-[Indeed string]
+[site:linkedin.com/jobs version of each title cluster, e.g. site:linkedin.com/jobs/view ("Title A" OR "Title B") "City"]
+[site:indeed.com version of each title cluster]
 Also check: company career pages you find, Google Jobs results, and other reputable boards.
-Search broad, filter narrow: use the strings to find candidates and the rubric to filter.
+Search broad, filter narrow: use the searches to find candidates and the rubric to filter.
 
 ## Verify every job
 Open the posting. Confirm it's still accepting applications. Prefer the employer's own careers page. Record the posted date. Remove duplicates. Never invent missing details.
 Skip any job I've already seen: [list of companies + titles from earlier runs, or "none yet"]
 
 ## Score every job with this rubric (100 points)
-Knockouts first (any one = skip): hard-required license or certification I don't have; work authorization conflict; location or onsite requirement that breaks my must-haves; disclosed pay ceiling below [floor]; years required far outside mine; my dealbreakers.
-Then score:
-1. Required qualifications proven by my achievements: 30 (share of required items I can prove, partial counts half)
-2. Title and seniority fit: 15
-3. Quantified proof for the role's top 3 priorities: 15 (5 each with a number, 2 without)
-4. Industry and domain fit: 10
-5. Nice-to-haves and keyword coverage: 10
-6. Logistics: location/arrangement 5, pay 5 (meets target 5, between floor and target or not disclosed 3, below floor 0)
-7. Values and growth: 5 (my values: [top 5])
-8. Freshness and access: 5 (posted within 7 days 3, plus 2 for a referral path or warm contact)
+Knockouts first (any one = skip and don't score): hard-required license, certification, degree or clearance I don't have; work authorization conflict; location or onsite requirement that breaks my must-haves; disclosed pay ceiling below [floor]; years required far outside mine; my dealbreakers; closed, expired or duplicate posting.
+
+Then score each category and round to whole points:
+1. Required qualifications proven by my achievements (30): share of required items and core duties I can prove with a specific achievement or role, partial counts half, times 30.
+2. Title and seniority fit (15): 15 same level or natural next step; 10 one-level stretch or adjacent title; 5 two-level stretch or title change; 0 step down.
+3. Quantified proof for the role's top 3 priorities (15): 5 per priority matched by a quantified achievement, 2 if matched without a number.
+4. Industry and domain fit (10): 10 same industry; 7 adjacent; 4 different but skills transfer cleanly; 0 unrelated and specialized.
+5. Nice-to-haves and keyword coverage (10): share of nice-to-haves and frequently repeated keywords I clearly have, times 10.
+6. Logistics (10): location/arrangement 5 matches, 3 workable, 0 breaks it; pay 5 meets [target], 3 between floor and target or not disclosed, 0 below [floor].
+7. Values and growth (5): 5 if 4 or 5 of my top values are clearly present plus a growth path; 3 if 2 or 3; 1 otherwise.
+8. Freshness and access (5): 3 if posted within 7 days, 1 if 8 to 21 days; plus 2 for a referral path, warm contact or apply-early signal.
 Score on evidence, not keyword overlap. Do not inflate. Most jobs should score under 75.
 Bands: 85+ Apply First, 75 to 84 Apply Now, 60 to 74 Tailor then decide, under 60 Skip.
 
 ## Report
-# Apply First (top 3, highest scores, 75+ only)
+# Top 3 to apply to today (highest scores, 75+ only)
 For each: Score and band | Title | Company | Location/arrangement | Posted | Direct link
-Pay: base min, base max, bonus or variable, equity, or "Not disclosed". Never call OTE or bonus-inclusive pay "base".
+Pay: base min, base max, bonus or variable, equity, or "Not disclosed". Never call OTE or bonus-inclusive pay "base". Label market estimates as market data.
+Score card: one line with all 8 category scores
 Why I fit: 2 to 4 requirements matched to my specific achievements
 My strongest proof: the 2 to 3 bullets to lead with
 Gaps: what I don't clearly have
-Summary to use: [which summary, with a one-line tweak]
+Summary to use: {run: the number of the best summary above, with a one-line tweak}
 Verdict: 1 to 2 sentences
 
 # Other Strong Matches (up to 7, scored 75+, one paragraph each)
@@ -57,7 +64,7 @@ Verdict: 1 to 2 sentences
 Remind me to save the full job description in my tracker, not just the link, and to apply today while the postings are fresh.
 If nothing scores 75+, say so plainly and show the 3 closest with what's missing. Do not pad the list.
 
-Write in plain, direct language. No em dashes.
+Write in plain, direct language. Never use em dashes, and never use these words: comprehensive, facilitate, innovative, impactful, nuanced, compelling, leverage, results-driven.
 ```
 
 ## Other task prompts (keep them self-contained the same way)

@@ -12,9 +12,9 @@ Build this table first:
 |---|---|---|---|---|
 | e.g. Stakeholder management | Required | Critical | Achievement 1.b: aligned 6 departments on rollout | ✅ |
 
-- **Type:** Required, Nice-to-have, or Not mentioned but expected (skills any strong candidate would show).
-- **Priority (ATS weight):** Critical = mentioned 3+ times or listed as required. High = mentioned twice or preferred. Medium = mentioned once. Low = implied.
-- **Match:** ✅ proven by a specific achievement or role | 🟡 partial, adjacent or only implied | ❌ no evidence.
+- **Type:** Required (including core duties under "What you'll do"), Nice-to-have, or Expected (not mentioned, but any strong candidate would show it).
+- **Priority (ATS weight):** every Required item is Critical. For everything else: High = mentioned twice or listed as preferred, Medium = mentioned once, Low = implied.
+- **Match:** ✅ proven by a specific achievement or role | 🟡 partial, adjacent or only implied | ❌ no evidence. A degree "or related field" counts ✅ for any reasonably related field and 🟡 for equivalent experience.
 - Also pull out the **top 3 priorities** of the role: what the hiring manager most needs this person to fix or deliver in year one.
 
 ## Step 2: Knockouts (any one = Skip, whatever the score)
@@ -38,9 +38,11 @@ List knockouts first. If one hits, stop, label the role **⛔ Skip: [reason]**, 
 | 3 | Quantified proof for the top 3 priorities | 15 | 5 points per priority with a matching quantified achievement; 2 if matched without a number |
 | 4 | Industry and domain fit | 10 | 10 = same industry; 7 = adjacent; 4 = different but skills transfer cleanly; 0 = unrelated and specialized |
 | 5 | Nice-to-haves and keyword coverage | 10 | Share of Nice-to-have and High-priority keywords present in the profile, times 10 |
-| 6 | Logistics: location, arrangement, pay | 10 | 5 for location/arrangement fit, 5 for pay (5 = meets target, 3 = between floor and target or not disclosed, 0 = below floor) |
-| 7 | Values and growth | 5 | Match to the client's must-have values, growth path, company stage |
+| 6 | Logistics: location, arrangement, pay | 10 | Location/arrangement: 5 = matches preference, 3 = workable but not preferred, 0 = breaks it. Pay: 5 = meets target, 3 = between floor and target or not disclosed, 0 = below floor |
+| 7 | Values and growth | 5 | 5 = 4 or 5 of the client's top values clearly present plus a growth path; 3 = 2 or 3 present; 1 = 0 or 1, or not enough information |
 | 8 | Freshness and access | 5 | 3 for posted within 7 days (1 if 8 to 21 days), plus 2 for a referral path, warm contact, or apply-early signal |
+
+Round each category to the nearest whole point, then add.
 
 **Notes, not deductions.** Flag likely hiring-manager objections (career gap, short tenures, over or under qualified, career change, industry switch, education) with a one-line strategy. Don't subtract them again: they already show up in categories 1, 2 and 4.
 

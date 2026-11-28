@@ -22,7 +22,7 @@ Ask for the Master Career Profile or its JSON export. If they don't have one, as
 2. **Search strings** per cluster: one LinkedIn string, Google X-ray strings for Greenhouse, Lever, Ashby and Workday, one Indeed string. Keep each to 2 to 4 titles.
 3. **Filters:** locations, remote or hybrid, seniority, pay floor, exclusions, dealbreakers.
 4. **Target company list:** ask if they have one. If not, build 20 to 30 companies that fit their industry, size, location and values (name, why it fits, careers page link). Use web search and never invent companies or links.
-5. **Proof library:** the top 8 to 10 quantified achievements and the 2 best summaries from the profile.
+5. **Proof library:** the top 8 to 10 quantified achievements and the 2 best summaries from the profile. If the profile has fewer than 5 quantified achievements, use the strongest resume bullets, tell the client matching will be weaker, and recommend finishing the achievement interview.
 
 ## Step 3: Write the scheduled-task prompts
 Fill in the Daily Job Scout template completely, then the three weekly prompts. Each prompt must stand completely on its own, because a scheduled run has no memory of this chat.
