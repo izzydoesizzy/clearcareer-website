@@ -3,6 +3,7 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import ProductAccessHub from "@components/products/ProductAccessHub";
 import { PRODUCTS } from "../../../../data/product-config";
 import Stripe from "stripe";
+import { readAccessToken, accessSecret } from "../../../../lib/access";
 
 export const prerender = false;
 
@@ -18,7 +19,12 @@ let buyerName = "Reader";
 let buyerEmail = "";
 let isValid = false;
 
-try {
+// A signed access link (email.signature) opens it without a Stripe session, e.g. after a one-click upsell.
+const signedEmail = token.includes(".") ? await readAccessToken(slug, token, accessSecret(import.meta.env)) : null;
+if (signedEmail) {
+  buyerEmail = signedEmail;
+  isValid = true;
+} else try {
   const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY);
   const session = await stripe.checkout.sessions.retrieve(token);
 

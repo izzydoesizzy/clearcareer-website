@@ -2,6 +2,7 @@
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { AccessHub } from "@components/layoff-kit/AccessHub";
 import Stripe from "stripe";
+import { readAccessToken, accessSecret } from "../../../lib/access";
 
 export const prerender = false;
 
@@ -12,8 +13,14 @@ let buyerEmail = "";
 let buyerName = "";
 let isValid = false;
 
+const signedEmail = token && token.includes(".") ? await readAccessToken("layoff-survival-kit", token, accessSecret(import.meta.env)) : null;
+if (signedEmail) {
+  isValid = true;
+  buyerEmail = signedEmail;
+}
+
 const stripeKey = import.meta.env.STRIPE_SECRET_KEY;
-if (stripeKey && token) {
+if (!isValid && stripeKey && token) {
   try {
     const stripe = new Stripe(stripeKey);
     const session = await stripe.checkout.sessions.retrieve(token);

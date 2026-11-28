@@ -3,6 +3,7 @@ import PageLayout from "@layouts/PageLayout.astro";
 import PromptViewer from "@components/vault/PromptViewer";
 import InstallGuide from "@components/vault/InstallGuide";
 import Stripe from "stripe";
+import { readAccessToken, accessSecret } from "../../../lib/access";
 import { readFileSync } from "fs";
 import { join } from "path";
 
@@ -13,8 +14,13 @@ const sessionId = Astro.url.searchParams.get("session_id");
 let buyerName = "";
 let isValid = false;
 
+const signedToken = Astro.url.searchParams.get("t");
+if (signedToken && (await readAccessToken("vault", signedToken, accessSecret(import.meta.env)))) {
+  isValid = true;
+}
+
 const stripeKey = import.meta.env.STRIPE_SECRET_KEY;
-if (stripeKey && sessionId) {
+if (!isValid && stripeKey && sessionId) {
   try {
     const stripe = new Stripe(stripeKey);
     const session = await stripe.checkout.sessions.retrieve(sessionId);

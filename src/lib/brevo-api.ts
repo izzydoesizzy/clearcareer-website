@@ -82,8 +82,9 @@ export function brevo(apiKey: string) {
       return out;
     },
 
-    async send(mail: Mail): Promise<boolean> {
-      const payload = brevoPayload(mail);
+    /** `m` overrides EMAIL_MODE for one send (the test funnel never emails a real person). */
+    async send(mail: Mail, m = emailMode()): Promise<boolean> {
+      const payload = brevoPayload(mail, m);
       if (!payload) {
         console.log(`[EMAIL_MODE=off] not sent: "${mail.subject}" to ${mail.to}`);
         return true;

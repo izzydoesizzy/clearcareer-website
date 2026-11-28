@@ -35,12 +35,12 @@ export const POST: APIRoute = async ({ params, request }) => {
 
   const session = await stripe.checkout.sessions.create({
     mode: "payment",
-    ui_mode: "embedded",
+    ui_mode: "embedded_page",
     payment_method_types: ["card"],
     allow_promotion_codes: true,
     line_items: [{ price: priceId, quantity: 1 }],
     metadata: { product: slug },
-    return_url: `${new URL(request.url).origin}/products/${slug}/access/success?session_id={CHECKOUT_SESSION_ID}`,
+    return_url: `${new URL(request.url).origin}/products/${slug}/access/{CHECKOUT_SESSION_ID}`,
   });
 
   return new Response(JSON.stringify({ clientSecret: session.client_secret }), {
