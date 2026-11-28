@@ -35,7 +35,7 @@ function Steps({ items }: { items: { title: string; body: ReactNode }[] }) {
 /** A small sketch of a settings screen, so people know what they're looking for. */
 function Sketch({ crumbs, rows, button }: { crumbs: string[]; rows: { label: string; on?: boolean }[]; button?: string }) {
   return (
-    <figure aria-hidden="true" className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+    <figure aria-hidden="true" className="self-start overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
       <div className="flex items-center gap-1.5 border-b border-gray-100 bg-gray-50 px-3 py-2">
         <span className="h-2.5 w-2.5 rounded-full bg-red-300" />
         <span className="h-2.5 w-2.5 rounded-full bg-yellow-300" />
