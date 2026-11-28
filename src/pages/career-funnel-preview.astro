@@ -4,6 +4,7 @@
  * Stages: offer (order box + embedded checkout) -> upsell (one click) -> done (access + Land and Level Up).
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
+import { serverEnv } from "../lib/server-env";
 import "@/styles/llu.css";
 import { offer, RESULTS_VARY } from "@data/llu";
 import { PRODUCTS } from "@data/product-config";
@@ -15,7 +16,7 @@ export const prerender = false;
 Astro.response.headers.set("Cache-Control", "private, no-store");
 Astro.response.headers.set("Referrer-Policy", "same-origin");
 
-const env = import.meta.env as unknown as Record<string, string | undefined>;
+const env = serverEnv();
 const stripe = allowedOrigin(Astro.url) ? sandbox() : null;
 const cookie = Astro.cookies.get(COOKIE)?.value;
 let x: FunnelState | null = null;

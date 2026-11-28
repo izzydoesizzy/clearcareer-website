@@ -1,6 +1,7 @@
 import type { APIRoute } from "astro";
 import Stripe from "stripe";
 import { PRODUCTS } from "../../../../data/product-config";
+import { serverEnv } from "../../../../lib/server-env";
 
 export const prerender = false;
 
@@ -21,8 +22,9 @@ export const POST: APIRoute = async ({ params, request }) => {
     );
   }
 
-  const stripeSecret = import.meta.env[product.stripePriceEnvVar.replace("PRICE_ID", "").replace(/STRIPE_/, "STRIPE_SECRET_KEY")] || import.meta.env.STRIPE_SECRET_KEY;
-  const priceId = import.meta.env[product.stripePriceEnvVar];
+  const env = serverEnv();
+  const stripeSecret = env.STRIPE_SECRET_KEY;
+  const priceId = env[product.stripePriceEnvVar];
 
   if (!stripeSecret || !priceId) {
     return new Response(

@@ -11,6 +11,7 @@
  */
 import Stripe from "stripe";
 import { isPreviewHost } from "./access";
+import { serverEnv } from "./server-env";
 
 export const COOKIE = "cc_funnel_sandbox";
 export const FLOW = "career-funnel-sandbox-v3";
@@ -27,7 +28,7 @@ export const format = (n: number) =>
   new Intl.NumberFormat("en-CA", { style: "currency", currency: "CAD", maximumFractionDigits: 2 }).format(n / 100);
 
 type Env = Record<string, string | undefined>;
-const ENV = (import.meta as unknown as { env: Env }).env || {};
+const ENV: Env = serverEnv();
 
 export function sandbox(env: Env = ENV) {
   const secret = env.STRIPE_FUNNEL_TEST_SECRET_KEY || "";

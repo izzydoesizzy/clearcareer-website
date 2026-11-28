@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
+import { serverEnv } from "../../../../lib/server-env";
 import ProductAccessHub from "@components/products/ProductAccessHub";
 import { PRODUCTS } from "../../../../data/product-config";
 import Stripe from "stripe";
@@ -20,7 +21,7 @@ let buyerEmail = "";
 let isValid = false;
 
 // A signed access link (email.signature) opens it without a Stripe session, e.g. after a one-click upsell.
-const signedEmail = token.includes(".") ? await readAccessToken(slug, token, accessSecret(import.meta.env, Astro.url)) : null;
+const signedEmail = token.includes(".") ? await readAccessToken(slug, token, accessSecret(serverEnv(), Astro.url)) : null;
 if (signedEmail) {
   buyerEmail = signedEmail;
   isValid = true;

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
+import { serverEnv } from "../../../lib/server-env";
 import { AccessHub } from "@components/layoff-kit/AccessHub";
 import Stripe from "stripe";
 import { readAccessToken, accessSecret } from "../../../lib/access";
@@ -13,7 +14,7 @@ let buyerEmail = "";
 let buyerName = "";
 let isValid = false;
 
-const signedEmail = token && token.includes(".") ? await readAccessToken("layoff-survival-kit", token, accessSecret(import.meta.env, Astro.url)) : null;
+const signedEmail = token && token.includes(".") ? await readAccessToken("layoff-survival-kit", token, accessSecret(serverEnv(), Astro.url)) : null;
 if (signedEmail) {
   isValid = true;
   buyerEmail = signedEmail;

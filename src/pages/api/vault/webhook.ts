@@ -8,6 +8,7 @@
  * which orders were emailed.
  */
 import type { APIRoute } from "astro";
+import { serverEnv } from "../../../lib/server-env";
 import Stripe from "stripe";
 import { orderFromSession, deliverPurchase } from "../../../lib/purchase-emails";
 
@@ -17,7 +18,7 @@ const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json" } });
 
 export const POST: APIRoute = async ({ request }) => {
-  const env = import.meta.env as unknown as Record<string, string | undefined>;
+  const env = serverEnv();
   const stripeKey = env.STRIPE_SECRET_KEY;
   const webhookSecret = env.STRIPE_VAULT_WEBHOOK_SECRET || env.STRIPE_WEBHOOK_SECRET;
   if (!stripeKey || !webhookSecret) return json({ error: "Stripe not configured" }, 500);

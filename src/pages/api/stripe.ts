@@ -15,6 +15,7 @@
  *   Then copy the signing secret into Vercel as STRIPE_WEBHOOK_SECRET.
  */
 import type { APIRoute } from 'astro';
+import { serverEnv } from '../../lib/server-env.js';
 import { brevo, hmacHex, parseSigHeader, safeEqual } from '../../lib/brevo-api.js';
 import { programFromAmount, makeToken } from '../../lib/onboarding.js';
 import { PROGRAMS } from '../../lib/book-call.js';
@@ -24,7 +25,7 @@ import { orderFromSession, deliverPurchase } from '../../lib/purchase-emails.js'
 
 export const prerender = false;
 
-const env = import.meta.env as unknown as ServerEnv & { STRIPE_WEBHOOK_SECRET?: string };
+const env = serverEnv() as unknown as ServerEnv & { STRIPE_WEBHOOK_SECRET?: string };
 const json = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json' } });
 
 export const POST: APIRoute = async ({ request }) => {

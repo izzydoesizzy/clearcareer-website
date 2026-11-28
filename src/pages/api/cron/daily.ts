@@ -7,6 +7,7 @@
  * Vercel sends "Authorization: Bearer <CRON_SECRET>" automatically when CRON_SECRET is set.
  */
 import type { APIRoute } from 'astro';
+import { serverEnv } from '../../../lib/server-env.js';
 import { brevo, type BrevoContact } from '../../../lib/brevo-api.js';
 import { dueSteps, noBookSteps, torontoDay } from '../../../lib/call-flow.js';
 import { runSteps, runnerEnv } from '../../../lib/call-runner.js';
@@ -17,7 +18,7 @@ import { setupGaps } from '../../../lib/setup-check.js';
 
 export const prerender = false;
 
-const env = import.meta.env;
+const env = serverEnv() as any;
 const json = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json' } });
 const nameOf = (c: BrevoContact) => `${c.attributes?.FIRSTNAME || ''} ${c.attributes?.LASTNAME || ''}`.trim() || c.email;
 const gradeOf = (n: unknown) => (n === undefined || n === null || n === '' ? undefined : Number(n) >= 75 ? `Hot ${n}` : Number(n) >= 50 ? `Warm ${n}` : `Cool ${n}`);
