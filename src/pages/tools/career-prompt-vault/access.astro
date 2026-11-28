@@ -15,7 +15,7 @@ let buyerName = "";
 let isValid = false;
 
 const signedToken = Astro.url.searchParams.get("t");
-if (signedToken && (await readAccessToken("vault", signedToken, accessSecret(import.meta.env)))) {
+if (signedToken && (await readAccessToken("vault", signedToken, accessSecret(import.meta.env, Astro.url)))) {
   isValid = true;
 }
 

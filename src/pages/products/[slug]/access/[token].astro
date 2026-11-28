@@ -20,7 +20,7 @@ let buyerEmail = "";
 let isValid = false;
 
 // A signed access link (email.signature) opens it without a Stripe session, e.g. after a one-click upsell.
-const signedEmail = token.includes(".") ? await readAccessToken(slug, token, accessSecret(import.meta.env)) : null;
+const signedEmail = token.includes(".") ? await readAccessToken(slug, token, accessSecret(import.meta.env, Astro.url)) : null;
 if (signedEmail) {
   buyerEmail = signedEmail;
   isValid = true;

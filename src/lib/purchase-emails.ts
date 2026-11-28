@@ -126,7 +126,7 @@ export async function productLink(
   origin = 'https://joinclearcareer.com',
   sessionId?: string,
 ): Promise<string> {
-  const secret = accessSecret(env);
+  const secret = accessSecret(env, new URL(origin));
   if (secret) return accessUrl(product, await makeAccessToken(product, email, secret), origin);
   if (!sessionId) return `${origin}/tools`;
   return product === 'vault'

@@ -5,7 +5,9 @@
  * and the link keeps working. It lets a product open even when it wasn't bought through a
  * Stripe Checkout session (for example a one-click upsell), and in the test funnel.
  *
- * Secret: ACCESS_SECRET, or ONBOARD_SECRET if that isn't set.
+ * Secret: ACCESS_SECRET, or ONBOARD_SECRET if that isn't set. On preview deployments only, with
+ * neither set, a key derived from the Stripe test key, so the test funnel works without extra setup.
+ * A link made on a preview never opens anything on the live site.
  */
 import { hmacHex, safeEqual } from './brevo-api.js';
 
@@ -14,8 +16,16 @@ export type AccessProduct = 'vault' | 'salary-generator' | 'script-vault' | 'lay
 const b64 = (s: string) => btoa(unescape(encodeURIComponent(s))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 const unb64 = (s: string) => decodeURIComponent(escape(atob(s.replace(/-/g, '+').replace(/_/g, '/'))));
 
-export function accessSecret(env: Record<string, unknown>): string {
-  return String(env.ACCESS_SECRET || env.ONBOARD_SECRET || '');
+/** Vercel preview deployments of this project (never the live site). */
+export function isPreviewHost(url: URL): boolean {
+  return url.protocol === 'https:' && /^clearcareer-website-[a-z0-9-]+-izzydoesizzys-projects\.vercel\.app$/.test(url.hostname);
+}
+
+export function accessSecret(env: Record<string, unknown>, url?: URL): string {
+  const s = String(env.ACCESS_SECRET || env.ONBOARD_SECRET || '');
+  if (s) return s;
+  const test = String(env.STRIPE_FUNNEL_TEST_SECRET_KEY || '');
+  return url && isPreviewHost(url) && /^(sk|rk)_test_/.test(test) ? `preview-access:${test}` : '';
 }
 
 export async function makeAccessToken(product: AccessProduct | string, email: string, secret: string): Promise<string> {

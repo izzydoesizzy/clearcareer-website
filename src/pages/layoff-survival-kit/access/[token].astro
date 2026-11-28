@@ -13,7 +13,7 @@ let buyerEmail = "";
 let buyerName = "";
 let isValid = false;
 
-const signedEmail = token && token.includes(".") ? await readAccessToken("layoff-survival-kit", token, accessSecret(import.meta.env)) : null;
+const signedEmail = token && token.includes(".") ? await readAccessToken("layoff-survival-kit", token, accessSecret(import.meta.env, Astro.url)) : null;
 if (signedEmail) {
   isValid = true;
   buyerEmail = signedEmail;

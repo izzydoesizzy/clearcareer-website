@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
-import { makeAccessToken, readAccessToken, accessUrl } from '../../src/lib/access';
+import { makeAccessToken, readAccessToken, accessUrl, accessSecret } from '../../src/lib/access';
 import { purchaseEmail, purchaseSubject, deliverPurchase, orderFromSession, productLink, catalogItem } from '../../src/lib/purchase-emails';
 import { cartSubtotal, FUNNEL } from '../../src/lib/career-funnel-test';
 
@@ -31,6 +31,14 @@ describe('access tokens', () => {
     expect(accessUrl('vault', 'x.y')).toBe('https://joinclearcareer.com/tools/career-prompt-vault/access?t=x.y');
     expect(accessUrl('layoff-survival-kit', 'x.y')).toBe('https://joinclearcareer.com/layoff-survival-kit/access/x.y');
     expect(accessUrl('script-vault', 'x.y', 'https://preview.example')).toBe('https://preview.example/products/script-vault/access/x.y');
+  });
+  it('derives a preview-only secret from the Stripe test key, never on the live site', () => {
+    const env = { STRIPE_FUNNEL_TEST_SECRET_KEY: 'sk_test_abc' };
+    const preview = new URL('https://clearcareer-website-git-x-izzydoesizzys-projects.vercel.app/a');
+    expect(accessSecret(env, preview)).toBe('preview-access:sk_test_abc');
+    expect(accessSecret(env, new URL('https://joinclearcareer.com/a'))).toBe('');
+    expect(accessSecret({ STRIPE_FUNNEL_TEST_SECRET_KEY: 'sk_live_abc' }, preview)).toBe('');
+    expect(accessSecret({ ...env, ACCESS_SECRET: 'real' }, preview)).toBe('real');
   });
   it('falls back to the Checkout Session link without a secret', async () => {
     expect(await productLink('vault', 'a@b.co', {}, undefined, 'cs_1')).toContain('session_id=cs_1');

@@ -10,6 +10,7 @@
  * Nothing here can touch live Stripe: every check refuses livemode objects.
  */
 import Stripe from "stripe";
+import { isPreviewHost } from "./access";
 
 export const COOKIE = "cc_funnel_sandbox";
 export const FLOW = "career-funnel-sandbox-v3";
@@ -39,9 +40,7 @@ export function publishableKey(env: Env = ENV): string | null {
   return /^pk_test_/.test(pk) ? pk : null;
 }
 
-export function allowedOrigin(url: URL) {
-  return url.protocol === "https:" && /^clearcareer-website-[a-z0-9-]+-izzydoesizzys-projects\.vercel\.app$/.test(url.hostname);
-}
+export const allowedOrigin = isPreviewHost;
 
 /** Same-origin JSON only, from a preview deployment. */
 export function guard(request: Request, url: URL): boolean {
