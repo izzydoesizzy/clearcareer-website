@@ -106,6 +106,10 @@ const PRODUCTS = {
     },
   },
 };
+// Covers only (no skills to show): used on the shop.
+PRODUCTS['layoff-survival-kit'] = {
+  name: 'Layoff Survival Kit', price: '$9', kicker: 'Severance · runway · lawyers · plan', accent: '#0EA5E9', glyph: '☂', only: ['cover'],
+};
 PRODUCTS['complete-toolkit'] = {
   name: 'Complete Job Search Toolkit', price: '$49', was: '$85', kicker: '5 products · 10 Claude skills', accent: '#0161EF', glyph: '◆',
   skills: ['vault', 'salary-generator', 'outreach-templates', 'interview-confidence', 'salary-negotiation'].flatMap((s) => PRODUCTS[s].skills).slice(0, 9),
@@ -290,7 +294,7 @@ for (const slug of slugs) {
   if (!p) { console.error('unknown product', slug); continue; }
   const out = join(root, 'public', 'images', 'products', slug);
   mkdirSync(out, { recursive: true });
-  const list = ['hero', 'inside', 'skills', 'og', 'square', 'cover', ...(p.bundle ? ['bundle'] : [])];
+  const list = p.only || ['hero', 'inside', 'skills', 'og', 'square', 'cover', ...(p.bundle ? ['bundle'] : [])];
   for (const scene of list) {
     const html = scenes[scene](p);
     const size = scene === 'og' ? [1200, 630] : scene === 'square' ? [1080, 1080] : scene === 'cover' ? [600, 340] : [1600, 1000];
