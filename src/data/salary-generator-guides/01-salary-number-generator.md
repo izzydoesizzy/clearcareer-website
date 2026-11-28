@@ -18,7 +18,7 @@ Walking into a negotiation with one number is like playing poker with your cards
 
 | Number | What It Is | Purpose |
 |--------|-----------|---------|
-| **Anchor** | The high end of your realistic range | Your opening number. Always go first when possible. |
+| **Anchor** | The high end of your realistic range | Your opening number when you have to say one. Let them share their range first when you can. |
 | **Target** | The number you would be genuinely happy with | Your real goal. You negotiate toward this. |
 | **Walk-away** | The lowest you will accept | Below this, you decline or keep looking. |
 
