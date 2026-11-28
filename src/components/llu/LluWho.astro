@@ -1,6 +1,6 @@
 ---
 import { roles } from "@/data/llu";
-import LluFitArt from "./LluFitArt.astro";
+import LluFitClip from "./LluFitClip.astro";
 
 const forYou = [
   "You're 3+ months in and the silence is getting loud.",
@@ -39,14 +39,14 @@ const notForYou = [
 
     <div class="llu-row llu-row--top llu-mt-72">
       <div class="llu-fit llu-fit--yes">
-        <LluFitArt kind="yes" />
+        <LluFitClip name="believe" width={498} height={330} alt="Ted Lasso points up at a handwritten BELIEVE sign." />
         <h3 class="llu-fit__title">This is for you if</h3>
         <ul class="llu-fit__list">
           {forYou.map((t) => <li>{t}</li>)}
         </ul>
       </div>
       <div class="llu-fit llu-fit--no">
-        <LluFitArt kind="no" />
+        <LluFitClip name="nope" width={320} height={212} alt="SpongeBob buries himself in a hole in the sand, and the word NOPE appears over it." />
         <h3 class="llu-fit__title">It's not for you if</h3>
         <ul class="llu-fit__list">
           {notForYou.map((t) => <li>{t}</li>)}

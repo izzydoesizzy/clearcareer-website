@@ -1,0 +1,54 @@
+---
+/**
+ * A short looping clip on top of each "is it for you" card (replaces the CSS animations in
+ * LluFitArt). The files in public/images/llu-fit/ were converted from GIFs: a small mp4 and webm
+ * (about 45 KB each) plus a still frame. Plays only while on screen and never makes a sound.
+ * With reduced motion it stays on the still frame (see the script below).
+ */
+interface Props {
+  name: "believe" | "nope";
+  alt: string;
+  width: number;
+  height: number;
+}
+const { name, alt, width, height } = Astro.props;
+const base = `/images/llu-fit/${name}`;
+---
+
+<div class="llu-clip">
+  <video
+    data-llu-clip
+    class="llu-clip__video"
+    poster={`${base}.webp`}
+    width={width}
+    height={height}
+    muted
+    loop
+    playsinline
+    preload="none"
+    role="img"
+    aria-label={alt}
+    disablepictureinpicture
+  >
+    <source src={`${base}.webm`} type="video/webm" />
+    <source src={`${base}.mp4`} type="video/mp4" />
+  </video>
+</div>
+
+<script>
+  const clips = document.querySelectorAll<HTMLVideoElement>("[data-llu-clip]");
+  const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!still && "IntersectionObserver" in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          const v = e.target as HTMLVideoElement;
+          if (e.isIntersecting) v.play().catch(() => {});
+          else v.pause();
+        }
+      },
+      { threshold: 0.35 },
+    );
+    clips.forEach((v) => io.observe(v));
+  }
+</script>
