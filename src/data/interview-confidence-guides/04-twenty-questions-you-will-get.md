@@ -1,6 +1,6 @@
 # 20 Questions You Will Get
 
-**The most common behavioral interview questions, with frameworks for answering every one.**
+**The most common behavioural interview questions, with frameworks for answering every one.**
 
 You do not need to prepare 100 questions. You need to prepare 20, because these 20 cover the themes that show up in virtually every professional interview. Master these and you will not be caught off guard.
 
@@ -168,7 +168,7 @@ For each question, you get the question itself, why they are asking it, a framew
 
 **Why they ask:** Are you coachable? Can you handle criticism?
 
-**Framework:** Describe the feedback (be specific), your initial reaction (honesty is good here), what you did with the feedback, and how it changed your behavior.
+**Framework:** Describe the feedback (be specific), your initial reaction (honesty is good here), what you did with the feedback, and how it changed your behaviour.
 
 **Avoid:** Stories where you disagreed with the feedback and ignored it. Even if you think the feedback was wrong, show that you engaged with it.
 
@@ -294,6 +294,8 @@ Print this and review it 30 minutes before your interview:
 
 ## Key Takeaway
 
-Twenty questions. Ten prepared stories that you can adapt. That is all you need to walk into any behavioral interview with confidence. The interviewers are not trying to trick you. They are trying to predict your future behavior based on your past behavior.
+Twenty questions. Ten prepared stories that you can adapt. That is all you need to walk into any behavioural interview with confidence. The interviewers are not trying to trick you. They are trying to predict your future behaviour based on your past behaviour.
 
 Give them good stories to work with.
+
+*Results vary. Good preparation improves your odds, but no framework guarantees an offer.*

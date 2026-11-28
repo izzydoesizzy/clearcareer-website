@@ -26,7 +26,7 @@ const testimonials = [
 const valueStack = [
   { item: "50 AI Career Frameworks (6 categories)", value: 197 },
   { item: "Custom AI System Prompt", value: 47 },
-  { item: "Step-by-Step Setup Guide", value: 27 },
+  { item: "6 Claude skills, with an install guide", value: 27 },
   { item: "Quick-Start Guide: 4 Wins in 30 Minutes", value: 27 },
   { item: "Bonus: AI Job Search Prompt Pack (15 prompts)", value: 47 },
   { item: "Bonus: Salary Research Prompt Pack (7 prompts)", value: 27 },
@@ -36,19 +36,19 @@ const valueStack = [
 const totalValue = valueStack.reduce((sum, v) => sum + v.value, 0);
 
 const faqItems = [
-  { q: "Which AI tools does this work with?", a: "The Career Prompt Vault works with any AI assistant: Claude, ChatGPT, Gemini, Perplexity, Copilot, or whatever you prefer. Every prompt produces great results on any platform." },
+  { q: "Which AI tools does this work with?", a: "Any AI assistant: Claude, ChatGPT, Gemini, Copilot or whatever you prefer. Claude users get the prompts as installable skills; everyone gets them as copy-paste prompts." },
   { q: "What if I don't have a resume yet?", a: "Start with the Career Highlights Matrix prompt. It helps you pull out your key achievements even if you've never written a formal resume." },
   { q: "How is this different from just asking AI for career help?", a: "AI gives you generic advice. The Career Prompt Vault gives you the exact frameworks from 300+ coaching engagements, structured prompts that produce specific outputs you can use immediately." },
-  { q: "How long does setup take?", a: "About 5 minutes. We include a step-by-step guide for Claude Projects, but you can also just copy-paste prompts directly into ChatGPT, Gemini, or any other AI tool." },
+  { q: "How long does setup take?", a: "About 5 minutes. Claude users upload 6 small skills (the install guide walks you through it), and everyone else copies prompts straight into ChatGPT, Gemini or any other AI tool." },
   { q: "What if it doesn't work for me?", a: "You have a 48-hour money-back guarantee. If it isn't useful, email us. Full refund, no questions asked. You keep everything." },
-  { q: "What exactly do I get?", a: "50 career frameworks in 6 category files, a custom AI system prompt, setup guide, quick-start guide with your first 4 wins in 30 minutes, and 3 bonus resources. Lifetime access." },
+  { q: "What exactly do I get?", a: "6 Claude skills (including the Achievement Interviewer, which asks you questions and turns your answers into resume bullets with real numbers), the same 50 frameworks as copy-paste prompts, setup text for Claude Projects, ChatGPT GPTs and Gemini Gems, a Start Here guide, and 3 bonus resources. Lifetime access." },
   { q: "Is this the same material from your coaching program?", a: "These are the same prompt frameworks I use with clients. Land and Level Up, my 6-week group program, adds live weekly calls, a resume and LinkedIn rebuild workshop, and personal feedback. The Vault gives you the self-serve toolkit." },
 ];
 
-const sidebarItems = ["50 AI career frameworks", "6 organized categories", "Custom AI system prompt", "Setup guide + quick-start guide", "3 bonus prompt packs", "Lifetime access"];
+const sidebarItems = ["6 Claude skills, including the Achievement Interviewer", "50 copy-paste prompts in 6 categories", "Setup for Claude Projects, GPTs and Gems", "Start Here guide and 7-day plan", "3 bonus prompt packs", "Lifetime access"];
 ---
 
-<SalesLayout title={`${PRODUCT_NAME} | ClearCareer`} description="50 AI prompts that turn any AI assistant into your personal career strategist. Resume rewrites, LinkedIn optimization, interview prep, salary negotiation. Just $9.">
+<SalesLayout image="/images/products/vault/og.jpg" title={`${PRODUCT_NAME} | ClearCareer`} description="50 AI prompts that turn any AI assistant into your personal career strategist. Resume rewrites, LinkedIn optimization, interview prep, salary negotiation. Just $9.">
   <div class="min-h-screen bg-white">
     <!-- Sticky top bar -->
     <div class="sticky top-0 z-50 border-b border-border bg-white/95 backdrop-blur-sm">
@@ -76,6 +76,14 @@ const sidebarItems = ["50 AI career frameworks", "6 organized categories", "Cust
               <span class="mx-2 text-border">|</span> Lifetime access
               <span class="mx-2 text-border">|</span> 48-hour money-back guarantee
             </p>
+            <img src="/images/products/vault/hero.webp" alt="The Career Prompt Vault: a Claude skill turning interview answers into resume bullets, and the Start Here guide on a phone" width="1600" height="1000" fetchpriority="high" decoding="async" class="mt-8 h-auto w-full rounded-2xl border border-border/60" />
+          </section>
+
+          <!-- The skills -->
+          <section class="pb-12">
+            <h2 class="font-display text-[clamp(1.25rem,3vw,1.75rem)] text-navy">Now with Claude skills</h2>
+            <p class="mt-3 text-text-muted">Upload 6 small skills once, then just ask Claude for help. The Achievement Interviewer asks you questions one at a time and turns your answers into resume bullets with real numbers. Not on Claude? Every prompt is also copy-paste ready for ChatGPT, Gemini or any AI.</p>
+            <img src="/images/products/vault/skills.webp" alt="The 6 Claude skills in the Career Prompt Vault" width="1600" height="1000" loading="lazy" decoding="async" class="mt-6 h-auto w-full rounded-2xl border border-border/60" />
           </section>
 
           <!-- Mobile checkout -->
@@ -183,8 +191,8 @@ const sidebarItems = ["50 AI career frameworks", "6 organized categories", "Cust
             <h2 class="font-display text-[clamp(1.25rem,3vw,1.75rem)] text-navy">Up and running in 5 minutes</h2>
             <div class="mt-6 space-y-5">
               {[
-                { step: "1", title: "Get instant access", desc: "Complete checkout and immediately access your vault: 6 prompt files, setup guide, quick-start guide, and bonuses." },
-                { step: "2", title: "Load into your favourite AI tool", desc: "Follow the setup guide for Claude Projects, or copy-paste prompts into ChatGPT, Gemini, Perplexity. Works with any AI tool." },
+                { step: "1", title: "Get instant access", desc: "Complete checkout and your vault opens right away: 6 Claude skills, 50 copy-paste prompts, a Start Here guide and bonuses. The link is emailed to you too." },
+                { step: "2", title: "Load into your favourite AI tool", desc: "Upload the skills to Claude, or copy-paste prompts into ChatGPT, Gemini or any AI tool. The install guide covers each one." },
                 { step: "3", title: "Add your resume and go", desc: "Feed in your resume and start generating career assets. Professional summary, LinkedIn headlines, interview answers, salary data." },
               ].map(item => (
                 <div class="flex gap-4">

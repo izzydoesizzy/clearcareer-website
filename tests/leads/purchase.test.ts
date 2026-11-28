@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { makeAccessToken, readAccessToken, accessUrl, accessSecret } from '../../src/lib/access';
 import { purchaseEmail, purchaseSubject, deliverPurchase, orderFromSession, productLink, catalogItem } from '../../src/lib/purchase-emails';
-import { cartSubtotal, FUNNEL } from '../../src/lib/career-funnel-test';
+import { cartSubtotal, upgradePrice, offerAmount, FUNNEL } from '../../src/lib/career-funnel-test';
 
 const SECRET = 'test-secret';
 const order = {
@@ -92,8 +92,13 @@ describe('funnel catalog', () => {
   it('prices the order box and the upsell', () => {
     expect(cartSubtotal(false)).toBe(900);
     expect(cartSubtotal(true)).toBe(1800);
-    expect(FUNNEL.upsell.amount).toBe(2900);
     expect(FUNNEL.main.product).toBe('vault');
+    // Upsell: the $49 toolkit minus what was paid today; downsell: the $19 outreach templates.
+    expect(FUNNEL.upsell.product).toBe('complete-toolkit');
+    expect(upgradePrice(false)).toBe(4000);
+    expect(upgradePrice(true)).toBe(3100);
+    expect(offerAmount('downsell', true)).toBe(1900);
+    expect(FUNNEL.downsell.product).toBe('outreach-templates');
   });
 });
 

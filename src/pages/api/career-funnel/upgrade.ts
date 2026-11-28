@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { sandbox, publishableKey, guard, state, upsellTax, FUNNEL, COOKIE, FLOW } from "../../../lib/career-funnel-test";
+import { sandbox, publishableKey, guard, state, offerTax, offerAmount, FUNNEL, COOKIE, FLOW, type Offer } from "../../../lib/career-funnel-test";
 
 export const prerender = false;
 
@@ -7,12 +7,13 @@ const out = (body: unknown, status = 200) => Response.json(body, { status, heade
 const next = (reason = "") => out({ next: "/career-funnel-preview" + (reason ? "?notice=" + reason : "") });
 
 /**
- * The one-click upsell. Choices:
- *   upsell          charge the saved card for the Script Vault (+ tax). If the bank asks for
- *                   3D Secure, returns { action, publishableKey } and the page finishes it.
- *   upsell-confirm  after 3D Secure: check the payment and record the tax.
- *   skip            no thanks
- *   restart         forget this test purchase
+ * The one-click offers. Choices:
+ *   buy       charge the saved card for the offer showing now (toolkit upgrade, then the downsell),
+ *             tax added. If the bank asks for 3D Secure, returns { action, publishableKey } and the
+ *             page finishes it.
+ *   confirm   after 3D Secure: check the payment and record the tax.
+ *   skip      no thanks (the toolkit skip leads to the downsell; the downsell skip to the downloads)
+ *   restart   forget this test purchase
  */
 export const POST: APIRoute = async ({ request, url, cookies }) => {
   if (!guard(request, url)) return new Response("Preview only", { status: 403 });
@@ -26,7 +27,9 @@ export const POST: APIRoute = async ({ request, url, cookies }) => {
     }
     const x = await state(stripe, cookies.get(COOKIE)?.value);
     if (!x) return next("unavailable");
-    if (x.upsellPaid || x.s.metadata?.upsell_skipped === "yes") return next();
+    const offer: Offer | null = x.offer;
+    if (!offer) return next();
+    const pi0 = x.current;
 
     const recordTax = async (pi: { id: string; metadata: Record<string, string> }) => {
       if (!pi.metadata.tax_calc || pi.metadata.tax_recorded === "yes") return;
@@ -39,39 +42,40 @@ export const POST: APIRoute = async ({ request, url, cookies }) => {
     };
 
     if (choice === "skip") {
-      if (x.upsell && x.upsell.status !== "succeeded" && x.upsell.status !== "processing") await stripe.paymentIntents.cancel(x.upsell.id);
-      await stripe.checkout.sessions.update(x.s.id, { metadata: { upsell_skipped: "yes" } });
+      if (pi0 && pi0.status !== "succeeded" && pi0.status !== "processing") await stripe.paymentIntents.cancel(pi0.id);
+      await stripe.checkout.sessions.update(x.s.id, { metadata: offer === "upsell" ? { upsell_skipped: "yes" } : { downsell_skipped: "yes" } });
       return next();
     }
 
-    if (choice === "upsell-confirm") {
-      if (!x.upsell) return next("payment-failed");
-      if (x.upsell.status === "succeeded") { await recordTax(x.upsell); return next(); }
-      return next(x.upsell.status === "processing" ? "pending" : "payment-failed");
+    if (choice === "confirm") {
+      if (!pi0) return next("payment-failed");
+      if (pi0.status === "succeeded") { await recordTax(pi0); return next(); }
+      return next(pi0.status === "processing" ? "pending" : "payment-failed");
     }
 
-    if (choice !== "upsell") return next("invalid");
+    if (choice !== "buy") return next("invalid");
 
-    // Already tried: don't charge again. Pick up where it left off.
-    let pi = x.upsell;
+    // Already tried this offer: don't charge again. Pick up where it left off.
+    let pi = pi0;
     if (!pi) {
-      const { tax, calc } = await upsellTax(stripe, x.s);
+      const base = offerAmount(offer, x.bump);
+      const { tax, calc } = await offerTax(stripe, x.s, offer);
       try {
         pi = await stripe.paymentIntents.create(
           {
-            amount: FUNNEL.upsell.amount + tax,
+            amount: base + tax,
             currency: "cad",
             customer: x.customer,
             payment_method: x.method,
             confirm: true,
             automatic_payment_methods: { enabled: true, allow_redirects: "never" },
-            description: `${FUNNEL.upsell.name} (test)`,
-            metadata: { funnel: FLOW, session: x.s.id, stage: "upsell", product: FUNNEL.upsell.product, base: String(FUNNEL.upsell.amount), tax: String(tax), tax_calc: calc || "" },
+            description: `${FUNNEL[offer].name}${offer === "upsell" ? " (upgrade)" : ""} (test)`,
+            metadata: { funnel: FLOW, session: x.s.id, stage: offer, product: FUNNEL[offer].product, base: String(base), tax: String(tax), tax_calc: calc || "" },
           },
-          { idempotencyKey: `${FLOW}:${x.s.id}:upsell` },
+          { idempotencyKey: `${FLOW}:${x.s.id}:${offer}` },
         );
       } catch (e) {
-        console.error("funnel: upsell charge failed", e instanceof Error ? e.message : e);
+        console.error("funnel: offer charge failed", e instanceof Error ? e.message : e);
         return next("payment-failed");
       }
     }

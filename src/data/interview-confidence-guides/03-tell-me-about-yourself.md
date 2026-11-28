@@ -1,18 +1,18 @@
 # Tell Me About Yourself
 
-**The most predictable question in every interview. Nail it in 60-90 seconds.**
+**The most predictable question in every interview. Nail it in 60 to 90 seconds.**
 
 "Tell me about yourself" is the opening pitch of nearly every interview. It is also the question candidates prepare for the least, because it sounds simple. It is not simple. It is your chance to set the narrative for the entire conversation. Get it right and the interviewer spends the rest of the interview confirming the positive impression you just created. Get it wrong and you spend the rest of the interview digging out of a hole.
 
 This guide gives you three formulas, three example scripts with [BRACKET] fields you can customize, and a practice method that takes 15 minutes.
 
-**Time:** 30 minutes to build your answer. 15 minutes to practice it. **What you'll need:** The job description for your target role and your resume.
+**Time:** 30 minutes to build your answer. 15 minutes to practise it. **What you'll need:** The job description for your target role and your resume.
 
 ---
 
 ## The Rules
 
-**Rule 1: Keep it to 60-90 seconds.** This is not your life story. It is a highlight reel. If you go past 2 minutes, you have lost them.
+**Rule 1: Keep it to 60 to 90 seconds.** This is not your life story. It is a highlight reel. If you go past 2 minutes, you have lost them.
 
 **Rule 2: End with why you are here.** The last sentence should connect your background to this specific role.
 
@@ -30,7 +30,7 @@ The most versatile formula. Works for any career stage, any industry.
 
 **Structure:**
 1. **Present:** What you do now (or most recently did), in one sentence.
-2. **Past:** How you got here. The 2-3 most relevant career moves, with one highlight from each.
+2. **Past:** How you got here. The 2 to 3 most relevant career moves, with one highlight from each.
 3. **Future:** Why you are excited about this opportunity. Connect your experience to what they need.
 
 ### Example Script 1: Mid-Career Professional
@@ -57,7 +57,7 @@ Best for career changers or people with diverse backgrounds. Instead of walking 
 ### Example Script 2: Career Changer
 
 ```
-"The thread through my career has been [YOUR THEME: solving complex problems, building things from scratch, helping people navigate change]. 
+"The thread through my career has been [YOUR THEME: solving complex problems, building things from scratch, helping people through change]. 
 
 In my [X YEARS] in [PREVIOUS INDUSTRY], that looked like [SPECIFIC EXAMPLE]. When I moved into [SECOND AREA/INDUSTRY], it showed up as [DIFFERENT SPECIFIC EXAMPLE]. In both cases, the core skill was [THE SKILL THAT CONNECTS THEM].
 
@@ -129,15 +129,15 @@ You do not want to memorize word-for-word. That sounds robotic. Instead, reduce 
 - Past: [PREVIOUS ROLE], [HIGHLIGHT], [SKILL DEVELOPED]
 - Future: [REASON EXCITED ABOUT THIS ROLE]
 
-### Step 4: Practice from bullets
+### Step 4: Practise from bullets
 Tell your story from the bullets, not the script. Do it 5 times. Each time will be slightly different. That is good. It sounds natural.
 
 ### Step 5: Record yourself
 Use your phone. Watch it back. Check for:
-- Length (60-90 seconds)
+- Length (60 to 90 seconds)
 - Filler words ("um," "like," "so," "you know")
 - Energy level (do you sound interested or bored?)
-- Eye contact (if practicing for video interviews, look at the camera)
+- Eye contact (if practising for video interviews, look at the camera)
 
 ### Step 6: Test it on a human
 Tell a friend or family member. Ask: "After hearing that, what do you think I do for a living? Would you hire me?" Their honest reaction is the best feedback.
@@ -168,4 +168,6 @@ Shorter version. 30 seconds. Present + one highlight + why here. That is it.
 
 "Tell me about yourself" is not a spontaneous question. It comes up in every single interview. There is zero reason to be unprepared for it.
 
-Pick a formula. Fill in the brackets. Practice it 5 times out loud. Walk in ready to start the conversation on your terms.
+Pick a formula. Fill in the brackets. Practise it 5 times out loud. Walk in ready to start the conversation on your terms.
+
+*Results vary. A strong opening won't win the job on its own, but it sets up everything that comes after it.*

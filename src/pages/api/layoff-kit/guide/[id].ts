@@ -1,6 +1,8 @@
 import type { APIRoute } from "astro";
 import { readFileSync, existsSync } from "fs";
 import { join } from "path";
+import { verifyAccess } from "../../../../lib/product-access";
+import { serverEnv } from "../../../../lib/server-env";
 
 export const prerender = false;
 
@@ -19,8 +21,12 @@ const ID_TO_FILE: Record<string, string> = {
   "11-mental-health": "11-mental-health-resilience-guide.md",
 };
 
-export const GET: APIRoute = async ({ params }) => {
+export const GET: APIRoute = async ({ params, url }) => {
   const { id } = params;
+
+  if (!(await verifyAccess("layoff-survival-kit", url.searchParams.get("t"), serverEnv(), url)).ok) {
+    return new Response(JSON.stringify({ error: "Access link required" }), { status: 403, headers: { "Content-Type": "application/json" } });
+  }
 
   if (!id || !ID_TO_FILE[id]) {
     return new Response(JSON.stringify({ error: "Invalid guide ID" }), {
@@ -43,6 +49,6 @@ export const GET: APIRoute = async ({ params }) => {
   const markdown = readFileSync(filePath, "utf-8");
   return new Response(JSON.stringify({ markdown }), {
     status: 200,
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", "Cache-Control": "private, no-store" },
   });
 };

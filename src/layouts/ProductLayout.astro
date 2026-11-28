@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
+import ProductCheckout from "@components/products/ProductCheckout";
 
 interface Props {
   title: string;
@@ -13,6 +14,12 @@ interface Props {
   ctaHref: string;
   guaranteeText?: string;
   faq?: { q: string; a: string }[];
+  /** Shows Stripe's embedded checkout at #checkout for this product. */
+  productSlug?: string;
+  /** Product mockup shown in the hero. */
+  image?: { src: string; alt: string; width: number; height: number };
+  /** Folder in public/images/products with hero, inside, skills and og images (see scripts/mockups). */
+  mockups?: string;
 }
 
 const {
@@ -27,12 +34,17 @@ const {
   ctaHref,
   guaranteeText = "30-day money-back guarantee. No questions asked.",
   faq = [],
+  productSlug,
+  mockups,
 } = Astro.props;
+const base = mockups ? `/images/products/${mockups}` : "";
+const image = Astro.props.image || (mockups ? { src: `${base}/${mockups === "complete-toolkit" ? "bundle" : "hero"}.webp`, alt: `${title.split(" | ")[0]}: what you get`, width: 1600, height: 1000 } : undefined);
+const publishableKey = import.meta.env.STRIPE_PUBLISHABLE_KEY || "";
 
 const currentYear = new Date().getFullYear();
 ---
 
-<BaseLayout title={title} description={description} type="website">
+<BaseLayout title={title} description={description} type="website" image={mockups ? `${base}/og.jpg` : undefined}>
   <div class="min-h-screen bg-white">
     <!-- Minimal Header -->
     <header class="border-b border-border/50 bg-white">
@@ -66,6 +78,18 @@ const currentYear = new Date().getFullYear();
           </ul>
         )}
 
+        {image && (
+          <img
+            src={image.src}
+            alt={image.alt}
+            width={image.width}
+            height={image.height}
+            class="mx-auto mt-8 h-auto w-full max-w-[600px]"
+            fetchpriority="high"
+            decoding="async"
+          />
+        )}
+
         <!-- Price + CTA -->
         <div class="mt-8">
           <div class="flex items-center justify-center gap-3">
@@ -94,6 +118,31 @@ const currentYear = new Date().getFullYear();
         </p>
       </div>
     </section>
+
+    {productSlug && (
+      <section id="checkout" class="scroll-mt-6 bg-blue-bg/30 py-12">
+        <div class="mx-auto max-w-[720px] px-4">
+          <h2 class="mb-2 text-center text-xl font-bold text-navy">Get instant access</h2>
+          <p class="mb-6 text-center text-sm text-text-muted">Secure checkout by Stripe. Your access link opens right after you pay, and it's emailed to you.</p>
+          <ProductCheckout client:visible productSlug={productSlug} publishableKey={publishableKey} />
+        </div>
+      </section>
+    )}
+
+    {mockups && (
+      <section class="py-10 md:py-14">
+        <div class="mx-auto grid max-w-[1040px] gap-6 px-4 md:grid-cols-2">
+          <figure>
+            <img src={`${base}/inside.webp`} alt="The guides inside, shown as pages" width="1600" height="1000" loading="lazy" decoding="async" class="h-auto w-full rounded-2xl border border-border/60" />
+            <figcaption class="mt-2 text-center text-sm text-text-muted">Every guide opens in your browser, with a Start Here page first.</figcaption>
+          </figure>
+          <figure>
+            <img src={`${base}/skills.webp`} alt="The Claude skills you install" width="1600" height="1000" loading="lazy" decoding="async" class="h-auto w-full rounded-2xl border border-border/60" />
+            <figcaption class="mt-2 text-center text-sm text-text-muted">Claude skills (text files only), plus copy-paste prompts for any AI.</figcaption>
+          </figure>
+        </div>
+      </section>
+    )}
 
     <!-- Product Preview / Content -->
     <section class="py-8 md:py-12">

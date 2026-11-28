@@ -12,7 +12,7 @@
  */
 import { brevo, emailMode, type EmailMode } from './brevo-api.js';
 import { ui } from './call-emails.js';
-import { makeAccessToken, accessSecret, accessUrl, type AccessProduct } from './access.js';
+import { makeAccessToken, accessSecret, accessUrl } from './access.js';
 import { PRODUCTS } from '../data/product-config.js';
 import { LLU_PITCH, LLU_URL } from '../data/llu-pitch.js';
 
@@ -21,12 +21,12 @@ const { shell, P, H, button, link, small, sign, esc } = ui;
 export interface CatalogItem { name: string; blurb: string; open: string; start: string }
 
 /** What each product is, and where to start. Only facts from the product pages. */
-export const CATALOG: Record<AccessProduct, CatalogItem> = {
+export const CATALOG: Record<string, CatalogItem> = {
   vault: {
     name: 'Career Prompt Vault',
-    blurb: '50 AI prompts for your resume, LinkedIn, interviews, outreach, salary research and negotiation.',
+    blurb: '6 Claude skills (including the Achievement Interviewer) and 50 copy-paste prompts for your resume, LinkedIn, interviews, outreach, research and offers.',
     open: 'Open the Prompt Vault',
-    start: "Start with the Career Highlights Extractor. Upload your resume, run it, and you'll have a list of achievements with numbers that every other prompt can use.",
+    start: 'Start with the Achievement Interviewer in the cc-resume skill. It asks you questions, one at a time, and turns your answers into resume bullets with real numbers.',
   },
   'salary-generator': {
     name: 'Salary Number Generator',
@@ -40,6 +40,30 @@ export const CATALOG: Record<AccessProduct, CatalogItem> = {
     open: 'Open the Script Vault',
     start: 'Start with the cold outreach scripts. Pick one person at a company you want, and send one today.',
   },
+  'outreach-templates': {
+    name: 'Outreach and Email Templates',
+    blurb: '60+ templates to reach hiring managers directly, plus a Claude skill that personalizes them.',
+    open: 'Open the Outreach Templates',
+    start: 'Read "Land an Interview in 1 Week" first, then pick three hiring managers and send your first email today.',
+  },
+  'interview-confidence': {
+    name: 'Interview Confidence Kit',
+    blurb: 'STAR stories, mock interviews with a Claude coach, answer frameworks and thank-you emails.',
+    open: 'Open the Interview Kit',
+    start: 'Build three STAR stories with the cc-interview-coach skill before your next interview is even booked.',
+  },
+  'salary-negotiation': {
+    name: 'Salary Negotiation Scripts and Advice',
+    blurb: 'Word-for-word scripts for every stage of the offer, the advice behind them, and a Claude negotiation coach.',
+    open: 'Open the Negotiation Scripts',
+    start: 'Read "How to Negotiate Your Offer" before your next recruiter call, so you never give the first number by accident.',
+  },
+  'complete-toolkit': {
+    name: 'Complete Job Search Toolkit',
+    blurb: 'All five products: the Prompt Vault, Salary Number Generator, Outreach Templates, Interview Kit and Negotiation Scripts, plus bonus scripts.',
+    open: 'Open your toolkit',
+    start: 'Open the toolkit page first. It links to every product and gives you a 14-day plan.',
+  },
   'layoff-survival-kit': {
     name: 'Layoff Survival Kit',
     blurb: 'Severance calculator, lawyer directory and 10 complete guides.',
@@ -49,13 +73,19 @@ export const CATALOG: Record<AccessProduct, CatalogItem> = {
 };
 
 export function catalogItem(product: string): CatalogItem | null {
-  if (product in CATALOG) return CATALOG[product as AccessProduct];
+  if (product in CATALOG) return CATALOG[product];
   const p = PRODUCTS[product];
   if (!p || p.price <= 0) return null;
   return { name: p.name.replace(/^The /, ''), blurb: p.description, open: `Open ${p.name.replace(/^The /, 'the ')}`, start: '' };
 }
 
-export interface PurchaseLine { product: string; amount: number; url: string }
+export interface PurchaseLine {
+  product: string;
+  amount: number;
+  url: string;
+  /** Bundles: each included product with its own link, shown as its own button. */
+  includes?: { product: string; url: string }[];
+}
 export interface Order {
   firstName?: string;
   email: string;
@@ -78,6 +108,17 @@ export function purchaseSubject(o: Order): string {
 const REASON = "You're getting this because you bought something from ClearCareer. It's your receipt and your access links, so it's sent even if you're not on my email list.";
 const UNSUB = 'mailto:izzy@joinclearcareer.com?subject=Question%20about%20my%20order';
 
+/** Products with a cover image (scripts/mockups/render.mjs makes them). */
+const COVERS = new Set(['vault', 'salary-generator', 'outreach-templates', 'interview-confidence', 'salary-negotiation', 'complete-toolkit']);
+
+/** The product's cover, served from the same site as the access link (so previews show preview images). */
+function coverImage(product: string, url: string): string {
+  if (!COVERS.has(product)) return '';
+  let origin = 'https://joinclearcareer.com';
+  try { origin = new URL(url).origin; } catch { /* keep the live site */ }
+  return `<img src="${esc(`${origin}/images/products/${product}/cover.jpg`)}" width="300" alt="" style="display:block;width:300px;max-width:100%;height:auto;border-radius:10px;margin:0 0 14px;">`;
+}
+
 export function purchaseEmail(o: Order): { subject: string; html: string } {
   const cur = o.currency || 'CAD';
   const items = o.lines
@@ -86,9 +127,16 @@ export function purchaseEmail(o: Order): { subject: string; html: string } {
   const one = items.length === 1;
 
   const blocks = items
-    .map(({ l, c }) =>
-      `${one ? '' : H(c.name)}${P(esc(c.blurb))}${button(c.open, l.url)}${c.start ? small(`<strong>Where to start:</strong> ${esc(c.start)}`) : ''}`,
-    )
+    .map(({ l, c }) => {
+      const img = coverImage(l.product, l.url);
+      const head = `${one ? '' : H(c.name)}${img}${P(esc(c.blurb))}${button(c.open, l.url)}${c.start ? small(`<strong>Where to start:</strong> ${esc(c.start)}`) : ''}`;
+      const inside = (l.includes || [])
+        .map((i) => ({ i, ic: catalogItem(i.product) }))
+        .filter((x) => x.ic)
+        .map(({ i, ic }) => `${P(`<strong>${esc(ic!.name)}</strong><br>${esc(ic!.blurb)}`, 'margin-bottom:8px;')}${button(ic!.open, i.url)}`)
+        .join('');
+      return head + (inside ? H("What's inside") + inside : '');
+    })
     .join('');
 
   const row = (label: string, value: string, bold = false) =>
@@ -132,6 +180,28 @@ export async function productLink(
   return product === 'vault'
     ? `${origin}/tools/career-prompt-vault/access?session_id=${encodeURIComponent(sessionId)}`
     : accessUrl(product, sessionId, origin);
+}
+
+/**
+ * Links to each product inside a bundle, all opened with the bundle's own token (or Checkout
+ * Session), which src/lib/product-access.ts accepts for every included product.
+ */
+export async function bundleLinks(
+  bundle: string,
+  email: string,
+  env: Record<string, unknown>,
+  origin = 'https://joinclearcareer.com',
+  sessionId?: string,
+): Promise<{ product: string; url: string }[]> {
+  const includes = PRODUCTS[bundle]?.includes || [];
+  if (!includes.length) return [];
+  const secret = accessSecret(env, new URL(origin));
+  const token = secret ? await makeAccessToken(bundle, email, secret) : sessionId || '';
+  if (!token) return [];
+  return includes.map((p) => ({
+    product: p,
+    url: p === 'vault' && !secret ? `${origin}/tools/career-prompt-vault/access?session_id=${encodeURIComponent(token)}` : accessUrl(p, token, origin),
+  }));
 }
 
 export type DeliverResult = 'sent' | 'duplicate' | 'failed' | 'skipped';
@@ -212,7 +282,12 @@ export async function orderFromSession(
     name,
     firstName: name.split(/\s+/)[0] || undefined,
     currency: String(s.currency || 'cad').toUpperCase(),
-    lines: [{ product, amount: subtotal, url: await productLink(product, email, env, origin, s.id) }],
+    lines: [{
+      product,
+      amount: subtotal,
+      url: await productLink(product, email, env, origin, s.id),
+      ...(PRODUCTS[product]?.includes ? { includes: await bundleLinks(product, email, env, origin, s.id) } : {}),
+    }],
     subtotal,
     tax: Number(s.total_details?.amount_tax || 0),
     total: Number(s.amount_total ?? subtotal),

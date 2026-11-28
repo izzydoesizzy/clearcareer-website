@@ -1,15 +1,16 @@
 ---
 /**
  * Test-mode product funnel (see src/lib/career-funnel-test.ts). Preview deployments only.
- * Stages: offer (order box + embedded checkout) -> upsell (one click) -> done (access + Land and Level Up).
+ * Stages: offer (order box + embedded checkout) -> toolkit upgrade (one click) -> if declined, the
+ * outreach templates (one click) -> done (access + Land and Level Up).
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { serverEnv } from "../lib/server-env";
 import "@/styles/llu.css";
 import { offer, RESULTS_VARY } from "@data/llu";
 import { PRODUCTS } from "@data/product-config";
-import { sandbox, allowedOrigin, state, upsellTax, COOKIE, FUNNEL, format, type FunnelState } from "../lib/career-funnel-test";
-import { CATALOG, deliverPurchase, productLink } from "../lib/purchase-emails";
+import { sandbox, allowedOrigin, state, offerTax, offerAmount, COOKIE, FUNNEL, format, type FunnelState } from "../lib/career-funnel-test";
+import { CATALOG, deliverPurchase, productLink, bundleLinks } from "../lib/purchase-emails";
 import { emailMode } from "../lib/brevo-api";
 
 export const prerender = false;
@@ -24,19 +25,26 @@ let checkFailed = false;
 if (stripe && cookie) {
   try { x = await state(stripe, cookie); } catch { checkFailed = true; }
 }
-const stage = !x ? "offer" : !x.upsellDone ? "upsell" : "done";
+const stage = !x ? "offer" : x.offer ?? "done";
 const notice = Astro.url.searchParams.get("notice") || (Astro.url.searchParams.get("paid") && !x ? "verify" : "");
 
 // Upsell price with tax, worked out for this buyer's address before they click.
-let upsellTaxAmount = 0;
-if (stage === "upsell" && stripe && x) upsellTaxAmount = (await upsellTax(stripe, x.s)).tax;
+let offerTaxAmount = 0;
+if ((stage === "upsell" || stage === "downsell") && stripe && x) offerTaxAmount = (await offerTax(stripe, x.s, stage)).tax;
+const offerBase = x && (stage === "upsell" || stage === "downsell") ? offerAmount(stage, x.bump) : 0;
 
 // Done: links for each item, and the Brevo email (once per purchase, test inbox only).
-let links: { product: string; name: string; amount: number; url: string }[] = [];
+let links: { product: string; name: string; amount: number; url: string; includes?: { product: string; url: string }[] }[] = [];
 let emailed: "sent" | "already" | "off" | "failed" = "off";
 if (stage === "done" && stripe && x) {
   const st = x;
-  links = await Promise.all(st.lines.map(async (l) => ({ ...l, url: await productLink(l.product, st.email, env, Astro.url.origin, st.s.id) })));
+  links = await Promise.all(
+    st.lines.map(async (l) => ({
+      ...l,
+      url: await productLink(l.product, st.email, env, Astro.url.origin, st.s.id),
+      ...(PRODUCTS[l.product]?.includes ? { includes: await bundleLinks(l.product, st.email, env, Astro.url.origin, st.s.id) } : {}),
+    })),
+  );
   if (st.s.metadata?.delivered === "yes") emailed = "already";
   else if (env.BREVO_API_KEY) {
     await stripe.checkout.sessions.update(st.s.id, { metadata: { delivered: "yes" } });
@@ -82,8 +90,9 @@ const faqs = [
   ["How do I get it?", "It opens on the next screen, and the link is emailed to you. The link doesn't expire."],
   ["What if I get stuck?", "Reply to the email. It comes straight to me."],
 ];
-const scriptGuides = PRODUCTS["script-vault"].guides.map((g) => g.title);
-const upsellTotal = FUNNEL.upsell.amount + upsellTaxAmount;
+const offerTotal = offerBase + offerTaxAmount;
+const outreachGuides = PRODUCTS["outreach-templates"].guides.map((g) => g.title);
+const toolkitParts = ["Salary Number Generator", "Outreach and Email Templates", "Interview Confidence Kit", "Salary Negotiation Scripts and Advice", "Bonus: rejection and resignation scripts"];
 ---
 
 <BaseLayout title="Career Prompt Vault | ClearCareer (test)" description="Test-mode preview of the ClearCareer product funnel." noindex>
@@ -98,7 +107,7 @@ const upsellTotal = FUNNEL.upsell.amount + upsellTaxAmount;
     <header class="llu-nav"><div class="llu-wrap llu-nav__row">
       <span class="llu-nav__brand"><span class="llu-nav__mark">ClearCareer</span></span>
       {stage !== "offer" && <ol class="steps" aria-label="Your order">
-        <li class="done">Paid</li><li class:list={[stage === "upsell" ? "on" : "done"]}>One more thing</li><li class:list={[stage === "done" && "on"]}>Your downloads</li>
+        <li class="done">Paid</li><li class:list={[stage === "upsell" || stage === "downsell" ? "on" : "done"]}>One more thing</li><li class:list={[stage === "done" && "on"]}>Your downloads</li>
       </ol>}
     </div></header>
 
@@ -137,6 +146,12 @@ const upsellTotal = FUNNEL.upsell.amount + upsellTaxAmount;
           </div>
         </div></section>
 
+        <section class="llu-band"><div class="llu-wrap llu-stack">
+          <div class="llu-head"><p class="llu-eyebrow">Now with Claude skills</p><h2 class="llu-h2">Install once. Then just ask.</h2>
+            <p class="llu-lead">6 small Claude skills, including the Achievement Interviewer: it asks you questions one at a time and turns your answers into resume bullets with real numbers. Every prompt also comes copy-paste ready for ChatGPT, Gemini or any AI.</p></div>
+          <img class="shot" src="/images/products/vault/hero.webp" alt="A Claude skill turning interview answers into a resume bullet, and the Start Here guide on a phone" width="1600" height="1000" loading="lazy" decoding="async" />
+        </div></section>
+
         <section class="llu-band llu-band--white"><div class="llu-wrap llu-stack">
           <div class="llu-head"><p class="llu-eyebrow">Before and after</p><h2 class="llu-h2">Same AI. Better questions.</h2>
             <p class="llu-lead">Each prompt asks the AI to interview you first, so what comes back sounds like you and has your numbers in it.</p></div>
@@ -171,14 +186,31 @@ const upsellTotal = FUNNEL.upsell.amount + upsellTaxAmount;
         <p class="paid">✓ Paid. Your {x.bump ? "Prompt Vault and Salary Number Generator are" : "Prompt Vault is"} ready. Your links are on the next screen, and in your inbox.</p>
         <div class="llu-card llu-stack">
           <p class="llu-eyebrow">One more thing before you go</p>
-          <h1 class="llu-h2">You've got the prompts. Now get the exact words.</h1>
-          <p>The Prompt Vault helps you work out what to say. The <strong>{FUNNEL.upsell.name}</strong> gives you 100+ scripts that are already written: the cold email to a hiring manager, the follow-up when they go quiet, the salary counter, the reply to a rejection.</p>
-          <ul class="ticks ticks--ink">{scriptGuides.map((g) => <li>{g}</li>)}</ul>
-          <div class="line"><span>{FUNNEL.upsell.name}</span><strong>{format(FUNNEL.upsell.amount)}</strong></div>
-          {upsellTaxAmount > 0 && <div class="line"><span>Tax</span><strong>{format(upsellTaxAmount)}</strong></div>}
-          <div class="line total"><strong>You pay</strong><strong>{format(upsellTotal)} CAD</strong></div>
-          <button class="llu-btn llu-btn--wide" type="button" data-choice="upsell">Yes, add it for {format(upsellTotal)}</button>
+          <h1 class="llu-h2">Get the rest of the toolkit for {format(offerBase)} more.</h1>
+          <p>The Prompt Vault gets your resume and LinkedIn ready. The rest of the <strong>{FUNNEL.upsell.name}</strong> covers what comes next: reaching hiring managers directly, walking into interviews ready, and negotiating the offer. Each one comes with its own Claude skill and copy-paste prompts.</p>
+          <ul class="ticks ticks--ink">{toolkitParts.filter((t) => !(x.bump && t === "Salary Number Generator")).map((t) => <li>{t}</li>)}</ul>
+          <div class="line"><span>{FUNNEL.upsell.name}</span><strong><s class="was">{format(FUNNEL.upsell.amount)}</s></strong></div>
+          <div class="line"><span>Already paid today</span><strong>−{format(FUNNEL.upsell.amount - offerBase)}</strong></div>
+          {offerTaxAmount > 0 && <div class="line"><span>Tax</span><strong>{format(offerTaxAmount)}</strong></div>}
+          <div class="line total"><strong>You pay</strong><strong>{format(offerTotal)} CAD</strong></div>
+          <button class="llu-btn llu-btn--wide" type="button" data-choice="buy">Yes, upgrade me for {format(offerTotal)}</button>
           <p class="llu-cap center">One click. It goes on {x.cardLabel}. No need to type your card again.</p>
+          <button class="skip" type="button" data-choice="skip">No thanks</button>
+          <p class="llu-cap center" id="upsell-status" role="status"></p>
+        </div>
+      </div></section>}
+
+      {stage === "downsell" && x && <section class="llu-band"><div class="llu-wrap narrow llu-stack">
+        <div class="llu-card llu-stack">
+          <p class="llu-eyebrow">Just this one, then?</p>
+          <h1 class="llu-h2">You've got the prompts. Now email the people who hire.</h1>
+          <p>Applying and waiting is the slowest way to get hired. The <strong>{FUNNEL.downsell.name}</strong> show you how to find the hiring manager, find their email, and send a short note they'll answer. 60+ templates, and a Claude skill that personalizes them.</p>
+          <ul class="ticks ticks--ink">{outreachGuides.map((g) => <li>{g}</li>)}</ul>
+          <div class="line"><span>{FUNNEL.downsell.name}</span><strong>{format(offerBase)}</strong></div>
+          {offerTaxAmount > 0 && <div class="line"><span>Tax</span><strong>{format(offerTaxAmount)}</strong></div>}
+          <div class="line total"><strong>You pay</strong><strong>{format(offerTotal)} CAD</strong></div>
+          <button class="llu-btn llu-btn--wide" type="button" data-choice="buy">Yes, add it for {format(offerTotal)}</button>
+          <p class="llu-cap center">One click, on {x.cardLabel}.</p>
           <button class="skip" type="button" data-choice="skip">No thanks, take me to my downloads</button>
           <p class="llu-cap center" id="upsell-status" role="status"></p>
         </div>
@@ -190,7 +222,7 @@ const upsellTotal = FUNNEL.upsell.amount + upsellTaxAmount;
             <p class="llu-eyebrow">You're all set{x.firstName ? `, ${x.firstName}` : ""}</p>
             <h1 class="llu-h2">Here's everything you bought.</h1>
             <ul class="items">{links.map((l) => (
-              <li><span><strong>{l.name}</strong><br /><span class="llu-cap">{CATALOG[l.product as keyof typeof CATALOG]?.blurb}</span></span>
+              <li><span><strong>{l.name}</strong><br /><span class="llu-cap">{CATALOG[l.product]?.blurb}</span></span>
                 <a class="llu-btn" href={l.url} target="_blank" rel="noopener">Open it now</a></li>
             ))}</ul>
             <div class="line"><span>Subtotal</span><strong>{format(x.subtotal)}</strong></div>
@@ -257,6 +289,7 @@ const upsellTotal = FUNNEL.upsell.amount + upsellTaxAmount;
   .checkout { min-height: 200px; }
   .fine { margin: 0; }
 
+  .shot { width: 100%; height: auto; border-radius: 20px; border: 1px solid var(--llu-hairline); }
   .ba { display: grid; gap: var(--llu-gap); grid-template-columns: minmax(0, 1fr); }
   @media (min-width: 1024px) { .ba { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   .ba__card { display: grid; gap: 12px; align-content: start; padding: 24px; border-radius: 20px; border: 1px solid var(--llu-hairline); background: var(--llu-white); }
@@ -277,6 +310,7 @@ const upsellTotal = FUNNEL.upsell.amount + upsellTaxAmount;
   .faq p { margin: 8px 0 0; color: var(--llu-body); }
 
   .narrow { max-width: 760px; }
+  .was { color: var(--llu-caption); font-weight: 400; }
   .paid { margin: 0; padding: 12px 16px; border-radius: 12px; background: #e9f8ef; color: #14532d; font-weight: 600; }
   .center { text-align: center; }
   .skip { display: block; width: 100%; min-height: 44px; color: var(--llu-blue); text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
@@ -353,14 +387,14 @@ const upsellTotal = FUNNEL.upsell.amount + upsellTaxAmount;
     b.addEventListener("click", async () => {
       const all = [...document.querySelectorAll<HTMLButtonElement>("[data-choice]")];
       all.forEach((x) => (x.disabled = true));
-      if (say) say.textContent = b.dataset.choice === "upsell" ? "Adding it to your order…" : "One moment…";
+      if (say) say.textContent = b.dataset.choice === "buy" ? "Adding it to your order…" : "One moment…";
       try {
         let r = await post("/api/career-funnel/upgrade", { choice: b.dataset.choice });
         if (r.action && r.publishableKey) {
           if (say) say.textContent = "Your bank wants to confirm it's you…";
           const stripe = await loadStripe(r.publishableKey);
           if (stripe) await stripe.handleNextAction({ clientSecret: r.action });
-          r = await post("/api/career-funnel/upgrade", { choice: "upsell-confirm" });
+          r = await post("/api/career-funnel/upgrade", { choice: "confirm" });
         }
         if (typeof r.next === "string") return go(r.next);
         throw new Error("Unexpected response.");

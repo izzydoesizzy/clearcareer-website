@@ -3,8 +3,9 @@
  *
  *   1. Offer page with the order box: Prompt Vault $9, optional Salary Number Generator +$9,
  *      paid in an embedded Stripe Checkout on the same page (card, wallets, Link; tax; card saved).
- *   2. Upsell: Job Search Script Vault $29, charged to the saved card in one click (tax added,
- *      3D Secure finished on the page).
+ *   2. Upsell: upgrade to the Complete Job Search Toolkit ($49 minus what they paid), one click on the
+ *      saved card (tax added, 3D Secure finished on the page). If they say no, a downsell: the $19
+ *      Outreach and Email Templates, same one click.
  *   3. Done: every item with an "Open it now" link, the Brevo email, then Land and Level Up and the form.
  *
  * Nothing here can touch live Stripe: every check refuses livemode objects.
@@ -19,10 +20,20 @@ export const FLOW = "career-funnel-sandbox-v3";
 export const FUNNEL = {
   main: { product: "vault", name: "Career Prompt Vault", amount: 900 },
   bump: { product: "salary-generator", name: "Salary Number Generator", amount: 900 },
-  upsell: { product: "script-vault", name: "Job Search Script Vault", amount: 2900 },
+  /** Upsell: the whole toolkit, minus what they've already paid. */
+  upsell: { product: "complete-toolkit", name: "Complete Job Search Toolkit", amount: 4900 },
+  /** If they say no to the toolkit: just the outreach templates. */
+  downsell: { product: "outreach-templates", name: "Outreach and Email Templates", amount: 1900 },
 } as const;
 
+export type Offer = "upsell" | "downsell";
+
 export const cartSubtotal = (bump: boolean) => FUNNEL.main.amount + (bump ? FUNNEL.bump.amount : 0);
+
+/** What the toolkit upgrade costs after what they paid at checkout (the Vault, and the add-on if taken). */
+export const upgradePrice = (bump: boolean) => FUNNEL.upsell.amount - cartSubtotal(bump);
+
+export const offerAmount = (offer: Offer, bump: boolean) => (offer === "upsell" ? upgradePrice(bump) : FUNNEL.downsell.amount);
 
 export const format = (n: number) =>
   new Intl.NumberFormat("en-CA", { style: "currency", currency: "CAD", maximumFractionDigits: 2 }).format(n / 100);
@@ -69,15 +80,16 @@ const addr = (a: Address) =>
       }
     : null;
 
-/** Tax on the upsell, from Stripe Tax, at the buyer's billing address. 0 if Stripe Tax isn't on. */
-export async function upsellTax(stripe: Stripe, s: Stripe.Checkout.Session): Promise<{ tax: number; calc?: string }> {
+/** Tax on a one-click offer, from Stripe Tax, at the buyer's billing address. 0 if Stripe Tax isn't on. */
+export async function offerTax(stripe: Stripe, s: Stripe.Checkout.Session, offer: Offer): Promise<{ tax: number; calc?: string }> {
+  const bump = s.metadata?.bump === "yes";
   if (s.metadata?.tax !== "auto") return { tax: 0 };
   const address = addr(s.customer_details?.address);
   if (!address) return { tax: 0 };
   try {
     const c = await stripe.tax.calculations.create({
       currency: "cad",
-      line_items: [{ amount: FUNNEL.upsell.amount, reference: FUNNEL.upsell.product, tax_behavior: "exclusive" }],
+      line_items: [{ amount: offerAmount(offer, bump), reference: FUNNEL[offer].product, tax_behavior: "exclusive" }],
       customer_details: { address, address_source: "billing" },
     });
     return { tax: c.tax_amount_exclusive, calc: c.id || undefined };
@@ -114,24 +126,36 @@ export async function state(stripe: Stripe, sessionId: string | undefined) {
   const cardLabel = card ? `${card.brand === "amex" ? "Amex" : card.brand.charAt(0).toUpperCase() + card.brand.slice(1)} ending in ${card.last4}` : "the card you just used";
 
   const intents = (await stripe.paymentIntents.list({ customer, limit: 20 })).data.filter(
-    (p) => !p.livemode && p.metadata.funnel === FLOW && p.metadata.session === s.id && p.metadata.stage === "upsell" && p.currency === "cad",
+    (p) => !p.livemode && p.metadata.funnel === FLOW && p.metadata.session === s.id && p.currency === "cad",
   );
-  const upsell = intents.find((p) => p.status !== "canceled");
-  const upsellPaid = upsell?.status === "succeeded" && Number(upsell.metadata.base) === FUNNEL.upsell.amount;
+  const find = (offer: Offer) => intents.find((p) => p.metadata.stage === offer && p.status !== "canceled");
+  const paid = (offer: Offer, p?: Stripe.PaymentIntent) => p?.status === "succeeded" && Number(p.metadata.base) === offerAmount(offer, bump);
+  const upsell = find("upsell");
+  const downsell = find("downsell");
+  const upsellPaid = paid("upsell", upsell);
+  const downsellPaid = paid("downsell", downsell);
   const upsellDone = upsellPaid || s.metadata.upsell_skipped === "yes";
+  const downsellDone = upsellPaid || downsellPaid || s.metadata.downsell_skipped === "yes";
+  /** Which one-click offer is showing now, if any. */
+  const offer: Offer | null = !upsellDone ? "upsell" : !downsellDone ? "downsell" : null;
+  const current = offer === "upsell" ? upsell : offer === "downsell" ? downsell : undefined;
 
   const lines: FunnelLine[] = [
     { ...FUNNEL.main },
     ...(bump ? [{ ...FUNNEL.bump }] : []),
-    ...(upsellPaid ? [{ ...FUNNEL.upsell }] : []),
+    ...(upsellPaid ? [{ product: FUNNEL.upsell.product, name: `${FUNNEL.upsell.name} (upgrade)`, amount: upgradePrice(bump) }] : []),
+    ...(downsellPaid ? [{ ...FUNNEL.downsell }] : []),
   ];
-  const tax = Number(s.total_details?.amount_tax || 0) + (upsellPaid ? Number(upsell!.metadata.tax || 0) : 0);
+  const tax =
+    Number(s.total_details?.amount_tax || 0) +
+    (upsellPaid ? Number(upsell!.metadata.tax || 0) : 0) +
+    (downsellPaid ? Number(downsell!.metadata.tax || 0) : 0);
   const subtotal = lines.reduce((n, l) => n + l.amount, 0);
 
   const email = String(s.customer_details?.email || "").trim().toLowerCase();
   const name = String(s.customer_details?.name || "").trim();
   return {
-    s, bump, customer, method, cardLabel, upsell, upsellPaid, upsellDone,
+    s, bump, customer, method, cardLabel, upsell, downsell, upsellPaid, downsellPaid, upsellDone, downsellDone, offer, current,
     lines, subtotal, tax, total: subtotal + tax,
     email, name, firstName: name.split(/\s+/)[0] || "",
   };

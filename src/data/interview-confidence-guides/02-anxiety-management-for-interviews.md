@@ -6,13 +6,13 @@ Interview anxiety is normal. Your brain is doing exactly what it was designed to
 
 This guide gives you three protocols: one for the night before, one for the morning of, and one for 10 minutes before you walk in. Use all three or pick the pieces that work for you.
 
-**Time:** 10-15 minutes to read. Then practice each protocol once before your next interview. **What you'll need:** Nothing except a willingness to try things that might feel awkward the first time.
+**Time:** 10 to 15 minutes to read. Then practise each protocol once before your next interview. **What you'll need:** Nothing except a willingness to try things that might feel awkward the first time.
 
 ---
 
 ## Understanding Interview Anxiety
 
-Your body cannot tell the difference between "I am being chased by a bear" and "I am about to be judged by a stranger." The physiological response is the same: elevated heart rate, shallow breathing, tight muscles, dry mouth, racing thoughts.
+Your body cannot tell the difference between "I am being chased by a bear" and "I am about to be judged by a stranger." The physiological response is the same: a racing heart, shallow breathing, tight muscles, dry mouth, racing thoughts.
 
 Here is what helps to know: interviewers expect you to be nervous. They are nervous too (most interviewers have zero training and are also worried about screwing up). A little nervousness actually helps. It sharpens your focus and gives you energy. The goal is not zero anxiety. The goal is manageable anxiety.
 
@@ -25,8 +25,8 @@ Here is what helps to know: interviewers expect you to be nervous. They are nerv
 Do this early in the evening, not at midnight.
 
 - [ ] Review the job description one more time. Highlight 3 key requirements.
-- [ ] Review your 3-4 strongest STAR stories that match those requirements.
-- [ ] Prepare 2-3 questions to ask the interviewer.
+- [ ] Review your 3 to 4 strongest STAR stories that match those requirements.
+- [ ] Prepare 2 to 3 questions to ask the interviewer.
 - [ ] Lay out your clothes (if in-person) or test your tech setup (if virtual).
 - [ ] Write down the interviewer's name, the time, and the location/link.
 
@@ -62,7 +62,7 @@ Your brain needs downtime to consolidate what you have learned. Studying until m
 
 ## The Morning-Of Protocol
 
-### 1. Move Your Body (10-15 minutes)
+### 1. Move Your Body (10 to 15 minutes)
 
 Do something physical before the interview. A walk, a few sets of pushups, stretching, dancing to a song in your kitchen. It does not matter what.
 
@@ -100,7 +100,7 @@ This is used by Navy SEALs, surgeons, and Olympic athletes. It works.
 - Hold for 4 counts
 - Breathe out for 4 counts
 - Hold for 4 counts
-- Repeat 4-6 times
+- Repeat 4 to 6 times
 
 This activates your parasympathetic nervous system (the "rest and digest" system) and directly counteracts the fight-or-flight response. Your heart rate will drop. Your thinking will clear.
 
@@ -123,7 +123,7 @@ If your thoughts are racing, use the 5-4-3-2-1 method:
 - Name **2 things you can smell**
 - Name **1 thing you can taste**
 
-This pulls you out of your anxious thoughts and into the present moment. You cannot panic about the future when your brain is busy cataloging your current environment.
+This pulls you out of your anxious thoughts and into the present moment. You cannot panic about the future when your brain is busy cataloguing your current environment.
 
 ### 4. The First 30 Seconds (preparation)
 
@@ -144,11 +144,11 @@ Having the first 30 seconds scripted reduces anxiety because your brain knows it
 
 "That's a great question. Let me think about that for a moment."
 
-Then pause for 5-10 seconds. This feels like an eternity to you. To the interviewer, it looks like thoughtfulness. Nobody expects instant answers to complex questions.
+Then pause for 5 to 10 seconds. This feels like an eternity to you. To the interviewer, it looks like thoughtfulness. Nobody expects instant answers to complex questions.
 
 ### If You Start Rambling
 
-Stop mid-sentence. Say: "Let me bring that back to the point." Then answer the actual question in 1-2 sentences. Interviewers respect self-correction far more than a 5-minute monologue.
+Stop mid-sentence. Say: "Let me bring that back to the point." Then answer the actual question in 1 to 2 sentences. Interviewers respect self-correction far more than a 5-minute monologue.
 
 ### If Your Hands Are Shaking
 
@@ -177,6 +177,8 @@ Your nervous system needs time to come back down. Do not immediately check your 
 
 ## Key Takeaway
 
-Nervousness is not a bug. It is a feature. Your body is giving you energy and focus for a high-stakes situation. The candidates who seem calm in interviews are not actually calm. They have just practiced managing the nerves so many times that it looks effortless.
+Nervousness is not a bug. It is a feature. Your body is giving you energy and focus for a high-stakes situation. The candidates who seem calm in interviews are not actually calm. They have just practised managing the nerves so many times that it looks effortless.
 
 Prepare the night before. Move and eat the morning of. Breathe and reframe 10 minutes before. Walk in ready.
+
+*Results vary from person to person. These are general tips, not medical advice. If anxiety is getting in the way of your daily life, talk to your doctor or a mental health professional.*

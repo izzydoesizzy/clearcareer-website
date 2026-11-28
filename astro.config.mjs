@@ -30,5 +30,8 @@ export default defineConfig({
     '/programs/community': '/land-and-level-up',
     '/community': '/land-and-level-up',
     '/blog/build-your-target-company-list-with-chatgpt': '/blog/build-your-target-company-list-with-ai',
+    // Retired products: folded into the new packs. Buyers' access links still work.
+    '/products/script-vault': '/products/complete-toolkit',
+    '/products/cold-outreach-pack': '/products/outreach-templates',
   },
 });

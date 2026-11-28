@@ -17,6 +17,11 @@ export interface Product {
   guidesDir: string;
   guides: ProductGuide[];
   badge?: string;
+  /** Bundles: the products this one unlocks (each keeps its own access page). */
+  includes?: string[];
+  /** No longer sold on its own: its page points to `replacedBy`, existing access links keep working. */
+  retired?: boolean;
+  replacedBy?: string;
 }
 
 export const PRODUCTS: Record<string, Product> = {
@@ -200,6 +205,8 @@ export const PRODUCTS: Record<string, Product> = {
   },
   "cold-outreach-pack": {
     slug: "cold-outreach-pack",
+    retired: true,
+    replacedBy: "outreach-templates",
     name: "Cold Outreach Script Pack",
     price: 9,
     currency: "CAD",
@@ -293,6 +300,8 @@ export const PRODUCTS: Record<string, Product> = {
   },
   "script-vault": {
     slug: "script-vault",
+    retired: true,
+    replacedBy: "complete-toolkit",
     name: "The Job Search Script Vault",
     price: 29,
     currency: "CAD",
@@ -412,12 +421,12 @@ export const PRODUCTS: Record<string, Product> = {
   },
   "interview-confidence": {
     slug: "interview-confidence",
-    name: "The Interview Confidence System",
+    name: "The Interview Confidence Kit",
     price: 19,
     currency: "CAD",
     tier: "$19-29",
     description:
-      "STAR stories, anxiety management, and answer frameworks for 20 common questions.",
+      "STAR stories, a mock-interview coach for Claude, answer frameworks for 20 common questions, and the thank-you email that gets remembered.",
     stripePriceEnvVar: "STRIPE_INTERVIEW_CONFIDENCE_PRICE_ID",
     guidesDir: "interview-confidence-guides",
     badge: "New",
@@ -457,10 +466,179 @@ export const PRODUCTS: Record<string, Product> = {
         icon: "📝",
         type: "guide",
       },
+      {
+        id: "06-prep-package",
+        file: "06-interview-prep-package.md",
+        title: "Interview Prep Package",
+        icon: "🗂️",
+        type: "guide",
+      },
+      {
+        id: "07-scripts",
+        file: "07-interview-scripts.md",
+        title: "Interview Scripts",
+        icon: "💬",
+        type: "guide",
+      },
+      {
+        id: "08-thank-you",
+        file: "08-thank-you-and-follow-up.md",
+        title: "Thank-You and Follow-Up Emails",
+        icon: "✉️",
+        type: "guide",
+      },
     ],
   },
 
   // ── $47-67 TIER ────────────────────────────────────────
+  "outreach-templates": {
+    slug: "outreach-templates",
+    name: "Outreach and Email Templates",
+    price: 19,
+    currency: "CAD",
+    tier: "$19-29",
+    description:
+      "60+ templates to reach hiring managers directly: cold emails, follow-ups, LinkedIn messages, referrals, and the thank-you that gets remembered. With a Claude skill that personalizes them.",
+    stripePriceEnvVar: "STRIPE_OUTREACH_TEMPLATES_PRICE_ID",
+    guidesDir: "outreach-templates-guides",
+    badge: "New",
+    guides: [
+      {
+        id: "01-one-week",
+        file: "01-land-an-interview-in-1-week.md",
+        title: "Land an Interview in 1 Week",
+        icon: "🎯",
+        type: "guide",
+      },
+      {
+        id: "02-hiring-managers",
+        file: "02-hiring-manager-cold-emails.md",
+        title: "Hiring Manager Cold Emails",
+        icon: "📧",
+        type: "guide",
+      },
+      {
+        id: "03-follow-ups",
+        file: "03-follow-ups.md",
+        title: "Follow-Ups",
+        icon: "🔁",
+        type: "guide",
+      },
+      {
+        id: "04-linkedin",
+        file: "04-linkedin-requests-and-messages.md",
+        title: "LinkedIn Requests and Messages",
+        icon: "💼",
+        type: "guide",
+      },
+      {
+        id: "05-referrals",
+        file: "05-referrals-and-informational-interviews.md",
+        title: "Referrals and Informational Interviews",
+        icon: "🤝",
+        type: "guide",
+      },
+      {
+        id: "06-thank-you",
+        file: "06-thank-you-emails.md",
+        title: "Thank-You Emails",
+        icon: "🙏",
+        type: "guide",
+      },
+      {
+        id: "07-networking",
+        file: "07-networking-without-the-awkward.md",
+        title: "Networking Without the Awkward",
+        icon: "☕",
+        type: "guide",
+      },
+    ],
+  },
+  "salary-negotiation": {
+    slug: "salary-negotiation",
+    name: "Salary Negotiation Scripts and Advice",
+    price: 29,
+    currency: "CAD",
+    tier: "$19-29",
+    description:
+      "Word-for-word scripts for every stage of the offer, my advice on how to use them, and a Claude negotiation coach that drafts your counter and rehearses the call with you.",
+    stripePriceEnvVar: "STRIPE_SALARY_NEGOTIATION_PRICE_ID",
+    guidesDir: "salary-negotiation-guides",
+    badge: "New",
+    guides: [
+      {
+        id: "01-advice",
+        file: "01-how-to-negotiate-your-offer.md",
+        title: "How to Negotiate Your Offer",
+        icon: "🧭",
+        type: "guide",
+      },
+      {
+        id: "02-recruiter-call",
+        file: "02-recruiter-call-and-the-salary-question.md",
+        title: "The Recruiter Call and the Salary Question",
+        icon: "📞",
+        type: "guide",
+      },
+      {
+        id: "03-counter",
+        file: "03-counter-offer-scripts.md",
+        title: "Counter-Offer Scripts",
+        icon: "💬",
+        type: "guide",
+      },
+      {
+        id: "04-beyond-base",
+        file: "04-beyond-base-pay-scripts.md",
+        title: "Beyond Base Pay",
+        icon: "🎁",
+        type: "guide",
+      },
+      {
+        id: "05-tricky",
+        file: "05-tricky-moments.md",
+        title: "Tricky Moments",
+        icon: "⚠️",
+        type: "guide",
+      },
+      {
+        id: "06-worksheet",
+        file: "06-offer-evaluation-worksheet.md",
+        title: "Offer Evaluation Worksheet",
+        icon: "🧮",
+        type: "guide",
+      },
+    ],
+  },
+  "complete-toolkit": {
+    slug: "complete-toolkit",
+    name: "The Complete Job Search Toolkit",
+    price: 49,
+    currency: "CAD",
+    tier: "$47-67",
+    description:
+      "Everything in one bundle: the Career Prompt Vault, Salary Number Generator, Outreach and Email Templates, Interview Confidence Kit, and Salary Negotiation Scripts and Advice. Plus bonus rejection and resignation scripts.",
+    stripePriceEnvVar: "STRIPE_COMPLETE_TOOLKIT_PRICE_ID",
+    guidesDir: "complete-toolkit-guides",
+    badge: "Best value",
+    includes: ["vault", "salary-generator", "outreach-templates", "interview-confidence", "salary-negotiation"],
+    guides: [
+      {
+        id: "01-rejection",
+        file: "01-rejection-response-scripts.md",
+        title: "Bonus: Rejection Response Scripts",
+        icon: "🔄",
+        type: "guide",
+      },
+      {
+        id: "02-resignation",
+        file: "02-resignation-and-transition-scripts.md",
+        title: "Bonus: Resignation and Transition Scripts",
+        icon: "🚪",
+        type: "guide",
+      },
+    ],
+  },
   "career-change-command-center": {
     slug: "career-change-command-center",
     name: "The Complete Career Change Command Center",
@@ -658,6 +836,14 @@ export function getProductsByTier(
 ): Product[] {
   return Object.values(PRODUCTS).filter((p) => p.tier === tier);
 }
+
+/** Bundles that include a product (so a bundle purchase opens it). */
+export function bundlesIncluding(slug: string): string[] {
+  return Object.values(PRODUCTS).filter((p) => p.includes?.includes(slug)).map((p) => p.slug);
+}
+
+/** Single prices for products not in PRODUCTS (sold on their own pages). */
+export const OTHER_PRICES: Record<string, number> = { vault: 9, "layoff-survival-kit": 67 };
 
 // Helper to get a product by slug (returns undefined if not found)
 export function getProduct(slug: string): Product | undefined {
