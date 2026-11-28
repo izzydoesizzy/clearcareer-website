@@ -21,6 +21,7 @@ const { tone = "dark", align = "start", class: className = "" } = Astro.props;
 <style>
   .pb { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 28px; }
   .pb--center { justify-content: center; }
+  .pb--center .pb__text { text-align: center; align-items: center; }
   /* Centred under a centred hero on phones and tablets, left-aligned once the hero goes side by side */
   .pb--responsive { justify-content: center; }
   .pb--responsive .pb__text { text-align: center; align-items: center; }
