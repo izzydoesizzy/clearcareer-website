@@ -16,20 +16,13 @@ export const POST: APIRoute = async ({ url }) => {
     const stripe = new Stripe(stripeKey);
     const baseUrl = url.origin;
 
-    const priceId = import.meta.env.STRIPE_LAYOFF_KIT_PRICE_ID;
-    if (!priceId) {
-      return new Response(JSON.stringify({ error: "Layoff Kit price is not configured" }), {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
-      });
-    }
-
     const session = await stripe.checkout.sessions.create({
       ui_mode: "embedded_page",
       mode: "payment",
       payment_method_types: ["card"],
       allow_promotion_codes: true,
-      line_items: [{ price: priceId, quantity: 1 }],
+      // $9 CAD, set here so the charge always matches the page (the old Stripe price was $67).
+      line_items: [{ price_data: { currency: "cad", unit_amount: 900, product_data: { name: "Layoff Survival Kit" } }, quantity: 1 }],
       metadata: { product: "layoff-survival-kit" },
       return_url: `${baseUrl}/layoff-survival-kit/access/success?session_id={CHECKOUT_SESSION_ID}`,
     });

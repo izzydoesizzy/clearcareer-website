@@ -3,44 +3,21 @@ import PageLayout from "@layouts/PageLayout.astro";
 
 const tiers = [
   {
-    label: "Free Resources",
-    sublabel: "Email signup for instant access",
-    products: [
-      { name: "ADHD Job Search Survival Cheat Sheet", price: "Free", description: "5 immediate hacks for job searching with ADHD. Built by someone who gets it.", href: "/products/adhd-cheat-sheet", cta: "Get Free Access", badge: "Free" },
-      { name: "Job Search Self-Diagnostic Scorecard", price: "Free", description: "Find out where your job search is breaking down. 10 questions, 5 dimensions.", href: "/products/job-search-scorecard", cta: "Get Free Access", badge: "Free" },
-      { name: "Rejection Reframe Card Deck", price: "Free", description: "10 printable cards with evidence-based CBT reframes for common rejection scenarios.", href: "/products/rejection-cards", cta: "Get Free Access", badge: "Free" },
-      { name: "50 Ghost Job Red Flags Checklist", price: "Free", description: "Stop wasting time on jobs that don't exist. 50 red flags across 5 categories.", href: "/products/ghost-job-checklist", cta: "Get Free Access", badge: "Free" },
-    ],
-  },
-  {
     label: "$9 Quick Wins",
     sublabel: "Solve one specific problem fast",
     products: [
       { name: "Career Prompt Vault", price: "$9 CAD", description: "6 Claude skills (including the Achievement Interviewer) and 50 copy-paste prompts for ChatGPT, Gemini and more.", href: "/tools/career-prompt-vault", cta: "Learn More", badge: "Claude skills", img: "/images/products/vault/cover.webp" },
-      { name: "ADHD Job Seeker's Focus Kit", price: "$9 CAD", description: "Energy management, dopamine-friendly tracking, and RSD tools for ADHD job seekers.", href: "/products/adhd-focus-kit", cta: "Learn More", badge: "New" },
-      { name: "LinkedIn Detox + Comparison Recovery", price: "$9 CAD", description: "Research-backed framework for using LinkedIn strategically without the emotional damage.", href: "/products/linkedin-detox", cta: "Learn More", badge: "New" },
       { name: "The Salary Number Generator", price: "$9 CAD", description: "Your anchor, target and walk-away numbers with word-for-word scripts, plus a Claude skill.", href: "/products/salary-generator", cta: "Learn More", badge: "Claude skill", img: "/images/products/salary-generator/cover.webp" },
+      { name: "Layoff Survival Kit", price: "$9 CAD", description: "Everything you need in the first 72 hours after a layoff: severance scripts, a severance calculator, financial planning, employment lawyers and an action plan. Built for Canada.", href: "/layoff-survival-kit", cta: "Learn More", badge: "Most Popular" },
     ],
   },
   {
     label: "$19 to $29 Systems",
     sublabel: "Complete frameworks that stand alone",
     products: [
-      { name: "Job Search Emotional Survival Kit", price: "$24 CAD", description: "CBT and ACT-based tools for the psychological toll of job searching. 8 evidence-based guides.", href: "/products/emotional-survival-kit", cta: "Learn More", badge: "New" },
       { name: "Outreach and Email Templates", price: "$19 CAD", description: "80+ templates to reach hiring managers directly, plus a Claude skill that personalizes them.", href: "/products/outreach-templates", cta: "Learn More", badge: "Claude skill", img: "/images/products/outreach-templates/cover.webp" },
-      { name: "Salary Negotiation Scripts and Advice", price: "$29 CAD", description: "Scripts for every stage of the offer, the advice behind them, and a Claude negotiation coach.", href: "/products/salary-negotiation", cta: "Learn More", badge: "Claude skill", img: "/images/products/salary-negotiation/cover.webp" },
-      { name: "ADHD Career Change Workbook", price: "$24 CAD", description: "A career change system designed for how ADHD brains actually work. 6 guides.", href: "/products/adhd-career-change", cta: "Learn More", badge: "New" },
       { name: "The Interview Confidence Kit", price: "$19 CAD", description: "STAR stories, mock interviews with a Claude coach, answer frameworks and thank-you emails.", href: "/products/interview-confidence", cta: "Learn More", badge: "Claude skill", img: "/images/products/interview-confidence/cover.webp" },
-    ],
-  },
-  {
-    label: "$47 to $67 Complete Systems",
-    sublabel: "Everything you need in one place",
-    products: [
-      { name: "Layoff Survival Kit", price: "$67 CAD", description: "Everything you need in the first 72 hours after a layoff. Severance scripts, financial planning, lawyers, action plan.", href: "/layoff-survival-kit", cta: "Learn More", badge: "Most Popular" },
-      { name: "ADHD Job Search Command Center", price: "$57 CAD", description: "The complete job search system designed for how your brain actually works. 8 modules.", href: "/products/adhd-command-center", cta: "Learn More", badge: "Flagship" },
-      { name: "Career Change Command Center", price: "$47 CAD", description: "Everything you need to change careers without burning it all down. 7 modules.", href: "/products/career-change-command-center", cta: "Learn More", badge: "New" },
-      { name: "The Over-40 Career Toolkit", price: "$47 CAD", description: "Resume, LinkedIn, interview, and strategy tools built for 20+ years of experience.", href: "/products/over-40-toolkit", cta: "Learn More", badge: "New" },
+      { name: "Salary Negotiation Scripts and Advice", price: "$29 CAD", description: "Scripts for every stage of the offer, the advice behind them, and a Claude negotiation coach.", href: "/products/salary-negotiation", cta: "Learn More", badge: "Claude skill", img: "/images/products/salary-negotiation/cover.webp" },
     ],
   },
 ];

@@ -21,6 +21,8 @@ export interface Product {
   includes?: string[];
   /** No longer sold on its own: its page points to `replacedBy`, existing access links keep working. */
   retired?: boolean;
+  /** Hidden for now: off the shop, its sales page redirects to /shop, existing access links keep working. */
+  hidden?: boolean;
   replacedBy?: string;
 }
 
@@ -28,6 +30,7 @@ export const PRODUCTS: Record<string, Product> = {
   // ── FREE TIER ──────────────────────────────────────────
   "adhd-cheat-sheet": {
     slug: "adhd-cheat-sheet",
+    hidden: true,
     name: "ADHD Job Search Survival Cheat Sheet",
     price: 0,
     currency: "CAD",
@@ -49,6 +52,7 @@ export const PRODUCTS: Record<string, Product> = {
   },
   "job-search-scorecard": {
     slug: "job-search-scorecard",
+    hidden: true,
     name: "Job Search Self-Diagnostic Scorecard",
     price: 0,
     currency: "CAD",
@@ -70,6 +74,7 @@ export const PRODUCTS: Record<string, Product> = {
   },
   "rejection-cards": {
     slug: "rejection-cards",
+    hidden: true,
     name: "Rejection Reframe Card Deck",
     price: 0,
     currency: "CAD",
@@ -91,6 +96,7 @@ export const PRODUCTS: Record<string, Product> = {
   },
   "ghost-job-checklist": {
     slug: "ghost-job-checklist",
+    hidden: true,
     name: "50 Ghost Job Red Flags Checklist",
     price: 0,
     currency: "CAD",
@@ -114,6 +120,7 @@ export const PRODUCTS: Record<string, Product> = {
   // ── $9 TIER ────────────────────────────────────────────
   "adhd-focus-kit": {
     slug: "adhd-focus-kit",
+    hidden: true,
     name: "ADHD Job Seeker's Focus Kit",
     price: 9,
     currency: "CAD",
@@ -163,6 +170,7 @@ export const PRODUCTS: Record<string, Product> = {
   },
   "linkedin-detox": {
     slug: "linkedin-detox",
+    hidden: true,
     name: "LinkedIn Detox + Comparison Recovery Guide",
     price: 9,
     currency: "CAD",
@@ -230,6 +238,7 @@ export const PRODUCTS: Record<string, Product> = {
   // ── $19-29 TIER ────────────────────────────────────────
   "emotional-survival-kit": {
     slug: "emotional-survival-kit",
+    hidden: true,
     name: "Job Search Emotional Survival Kit",
     price: 24,
     currency: "CAD",
@@ -365,6 +374,7 @@ export const PRODUCTS: Record<string, Product> = {
   },
   "adhd-career-change": {
     slug: "adhd-career-change",
+    hidden: true,
     name: "ADHD Career Change Workbook",
     price: 24,
     currency: "CAD",
@@ -641,6 +651,7 @@ export const PRODUCTS: Record<string, Product> = {
   },
   "career-change-command-center": {
     slug: "career-change-command-center",
+    hidden: true,
     name: "The Complete Career Change Command Center",
     price: 47,
     currency: "CAD",
@@ -704,6 +715,7 @@ export const PRODUCTS: Record<string, Product> = {
   },
   "over-40-toolkit": {
     slug: "over-40-toolkit",
+    hidden: true,
     name: "The Over-40 Career Toolkit",
     price: 47,
     currency: "CAD",
@@ -760,6 +772,7 @@ export const PRODUCTS: Record<string, Product> = {
   },
   "adhd-command-center": {
     slug: "adhd-command-center",
+    hidden: true,
     name: "The ADHD Job Search Command Center",
     price: 57,
     currency: "CAD",
@@ -843,7 +856,7 @@ export function bundlesIncluding(slug: string): string[] {
 }
 
 /** Single prices for products not in PRODUCTS (sold on their own pages). */
-export const OTHER_PRICES: Record<string, number> = { vault: 9, "layoff-survival-kit": 67 };
+export const OTHER_PRICES: Record<string, number> = { vault: 9, "layoff-survival-kit": 9 };
 
 // Helper to get a product by slug (returns undefined if not found)
 export function getProduct(slug: string): Product | undefined {

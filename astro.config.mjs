@@ -33,5 +33,17 @@ export default defineConfig({
     // Retired products: folded into the new packs. Buyers' access links still work.
     '/products/script-vault': '/products/complete-toolkit',
     '/products/cold-outreach-pack': '/products/outreach-templates',
+    // Hidden for now (see src/pages/products/_hidden/README.md).
+    '/products/adhd-cheat-sheet': '/shop',
+    '/products/job-search-scorecard': '/shop',
+    '/products/rejection-cards': '/shop',
+    '/products/ghost-job-checklist': '/shop',
+    '/products/adhd-focus-kit': '/shop',
+    '/products/linkedin-detox': '/shop',
+    '/products/emotional-survival-kit': '/shop',
+    '/products/adhd-career-change': '/shop',
+    '/products/career-change-command-center': '/shop',
+    '/products/over-40-toolkit': '/shop',
+    '/products/adhd-command-center': '/shop',
   },
 });

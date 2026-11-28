@@ -759,7 +759,7 @@ export default function RunwayStory() {
           <div className="section" style={{ padding: "24px", background: "#EFF5FF", borderRadius: "12px", marginBottom: "20px", border: "1px solid rgba(1,97,239,0.15)" }}>
             <div style={{ fontSize: "16px", fontWeight: 700, color: "#030620" }}>Just got laid off? Get the Layoff Survival Kit.</div>
             <div style={{ fontSize: "13px", color: "#6b7280", marginTop: "6px", lineHeight: 1.6 }}>
-              Severance negotiation playbook with email scripts. Employment lawyer directory (30+ firms). Tax strategies for your severance payout. 30/60/90 day job search plan. 10 complete modules for $67 CAD.
+              Severance negotiation playbook with email scripts. Employment lawyer directory (30+ firms). Tax strategies for your severance payout. 30/60/90 day job search plan. 10 complete modules for $9 CAD.
             </div>
             <div style={{ marginTop: "12px" }}>
               <a href="https://joinclearcareer.com/layoff-survival-kit" style={{ display: "inline-block", background: "#0161EF", color: "white", padding: "10px 24px", borderRadius: "8px", fontSize: "13px", fontWeight: 600, textDecoration: "none" }}>

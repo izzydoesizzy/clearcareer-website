@@ -25,13 +25,17 @@ what can be sold, how ready it is, and what it needs first. Prices are CAD.
 
 **Retire as standalone products (folded into the above):** Script Vault ($29, its checkout never worked) and the Cold Outreach Script Pack ($9, it duplicates Script Vault 01).
 
+**Hidden for now (Nov 28, 2026):** all 11 older shop products below (the 4 free downloads and the 7 paid ones). Their pages redirect to /shop and they're off the shop; past buyers' links still work. How to bring one back: `src/pages/products/_hidden/README.md`.
+
+**Layoff Survival Kit:** stays on sale, now **$9** (was $67). The checkout charges $9 directly, so the old $67 Stripe price is no longer used.
+
 ---
 
 ## 2. Second pass: existing products that need a refresh
 
 | Product | Price now | What it needs | Source |
 |---|---|---|---|
-| Layoff Survival Kit (on sale) | $67 | Already polished. Add a "Layoff Coach" skill (severance questions, runway, first-72-hours plan). Very Canadian, so say that on the page. | website `src/data/layoff-kit-guides/`; client-manager `content/products/layoff-survival-kit/` |
+| Layoff Survival Kit (on sale) | $9 (was $67) | Already polished. Add a "Layoff Coach" skill (severance questions, runway, first-72-hours plan). Very Canadian, so say that on the page. | website `src/data/layoff-kit-guides/`; client-manager `content/products/layoff-survival-kit/` |
 | Job Search Emotional Survival Kit | $24 | Ready. Check the disclaimers and crisis lines. | `emotional-survival-kit` (8 guides, about 13,000 words) |
 | ADHD line (4 products) | $9 to $57 | Merge into 2: a $9 cheat sheet and focus kit, and a $47 ADHD Command Center that includes career change. Add a non-medical disclaimer to every guide. | `adhd-cheat-sheet`, `adhd-focus-kit`, `adhd-command-center`, `adhd-career-change` |
 | Career Change Command Center | $47 | Ready. Heavy on tables, so a worksheet edition (Google Sheets) would add value. Shares a runway guide with three other products. | `career-change-command-center` (7 guides) |

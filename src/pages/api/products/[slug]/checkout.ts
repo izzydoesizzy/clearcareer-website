@@ -15,6 +15,11 @@ export const POST: APIRoute = async ({ params, request }) => {
 
   const product = PRODUCTS[slug];
 
+  // Hidden and retired products aren't for sale (their access links still work for past buyers).
+  if (product.hidden || product.retired) {
+    return new Response(JSON.stringify({ error: "This product isn't available right now" }), { status: 404 });
+  }
+
   if (product.tier === "free") {
     return new Response(
       JSON.stringify({ error: "Free products do not require checkout" }),

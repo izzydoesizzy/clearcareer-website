@@ -113,7 +113,7 @@ function buildReportEmail(data: {
         <tr><td style="padding:24px 32px; background:${COLORS.blueBg};">
           <div style="font-size:16px; font-weight:700; color:${COLORS.navy};">Just got laid off? Get the Layoff Survival Kit.</div>
           <div style="font-size:13px; color:${COLORS.grey500}; margin-top:6px; line-height:1.6;">
-            Severance negotiation scripts. Employment lawyer directory. Tax strategies. 30/60/90 day job search plan. 10 complete modules for $67 CAD.
+            Severance negotiation scripts. Employment lawyer directory. Tax strategies. 30/60/90 day job search plan. 10 complete modules for $9 CAD.
           </div>
           <div style="margin-top:16px;">
             <a href="${SITE_URL}/layoff-survival-kit" style="display:inline-block; background:${COLORS.blue}; color:white; padding:12px 28px; border-radius:8px; font-size:14px; font-weight:600; text-decoration:none;">
