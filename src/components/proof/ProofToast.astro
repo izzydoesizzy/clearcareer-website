@@ -40,8 +40,10 @@ const slides = wins.filter((w) => !w.face);
     const show = (n: number) => { slides[i].hidden = true; i = n % slides.length; slides[i].hidden = false; };
     const start = () => { if (!still) timer = window.setInterval(() => show(i + 1), 7000); };
     const stop = () => window.clearInterval(timer);
+    // Wait until the visitor has scrolled past the first screen, so the popup never covers
+    // the hero's headline, proof or buttons (on a 768px-tall laptop, 600px wasn't enough).
     const open = () => {
-      if (window.scrollY < 600) return;
+      if (window.scrollY < Math.max(600, window.innerHeight)) return;
       window.removeEventListener("scroll", open);
       toast.hidden = false;
       requestAnimationFrame(() => toast.classList.add("is-in"));

@@ -12,6 +12,7 @@ import PricingCard from "@components/PricingCard.astro";
 import { offer } from "@data/llu";
 import CTASection from "@components/CTASection.astro";
 import AiToolsGrid from "@components/AiToolsGrid.astro";
+import BlogCardThumbnail from "@components/BlogCardThumbnail.astro";
 import { getCollection } from "astro:content";
 
 import IndustryStatCard from "@components/IndustryStatCard.astro";
@@ -43,7 +44,7 @@ const latestPosts = (await getCollection("blog", ({ data }) => {
     secondaryCTA={{ text: "See Land and Level Up", href: "/land-and-level-up" }}
     trustText="Free 20-minute call · No commitment · No pressure"
   >
-    <ProofBar slot="proof" tone="dark" />
+    <ProofBar slot="proof" tone="dark" align="responsive" />
   </Hero>
 
   {/* ── 2. Stats Bar ── */}
@@ -297,7 +298,13 @@ const latestPosts = (await getCollection("blog", ({ data }) => {
               href={`/blog/${post.id}`}
               class="group overflow-hidden rounded-xl border border-border bg-white shadow-sm transition-shadow hover:shadow-md"
             >
-              <div class="aspect-video bg-blue-bg" />
+              {post.data.image ? (
+                <div class="aspect-video overflow-hidden">
+                  <img src={post.data.image} alt={post.data.title} class="h-full w-full object-cover" loading="lazy" decoding="async" />
+                </div>
+              ) : (
+                <BlogCardThumbnail title={post.data.title} category={post.data.category} />
+              )}
               <div class="p-6">
                 {post.data.tags.length > 0 && (
                   <div class="mb-3 flex flex-wrap gap-2">

@@ -4,6 +4,10 @@
  * (izzydoesizzy/clearcareerv2-2024, Features2 + ItemGrid2), same look and same Flat Color icons,
  * with cards for the tools that exist now. Used on the homepage and the Land and Level Up page.
  *
+ * The cards keep the 2024 look; the heading and text use the host page's own type, so nothing
+ * stands out: `variant="home"` matches the homepage sections (DM Serif heading, Inter body),
+ * `variant="llu"` uses the Land and Level Up classes (llu-eyebrow, llu-h2, llu-lead, llu-title).
+ *
  * Icons: Flat Color Icons (MIT), saved in src/icons/flat-color/ from the Iconify API.
  */
 import approval from "../icons/flat-color/approval.svg?raw";
@@ -16,9 +20,9 @@ import gallery from "../icons/flat-color/gallery.svg?raw";
 import highPriority from "../icons/flat-color/high-priority.svg?raw";
 
 interface Props {
-  class?: string;
+  variant?: "home" | "llu";
 }
-const { class: extraClass = "" } = Astro.props;
+const { variant = "home" } = Astro.props;
 
 // Size the icons with CSS, not the 1em the Iconify files ship with.
 const icon = (svg: string) => svg.replace(/\swidth="1em"\sheight="1em"/, ' width="40" height="40" aria-hidden="true"');
@@ -72,24 +76,44 @@ const items = [
 ];
 ---
 
-<section class={`py-16 md:py-24 ${extraClass}`} aria-labelledby="ai-tools-heading">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6">
-    <div class="mx-auto mb-10 max-w-3xl text-center md:mb-12">
-      <p class="text-base font-bold uppercase tracking-wide text-blue">Our favourite tools</p>
-      <h2 id="ai-tools-heading" class="mt-2 text-4xl font-bold leading-tight tracking-tighter text-navy md:text-5xl">
-        AI Prompts, Tools, &amp; Templates
-      </h2>
-      <p class="mt-4 text-xl text-text-muted">It's like Batman's Utility Belt, but for your job search</p>
+{variant === "llu" ? (
+  <section class="llu-band llu-band--white" id="ai-tools" aria-labelledby="ai-tools-heading">
+    <div class="llu-wrap">
+      <div class="llu-head">
+        <p class="llu-eyebrow">Our favourite tools</p>
+        <h2 id="ai-tools-heading" class="llu-h2">AI prompts, tools and templates.</h2>
+        <p class="llu-lead">It's like Batman's utility belt, but for your job search.</p>
+      </div>
+      <div class="llu-mt-48 grid gap-4 sm:grid-cols-2 md:grid-cols-3 md:gap-6">
+        {items.map((item) => (
+          <div class="flex flex-col rounded-lg border border-white/20 bg-white p-6 shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
+            <span class="mb-6 block h-10 w-10" set:html={icon(item.icon)} />
+            <h3 class="llu-title">{item.title}</h3>
+            <p class="llu-cap mt-2">{item.description}</p>
+          </div>
+        ))}
+      </div>
     </div>
-
-    <div class="grid gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-3">
-      {items.map((item) => (
-        <div class="relative flex flex-col rounded-lg border border-white/20 bg-white p-6 shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
-          <span class="mb-6 block h-10 w-10" set:html={icon(item.icon)} />
-          <h3 class="text-xl font-bold text-navy">{item.title}</h3>
-          <p class="mt-2 text-text-muted">{item.description}</p>
-        </div>
-      ))}
+  </section>
+) : (
+  <section class="py-16 md:py-24" aria-labelledby="ai-tools-heading">
+    <div class="mx-auto max-w-[1080px] px-4 sm:px-6 lg:px-8">
+      <div class="text-center" data-animate="fade-up">
+        <p class="mb-4 text-sm font-semibold uppercase tracking-widest text-blue">Our Favourite Tools</p>
+        <h2 id="ai-tools-heading" class="font-display text-[clamp(1.5rem,3vw,2.25rem)] leading-[1.15] text-navy">
+          AI Prompts, Tools, &amp; Templates
+        </h2>
+        <p class="mx-auto mt-4 max-w-[720px] text-lg leading-relaxed text-text-muted">It's like Batman's Utility Belt, but for your job search.</p>
+      </div>
+      <div class="mt-12 grid gap-4 sm:grid-cols-2 md:grid-cols-3 md:gap-6" data-animate-stagger>
+        {items.map((item) => (
+          <div class="flex flex-col rounded-lg border border-white/20 bg-white p-6 shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
+            <span class="mb-6 block h-10 w-10" set:html={icon(item.icon)} />
+            <h3 class="text-base font-bold text-navy">{item.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-text-muted">{item.description}</p>
+          </div>
+        ))}
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+)}
