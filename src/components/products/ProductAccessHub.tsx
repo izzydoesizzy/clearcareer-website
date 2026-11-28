@@ -29,7 +29,7 @@ interface ProductAccessHubProps {
 
 function MarkdownContent({ content }: { content: string }) {
   return (
-    <div className="prose prose-sm max-w-none prose-headings:font-semibold prose-h1:text-2xl prose-h2:text-xl prose-h3:text-lg prose-a:text-[#0161EF]">
+    <div className="prose prose-sm max-w-none break-words prose-headings:font-semibold prose-h1:text-2xl prose-h2:text-xl prose-h3:text-lg prose-a:text-[#0161EF] prose-table:block prose-table:overflow-x-auto prose-pre:overflow-x-auto">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
@@ -108,16 +108,17 @@ export default function ProductAccessHub({
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="sticky top-0 z-50 border-b border-gray-200 bg-white">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
-          <div>
-            <a href="/" className="text-lg font-bold text-[#0161EF]">ClearCareer</a>
-            <span className="ml-2 text-sm text-gray-500">{productName}</span>
+        <div className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-3 px-4">
+          <div className="flex min-w-0 items-baseline">
+            <a href="/" className="shrink-0 text-lg font-bold text-[#0161EF]">ClearCareer</a>
+            <span className="ml-2 truncate text-sm text-gray-500">{productName}</span>
           </div>
           <span className="hidden text-sm text-gray-400 sm:inline">{buyerEmail}</span>
         </div>
       </header>
 
-      <div className="mx-auto flex max-w-7xl">
+      {/* Stacked on phones (menu bar above the content), side by side from md up. */}
+      <div className="mx-auto flex max-w-7xl flex-col md:flex-row">
         <nav className="hidden w-72 shrink-0 border-r border-gray-200 bg-white p-4 md:block" aria-label="Product sections">
           {(["start", "tools", "guides"] as const).map((grp) => {
             const items = sections.filter((s) => s.group === grp);
@@ -152,16 +153,26 @@ export default function ProductAccessHub({
           )}
         </nav>
 
-        <div className="w-full border-b border-gray-200 bg-white p-4 md:hidden">
+        <div className="sticky top-14 z-40 w-full border-b border-gray-200 bg-white px-4 py-3 md:hidden">
           <label className="sr-only" htmlFor="section-select">Section</label>
-          <select id="section-select" value={active} onChange={(e) => open(e.target.value)} className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm">
+          <select id="section-select" value={active} onChange={(e) => open(e.target.value)} className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-base">
             {sections.map((s) => (
               <option key={s.id} value={s.id}>{s.icon} {s.label}</option>
             ))}
           </select>
+          {extraDownloads.length > 0 && (
+            <div className="mt-2 grid grid-cols-2 gap-2">
+              {extraDownloads.map((d) => (
+                // Short labels on phones: the full ones ("... (setup steps inside each folder)") wrap badly.
+                <a key={d.file} href={download(d.file)} className="truncate rounded-lg border border-[#0161EF] px-2 py-1.5 text-center text-sm font-medium text-[#0161EF]">
+                  ⬇ {d.label.replace(/\s*\(.*\)\s*$/, "")}
+                </a>
+              ))}
+            </div>
+          )}
         </div>
 
-        <main className="flex-1 p-6 md:p-10">
+        <main className="min-w-0 flex-1 px-4 py-6 sm:p-6 md:p-10">
           <div className="mx-auto max-w-3xl">
             {active === "start" && startHere && (
               <>
