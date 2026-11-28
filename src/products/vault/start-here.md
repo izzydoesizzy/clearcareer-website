@@ -24,12 +24,6 @@ Hey, I'm Izzy. This is the prompt library I built for my ClearCareer coaching pr
 
 **Project instructions.** One page you paste into a Claude Project, a ChatGPT Custom GPT or a Gemini Gem, so the prompts work there too.
 
-**3 bonus guides.**
-
-- **The AI Job Search Prompt Pack:** 15 more prompts across 5 parts of your search.
-- **The AI Salary Research Prompt Pack:** 7 prompts to research your number and prep your negotiation.
-- **How to Answer "Tell Me About Yourself":** a 5-part framework, worked examples and a practice script.
-
 ## Your first 10 minutes
 
 Let's get you one real win today.
@@ -80,7 +74,7 @@ Small steps, every day. Keep showing up.
 - **Results vary.** These tools make the work faster and clearer, but the work is still yours: applying, reaching out and showing up.
 - **Keep your facts true.** Never let an AI add a number, title, employer or date you can't back up. If you see "(estimate, confirm)", check it before you use it.
 - **Read everything before you send it.** Make every draft sound like you.
-- **Salary and negotiation help is general guidance, not legal or financial advice.** Rules differ between provinces and states, so check your contract and your local employment standards.
+- **Salary and negotiation help:** This is general guidance, not legal or financial advice. Rules differ between provinces and states, so check your contract and your local employment standards.
 - **Need help?** Reply to your purchase email and we'll sort it out.
 
 Izzy

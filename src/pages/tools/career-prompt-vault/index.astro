@@ -27,10 +27,8 @@ const valueStack = [
   { item: "50 AI Career Frameworks (6 categories)", value: 197 },
   { item: "Custom AI System Prompt", value: 47 },
   { item: "6 Claude skills, with an install guide", value: 27 },
-  { item: "Quick-Start Guide: 4 Wins in 30 Minutes", value: 27 },
-  { item: "Bonus: AI Job Search Prompt Pack (15 prompts)", value: 47 },
-  { item: "Bonus: Salary Research Prompt Pack (7 prompts)", value: 27 },
-  { item: 'Bonus: "Tell Me About Yourself" Guide', value: 27 },
+  { item: "The Achievement Interviewer (turns your answers into resume bullets)", value: 47 },
+  { item: "Start Here guide and 7-day plan", value: 27 },
 ];
 
 const totalValue = valueStack.reduce((sum, v) => sum + v.value, 0);
@@ -41,11 +39,11 @@ const faqItems = [
   { q: "How is this different from just asking AI for career help?", a: "AI gives you generic advice. The Career Prompt Vault gives you the exact frameworks from 300+ coaching engagements, structured prompts that produce specific outputs you can use immediately." },
   { q: "How long does setup take?", a: "About 5 minutes. Claude users upload 6 small skills (the install guide walks you through it), and everyone else copies prompts straight into ChatGPT, Gemini or any other AI tool." },
   { q: "What if it doesn't work for me?", a: "You have a 48-hour money-back guarantee. If it isn't useful, email us. Full refund, no questions asked. You keep everything." },
-  { q: "What exactly do I get?", a: "6 Claude skills (including the Achievement Interviewer, which asks you questions and turns your answers into resume bullets with real numbers), the same 50 frameworks as copy-paste prompts, setup text for Claude Projects, ChatGPT GPTs and Gemini Gems, a Start Here guide, and 3 bonus resources. Lifetime access." },
+  { q: "What exactly do I get?", a: "6 Claude skills (including the Achievement Interviewer, which asks you questions and turns your answers into resume bullets with real numbers), the same 50 frameworks as copy-paste prompts, setup text for Claude Projects, ChatGPT GPTs and Gemini Gems, and a Start Here guide with a 7-day plan. Lifetime access." },
   { q: "Is this the same material from your coaching program?", a: "These are the same prompt frameworks I use with clients. Land and Level Up, my 6-week group program, adds live weekly calls, a resume and LinkedIn rebuild workshop, and personal feedback. The Vault gives you the self-serve toolkit." },
 ];
 
-const sidebarItems = ["6 Claude skills, including the Achievement Interviewer", "50 copy-paste prompts in 6 categories", "Setup for Claude Projects, GPTs and Gems", "Start Here guide and 7-day plan", "3 bonus prompt packs", "Lifetime access"];
+const sidebarItems = ["6 Claude skills, including the Achievement Interviewer", "50 copy-paste prompts in 6 categories", "Setup for Claude Projects, GPTs and Gems", "Start Here guide and 7-day plan", "Lifetime access"];
 ---
 
 <SalesLayout image="/images/products/vault/og.jpg" title={`${PRODUCT_NAME} | ClearCareer`} description="50 AI prompts that turn any AI assistant into your personal career strategist. Resume rewrites, LinkedIn optimization, interview prep, salary negotiation. Just $9.">
@@ -191,7 +189,7 @@ const sidebarItems = ["6 Claude skills, including the Achievement Interviewer", 
             <h2 class="font-display text-[clamp(1.25rem,3vw,1.75rem)] text-navy">Up and running in 5 minutes</h2>
             <div class="mt-6 space-y-5">
               {[
-                { step: "1", title: "Get instant access", desc: "Complete checkout and your vault opens right away: 6 Claude skills, 50 copy-paste prompts, a Start Here guide and bonuses. The link is emailed to you too." },
+                { step: "1", title: "Get instant access", desc: "Complete checkout and your vault opens right away: 6 Claude skills, 50 copy-paste prompts, and a Start Here guide. The link is emailed to you too." },
                 { step: "2", title: "Load into your favourite AI tool", desc: "Upload the skills to Claude, or copy-paste prompts into ChatGPT, Gemini or any AI tool. The install guide covers each one." },
                 { step: "3", title: "Add your resume and go", desc: "Feed in your resume and start generating career assets. Professional summary, LinkedIn headlines, interview answers, salary data." },
               ].map(item => (

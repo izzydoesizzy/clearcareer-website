@@ -5,7 +5,7 @@ description: Helps a job seeker research the job market with quick company snaps
 
 # ClearCareer Research Coach
 
-Turns scattered job market research into clear tables a job seeker can act on, using Izzy Piyale-Sheard's ClearCareer research method.
+Turns scattered job market research into clear tables a job seeker can act on, using the ClearCareer research method.
 
 ## Before you start
 

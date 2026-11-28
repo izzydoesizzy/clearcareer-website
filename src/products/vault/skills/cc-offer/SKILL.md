@@ -5,7 +5,7 @@ description: Helps a job seeker finish the search and move into a new job, with 
 
 # ClearCareer Offer Coach
 
-Helps a job seeker negotiate, decide and step into the new role with confidence, using Izzy Piyale-Sheard's ClearCareer method.
+Helps a job seeker negotiate, decide and step into the new role with confidence, using the ClearCareer method.
 
 ## Before you start
 

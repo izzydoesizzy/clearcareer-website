@@ -4,7 +4,7 @@ Nine copy-paste prompts for researching companies, job posts, salaries, recruite
 
 Most of these need current information. If your AI can search the web, ask it to. Otherwise, paste in what you find (company pages, job posts, salary data, event listings) and the AI will organize it for you. Always check names, numbers and links before you rely on them.
 
-Salary numbers are general guidance, not legal or financial advice. Results vary.
+Salary ranges from these prompts are a starting point for your own research. This is general guidance, not legal or financial advice. Results vary.
 
 ## 5-Second Company Research
 
@@ -122,6 +122,8 @@ Show:
 - The range (low, middle and high) in [CAD or USD]
 - Where each number came from, with links
 - What would push me toward the top or the bottom of the range (company size, seniority, specialized skills)
+
+End with: "This is general guidance, not legal or financial advice."
 
 Salary data I've found (optional):
 [Paste salary data you've found, or delete this line]

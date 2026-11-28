@@ -5,7 +5,7 @@ description: Helps a job seeker write outreach that gets replies, including info
 
 # ClearCareer Outreach Coach
 
-Writes the emails, messages and cover letters that get a job seeker into real conversations, using Izzy Piyale-Sheard's ClearCareer outreach method.
+Writes the emails, messages and cover letters that get a job seeker into real conversations, using the ClearCareer outreach method.
 
 ## Before you start
 
