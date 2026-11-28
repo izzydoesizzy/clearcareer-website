@@ -167,7 +167,7 @@ const upsellTotal = FUNNEL.upsell.amount + upsellTaxAmount;
       </>}
 
       {stage === "upsell" && x && <section class="llu-band"><div class="llu-wrap narrow llu-stack">
-        <p class="paid">✓ Paid. Your {x.bump ? "Prompt Vault and Salary Number Generator are" : "Prompt Vault is"} ready, one step from now.</p>
+        <p class="paid">✓ Paid. Your {x.bump ? "Prompt Vault and Salary Number Generator are" : "Prompt Vault is"} ready. Your links are on the next screen, and in your inbox.</p>
         <div class="llu-card llu-stack">
           <p class="llu-eyebrow">One more thing before you go</p>
           <h1 class="llu-h2">You've got the prompts. Now get the exact words.</h1>
@@ -231,10 +231,10 @@ const upsellTotal = FUNNEL.upsell.amount + upsellTaxAmount;
   .testbar { background: #fff7d6; border-bottom: 1px solid #f0d77a; font-size: 14px; }
   .testbar__row { display: flex; gap: 12px; align-items: center; justify-content: space-between; padding: 8px 0; }
   .testbar__reset { color: var(--llu-blue); text-decoration: underline; cursor: pointer; white-space: nowrap; }
-  .steps { display: flex; gap: 6px; margin: 0; padding: 0; list-style: none; font-size: 13px; color: var(--llu-caption); }
-  .steps li { padding: 4px 10px; border-radius: 999px; border: 1px solid var(--llu-hairline); }
-  .steps .done { color: var(--llu-ink); }
-  .steps .done::before { content: "✓ "; color: var(--llu-blue); }
+  .steps { display: flex; gap: 6px; margin: 0; padding: 0; list-style: none; font-size: 13px; color: rgb(255 255 255 / 0.6); }
+  .steps li { padding: 4px 10px; border-radius: 999px; border: 1px solid rgb(255 255 255 / 0.25); }
+  .steps .done { color: #fff; }
+  .steps .done::before { content: "✓ "; color: #7fb2ff; }
   .steps .on { background: var(--llu-blue); color: #fff; border-color: var(--llu-blue); }
   @media (max-width: 639px) { .steps li:not(.on) { display: none; } }
   .notice-wrap { padding-top: 20px; }
