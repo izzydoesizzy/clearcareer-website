@@ -8,21 +8,24 @@
  * Set up (once): Stripe > Developers > Webhooks > Add endpoint
  *   URL: https://www.joinclearcareer.com/api/stripe   (www: the bare domain redirects, and Stripe won't follow it)
  *
- * Only Land and Level Up payment links are handled: they carry metadata product=land-and-level-up
- * and program=group|private. Every other Stripe sale (Prompt Vault, Layoff Survival Kit, invoices) is ignored.
+ * Land and Level Up payment links carry metadata product=land-and-level-up and program=group|private.
+ * Digital products (Prompt Vault, Layoff Survival Kit, shop products: metadata product=<slug>) get their
+ * Brevo delivery email with access links (src/lib/purchase-emails.ts). Anything else is ignored.
  *   Events: checkout.session.completed, checkout.session.async_payment_succeeded
  *   Then copy the signing secret into Vercel as STRIPE_WEBHOOK_SECRET.
  */
 import type { APIRoute } from 'astro';
+import { serverEnv } from '../../lib/server-env.js';
 import { brevo, hmacHex, parseSigHeader, safeEqual } from '../../lib/brevo-api.js';
-import { programFromAmount, makeToken } from '../../lib/onboarding.js';
+import { programFromAmount, makeToken, toolkitUrl } from '../../lib/onboarding.js';
 import { PROGRAMS } from '../../lib/book-call.js';
 import { getClient, ensureFolder, seatsSold, type ServerEnv } from '../../lib/clients.js';
 import { welcomeEmail, enrolmentNotice } from '../../lib/onboarding-emails.js';
+import { orderFromSession, deliverPurchase } from '../../lib/purchase-emails.js';
 
 export const prerender = false;
 
-const env = import.meta.env as unknown as ServerEnv & { STRIPE_WEBHOOK_SECRET?: string };
+const env = serverEnv() as unknown as ServerEnv & { STRIPE_WEBHOOK_SECRET?: string };
 const json = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json' } });
 
 export const POST: APIRoute = async ({ request }) => {
@@ -38,6 +41,13 @@ export const POST: APIRoute = async ({ request }) => {
   const event = JSON.parse(raw);
   if (!['checkout.session.completed', 'checkout.session.async_payment_succeeded'].includes(event.type)) return json({ ok: true, ignored: event.type });
   const s = event.data?.object || {};
+  if (s.metadata?.product && s.metadata.product !== 'land-and-level-up') {
+    if (s.payment_status !== 'paid') return json({ ok: true, waiting: s.payment_status });
+    const order = await orderFromSession(s, env as unknown as Record<string, unknown>);
+    if (!order) return json({ ok: true, ignored: `unknown product ${s.metadata.product}` });
+    const delivery = await deliverPurchase(env as unknown as Record<string, unknown>, order, { record: true });
+    return delivery === 'failed' ? json({ error: 'email failed, retry' }, 500) : json({ ok: true, delivery });
+  }
   if (s.metadata?.product !== 'land-and-level-up') return json({ ok: true, ignored: 'not a Land and Level Up purchase' });
   if (s.payment_status !== 'paid') return json({ ok: true, waiting: s.payment_status }); // async methods finish later
   const email = String(s.customer_details?.email || s.customer_email || '').trim().toLowerCase();
@@ -76,7 +86,7 @@ export const POST: APIRoute = async ({ request }) => {
 
   const token = env.ONBOARD_SECRET ? await makeToken(email, env.ONBOARD_SECRET) : '';
   if (token) {
-    const w = welcomeEmail({ firstName: first || 'there', program, token });
+    const w = welcomeEmail({ firstName: first || 'there', program, token, toolkitUrl: await toolkitUrl(env as unknown as Record<string, unknown>, email) });
     await api.send({ to: email, toName: first, subject: w.subject, html: w.html, tags: ['welcome'] });
   } else {
     console.error('ONBOARD_SECRET not set: welcome email not sent');

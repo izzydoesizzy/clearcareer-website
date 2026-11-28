@@ -5,17 +5,15 @@ import LluButton from "./LluButton.astro";
 import LluReviewCard from "./LluReviewCard.astro";
 import { faces, originals, videoThumb } from "./images";
 import WinsGrid from "@components/proof/WinsGrid.astro";
-import ReviewWall from "@components/proof/ReviewWall.astro";
-import { winNames } from "@data/proof";
 
 /** The YouTube ID, for the in-page player. */
 const videoId = new URL(VIDEO_URL).searchParams.get("v") ?? VIDEO_URL.split("/").pop();
 
 /**
- * One appearance per person on this page. Cases: Darin, Laura, Blake. "What's inside": Sparsh, Tamara.
+ * One appearance per person on this page. Cases: Darin, Laura, Blake.
  * Beside the video: Kristin. About Izzy: Heidi. Everyone else appears once, below.
  */
-const featured = ["Darin M.", "Laura S.", "Blake M.", "Sparsh K.", "Tamara G.", "Kristin D.", "Heidi P."];
+const featured = ["Darin M.", "Laura S.", "Blake M.", "Kristin D.", "Heidi P."];
 ---
 
 <section class="llu-band llu-band--navy" id="results">
@@ -75,13 +73,11 @@ const featured = ["Darin M.", "Laura S.", "Blake M.", "Sparsh K.", "Tamara G.", 
       <LluReviewCard item={reviews.kristin} variant="big" />
     </div>
 
-    <div class="llu-head llu-mt-72">
-      <p class="llu-eyebrow">In their words</p>
-      <h2 class="llu-h3">More from people I've coached.</h2>
-    </div>
-    <ReviewWall tone="dark" exclude={[...featured, ...winNames]} initial={9} batch={9} class="llu-mt-48" />
+    <p class="llu-center llu-mt-48">
+      <a class="llu-link" href="/testimonials">Read 80+ reviews from clients, colleagues and workshop attendees</a>
+    </p>
 
-    <p class="llu-cap llu-center llu-mt-32">{NEW_PROGRAM_NOTE} {RESULTS_VARY}</p>
+    <p class="llu-cap llu-center llu-mt-32">{RESULTS_VARY}</p>
     <div class="llu-center-row llu-mt-48">
       <LluButton />
     </div>

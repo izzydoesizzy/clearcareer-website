@@ -1,0 +1,407 @@
+---
+/**
+ * Test-mode product funnel (see src/lib/career-funnel-test.ts). Preview deployments only.
+ * Stages: offer (order box + embedded checkout) -> toolkit upgrade (one click) -> if declined, the
+ * outreach templates (one click) -> done (access + Land and Level Up).
+ */
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { serverEnv } from "../lib/server-env";
+import "@/styles/llu.css";
+import { offer, RESULTS_VARY } from "@data/llu";
+import { PRODUCTS } from "@data/product-config";
+import { sandbox, allowedOrigin, state, offerTax, offerAmount, COOKIE, FUNNEL, format, type FunnelState } from "../lib/career-funnel-test";
+import { CATALOG, deliverPurchase, productLink, bundleLinks } from "../lib/purchase-emails";
+import { emailMode } from "../lib/brevo-api";
+
+export const prerender = false;
+Astro.response.headers.set("Cache-Control", "private, no-store");
+Astro.response.headers.set("Referrer-Policy", "same-origin");
+
+const env = serverEnv();
+const stripe = allowedOrigin(Astro.url) ? sandbox() : null;
+const cookie = Astro.cookies.get(COOKIE)?.value;
+let x: FunnelState | null = null;
+let checkFailed = false;
+if (stripe && cookie) {
+  try { x = await state(stripe, cookie); } catch { checkFailed = true; }
+}
+const stage = !x ? "offer" : x.offer ?? "done";
+const notice = Astro.url.searchParams.get("notice") || (Astro.url.searchParams.get("paid") && !x ? "verify" : "");
+
+// Upsell price with tax, worked out for this buyer's address before they click.
+let offerTaxAmount = 0;
+if ((stage === "upsell" || stage === "downsell") && stripe && x) offerTaxAmount = (await offerTax(stripe, x.s, stage)).tax;
+const offerBase = x && (stage === "upsell" || stage === "downsell") ? offerAmount(stage, x.bump) : 0;
+
+// Done: links for each item, and the Brevo email (once per purchase, test inbox only).
+let links: { product: string; name: string; amount: number; url: string; includes?: { product: string; url: string }[] }[] = [];
+let emailed: "sent" | "already" | "off" | "failed" = "off";
+if (stage === "done" && stripe && x) {
+  const st = x;
+  links = await Promise.all(
+    st.lines.map(async (l) => ({
+      ...l,
+      url: await productLink(l.product, st.email, env, Astro.url.origin, st.s.id),
+      ...(PRODUCTS[l.product]?.includes ? { includes: await bundleLinks(l.product, st.email, env, Astro.url.origin, st.s.id) } : {}),
+    })),
+  );
+  if (st.s.metadata?.delivered === "yes") emailed = "already";
+  else if (env.BREVO_API_KEY) {
+    await stripe.checkout.sessions.update(st.s.id, { metadata: { delivered: "yes" } });
+    const m = emailMode(env);
+    const result = await deliverPurchase(
+      env,
+      { ref: st.s.id, email: st.email, name: st.name, firstName: st.firstName, lines: links, subtotal: st.subtotal, tax: st.tax, total: st.total },
+      { record: false, mode: m.mode === "live" ? { ...m, mode: "test" } : m },
+    );
+    emailed = result === "sent" ? "sent" : "failed";
+    if (result !== "sent") await stripe.checkout.sessions.update(st.s.id, { metadata: { delivered: "" } });
+  }
+}
+const testInbox = emailMode(env).testTo;
+
+const examples = [
+  {
+    label: "Resume",
+    before: "Managed a team and completed projects on time.",
+    after: "Led a cross-functional team of 12 engineers, delivering a $2.4M platform migration 3 weeks ahead of schedule, reducing infrastructure costs by 34%.",
+  },
+  {
+    label: "LinkedIn headline",
+    before: "Marketing Manager at Acme Corp",
+    after: "B2B Marketing Leader | 3x Pipeline Growth | HubSpot + Salesforce | Helping SaaS companies turn content into revenue",
+  },
+  {
+    label: "The offer call",
+    before: "That sounds great, I'll take it!",
+    after: "Thank you for the offer. I'm genuinely excited about this role. Based on my research and the scope we discussed, I was targeting $165K. Is there flexibility to close that gap?",
+  },
+];
+const categories = ["Resume and skills", "LinkedIn", "Interview prep", "Networking and outreach", "Market research", "Negotiation and transitions"];
+// Exact words from src/data/testimonials.json (attendees of my AI job search workshop).
+const quotes = [
+  { name: "Rebecca Meyer", text: "His prompts are very creative and particularly informative. He's done the work for you! What a great resource!" },
+  { name: "Glenna Eastwood", text: "The library of prompts he shared for maximizing the potential of ChatGPT to support job search efforts is invaluable." },
+  { name: "Maggie", text: "Each of the AI prompts Izzy shared was directly applicable to the job search process. The prompts went beyond the 'Create a thank you email ...' I usually write." },
+];
+const faqs = [
+  ["Which AI tools does it work with?", "Any chat AI: ChatGPT, Claude, Gemini or Copilot. You copy a prompt, paste it in, and fill in the [brackets]."],
+  ["Is this a subscription?", "No. One payment, and it's yours."],
+  ["How do I get it?", "It opens on the next screen, and the link is emailed to you. The link doesn't expire."],
+  ["What if I get stuck?", "Reply to the email. It comes straight to me."],
+];
+const offerTotal = offerBase + offerTaxAmount;
+const outreachGuides = PRODUCTS["outreach-templates"].guides.map((g) => g.title);
+const toolkitParts = ["Salary Number Generator", "Outreach and Email Templates", "Interview Confidence Kit", "Salary Negotiation Scripts and Advice", "Bonus: rejection and resignation scripts"];
+---
+
+<BaseLayout title="Career Prompt Vault | ClearCareer (test)" description="Test-mode preview of the ClearCareer product funnel." noindex>
+  <div class="llu funnel">
+    <div class="testbar" role="note">
+      <div class="llu-wrap testbar__row">
+        <span><strong>Test mode.</strong> Card 4242 4242 4242 4242, any future date, any CVC. For 3D Secure, use 4000 0025 0000 3155. No real money moves.</span>
+        {cookie && <button class="testbar__reset" type="button" data-choice="restart">Start over</button>}
+      </div>
+    </div>
+
+    <header class="llu-nav"><div class="llu-wrap llu-nav__row">
+      <span class="llu-nav__brand"><span class="llu-nav__mark">ClearCareer</span></span>
+      {stage !== "offer" && <ol class="steps" aria-label="Your order">
+        <li class="done">Paid</li><li class:list={[stage === "upsell" || stage === "downsell" ? "on" : "done"]}>One more thing</li><li class:list={[stage === "done" && "on"]}>Your downloads</li>
+      </ol>}
+    </div></header>
+
+    <main id="main-content">
+      {(!stripe || checkFailed || notice) && <div class="llu-wrap notice-wrap"><p class="notice" role="alert">{
+        !stripe ? "Checkout isn't set up on this preview (it needs the Stripe test key). No live key is ever used here."
+        : checkFailed ? "Couldn't reach Stripe to check your order. Refresh in a moment."
+        : notice === "verify" ? "Your payment is still being confirmed. Refresh in a few seconds."
+        : notice === "payment-failed" ? "That payment didn't go through, so nothing was charged for it. You can skip it and get your downloads."
+        : notice === "pending" ? "That payment is still processing. Refresh in a few seconds."
+        : "Something went wrong. Refresh and try again."
+      }</p></div>}
+
+      {stage === "offer" && <>
+        <section class="llu-band llu-band--navy hero"><div class="llu-wrap hero__grid">
+          <div class="llu-stack">
+            <p class="llu-eyebrow">Career Prompt Vault</p>
+            <h1 class="llu-display">Stop asking AI for generic career advice.</h1>
+            <p class="llu-lead">50 tested prompts that turn ChatGPT, Claude or Gemini into a career strategist who knows your work. Your resume, LinkedIn, interviews, outreach and salary, all in one place.</p>
+            <ul class="ticks">{categories.map((c) => <li>{c}</li>)}</ul>
+          </div>
+
+          <div class="order llu-card" id="order">
+            <p class="llu-eyebrow">Your order</p>
+            <div class="line"><span><strong>{FUNNEL.main.name}</strong><br /><span class="llu-cap">50 prompts, setup guide and quick start</span></span><strong>{format(FUNNEL.main.amount)}</strong></div>
+            <label class="bump">
+              <input type="checkbox" id="bump" />
+              <span><strong>Yes, add the {FUNNEL.bump.name} for {format(FUNNEL.bump.amount)}</strong><br />
+              <span class="llu-cap">{CATALOG["salary-generator"].blurb} Know your number before the salary question comes up.</span></span>
+            </label>
+            <div class="line total"><strong>Total</strong><strong><span id="total" data-base={FUNNEL.main.amount} data-bump={FUNNEL.bump.amount}>{format(FUNNEL.main.amount)}</span> <span class="llu-cap">CAD + tax</span></strong></div>
+            <button class="llu-btn llu-btn--wide" id="start" type="button" disabled={!stripe}>Get instant access</button>
+            <div id="checkout" class="checkout" hidden></div>
+            <p class="llu-cap" id="checkout-status" role="status"></p>
+            <p class="llu-cap fine">Secure checkout by Stripe. We save your card so you can add the next item in one click. Nothing else is charged without your click.</p>
+          </div>
+        </div></section>
+
+        <section class="llu-band"><div class="llu-wrap llu-stack">
+          <div class="llu-head"><p class="llu-eyebrow">Now with Claude skills</p><h2 class="llu-h2">Install once. Then just ask.</h2>
+            <p class="llu-lead">6 small Claude skills, including the Achievement Interviewer: it asks you questions one at a time and turns your answers into resume bullets with real numbers. Every prompt also comes copy-paste ready for ChatGPT, Gemini or any AI.</p></div>
+          <img class="shot" src="/images/products/vault/hero.webp" alt="A Claude skill turning interview answers into a resume bullet, and the Start Here guide on a phone" width="1600" height="1000" loading="lazy" decoding="async" />
+        </div></section>
+
+        <section class="llu-band llu-band--white"><div class="llu-wrap llu-stack">
+          <div class="llu-head"><p class="llu-eyebrow">Before and after</p><h2 class="llu-h2">Same AI. Better questions.</h2>
+            <p class="llu-lead">Each prompt asks the AI to interview you first, so what comes back sounds like you and has your numbers in it.</p></div>
+          <div class="ba">{examples.map((e) => (
+            <div class="ba__card"><p class="ba__label">{e.label}</p>
+              <p class="ba__before"><span>Before</span>{e.before}</p>
+              <p class="ba__after"><span>After</span>{e.after}</p></div>
+          ))}</div>
+        </div></section>
+
+        <section class="llu-band"><div class="llu-wrap llu-stack">
+          <div class="llu-head"><p class="llu-eyebrow">From my AI job search workshop</p><h2 class="llu-h2">What people say about my prompts</h2></div>
+          <div class="quotes">{quotes.map((q) => <figure class="llu-card"><blockquote>&ldquo;{q.text}&rdquo;</blockquote><figcaption class="llu-cap">{q.name}, workshop attendee</figcaption></figure>)}</div>
+        </div></section>
+
+        <section class="llu-band llu-band--white"><div class="llu-wrap two">
+          <div class="llu-stack"><p class="llu-eyebrow">What happens after you buy</p><h2 class="llu-h3">You're using it in 2 minutes.</h2>
+            <ol class="nums">
+              <li>Your prompts open on the next screen. No account, no password.</li>
+              <li>The link is emailed to you too. It doesn't expire.</li>
+              <li>Copy a prompt into your AI tool, fill in the [brackets], hit send.</li>
+            </ol>
+            <a class="llu-btn" href="#order">Get instant access, {format(FUNNEL.main.amount)}</a>
+          </div>
+          <div class="llu-stack"><p class="llu-eyebrow">Questions</p>
+            {faqs.map(([q, a]) => <details class="faq"><summary>{q}</summary><p>{a}</p></details>)}
+          </div>
+        </div></section>
+      </>}
+
+      {stage === "upsell" && x && <section class="llu-band"><div class="llu-wrap narrow llu-stack">
+        <p class="paid">✓ Paid. Your {x.bump ? "Prompt Vault and Salary Number Generator are" : "Prompt Vault is"} ready. Your links are on the next screen, and in your inbox.</p>
+        <div class="llu-card llu-stack">
+          <p class="llu-eyebrow">One more thing before you go</p>
+          <h1 class="llu-h2">Get the rest of the toolkit for {format(offerBase)} more.</h1>
+          <p>The Prompt Vault gets your resume and LinkedIn ready. The rest of the <strong>{FUNNEL.upsell.name}</strong> covers what comes next: reaching hiring managers directly, walking into interviews ready, and negotiating the offer. Each one comes with its own Claude skill and copy-paste prompts.</p>
+          <ul class="ticks ticks--ink">{toolkitParts.filter((t) => !(x.bump && t === "Salary Number Generator")).map((t) => <li>{t}</li>)}</ul>
+          <div class="line"><span>{FUNNEL.upsell.name}</span><strong><s class="was">{format(FUNNEL.upsell.amount)}</s></strong></div>
+          <div class="line"><span>Already paid today</span><strong>−{format(FUNNEL.upsell.amount - offerBase)}</strong></div>
+          {offerTaxAmount > 0 && <div class="line"><span>Tax</span><strong>{format(offerTaxAmount)}</strong></div>}
+          <div class="line total"><strong>You pay</strong><strong>{format(offerTotal)} CAD</strong></div>
+          <button class="llu-btn llu-btn--wide" type="button" data-choice="buy">Yes, upgrade me for {format(offerTotal)}</button>
+          <p class="llu-cap center">One click. It goes on {x.cardLabel}. No need to type your card again.</p>
+          <button class="skip" type="button" data-choice="skip">No thanks</button>
+          <p class="llu-cap center" id="upsell-status" role="status"></p>
+        </div>
+      </div></section>}
+
+      {stage === "downsell" && x && <section class="llu-band"><div class="llu-wrap narrow llu-stack">
+        <div class="llu-card llu-stack">
+          <p class="llu-eyebrow">Just this one, then?</p>
+          <h1 class="llu-h2">You've got the prompts. Now email the people who hire.</h1>
+          <p>Applying and waiting is the slowest way to get hired. The <strong>{FUNNEL.downsell.name}</strong> show you how to find the hiring manager, find their email, and send a short note they'll answer. 80+ templates, and a Claude skill that personalizes them.</p>
+          <ul class="ticks ticks--ink">{outreachGuides.map((g) => <li>{g}</li>)}</ul>
+          <div class="line"><span>{FUNNEL.downsell.name}</span><strong>{format(offerBase)}</strong></div>
+          {offerTaxAmount > 0 && <div class="line"><span>Tax</span><strong>{format(offerTaxAmount)}</strong></div>}
+          <div class="line total"><strong>You pay</strong><strong>{format(offerTotal)} CAD</strong></div>
+          <button class="llu-btn llu-btn--wide" type="button" data-choice="buy">Yes, add it for {format(offerTotal)}</button>
+          <p class="llu-cap center">One click, on {x.cardLabel}.</p>
+          <button class="skip" type="button" data-choice="skip">No thanks, take me to my downloads</button>
+          <p class="llu-cap center" id="upsell-status" role="status"></p>
+        </div>
+      </div></section>}
+
+      {stage === "done" && x && <>
+        <section class="llu-band"><div class="llu-wrap narrow llu-stack">
+          <div class="llu-card llu-stack">
+            <p class="llu-eyebrow">You're all set{x.firstName ? `, ${x.firstName}` : ""}</p>
+            <h1 class="llu-h2">Here's everything you bought.</h1>
+            <ul class="items">{links.map((l) => (
+              <li><span><strong>{l.name}</strong><br /><span class="llu-cap">{CATALOG[l.product]?.blurb}</span></span>
+                <a class="llu-btn" href={l.url} target="_blank" rel="noopener">Open it now</a></li>
+            ))}</ul>
+            <div class="line"><span>Subtotal</span><strong>{format(x.subtotal)}</strong></div>
+            {x.tax > 0 && <div class="line"><span>Tax</span><strong>{format(x.tax)}</strong></div>}
+            <div class="line total"><strong>Total</strong><strong>{format(x.total)} CAD</strong></div>
+            <p class="llu-cap">{
+              emailed === "sent" || emailed === "already" ? `We also emailed these links to ${x.email}. (Test mode: the email went to ${testInbox} instead.)`
+              : emailed === "failed" ? "The email didn't send. Refresh to try again. Your links above work either way."
+              : "Email delivery is off on this preview (no Brevo key), so only the links above."
+            }</p>
+          </div>
+        </div></section>
+
+        <section class="llu-band llu-band--navy"><div class="llu-wrap narrow llu-stack">
+          <p class="llu-eyebrow">Want help using all of this?</p>
+          <h2 class="llu-h2">Land and Level Up: 6 weeks, a small group, and me.</h2>
+          <p class="llu-lead">The tools help. Doing it with people who are searching right now, with me on a live call every Wednesday, is what gets it done.</p>
+          <div class="months">
+            <div><p class="months__label">December: get ready</p><p>Get clear on what you want next and the roles that fit. Rebuild your resume and LinkedIn in a live workshop, with numbers on your work.</p></div>
+            <div><p class="months__label">January: go get it</p><p>Find the hiring managers at your target companies, find their emails, and write emails they'll answer. Then interviews and offers.</p></div>
+          </div>
+          <ul class="ticks">
+            <li>6 live group calls ({offer.callDates}), every one recorded</li>
+            <li>A community of {offer.seatsTotal} people at most, all searching right now</li>
+            <li>Templates, scripts, 30+ AI prompts and a job search tracker</li>
+          </ul>
+          <p>We start {offer.startDateLong}. Group cohort {offer.group.price} CAD{offer.dealLive ? ` with code ${offer.promoCode}, until ${offer.dealEndsShort}` : ""}.</p>
+          <a class="llu-btn llu-btn--wide" href="/book-a-call?source=career-funnel">See if it's a fit: fill out the form</a>
+          <p class="llu-cap">A few questions about your search. If it looks like a fit, you pick a time for a free call with me. <a class="llu-link" href="/land-and-level-up">See the full program</a></p>
+          <p class="llu-cap">{RESULTS_VARY}</p>
+        </div></section>
+      </>}
+    </main>
+  </div>
+</BaseLayout>
+
+<style>
+  .funnel :global(.llu-btn) { white-space: normal; }
+  .testbar { background: #fff7d6; border-bottom: 1px solid #f0d77a; font-size: 14px; }
+  .testbar__row { display: flex; gap: 12px; align-items: center; justify-content: space-between; padding: 8px 0; }
+  .testbar__reset { color: var(--llu-blue); text-decoration: underline; cursor: pointer; white-space: nowrap; }
+  .steps { display: flex; gap: 6px; margin: 0; padding: 0; list-style: none; font-size: 13px; color: rgb(255 255 255 / 0.6); }
+  .steps li { padding: 4px 10px; border-radius: 999px; border: 1px solid rgb(255 255 255 / 0.25); }
+  .steps .done { color: #fff; }
+  .steps .done::before { content: "✓ "; color: #7fb2ff; }
+  .steps .on { background: var(--llu-blue); color: #fff; border-color: var(--llu-blue); }
+  @media (max-width: 639px) { .steps li:not(.on) { display: none; } }
+  .notice-wrap { padding-top: 20px; }
+  .notice { padding: 14px 18px; border-radius: 12px; background: #fff1f0; border: 1px solid #f5c2bd; color: #7a1d14; }
+
+  .hero__grid { display: grid; gap: 40px; grid-template-columns: minmax(0, 1fr); align-items: start; }
+  @media (min-width: 1024px) { .hero__grid { grid-template-columns: minmax(0, 1fr) 460px; } }
+  @media (max-width: 767px) { .funnel :global(.llu-display) { font-size: clamp(36px, 10vw, 52px); } }
+  .ticks { display: grid; gap: 8px; margin: 12px 0 0; padding: 0; list-style: none; }
+  .ticks li { display: flex; gap: 10px; }
+  .ticks li::before { content: "✓"; font-weight: 700; color: #7fb2ff; }
+  .ticks--ink li::before { color: var(--llu-blue); }
+  .order { display: grid; gap: 14px; color: var(--llu-ink); }
+  .line { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--llu-hairline); }
+  .line strong { white-space: nowrap; }
+  .line.total { border-bottom: 0; font-size: 18px; }
+  .bump { display: flex; gap: 12px; align-items: flex-start; padding: 16px; border: 2px dashed var(--llu-blue); border-radius: 14px; background: #f4f8ff; cursor: pointer; }
+  .bump input { width: 22px; height: 22px; flex: none; margin-top: 2px; accent-color: var(--llu-blue); }
+  .checkout { min-height: 200px; }
+  .fine { margin: 0; }
+
+  .shot { width: 100%; height: auto; border-radius: 20px; border: 1px solid var(--llu-hairline); }
+  .ba { display: grid; gap: var(--llu-gap); grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 1024px) { .ba { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .ba__card { display: grid; gap: 12px; align-content: start; padding: 24px; border-radius: 20px; border: 1px solid var(--llu-hairline); background: var(--llu-white); }
+  .ba__label { margin: 0; font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--llu-blue); }
+  .ba__before, .ba__after { margin: 0; padding: 14px; border-radius: 12px; line-height: 1.5; }
+  .ba__before { background: #f5f5f4; color: var(--llu-caption); }
+  .ba__after { background: #eef5ff; color: var(--llu-ink); }
+  .ba__before span, .ba__after span { display: block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+  .quotes { display: grid; gap: var(--llu-gap); grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 1024px) { .quotes { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .quotes figure { margin: 0; display: grid; gap: 12px; align-content: space-between; }
+  .quotes blockquote { margin: 0; font-size: 18px; line-height: 1.5; color: var(--llu-ink); }
+  .two { display: grid; gap: 48px; grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 1024px) { .two { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .nums { display: grid; gap: 10px; margin: 8px 0 16px; padding-left: 22px; line-height: 1.5; }
+  .faq { border-bottom: 1px solid var(--llu-hairline); padding: 12px 0; }
+  .faq summary { cursor: pointer; font-weight: 700; color: var(--llu-ink); }
+  .faq p { margin: 8px 0 0; color: var(--llu-body); }
+
+  .narrow { max-width: 760px; }
+  .was { color: var(--llu-caption); font-weight: 400; }
+  .paid { margin: 0; padding: 12px 16px; border-radius: 12px; background: #e9f8ef; color: #14532d; font-weight: 600; }
+  .center { text-align: center; }
+  .skip { display: block; width: 100%; min-height: 44px; color: var(--llu-blue); text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
+  .items { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+  .items li { display: flex; gap: 16px; align-items: center; justify-content: space-between; padding: 16px; border-radius: 14px; border: 1px solid var(--llu-hairline); }
+  .items li a.llu-btn { white-space: nowrap; flex: none; }
+  @media (max-width: 639px) { .items li { flex-direction: column; align-items: stretch; } }
+  .months { display: grid; gap: 16px; margin-bottom: 12px; grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 768px) { .months { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .months > div { padding: 20px; border-radius: 16px; background: rgb(255 255 255 / 0.08); }
+  .months p { margin: 0; }
+  .months__label { font-weight: 700; margin-bottom: 6px !important; color: #fff; }
+</style>
+
+<script>
+  import { loadStripe } from "@stripe/stripe-js";
+
+  const post = async (path: string, body: unknown) => {
+    const r = await fetch(path, {
+      method: "POST", credentials: "same-origin", cache: "no-store",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify(body),
+    });
+    if (!r.ok) throw new Error("Request rejected (" + r.status + ").");
+    return r.json();
+  };
+  const go = (next: string) => {
+    const u = new URL(next, location.origin);
+    if (u.origin === location.origin && u.pathname === "/career-funnel-preview") location.assign(u.href);
+    else if (u.origin === "https://checkout.stripe.com") location.assign(u.href);
+  };
+
+  // ── Order box: embedded checkout, remade when the add-on changes ──
+  const start = document.querySelector<HTMLButtonElement>("#start");
+  const bump = document.querySelector<HTMLInputElement>("#bump");
+  const total = document.querySelector<HTMLElement>("#total");
+  const mount = document.querySelector<HTMLElement>("#checkout");
+  const status = document.querySelector<HTMLElement>("#checkout-status");
+  let checkout: { destroy(): void } | null = null;
+  let opened = false;
+  const money = (c: number) => new Intl.NumberFormat("en-CA", { style: "currency", currency: "CAD" }).format(c / 100);
+
+  async function open() {
+    if (!start || !mount || !status) return;
+    start.disabled = true;
+    status.textContent = "Loading secure checkout…";
+    try {
+      const r = await post("/api/career-funnel/checkout", { bump: !!bump?.checked });
+      if (r.next) return go(r.next);
+      if (!r.clientSecret || !r.publishableKey) throw new Error(r.error || "Checkout didn't start.");
+      const stripe = await loadStripe(r.publishableKey);
+      if (!stripe) throw new Error("Stripe didn't load.");
+      checkout?.destroy();
+      mount.hidden = false;
+      checkout = await stripe.createEmbeddedCheckoutPage({ clientSecret: r.clientSecret });
+      (checkout as unknown as { mount(el: HTMLElement): void }).mount(mount);
+      opened = true;
+      start.hidden = true;
+      status.textContent = "";
+    } catch (e) {
+      status.textContent = (e instanceof Error ? e.message : "Checkout didn't start.") + " Try again.";
+      start.disabled = false;
+    }
+  }
+  start?.addEventListener("click", open);
+  bump?.addEventListener("change", () => {
+    if (total) total.textContent = money(Number(total.dataset.base) + (bump.checked ? Number(total.dataset.bump) : 0));
+    if (opened) open();
+  });
+
+  // ── Upsell, skip and start over ──
+  const say = document.querySelector<HTMLElement>("#upsell-status");
+  for (const b of document.querySelectorAll<HTMLButtonElement>("[data-choice]")) {
+    b.addEventListener("click", async () => {
+      const all = [...document.querySelectorAll<HTMLButtonElement>("[data-choice]")];
+      all.forEach((x) => (x.disabled = true));
+      if (say) say.textContent = b.dataset.choice === "buy" ? "Adding it to your order…" : "One moment…";
+      try {
+        let r = await post("/api/career-funnel/upgrade", { choice: b.dataset.choice });
+        if (r.action && r.publishableKey) {
+          if (say) say.textContent = "Your bank wants to confirm it's you…";
+          const stripe = await loadStripe(r.publishableKey);
+          if (stripe) await stripe.handleNextAction({ clientSecret: r.action });
+          r = await post("/api/career-funnel/upgrade", { choice: "confirm" });
+        }
+        if (typeof r.next === "string") return go(r.next);
+        throw new Error("Unexpected response.");
+      } catch (e) {
+        if (say) say.textContent = (e instanceof Error ? e.message : "Something went wrong.") + " Refresh to check your order before trying again.";
+        all.forEach((x) => (x.disabled = false));
+      }
+    });
+  }
+</script>

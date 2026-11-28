@@ -1,10 +1,10 @@
 # STAR Story Bank Builder
 
-**Build a bank of 10-12 stories that answer any behavioral interview question thrown at you.**
+**Build a bank of 10 to 12 stories that answer any behavioural interview question thrown at you.**
 
-Behavioral interview questions ("Tell me about a time when...") are the most common question type in professional interviews. They are also the most predictable. There are roughly 50 common behavioral questions, and they all map to about 8 core themes. If you have 10-12 well-prepared stories, you can answer any of them.
+Behavioural interview questions ("Tell me about a time when...") are the most common question type in professional interviews. They are also the most predictable. There are roughly 50 common behavioural questions, and they all map to about 8 core themes. If you have 10 to 12 well-prepared stories, you can answer any of them.
 
-This guide helps you mine your experience for the right stories, structure them in the STAR format, and practice adapting them on the fly.
+This guide helps you mine your experience for the right stories, structure them in the STAR format, and practise adapting them on the fly.
 
 **Time:** 90 minutes to build your initial bank. 30 minutes to refine. **What you'll need:** Your resume, a list of major projects you have worked on, and a quiet place to think.
 
@@ -16,10 +16,10 @@ Every story follows four parts:
 
 | Letter | Stands For | What to Include | Time Allocation |
 |--------|-----------|----------------|-----------------|
-| **S** | Situation | Context. Where, when, what was happening. | 15-20% of your answer |
-| **T** | Task | Your specific responsibility or challenge. | 10-15% |
-| **A** | Action | What you did. Specific steps, decisions, behaviors. | 50-60% |
-| **R** | Result | The outcome. Numbers whenever possible. | 15-20% |
+| **S** | Situation | Context. Where, when, what was happening. | 15 to 20% of your answer |
+| **T** | Task | Your specific responsibility or challenge. | 10 to 15% |
+| **A** | Action | What you did. Specific steps, decisions, behaviours. | 50 to 60% |
+| **R** | Result | The outcome. Numbers whenever possible. | 15 to 20% |
 
 The Action section is the star of the show. This is where interviewers learn who you are. Spend most of your time here. The Situation and Task should be brief. Just enough context so the Action makes sense.
 
@@ -27,7 +27,7 @@ The Action section is the star of the show. This is where interviewers learn who
 
 ## The 8 Mining Prompts
 
-Use these prompts to dig stories out of your experience. Write down everything that comes to mind, even if it seems small. Small stories are often the best ones because they show day-to-day behavior, not just big wins.
+Use these prompts to dig stories out of your experience. Write down everything that comes to mind, even if it seems small. Small stories are often the best ones because they show day-to-day behaviour, not just big wins.
 
 ### Prompt 1: Times You Solved a Problem Nobody Asked You to Solve
 Think about moments where you noticed something wrong, broken, or inefficient and fixed it without being told to. These stories show initiative.
@@ -79,9 +79,9 @@ Story idea: ________________
 
 ---
 
-## Selecting Your 10-12 Stories
+## Selecting Your 10 to 12 Stories
 
-From your mining prompts, you probably have 15-20 story ideas. Now narrow down to your top 10-12 by checking two things:
+From your mining prompts, you probably have 15 to 20 story ideas. Now narrow down to your top 10 to 12 by checking two things:
 
 **1. Coverage:** Your bank should cover at least 6 of the 8 themes above. If all your stories are about hitting targets, you have gaps.
 
@@ -108,27 +108,27 @@ From your mining prompts, you probably have 15-20 story ideas. Now narrow down t
 
 ## Writing Out Your Stories
 
-For each story, write the full STAR version. Aim for 60-90 seconds when spoken aloud (roughly 150-250 words written).
+For each story, write the full STAR version. Aim for 60 to 90 seconds when spoken aloud (roughly 150 to 250 words written).
 
 ### Story Template
 
 **Story Title:** ________________
 
-**Situation (2-3 sentences):**
+**Situation (2 to 3 sentences):**
 ________________
 
-**Task (1-2 sentences):**
+**Task (1 to 2 sentences):**
 ________________
 
-**Action (4-6 sentences, be specific about YOUR actions):**
+**Action (4 to 6 sentences, be specific about YOUR actions):**
 ________________
 
-**Result (1-2 sentences, include numbers if possible):**
+**Result (1 to 2 sentences, include numbers if possible):**
 ________________
 
 **Themes this story covers:** ________________
 
-Write out all 10-12 stories using this template. Yes, all of them. Written preparation is the difference between "I kind of have some stories" and "I can answer any behavioral question in 90 seconds."
+Write out all 10 to 12 stories using this template. Yes, all of them. Written preparation is the difference between "I kind of have some stories" and "I can answer any behavioural question in 90 seconds."
 
 ---
 
@@ -172,7 +172,7 @@ Pick your strongest story and write how you would adapt it for three different q
 1. **Too much Situation.** If your context takes longer than 20 seconds, cut it. Interviewers do not need the full backstory.
 2. **Using "we" instead of "I."** Teamwork is great, but the interviewer wants to know what YOU did. Say "I" more than "we."
 3. **Vague actions.** "I worked hard and figured it out" tells the interviewer nothing. Specific actions: "I mapped out the three biggest risks, built a mitigation plan for each, and presented it to leadership for approval."
-4. **No result.** Every story needs an ending. If you do not have a number, describe the qualitative outcome. "The client renewed their contract" or "The team adopted the new process and we never had that problem again."
+4. **No result.** Every story needs an ending. If you do not have a number, describe the qualitative outcome. "The customer renewed their contract" or "The team adopted the new process and we never had that problem again."
 5. **Stories that are too old.** A story from 15 years ago signals you have not done anything impressive recently. Keep most stories within the last 5 years.
 6. **Only positive stories.** Include at least 2 stories about failures, mistakes, or challenges. Interviewers who only hear wins suspect you are not being honest.
 
@@ -182,18 +182,20 @@ Pick your strongest story and write how you would adapt it for three different q
 
 Writing your stories is step one. Speaking them is step two.
 
-**Round 1: Solo practice.** Read each story out loud 3 times. Time yourself. Aim for 60-90 seconds. Trim anything that does not add value.
+**Round 1: Solo practice.** Read each story out loud 3 times. Time yourself. Aim for 60 to 90 seconds. Trim anything that does not add value.
 
 **Round 2: Mirror or recording.** Tell each story to a mirror or record yourself on your phone. Watch for filler words ("um," "like," "so"), lack of eye contact, and stories that wander.
 
 **Round 3: Live practice.** Tell your stories to a friend, family member, or career coach. Ask them: "Did that make sense? What stuck with you? What felt too long?"
 
-**Round 4: Random drill.** Have someone ask you random behavioral questions from the list in Guide 04. Practice selecting the right story and adapting it in real time.
+**Round 4: Random drill.** Have someone ask you random behavioural questions from the list in Guide 04. Practise selecting the right story and adapting it in real time.
 
 ---
 
 ## Key Takeaway
 
-Behavioral interviews are not about being a good storyteller. They are about being a prepared storyteller. The candidates who do well are not more impressive than you. They have just practiced their stories more.
+Behavioural interviews are not about being a good storyteller. They are about being a prepared storyteller. The candidates who do well are not more impressive than you. They have just practised their stories more.
 
-Build the bank. Write them out. Practice out loud. Walk in ready.
+Build the bank. Write them out. Practise out loud. Walk in ready.
+
+*Results vary. A strong story bank won't guarantee an offer, but it means you'll never be stuck for an example.*

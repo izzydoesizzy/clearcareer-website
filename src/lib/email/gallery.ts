@@ -47,11 +47,11 @@ export function buildGallery(opts: { previewImages?: boolean } = {}): string {
       ['Follow-up: 3 days, last one', ...Object.values(call.followUp2Email(c, k)) as [string, string]],
     ]],
     ['Clients: after payment', [
-      ['Welcome', ...Object.values(onb.welcomeEmail({ firstName: 'Sam', program: 'Group cohort', token: 'example' })) as [string, string]],
+      ['Welcome', ...Object.values(onb.welcomeEmail({ firstName: 'Sam', program: 'Group cohort', token: 'example', toolkitUrl: 'https://joinclearcareer.com/products/llu-toolkit/access/example' })) as [string, string]],
       ['Reminder: 2 days', ...Object.values(onb.reminderEmail({ firstName: 'Sam', token: 'example', agreement: true, intake: false }, false)) as [string, string]],
       ['Reminder: 4 days', ...Object.values(onb.reminderEmail({ firstName: 'Sam', token: 'example', agreement: false, intake: false }, true)) as [string, string]],
       ['Signed copy', ...Object.values(onb.signedCopyEmail({ firstName: 'Sam', token: 'example' })) as [string, string]],
-      ["Intake done: you're set", ...Object.values(onb.intakeDoneEmail({ firstName: 'Sam', program: 'Group plus private 1:1 rebuild' })) as [string, string]],
+      ["Intake done: you're set", ...Object.values(onb.intakeDoneEmail({ firstName: 'Sam', program: 'Group plus private 1:1 rebuild', toolkitUrl: 'https://joinclearcareer.com/products/llu-toolkit/access/example' })) as [string, string]],
       ['Week 5: renewal ($49/mo)', ...Object.values(onb.renewalEmail({ firstName: 'Sam', renewalUrl: 'https://buy.stripe.com/example-renewal' })) as [string, string]],
     ]],
     ['Launch sequence (Brevo campaigns)', nurtureEmails().map((e) => [`${e.n}. ${e.sendAt} ET`, e.subject, e.html.replace(/\{\{ contact\.FIRSTNAME[^}]*\}\}/g, 'Sam').replace(/\{\{ unsubscribe \}\}/g, '#')] as [string, string, string])],

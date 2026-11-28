@@ -10,7 +10,7 @@
  */
 import { offer, RESULTS_VARY } from '../data/llu.js';
 
-export const AGREEMENT_DEFAULT_VERSION = 'v2-draft-2026-11-21';
+export const AGREEMENT_DEFAULT_VERSION = 'v3-draft-2026-11-28';
 
 const li = (items: readonly string[]) => `<ul>${items.map((i) => `<li>${i}</li>`).join('')}</ul>`;
 

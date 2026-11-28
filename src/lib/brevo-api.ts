@@ -10,9 +10,11 @@
  *   sandbox  ask Brevo to check the email without delivering it (X-Sib-Sandbox: drop).
  *            Brevo doesn't say whether this saves credits, so prefer "off" for that.
  */
+import { serverEnv } from './server-env.js';
+
 export type EmailMode = 'live' | 'test' | 'off' | 'sandbox';
 
-export function emailMode(env: Record<string, unknown> = (import.meta as any).env || {}): { mode: EmailMode; testTo: string } {
+export function emailMode(env: Record<string, unknown> = serverEnv()): { mode: EmailMode; testTo: string } {
   const m = String(env.EMAIL_MODE || 'live').toLowerCase();
   const mode: EmailMode = m === 'test' || m === 'off' || m === 'sandbox' ? m : 'live';
   const testTo = String(env.EMAIL_TEST_TO || 'izzy@joinclearcareer.com');
@@ -82,8 +84,9 @@ export function brevo(apiKey: string) {
       return out;
     },
 
-    async send(mail: Mail): Promise<boolean> {
-      const payload = brevoPayload(mail);
+    /** `m` overrides EMAIL_MODE for one send (the test funnel never emails a real person). */
+    async send(mail: Mail, m = emailMode()): Promise<boolean> {
+      const payload = brevoPayload(mail, m);
       if (!payload) {
         console.log(`[EMAIL_MODE=off] not sent: "${mail.subject}" to ${mail.to}`);
         return true;

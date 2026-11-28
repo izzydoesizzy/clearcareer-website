@@ -3,26 +3,23 @@ import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
-import { readdirSync, existsSync } from 'node:fs';
-
-// Career Suite downloads live outside public/ and are served by the gated
-// /api/career-suite/download route, so they must be bundled into the function.
-const SUITE_DIST = 'skills/clearcareer-career-suite/dist';
-const suiteFiles = existsSync(SUITE_DIST)
-  ? readdirSync(SUITE_DIST, { recursive: true, withFileTypes: true })
-      .filter((d) => d.isFile())
-      .map((d) => `./${d.parentPath ?? d.path}/${d.name}`.replace(/\\/g, '/'))
-  : [];
 
 // Only load Vercel adapter for production builds
 const isProduction = process.env.NODE_ENV === 'production' || process.argv.includes('build');
 
 export default defineConfig({
   site: 'https://joinclearcareer.com',
-  adapter: isProduction ? (await import('@astrojs/vercel')).default({ includeFiles: suiteFiles }) : undefined,
+  adapter: isProduction ? (await import('@astrojs/vercel')).default() : undefined,
+  // Trust only the known Vercel branch alias on preview builds. Keep CSRF checks enabled.
+  ...(process.env.VERCEL_ENV === 'preview' ? {
+    security: { checkOrigin: true, allowedDomains: [
+      { protocol: 'https', hostname: 'clearcareer-website-git-preview-c-1a23fc-izzydoesizzys-projects.vercel.app' },
+      ...[process.env.VERCEL_URL, process.env.VERCEL_BRANCH_URL].filter((hostname) => typeof hostname === 'string' && /^clearcareer-website-[a-z0-9-]+-izzydoesizzys-projects\.vercel\.app$/.test(hostname)).map((hostname) => ({ protocol: 'https', hostname })),
+    ] },
+  } : {}),
   integrations: [
     mdx(),
-    sitemap({ filter: (page) => { const p = new URL(page).pathname.replace(/\/$/, ''); return !['/book-a-call', '/tools/career-suite/access', '/booked', '/welcome', '/onboarding', '/roi', '/testimonial-variations'].includes(p) && !p.startsWith('/team/') && !p.endsWith('-old'); } }),
+    sitemap({ filter: (page) => { const p = new URL(page).pathname.replace(/\/$/, ''); return !['/book-a-call', '/booked', '/welcome', '/onboarding', '/roi', '/testimonial-variations'].includes(p) && !p.startsWith('/team/') && !p.endsWith('-old'); } }),
     react(),
   ],
   redirects: {
@@ -33,5 +30,6 @@ export default defineConfig({
     '/programs/community': '/land-and-level-up',
     '/community': '/land-and-level-up',
     '/blog/build-your-target-company-list-with-chatgpt': '/blog/build-your-target-company-list-with-ai',
+    // Retired and hidden products redirect in src/pages/products/[slug]/index.astro.
   },
 });

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import {
-  READY, NOT_READY, ALTERNATIVE, PROGRAMS, PROGRAM_CHOICES, COMMIT, SEARCH_LENGTH, APPS_PER_WEEK, STRUGGLES, SITUATION, COUNTRY, DECIDER, START, PAYMENT,
-} from '../../lib/book-call';
+  READY, NOT_READY, ALTERNATIVE, PROGRAMS, PROGRAM_CHOICES, COMMIT, SEARCH_LENGTH, APPS_PER_WEEK, STRUGGLES, SITUATION, COUNTRY, DECIDER, START, PAYMENT, cad, PROMO } from '../../lib/book-call';
 import { CONSENT_TEXT } from '../../lib/consent';
 import { dealIsLive } from '../../lib/email/deal';
 
@@ -222,7 +221,7 @@ export default function BookCallForm() {
           <p className="llu-lead">Land and Level Up is a high-touch program with a low four-figure investment. There's a 7-day money-back guarantee, as long as your rebuild work hasn't started.</p>
           <Field id="program" label="Which option are you most interested in?" error={errors.program}
             hint={dealIsLive()
-              ? `${PROGRAMS.group.name}: $${PROGRAMS.group.price.toLocaleString('en-CA')} (regular $${PROGRAMS.group.regular.toLocaleString('en-CA')}). ${PROGRAMS.private.name}: $${PROGRAMS.private.price.toLocaleString('en-CA')} (regular $${PROGRAMS.private.regular.toLocaleString('en-CA')}). Black Friday prices, CAD plus HST.`
+              ? `${PROGRAMS.group.name}: ${cad(PROGRAMS.group.price)} (regular ${cad(PROGRAMS.group.regular)}). ${PROGRAMS.private.name}: ${cad(PROGRAMS.private.price)} (regular ${cad(PROGRAMS.private.regular)}). That's ${PROMO.percentOff}% off with code ${PROMO.code} until November 30. CAD plus HST.`
               : `${PROGRAMS.group.name}: $${PROGRAMS.group.regular.toLocaleString('en-CA')}. ${PROGRAMS.private.name}: $${PROGRAMS.private.regular.toLocaleString('en-CA')}. CAD plus HST.`}>
             <Choices name="program" options={PROGRAM_CHOICES} value={v.program} onChange={(x) => set('program', x)} />
           </Field>

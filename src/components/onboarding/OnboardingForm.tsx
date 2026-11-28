@@ -12,7 +12,7 @@ type State = {
   files: string[];
   uploadsReady: boolean;
   prefill: Record<string, string>;
-  next: { communityName: string; communityUrl: string; callTime: string; callUrl: string; privateBookingUrl: string };
+  next: { communityName: string; communityUrl: string; callTime: string; callUrl: string; privateBookingUrl: string; toolkitUrl?: string };
 };
 
 const TIMEZONES = ['Eastern (Toronto, New York)', 'Atlantic (Halifax)', 'Newfoundland (St. John\'s)', 'Central (Winnipeg, Chicago)', 'Mountain (Calgary, Denver)', 'Pacific (Vancouver, Los Angeles)', 'Somewhere else'];
@@ -231,6 +231,7 @@ export default function OnboardingForm() {
           <h2 className="llu-h2">You're all set, {s.firstName}.</h2>
           <p className="llu-lead">Got everything. I'll go through it before we start, so we hit the ground running. Your next steps are in your inbox too.</p>
           <ol className="llu-list">
+            <li>{n.toolkitUrl ? <>Open your AI toolkit: <a className="llu-link llu-link--inline" href={n.toolkitUrl}>every tool I've built</a>. Start with Career Clarity.</> : <>Your AI toolkit link is coming from me before we start.</>}</li>
             <li>{n.communityUrl ? <>Join the community: <a className="llu-link llu-link--inline" href={n.communityUrl}>join us on {n.communityName}</a>, then post a quick hello.</> : <>Your {n.communityName} invite is coming from me before we start.</>}</li>
             <li>{n.callTime && n.callUrl ? <>Every Wednesday at {n.callTime}: <a className="llu-link llu-link--inline" href={n.callUrl}>join link</a>. <a className="llu-link llu-link--inline" href="/llu-calls.ics">Add all 6 calls to your calendar</a>.</> : <>The Wednesday call time and link are coming from me before the first call.</>}</li>
             {s.isPrivate && <li>{n.privateBookingUrl ? <>Book your 1:1 rebuild: <a className="llu-link llu-link--inline" href={n.privateBookingUrl}>pick your times</a>.</> : <>I'll email you to book your 1:1 rebuild sessions.</>}</li>}

@@ -1,0 +1,30 @@
+---
+import ProductLayout from "@layouts/ProductLayout.astro";
+---
+
+<ProductLayout
+  productSlug="interview-dossier"
+  mockups="interview-dossier"
+  title="Interview Prep Dossier | ClearCareer"
+  description="My flagship client deliverable as a Claude skill: a full prep pack for one specific job, with company research, likely objections, your answers and questions to ask."
+  headline="Walk in knowing the company,<br />the people and your answers."
+  subheadline="This is the prep pack I build for clients before a big interview, as a Claude skill you run yourself. Give it the job post and your resume, and it builds your dossier for that one job."
+  bullets={[
+    "Company research: what they do, recent news, what employees say, and red flags, with sources",
+    "Your edge: each requirement in the job post matched to proof from your experience",
+    "Objection cards: the concerns they might have about you, and exactly what to say",
+    "A researched \"tell me about yourself\", timed for delivery",
+    "10 likely questions with a strategy and sample answer for each, plus questions to ask them",
+    "Your STAR stories mapped to the role, and your salary numbers ready",
+  ]}
+  price="$39 CAD"
+  ctaHref="#checkout"
+  ctaText="Get the Interview Dossier"
+  guaranteeText="One payment, use it for every interview. Questions? Reply to your purchase email and I'll help."
+  faq={[
+    { q: "Can I use it for more than one interview?", a: "Yes. Run it for every job. Each dossier is built for that one role and company." },
+    { q: "Does it need web search?", a: "It works best when your AI can search the web, so it can research the company and cite sources. If it can't, it tells you exactly what to look up and paste in." },
+    { q: "Will it make things up about the company or the interviewers?", a: "No. It only uses facts it can source, marks anything old, and only names people you give it or who are publicly listed for the role." },
+    { q: "How is this different from the Interview Confidence Kit?", a: "The Kit builds your general skills: STAR stories, practice and thank-you emails. The Dossier is the deep prep for one specific interview. They work well together." },
+  ]}
+/>

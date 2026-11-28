@@ -1,35 +1,18 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
+import { serverEnv } from "../../../lib/server-env";
 import { AccessHub } from "@components/layoff-kit/AccessHub";
-import Stripe from "stripe";
+import { verifyAccess } from "../../../lib/product-access";
 
 export const prerender = false;
 
 const { token } = Astro.params;
 
-// Verify payment by looking up the Stripe checkout session
-let buyerEmail = "";
-let buyerName = "";
-let isValid = false;
-
-const stripeKey = import.meta.env.STRIPE_SECRET_KEY;
-if (stripeKey && token) {
-  try {
-    const stripe = new Stripe(stripeKey);
-    const session = await stripe.checkout.sessions.retrieve(token);
-
-    if (
-      session.payment_status === "paid" &&
-      session.metadata?.product === "layoff-survival-kit"
-    ) {
-      isValid = true;
-      buyerEmail = session.customer_details?.email || "";
-      buyerName = session.customer_details?.name || "";
-    }
-  } catch {
-    // Invalid session ID — will show error page
-  }
-}
+// A signed access link or a paid Stripe Checkout Session opens the kit.
+const access = await verifyAccess("layoff-survival-kit", token, serverEnv(), Astro.url);
+const isValid = access.ok;
+const buyerEmail = access.email || "";
+const buyerName = access.name || "";
 ---
 
 <BaseLayout
@@ -39,7 +22,7 @@ if (stripeKey && token) {
   noindex={true}
 >
   {isValid ? (
-    <AccessHub buyerName={buyerName} buyerEmail={buyerEmail} client:load />
+    <AccessHub buyerName={buyerName} buyerEmail={buyerEmail} accessToken={token || ""} client:load />
   ) : (
     <div class="min-h-screen bg-white flex items-center justify-center">
       <div class="max-w-md mx-auto px-4 text-center">

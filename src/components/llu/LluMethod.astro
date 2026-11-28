@@ -1,0 +1,96 @@
+---
+/**
+ * The method: five steps, each backed by a client's own words (exact quotes from
+ * src/data/testimonials.json, src/data/llu.ts reviews, or the receipts screenshots).
+ */
+const steps = [
+  {
+    n: "1",
+    title: "Get clear on what's next",
+    body: "Decide what you want, which roles fit, and which companies you're going after. No more applying to everything.",
+    proof: "“I really want to thank you for helping me clear my mind as to what I want.”",
+    who: "Sparsh K.",
+  },
+  {
+    n: "2",
+    title: "Tell your story with numbers",
+    body: "We rebuild your resume around your real wins, with the numbers that prove them.",
+    proof: "“…she said she really appreciated how I included in my resume how much $$ and time i have saved my companies in the past!”",
+    who: "Danica S.",
+  },
+  {
+    n: "3",
+    title: "Get found",
+    body: "A LinkedIn profile that makes recruiters and hiring managers come to you.",
+    proof: "Profile views went from 16 to 65+ a week after the rebuild.",
+    who: "Victor P., LinkedIn analytics",
+  },
+  {
+    n: "4",
+    title: "Go direct",
+    body: "Find the hiring managers at your target companies, find their emails, and send them a precise email that shows what you'd bring. Not more applications into the black hole.",
+    proof: "“I sent out 27 emails in total. 13 replied.”",
+    who: "Blake M.",
+  },
+  {
+    n: "5",
+    title: "Get paid what you're worth",
+    body: "Walk into interviews with stories ready. When the offer comes, use my negotiation frameworks before you say yes.",
+    proof: "“An extra 5 grand just by asking for it.”",
+    who: "Blake M.",
+  },
+];
+---
+
+<section class="llu-band llu-band--white" id="method">
+  <div class="llu-wrap">
+    <div class="llu-head">
+      <p class="llu-eyebrow">How it works</p>
+      <h2 class="llu-h2">More applications won't fix it. A different approach will.</h2>
+      <p class="llu-lead">The people who turn their search around do five things. We do all five together.</p>
+    </div>
+
+    <ol class="mt-steps llu-mt-72">
+      {
+        steps.map((s) => (
+          <li class="mt-step">
+            <span class="mt-step__n" aria-hidden="true">{s.n}</span>
+            <div class="mt-step__main">
+              <h3 class="mt-step__title">{s.title}</h3>
+              <p class="mt-step__body">{s.body}</p>
+            </div>
+            <figure class="mt-step__proof">
+              <blockquote>{s.proof}</blockquote>
+              <figcaption>{s.who}</figcaption>
+            </figure>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .mt-steps { display: grid; gap: 16px; padding: 0; margin: 0; list-style: none; counter-reset: none; }
+  .mt-step {
+    display: grid; gap: 16px 24px; align-items: start; padding: 24px;
+    grid-template-columns: 48px minmax(0, 1fr);
+    border-radius: 20px; background: var(--llu-paper); border: 1px solid var(--llu-hairline);
+  }
+  @media (min-width: 1024px) {
+    .mt-step { grid-template-columns: 56px minmax(0, 1.2fr) minmax(0, 1fr); padding: 28px 32px; align-items: center; }
+  }
+  .mt-step__n {
+    display: grid; place-items: center; width: 48px; height: 48px; border-radius: 999px;
+    background: var(--llu-blue); color: #fff; font-weight: 700; font-size: 20px;
+  }
+  .mt-step__title { margin: 0; font-size: 22px; line-height: 1.25; font-weight: 700; color: var(--llu-ink); }
+  .mt-step__body { margin: 8px 0 0; color: var(--llu-body); }
+  .mt-step__proof {
+    grid-column: 2; margin: 0; padding: 14px 16px; border-radius: 14px;
+    background: var(--llu-white); border: 1px solid var(--llu-hairline);
+  }
+  @media (min-width: 1024px) { .mt-step__proof { grid-column: 3; } }
+  .mt-step__proof blockquote { margin: 0; font-size: 15px; line-height: 1.5; color: var(--llu-ink); }
+  .mt-step__proof figcaption { margin-top: 6px; font-size: 13px; color: var(--llu-caption); }
+</style>

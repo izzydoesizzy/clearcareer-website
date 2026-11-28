@@ -2,9 +2,10 @@
  * Shared helpers for the /api/onboarding/* routes. Server only.
  */
 import { readToken } from './onboarding.js';
+import { serverEnv } from './server-env.js';
 import { getClient, type Client, type ServerEnv } from './clients.js';
 
-export const env = import.meta.env as unknown as ServerEnv & { STRIPE_SECRET_KEY?: string };
+export const env = serverEnv() as unknown as ServerEnv & { STRIPE_SECRET_KEY?: string };
 
 export const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' } });

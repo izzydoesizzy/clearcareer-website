@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { cleanAnswers, scoreLead, bookingUrl, diagnose, leadScore, programValue, PROGRAMS } from '../../lib/book-call.js';
+import { cleanAnswers, scoreLead, bookingUrl, diagnose, leadScore, programValue, PROGRAMS, cad, PROMO } from '../../lib/book-call.js';
 import { packAnswers } from '../../lib/call-flow.js';
 import { checkoutFromEnv } from '../../lib/call-runner.js';
 import { consentAttributes } from '../../lib/brevo.js';
@@ -35,7 +35,7 @@ function limited(ip: string): boolean {
 function hotCheckoutFor(program: string, grade: string) {
   if (grade !== 'Hot') return {};
   const live = dealIsLive();
-  const fmt = (n: number) => `$${n.toLocaleString('en-CA')}`;
+  const fmt = (n: number) => (live ? `${cad(n)} with code ${PROMO.code}` : cad(n));
   if (program === PROGRAMS.group.name && CHECKOUT.group)
     return { checkout: { url: CHECKOUT.group, program: PROGRAMS.group.name.toLowerCase(), price: fmt(live ? PROGRAMS.group.price : PROGRAMS.group.regular) } };
   if (program === PROGRAMS.private.name && CHECKOUT.private)

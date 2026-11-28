@@ -2,10 +2,12 @@ import type { APIRoute } from "astro";
 import { readFileSync } from "fs";
 import { join } from "path";
 import { PRODUCTS } from "../../../../../data/product-config";
+import { verifyAccess } from "../../../../../lib/product-access";
+import { serverEnv } from "../../../../../lib/server-env";
 
 export const prerender = false;
 
-export const GET: APIRoute = async ({ params }) => {
+export const GET: APIRoute = async ({ params, url }) => {
   const { slug, id } = params;
 
   if (!slug || !id || !PRODUCTS[slug]) {
@@ -15,6 +17,10 @@ export const GET: APIRoute = async ({ params }) => {
   }
 
   const product = PRODUCTS[slug];
+  // Paid guides need the buyer's access token (free products stay open).
+  if (product.price > 0 && !(await verifyAccess(slug, url.searchParams.get("t"), serverEnv(), url)).ok) {
+    return new Response(JSON.stringify({ error: "Access link required" }), { status: 403 });
+  }
   const guide = product.guides.find((g) => g.id === id);
 
   if (!guide) {
@@ -34,7 +40,7 @@ export const GET: APIRoute = async ({ params }) => {
 
     return new Response(JSON.stringify({ markdown: content }), {
       status: 200,
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "Cache-Control": "private, no-store" },
     });
   } catch {
     return new Response(
