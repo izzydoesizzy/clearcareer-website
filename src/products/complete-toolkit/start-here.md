@@ -7,7 +7,7 @@ Welcome in. This is everything in one place: five products that cover a job sear
 **The five products** (open each one from **Your products** on this page):
 - **Career Prompt Vault:** 6 Claude skills and 50 copy-paste prompts for career clarity, target roles and companies, your resume, LinkedIn and more.
 - **Salary Number Generator:** a guide and a Claude skill to work out your anchor, target and walk-away numbers before any money conversation.
-- **Outreach and Email Templates:** 60+ templates and a Claude skill for cold emails, LinkedIn messages, networking and follow-ups, plus "Land an Interview in 1 Week".
+- **Outreach and Email Templates:** 80+ templates and a Claude skill for cold emails, LinkedIn messages, networking and follow-ups, plus "Land an Interview in 1 Week".
 - **Interview Confidence Kit:** guides for your story bank, "Tell me about yourself", likely questions, nerves and follow-up, plus a Claude skill that runs mock interviews with you.
 - **Salary Negotiation Scripts and Advice:** 52 scripts, an advice guide, an offer worksheet and a Claude skill that evaluates your offer, drafts your counter and rehearses the call.
 

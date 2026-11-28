@@ -212,7 +212,7 @@ Onward.
 - **Don't take company property or data.** No client lists, no internal documents, no code. This can lead to legal trouble.
 - **Don't burn bridges with individuals.** You may work with these people again.
 - **Don't announce on social media before telling your manager.** The order matters: manager first, then HR, then your team, then everyone else.
-- **Don't forget your departure details.** Ask what happens to unused vacation (in Canada, earned vacation pay is generally owed to you when you leave; in the US it depends on your state and your employer's policy), any bonus you've partly earned, when your benefits end, and whether your manager will be a reference.
+- **Don't forget your departure details.** Ask what happens to unused vacation, any bonus you've partly earned, when your benefits end, and whether your manager will be a reference. In Canada, earned vacation pay is generally owed to you when you leave. In the US, it depends on your state and your employer's policy.
 
 ---
 
@@ -229,7 +229,7 @@ Onward.
 - [ ] Sent a farewell message to my team
 - [ ] Connected with colleagues on personal channels (personal email, LinkedIn)
 - [ ] Returned all company equipment on or before my last day
-- [ ] Confirmed when my benefits end and my options to keep coverage (in the US, ask about COBRA; in Canada, ask whether your group plan lets you convert to an individual plan)
+- [ ] Confirmed when my benefits end and my options to keep coverage (in the US, ask about COBRA. In Canada, ask whether your group plan lets you convert to an individual plan)
 
 ---
 

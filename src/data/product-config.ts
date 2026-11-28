@@ -498,7 +498,7 @@ export const PRODUCTS: Record<string, Product> = {
     currency: "CAD",
     tier: "$19-29",
     description:
-      "60+ templates to reach hiring managers directly: cold emails, follow-ups, LinkedIn messages, referrals, and the thank-you that gets remembered. With a Claude skill that personalizes them.",
+      "80+ templates to reach hiring managers directly: cold emails, follow-ups, LinkedIn messages, referrals, and the thank-you that gets remembered. With a Claude skill that personalizes them.",
     stripePriceEnvVar: "STRIPE_OUTREACH_TEMPLATES_PRICE_ID",
     guidesDir: "outreach-templates-guides",
     badge: "New",

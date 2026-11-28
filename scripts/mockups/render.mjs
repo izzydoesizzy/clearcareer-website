@@ -63,7 +63,7 @@ const PRODUCTS = {
     },
   },
   'outreach-templates': {
-    name: 'Outreach and Email Templates', price: '$19', kicker: '60+ templates · Claude skill', accent: '#7C3AED', glyph: '✉',
+    name: 'Outreach and Email Templates', price: '$19', kicker: '80+ templates · Claude skill', accent: '#7C3AED', glyph: '✉',
     skills: [['cc-email-writer', 'Finds the right template and writes a short, personal email to a hiring manager']],
     pages: ['Start here', 'Land an Interview in 1 Week', 'Hiring Manager Cold Emails', 'Follow-Ups', 'Thank-You Emails'],
     chat: {

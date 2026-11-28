@@ -355,7 +355,7 @@ Rules for every template:
 - Ask for a conversation, never for a job.
 - No salary expectations.
 - No attachments in the first email unless they asked for a resume.
-- Plain text only: no coloured text, custom fonts or HTML.
+- Plain text only: no colours, custom fonts or HTML.
 - Don't send the identical email to several people at one company. They talk to each other.
 - No fake "Re:" subject lines, and no "Quick question" when there's no question.
 - Use only facts from my resume and details. Never invent a referral, a mutual connection or a number.

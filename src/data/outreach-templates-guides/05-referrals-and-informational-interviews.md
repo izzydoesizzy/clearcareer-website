@@ -69,6 +69,8 @@ Would you have 15 minutes for a call or a virtual coffee? I know alumni requests
 
 ### Template 3: The Coffee Invite (someone you know)
 
+**Subject:** Coffee soon?
+
 ~~~text
 Hi [First name],
 
@@ -84,6 +86,8 @@ Could I buy you a coffee [this week or next]? I'll come to your neighbourhood. T
 **Make it yours:** Offer to go to them, and pick up the bill. Small gestures make it easy to say yes.
 
 ### Template 4: The Coffee Invite (someone you've met once)
+
+**Subject:** Great meeting you at [event]: coffee?
 
 ~~~text
 Hi [First name],
@@ -168,6 +172,8 @@ No pressure at all if it doesn't feel right. I appreciate you either way.
 
 ### Template 8: The Check-First Intro Request
 
+**Subject:** Would you be open to an introduction?
+
 ~~~text
 Hi [First name],
 
@@ -207,6 +213,8 @@ No pressure. I appreciate you either way.
 **Make it yours:** Many companies have an internal referral system, and some want you to apply through the employee's link rather than the careers page. Ask first so you don't apply twice.
 
 ### Template 10: The Soft Referral Ask
+
+**Subject:** Who should I talk to about [field]?
 
 ~~~text
 Hi [First name],

@@ -42,7 +42,7 @@ export const CATALOG: Record<string, CatalogItem> = {
   },
   'outreach-templates': {
     name: 'Outreach and Email Templates',
-    blurb: '60+ templates to reach hiring managers directly, plus a Claude skill that personalizes them.',
+    blurb: '80+ templates to reach hiring managers directly, plus a Claude skill that personalizes them.',
     open: 'Open the Outreach Templates',
     start: 'Read "Land an Interview in 1 Week" first, then pick three hiring managers and send your first email today.',
   },

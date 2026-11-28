@@ -61,6 +61,8 @@ The part about [specific point] seemed especially relevant. No need to reply. I 
 
 ### Template 2: Celebrate Their Win
 
+**Subject:** Congrats, [First name]!
+
 ~~~text
 Hi [First name],
 
@@ -76,6 +78,8 @@ Wishing you a great start to the next chapter.
 **Make it yours:** Skip the generic "Congrats!" comment everyone else leaves. A short private message with one specific line stands out.
 
 ### Template 3: Pass Along an Event
+
+**Subject:** An event you might like: [event name]
 
 ~~~text
 Hi [First name],
@@ -93,6 +97,8 @@ Given your work on [their area], I thought you might like it. I'm planning to go
 
 ### Template 4: Offer an Introduction
 
+**Subject:** An introduction that might help
+
 ~~~text
 Hi [First name],
 
@@ -108,6 +114,8 @@ Would an introduction be helpful? If so, I'll check with [Name] first and then c
 **Make it yours:** Always ask both people before you introduce them. Nobody likes a surprise introduction they didn't agree to.
 
 ### Template 5: Thoughtful Feedback
+
+**Subject:** Your [article or talk] on [topic]
 
 ~~~text
 Hi [First name],
@@ -125,6 +133,8 @@ One thought, in case it's useful: [one modest suggestion or question]. Either wa
 
 ### Template 6: Ask for Their Expertise
 
+**Subject:** A quick question for you
+
 ~~~text
 Hi [First name],
 
@@ -140,6 +150,8 @@ Even a quick answer would help. Thank you!
 **Make it yours:** One question, answerable in a few lines. "What's the best way to learn [tool] fast?" works. "Can you teach me [tool]?" doesn't.
 
 ### Template 7: Support After a Layoff
+
+**Subject:** Thinking of you
 
 ~~~text
 Hi [First name],
