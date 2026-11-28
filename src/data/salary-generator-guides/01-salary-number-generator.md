@@ -44,7 +44,7 @@ Work through each line:
 | Food (groceries + dining out, be honest) | $_____ | $_____ |
 | Insurance (health, dental, life, disability) | $_____ | $_____ |
 | Debt payments (student loans, credit cards, other) | $_____ | $_____ |
-| Childcare/dependents | $_____ | $_____ |
+| Childcare/dependants | $_____ | $_____ |
 | Savings (minimum: emergency fund contribution) | $_____ | $_____ |
 | Everything else (subscriptions, clothing, personal) | $_____ | $_____ |
 | **Total Monthly Minimum** | **$_____** | |
