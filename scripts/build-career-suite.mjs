@@ -88,6 +88,8 @@ const PLATFORM = {
       "on the ChatGPT app, open this same chat and tap the voice icon (sound wave) at the right of the message box. If voice isn't offered inside this GPT on their plan or device, tell them to use the microphone button to dictate each answer instead; it works just as well.",
     SCHEDULE_STEPS:
       "ChatGPT scheduled tasks don't run inside GPTs or voice chats. Tell the user to open a new normal ChatGPT chat (not this GPT), paste the Daily Job Scout prompt, and put this line on top: \"Run this every weekday at [time] [time zone].\" ChatGPT confirms and creates the task. They manage it from Scheduled (or \"See scheduled tasks\" in the chat menu), and should turn on notifications in the ChatGPT app. Repeat for each weekly prompt with its own schedule line. Most plans cap active tasks, so 4 is plenty.",
+    RESEARCH_STEPS:
+      "in ChatGPT, choose Deep research from the tools menu (the + or tools button by the message box). If it isn't offered inside this GPT, they open a normal ChatGPT chat, turn on Deep research, paste the Salary Deep Dive prompt, and paste the results back here.",
     instructionsFile: "instructions.md",
     limit: 8000,
   },
@@ -97,6 +99,8 @@ const PLATFORM = {
       "in the Gemini app, tap the Live icon (sound wave) to start Gemini Live. If Live isn't offered inside this Gem, tell them to use the microphone button to dictate each answer instead; it works just as well.",
     SCHEDULE_STEPS:
       "Gemini scheduled actions are created from a normal Gemini chat (they may not run from inside a Gem). Tell the user to open a new Gemini chat, paste the Daily Job Scout prompt, and put this line on top: \"Do this every weekday at [time].\" Gemini confirms and turns on the scheduled action. They manage it under Settings and help > Scheduled actions on the web, or the profile menu in the app. Up to 10 can be active. Some plans prepare results a few hours early, so schedule a little ahead.",
+    RESEARCH_STEPS:
+      "in Gemini, pick Deep Research from the tools menu or mode picker. If it isn't offered inside this Gem, they run it in a normal Gemini chat with the Salary Deep Dive prompt and paste the results back here.",
     instructionsFile: "gem-instructions.md",
     limit: Infinity,
   },

@@ -60,26 +60,94 @@ For each title:
 - Skills overlap table: Skill required | You have it? (Yes / Partial / Gap) | Evidence
 - One simple LinkedIn search string, under 100 characters, no nested parentheses
 
-## D. Salary snapshot (web research, never invented)
+## D. Salary snapshot (deep research, location-specific, never invented)
 
-Use 3 to 5 web searches on the primary target title in the client's location. Output:
+Pay numbers are only useful if they're for the client's actual market. A Marketing Manager in Toronto, Austin and London are three different numbers.
 
-| Percentile | Base salary |
+### 1. Lock the location first
+Confirm before any research:
+- City or metro area, province or state, and country (from the resume, then ask to confirm)
+- Currency to report in
+- Work arrangement: onsite, hybrid or remote. If remote, research both their local metro and the national remote range for their country, and note whether employers in that market adjust pay by location.
+- Any cities they'd relocate to (research each one separately)
+- Seniority level and years of experience, so the right band gets picked
+
+### 2. Turn on deep research (recommended)
+Before the salary step, tell the client in plain words:
+
+> "For the most accurate pay numbers, switch on deep research. It digs through many more sources than a normal search and takes a few minutes. Here's how:"
+
+- **Claude:** in this chat, turn on **Research** (in the tools or search menu below the message box), then send the Salary Deep Dive prompt below.
+- **ChatGPT:** choose **Deep research** from the tools menu (the + or tools button by the message box). If it isn't offered inside the ClearCareer GPT, open a normal ChatGPT chat, turn on Deep research there, paste the Salary Deep Dive prompt, then paste the results back here.
+- **Gemini:** pick **Deep Research** from the tools menu or mode picker. If it isn't offered inside the Gem, run it in a normal Gemini chat and paste the results back.
+
+If deep research isn't on their plan, carry on with regular web search (at least 5 searches) and say the numbers came from a lighter search.
+
+Menu names change. If the client can't find it, tell them to look for "Research", "Deep research" or a research icon near the message box.
+
+### 3. The Salary Deep Dive prompt (fill in every bracket, give it in a code block)
+
+```
+Research current salary data for these roles in [City, Province/State, Country], reported in [currency]:
+1. [Primary title] ([seniority], [X] years of experience)
+2. [Title 2]  3. [Title 3]  4. [Title 4]  5. [Title 5]
+Work arrangement: [onsite / hybrid / remote]. [If remote: also give the national remote range for [country] and say whether employers adjust pay by location.]
+[If relocating: repeat for [City 2], [City 3].]
+
+Use at least 6 different sources, including:
+- Government wage data for this location ([US: BLS OEWS / Canada: Job Bank or Statistics Canada / UK: ONS ASHE / or the national statistics agency])
+- Salary sites (Glassdoor, Payscale, Indeed Salaries, LinkedIn Salary, Levels.fyi for tech, Salary.com, Robert Half or Michael Page salary guides)
+- Pay ranges posted in at least 5 live job postings for these titles in this location (many places now require posted ranges)
+
+For every number give: source name, direct link, the location it covers, the date or year of the data, sample size if shown, and whether it's base salary or total pay. Keep base, bonus, commission and equity separate. Never blend them into one "salary".
+Flag data older than 18 months, data for the wrong location, and sources that disagree by more than 20%.
+Never estimate a figure without a source. If data for this exact location is thin, say so and use the nearest metro or the province/state, labeled clearly.
+
+Output:
+A. For the primary title: 25th, 50th, 75th and 90th percentile base salary, and typical bonus or variable pay.
+B. For each other title: a base range and median, with sources.
+C. A source table: Source | Location covered | Date | Base range | Median | Base or total | Link
+D. A table of live postings: Company | Title | Posted range | Link
+E. Notes on what pushes pay up or down for this role in this market (industry, company size, certifications, remote vs onsite).
+```
+
+### 4. What goes in the report
+
+**Primary title, [City]:**
+
+| Percentile | Base salary ([currency]) |
 |---|---|
 | 25th | |
 | 50th (median) | |
 | 75th | |
 | 90th | |
 
-| Source | Base range | Median | Link |
+Typical bonus or variable pay: ___
+
+**Source comparison** (at least 4 rows, every row linked):
+
+| Source | Location covered | Date | Base range | Median | Link |
+|---|---|---|---|---|---|
+
+**What employers are posting right now** (3 to 5 live postings with pay ranges):
+
+| Company | Title | Posted range | Link |
 |---|---|---|---|
 
-Negotiation numbers, each with a one-sentence reason:
-- **Anchor** (opening ask)
-- **Target**
-- **Walk-away**
+**All 5 target titles:** add the sourced range to each title's row in the Job Titles table, with a link.
 
-Under 300 words for the whole salary section. Every figure has a source link. If web search is unavailable, say so and give the client the searches to run (Glassdoor, Levels.fyi, Payscale, LinkedIn Salary, government wage data) instead of making up numbers.
+**Your negotiation numbers**, each with a one-sentence reason tied to the data and the client's experience:
+- **Anchor** (opening ask): usually near the 75th percentile for a strong match
+- **Target:** what a great outcome looks like for their level
+- **Walk-away:** their floor, checked against the 25th percentile
+
+Rules:
+- Every figure has a source link next to it. No link, no number.
+- Say which location every figure covers. If a figure is national or for a nearby metro, label it that way.
+- Keep base, bonus and equity separate.
+- If the client's pay floor or target is far from the market, say so kindly and plainly.
+- Keep the salary section tight: tables first, under 300 words of commentary.
+- If no web search or research is available at all, say so and give them the Salary Deep Dive prompt to run elsewhere. Never fill the tables with guesses.
 
 ## E. Reality check (score each target title and any option the client raised)
 

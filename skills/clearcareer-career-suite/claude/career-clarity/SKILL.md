@@ -23,7 +23,11 @@ Say back what you inferred from the resume (seniority, industry, location) in on
 ## Step 3: Research and analysis
 1. Pick 5 target titles with the Clarity Audit mix: 2 Direct, 1 Adjacent, 1 Emerging, 1 Stretch, each 70%+ skills overlap. Respect titles they named, and say honestly if one doesn't fit.
 2. For each title: fit %, demand, type, salary range in local currency, one sentence of resume evidence, a skills overlap table (Yes / Partial / Gap with evidence), and one simple LinkedIn search string under 100 characters.
-3. Salary snapshot for the primary title: use web search (3 to 5 searches). Percentiles table, sources table with links, and Anchor / Target / Walk-away numbers with one-line reasons. **Never invent a salary figure or a link.** If you can't search, say so and give them the exact searches to run.
+3. **Salary research (location-specific, deep research recommended).** Follow section D of the framework exactly:
+   - Lock the location first: city or metro, province or state, country, currency, work arrangement, any relocation cities. Confirm it with the client.
+   - Tell the client to switch on **Research** mode in this chat for the salary step (explain why in one line, and how to find it), then give them the filled-in Salary Deep Dive prompt in a code block to send. If Research isn't available on their plan, run at least 5 regular web searches yourself and say the numbers came from a lighter search.
+   - Report percentiles for the primary title, a ranged and sourced figure for all 5 titles, a source comparison table (at least 4 sources, each with location, date and link), 3 to 5 live postings with posted pay ranges, and Anchor / Target / Walk-away with reasons.
+   - **Every number has a source link and says which location it covers. Never invent a salary figure or a link.**
 4. Reality check: score each title (and anything they're curious about) on Values fit, Skills match and Practical viability, 1 to 5 each.
 5. Resume verdicts: the 6 areas, one verdict and one sentence each. Don't rewrite bullets here.
 
@@ -49,8 +53,8 @@ Top 5 values, values score (__/5 in your last role), keep / drop / build skills,
 | Title | Fit | Salary Range | Demand | Type |
 Then a section per title: evidence sentence, skills overlap table, LinkedIn search string in a code block.
 
-## Salary Snapshot
-Percentiles, sources, your negotiation numbers.
+## Salary Snapshot: [City, Country], [currency]
+Percentiles for the primary title, source comparison table (location, date, link per row), live postings with posted ranges, your negotiation numbers. Every figure linked.
 
 ## Reality Check
 The scoring table and a one-line verdict per option.

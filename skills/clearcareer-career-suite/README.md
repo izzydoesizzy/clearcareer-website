@@ -6,7 +6,7 @@ Five AI tools that take someone from "here's my resume" to "here are the 3 jobs 
 
 | # | Tool | What it does | Time |
 |---|---|---|---|
-| 1 | **Career Clarity** (`career-clarity`) | Upload your resume, answer a short intake. Get 5 target titles with fit scores, what they pay, your negotiation numbers, a reality check and resume feedback. | 15 to 20 min |
+| 1 | **Career Clarity** (`career-clarity`) | Upload your resume, answer a short intake. Get 5 target titles with fit scores, what they pay in your city (deep research recommended, every number linked to its source), your negotiation numbers, a reality check and resume feedback. | 15 to 20 min |
 | 2 | **AI Achievement Interviewer** (`achievement-interviewer`) | Quick text scan, then a voice-mode interview that drills into every role until it has numbers on it. Keeps a living Master Career Profile. Writes your bullets, 8 professional summaries, headlines and skills section. | 2 to 3 voice sittings of 20 to 45 min |
 | 3 | **Job Match Scorer** (`job-match-rubric`) | Paste any job posting. Get a 100-point score on your real chances, the proof to lead with, gaps, and a tailored summary. | 2 min per job |
 | 4 | **Job Search Autopilot** (`job-search-autopilot`) | Turns your profile into scheduled daily and weekly job searches that find, verify and score new roles. | 15 min setup |
