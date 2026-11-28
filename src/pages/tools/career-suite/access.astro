@@ -1,0 +1,131 @@
+---
+import PageLayout from "@layouts/PageLayout.astro";
+import Stripe from "stripe";
+import { Content as Guide } from "../../../../skills/clearcareer-career-suite/shared/career-suite-guide.md";
+import { PLATFORMS, SUITE_SKILLS, isSuiteSessionValid } from "../../../data/career-suite";
+
+export const prerender = false;
+
+// Verify the buyer through their Stripe Checkout session.
+const sessionId = Astro.url.searchParams.get("session_id") || "";
+let buyerName = "";
+let isValid = false;
+
+const stripeKey = import.meta.env.STRIPE_SECRET_KEY;
+if (stripeKey && sessionId.startsWith("cs_")) {
+  try {
+    const stripe = new Stripe(stripeKey);
+    const session = await stripe.checkout.sessions.retrieve(sessionId);
+    if (isSuiteSessionValid(session)) {
+      isValid = true;
+      buyerName = session.customer_details?.name?.split(" ")[0] || "";
+    }
+  } catch {
+    // Invalid session: show the error state below.
+  }
+}
+
+const dl = (platform: string, skill: string) =>
+  `/api/career-suite/download?session_id=${encodeURIComponent(sessionId)}&platform=${platform}&skill=${skill}`;
+
+Astro.response.headers.set("Cache-Control", "private, no-store");
+---
+
+{isValid ? (
+<PageLayout title="Your Career Suite | ClearCareer" description="Download the ClearCareer Career Suite for Claude, ChatGPT or Gemini." noindex={true}>
+  <section class="bg-gradient-to-b from-blue-bg to-white pb-10 pt-12 md:pt-16">
+    <div class="mx-auto max-w-[880px] px-4 text-center sm:px-6">
+      <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-success/10">
+        <svg class="h-8 w-8 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+      </div>
+      <h1 class="font-display text-[clamp(1.5rem,4vw,2.5rem)] text-navy">
+        {buyerName ? `Welcome, ${buyerName}.` : "Your Career Suite"}
+      </h1>
+      <p class="mx-auto mt-3 max-w-xl text-base text-text-muted">Six AI tools that take you from "here's my resume" to "here are the 3 jobs to apply to today." Pick the AI you use, download the tools, and follow the steps in order.</p>
+      <p class="mx-auto mt-3 max-w-xl text-sm text-text-muted">Bookmark this page. It's your download link for life.</p>
+    </div>
+  </section>
+
+  <!-- Step 1: pick your AI and install -->
+  <section class="py-10">
+    <div class="mx-auto max-w-[1080px] px-4 sm:px-6">
+      <h2 class="font-display text-2xl text-navy">1. Pick your AI and download</h2>
+      <p class="mt-2 text-text-muted">Each version is formatted exactly the way that AI needs it. Use the one you already pay for. Not sure? Claude keeps everything in one conversation most easily.</p>
+
+      <div class="mt-8 grid gap-6 md:grid-cols-3">
+        {PLATFORMS.map((p) => (
+          <div class="flex flex-col rounded-2xl border border-border bg-white p-6 shadow-sm">
+            <h3 class="font-display text-xl text-navy">{p.name}</h3>
+            <p class="mt-1 text-xs font-semibold uppercase tracking-wider text-blue">{p.format}</p>
+            <a href={dl(p.id, "all")} class="mt-5 inline-flex items-center justify-center gap-2 rounded-lg bg-blue px-4 py-3 text-sm font-bold text-white shadow hover:bg-blue-dark">
+              <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3" /></svg>
+              All 6 tools for {p.name}
+            </a>
+            <h4 class="mt-6 text-sm font-semibold text-navy">How to install</h4>
+            <ol class="mt-2 list-decimal space-y-1.5 pl-5 text-sm text-text-muted">
+              {p.install.map((s) => <li>{s}</li>)}
+            </ol>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Per-tool downloads -->
+  <section class="pb-12">
+    <div class="mx-auto max-w-[1080px] px-4 sm:px-6">
+      <h2 class="font-display text-2xl text-navy">Or download one tool at a time</h2>
+      <p class="mt-2 text-text-muted">Listed in the order you'll use them.</p>
+      <div class="mt-6 space-y-4">
+        {SUITE_SKILLS.map((s) => (
+          <div class="rounded-xl border border-border bg-white p-5 shadow-sm md:flex md:items-center md:justify-between md:gap-6">
+            <div class="md:max-w-[560px]">
+              <p class="text-xs font-semibold uppercase tracking-wider text-blue">{s.step}</p>
+              <h3 class="mt-1 font-bold text-navy">{s.name}</h3>
+              <p class="mt-1 text-sm text-text-muted">{s.summary}</p>
+            </div>
+            <div class="mt-4 flex shrink-0 flex-wrap gap-2 md:mt-0">
+              {PLATFORMS.map((p) => (
+                <a href={dl(p.id, s.slug)} class="rounded-lg border border-blue px-3 py-2 text-sm font-semibold text-blue hover:bg-blue-bg">{p.name}</a>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- The guide -->
+  <section class="border-t border-border bg-blue-bg/40 py-12">
+    <div class="mx-auto max-w-[880px] px-4 sm:px-6">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <h2 class="font-display text-2xl text-navy">2. Follow the steps in order</h2>
+        <a href={dl("claude", "guide")} class="rounded-lg border border-blue bg-white px-4 py-2 text-sm font-semibold text-blue hover:bg-blue-bg">Download the guide</a>
+      </div>
+      <article class="prose prose-slate mt-6 max-w-none rounded-2xl border border-border bg-white p-6 shadow-sm md:p-10 prose-headings:font-display prose-headings:text-navy prose-table:text-sm prose-th:text-navy">
+        <Guide />
+      </article>
+    </div>
+  </section>
+
+  <section class="bg-navy py-14 text-center">
+    <div class="mx-auto max-w-[680px] px-4 sm:px-6">
+      <h2 class="font-display text-2xl text-white">Want a coach in your corner?</h2>
+      <p class="mt-3 text-white/80">Land and Level Up adds live weekly calls, resume and LinkedIn feedback, and a community of people searching alongside you.</p>
+      <a href="/land-and-level-up" class="mt-6 inline-flex items-center justify-center rounded-lg bg-white px-8 py-3.5 text-base font-semibold text-blue hover:bg-gray-100">See Land and Level Up</a>
+      <p class="mt-6 text-sm text-white/70">Questions? <a href="mailto:izzy@joinclearcareer.com" class="underline">izzy@joinclearcareer.com</a></p>
+    </div>
+  </section>
+</PageLayout>
+) : (
+<PageLayout title="Career Suite Access | ClearCareer" description="Access your ClearCareer Career Suite." noindex={true}>
+  <section class="py-20">
+    <div class="mx-auto max-w-[560px] px-4 text-center sm:px-6">
+      <h1 class="font-display text-2xl text-navy">We couldn't find your purchase</h1>
+      <p class="mt-3 text-text-muted">This link is missing or doesn't match a completed order. Use the link in your confirmation email, or get the Career Suite below.</p>
+      <a href="/tools/career-suite" class="mt-6 inline-block rounded-lg bg-blue px-6 py-2.5 text-sm font-semibold text-white hover:bg-blue-dark">Go to the Career Suite</a>
+      <p class="mt-6 text-sm text-text-muted">Already paid? Email <a href="mailto:izzy@joinclearcareer.com" class="text-blue underline">izzy@joinclearcareer.com</a> and we'll sort it out.</p>
+    </div>
+  </section>
+</PageLayout>
+)}

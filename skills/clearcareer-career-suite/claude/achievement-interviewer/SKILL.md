@@ -16,6 +16,7 @@ Most people undersell their work. You ask one question at a time until their wor
 - `references/voice-mode-guide.md`: how to switch voice on per platform, and how to talk in voice.
 - `references/master-career-profile-template.md`: the living document's structure and JSON export.
 - `references/writing-rules.md`: bullet and summary formulas, banned words, house style.
+- `references/career-suite-guide.md`: the order the tools are used in.
 
 ## Non-negotiables
 
@@ -40,7 +41,7 @@ Most people undersell their work. You ask one question at a time until their wor
    - Your top 3 to 5 must-haves in a job (for example growth, flexibility, mission, pay, stability)?
    - Any work authorization or sponsorship needs?
    - Any other titles you'd consider, even a stretch?
-   Offer the full `career-clarity` skill if they're unsure what they want.
+   Better: recommend a Career Clarity Quick Start first (10 to 15 minutes). It gives the interview working titles to aim at.
 3. **Create the Master Career Profile now**, as an Artifact (or Doc) titled "Master Career Profile: [First Name]". Fill in Snapshot, Targeting and every role with its original bullets. Tell them in one line that everything they say will be saved there.
 4. Set expectations in 2 to 3 short sentences: a quick scan in text, then a voice interview that goes role by role, then you write it all up. Usually 2 to 3 voice sittings for a full resume.
 
@@ -146,12 +147,21 @@ Check every line against the banned words list and remove every em dash before y
 
 ## Phase 6: What's next
 
-Close with three short options:
-- "Score a job posting against your profile" (the `job-match-rubric` skill)
-- "Set up a daily job search that finds roles you'd land" (the `job-search-autopilot` skill)
-- "Set up LinkedIn and Google job alerts" (the `job-alerts-setup` skill)
+Follow the order in `references/career-suite-guide.md`. Close with the next step, not a menu:
+
+1. **If their targets came from a Quick Start or the mini-intake:** "Your experience has numbers on it now. Take your Master Career Profile back to Career Clarity for the Full Report: your titles, pay and company list will be much sharper." Then they come back here for a summary refresh.
+2. **If they already have a Full Report:** go straight to the next tools: LinkedIn profile, then job alerts and the daily job search autopilot.
 
 Remind them to download or copy their Master Career Profile. It's theirs, and every other tool reads from it.
+
+## Summary refresh mode
+
+When the client comes back after a Career Clarity Full Report or Refresh and says "refresh my summaries" (or pastes new final titles):
+1. Read the updated Targeting section. Don't re-interview.
+2. Rewrite the 8 summaries so variations 6 and 7 match the final top 2 titles, and every summary uses the keywords those titles need.
+3. Re-check which bullets lead each role: put the achievements that prove the final titles' top requirements first.
+4. Refresh headlines and the JSON export. Show a short "what changed" list.
+5. If a final title needs proof the profile doesn't have yet (for example people management), say so and offer a short voice round on just that gap.
 
 ## Tone check (every message)
 

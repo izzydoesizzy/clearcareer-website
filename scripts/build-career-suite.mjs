@@ -68,6 +68,17 @@ const SKILLS = {
     ],
     browsing: true,
   },
+  "linkedin-profile-builder": {
+    title: "ClearCareer LinkedIn Profile Builder",
+    description: "Rebuilds your LinkedIn headline, About, experience, skills and Open to Work settings from your Master Career Profile, ready to paste.",
+    starters: [
+      "Here's my Master Career Profile. Build my LinkedIn profile.",
+      "Write 10 LinkedIn headlines for my target title",
+      "Rewrite my LinkedIn About section",
+      "Score my current LinkedIn profile",
+    ],
+    browsing: false,
+  },
   "job-alerts-setup": {
     title: "ClearCareer Job Alerts Setup",
     description: "Builds copy-paste LinkedIn, Google and Indeed job alerts from your target titles and walks you through saving each one.",
@@ -229,15 +240,44 @@ if (errors.length) {
 }
 
 // ---------- 5. Zip ----------
+// One zip per skill per platform, shaped the way each platform installs it,
+// plus an all-in-one zip per platform and the guide on its own.
+//   dist/claude/<skill>.zip   -> <skill>/SKILL.md + references/ (upload to Claude as a skill)
+//   dist/chatgpt/<skill>.zip  -> <skill>/instructions.md + knowledge/ + setup.md
+//   dist/gemini/<skill>.zip   -> <skill>/gem-instructions.md + knowledge/ + setup.md
+//   dist/<platform>/clearcareer-career-suite-<platform>-all.zip
+//   dist/career-suite-guide.md
 rmrf(DIST);
 fs.mkdirSync(DIST, { recursive: true });
 const readme = path.join(SUITE, "README.md");
+const guide = path.join(SHARED, "career-suite-guide.md");
+fs.copyFileSync(guide, path.join(DIST, "career-suite-guide.md"));
 for (const platform of ["claude", "chatgpt", "gemini"]) {
-  const out = path.join(DIST, `clearcareer-career-suite-${platform}.zip`);
-  execFileSync("zip", ["-rqX", out, "."], { cwd: path.join(SUITE, platform) });
-  if (fs.existsSync(readme)) execFileSync("zip", ["-qjX", out, readme]);
+  const platformDir = path.join(SUITE, platform);
+  const outDir = path.join(DIST, platform);
+  fs.mkdirSync(outDir, { recursive: true });
+  for (const skill of Object.keys(SKILLS)) {
+    const out = path.join(outDir, `${skill}.zip`);
+    // Only the skill folder: Claude's skill upload expects exactly one folder.
+    // The guide is already inside each skill's references/ or knowledge/.
+    execFileSync("zip", ["-rqX", out, skill], { cwd: platformDir });
+  }
+  const all = path.join(outDir, `clearcareer-career-suite-${platform}-all.zip`);
+  execFileSync("zip", ["-rqX", all, ...Object.keys(SKILLS)], { cwd: platformDir });
+  execFileSync("zip", ["-qjX", all, guide]);
+  if (fs.existsSync(readme)) execFileSync("zip", ["-qjX", all, readme]);
 }
+
+// A manifest the website reads to draw the download buttons.
+const manifest = {
+  generated: new Date().toISOString().slice(0, 10),
+  skills: Object.entries(SKILLS).map(([slug, meta]) => ({ slug, title: meta.title, description: meta.description })),
+  platforms: ["claude", "chatgpt", "gemini"],
+};
+write(path.join(DIST, "manifest.json"), JSON.stringify(manifest, null, 2) + "\n");
+
 console.log("Built career suite:");
-for (const f of fs.readdirSync(DIST)) {
-  console.log(`  dist/${f} (${Math.round(fs.statSync(path.join(DIST, f)).size / 1024)} KB)`);
+for (const platform of ["claude", "chatgpt", "gemini"]) {
+  const files = fs.readdirSync(path.join(DIST, platform));
+  console.log(`  dist/${platform}/: ${files.length} zips`);
 }

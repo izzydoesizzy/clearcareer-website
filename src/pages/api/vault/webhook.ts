@@ -43,13 +43,19 @@ export const POST: APIRoute = async ({ request }) => {
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
 
-    if (session.payment_status === "paid") {
+    // "no_payment_required" covers 100% promo codes (Land and Level Up members get the Career Suite free).
+    const isFreeCareerSuite = session.payment_status === "no_payment_required" && session.metadata?.product === "career-suite";
+    if (session.payment_status === "paid" || isFreeCareerSuite) {
       const customerEmail = session.customer_details?.email;
       const customerName = session.customer_details?.name;
       const firstName = customerName?.split(" ")[0];
 
       if (session.metadata?.product === "vault" && customerEmail) {
         await sendProductEmail(customerEmail, session.id, "vault", firstName);
+      }
+
+      if (session.metadata?.product === "career-suite" && customerEmail) {
+        await sendProductEmail(customerEmail, session.id, "career-suite", firstName);
       }
 
       if (session.metadata?.product === "layoff-survival-kit" && customerEmail) {
@@ -67,7 +73,7 @@ export const POST: APIRoute = async ({ request }) => {
 async function sendProductEmail(
   email: string,
   sessionId: string,
-  product: "vault" | "layoff-survival-kit",
+  product: "vault" | "layoff-survival-kit" | "career-suite",
   firstName?: string,
 ) {
   const resendKey = import.meta.env.RESEND_API_KEY;
@@ -79,11 +85,15 @@ async function sendProductEmail(
   const baseUrl = import.meta.env.SITE || SITE_URL;
   const emailData = product === "vault"
     ? buildVaultEmailData(baseUrl, sessionId, firstName)
-    : buildLayoffKitEmailData(baseUrl, sessionId, firstName);
+    : product === "career-suite"
+      ? buildCareerSuiteEmailData(baseUrl, sessionId, firstName)
+      : buildLayoffKitEmailData(baseUrl, sessionId, firstName);
 
   const subject = product === "vault"
     ? "Your Career Prompt Vault is ready"
-    : "Your Layoff Survival Kit is ready";
+    : product === "career-suite"
+      ? "Your Career Suite is ready"
+      : "Your Layoff Survival Kit is ready";
 
   const html = buildBoldConversion(emailData);
   const resend = new Resend(resendKey);
@@ -130,6 +140,49 @@ function buildVaultEmailData(baseUrl: string, sessionId: string, firstName?: str
       quote: "Top of salary range, extra vacation, and a role that matters.",
       name: "Alison Gibbins",
       outcome: "Top of salary range + 5 extra vacation days; corporate to nonprofit transition",
+    },
+    discoveryCall: {
+      text: "Want to talk through your job search?",
+      url: DISCOVERY_CALL_URL,
+    },
+  };
+}
+
+function buildCareerSuiteEmailData(baseUrl: string, sessionId: string, firstName?: string): EmailData {
+  const accessUrl = `${baseUrl}/tools/career-suite/access?session_id=${sessionId}`;
+
+  return {
+    productName: "Your Career Suite",
+    subtitle: "Six AI tools for Claude, ChatGPT and Gemini, in the order you use them.",
+    firstName,
+    primaryCta: {
+      text: "Download Your Tools",
+      url: accessUrl,
+    },
+    quickTip: {
+      label: "Start here",
+      text: "Install Career Clarity and the AI Achievement Interviewer first. Run the Quick Start (15 minutes), then do your first voice interview on your phone. Everything else builds on that.",
+    },
+    extraContent: `
+<h3 style="margin:0 0 12px;font-size:16px;color:#1B2A4A;">Your first week:</h3>
+<ol style="margin:0;padding-left:20px;line-height:1.8;">
+  <li style="color:#4b5563;font-size:14px;">Career Clarity Quick Start: working titles and resume feedback</li>
+  <li style="color:#4b5563;font-size:14px;">AI Achievement Interviewer: 2 to 3 voice sittings until every role has numbers</li>
+  <li style="color:#4b5563;font-size:14px;">Career Clarity Full Report: final titles, pay for your city, target companies</li>
+  <li style="color:#4b5563;font-size:14px;">Summary refresh: your resume is done</li>
+</ol>
+<p style="margin:12px 0 0;color:#4b5563;font-size:14px;">Bookmark your download page. It's your access link for life.</p>`,
+    upsell: {
+      headline: LLU_PITCH.headline,
+      description: LLU_PITCH.description,
+      bullets: LLU_PITCH.bullets,
+      buttonText: LLU_PITCH.button,
+      buttonUrl: `${baseUrl}/land-and-level-up`,
+    },
+    testimonial: {
+      quote: "After 12 months of searching and 160+ applications with no offers, I was hired in 3 weeks using Izzy's system.",
+      name: "Jorge G.",
+      outcome: "Hired in 3 weeks after 12 months",
     },
     discoveryCall: {
       text: "Want to talk through your job search?",

@@ -4,7 +4,7 @@
 2. **Name:** ClearCareer AI Achievement Interviewer
 3. **Description:** Upload your resume, then talk it through in voice mode. It asks one question at a time until every role has numbers on it, then writes your bullets and 8 professional summaries.
 4. **Instructions:** paste everything in `gem-instructions.md`.
-5. **Knowledge:** upload every file in the `knowledge/` folder (master-career-profile-template.md, quantification-playbook.md, question-bank.md, voice-mode-guide.md, writing-rules.md).
+5. **Knowledge:** upload every file in the `knowledge/` folder (career-suite-guide.md, master-career-profile-template.md, quantification-playbook.md, question-bank.md, voice-mode-guide.md, writing-rules.md).
 6. **Suggested first messages to share with members:**
    - Here's my resume. Start my achievement interview.
    - Start my achievement interview. Use my Voice Interview Brief.
