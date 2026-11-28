@@ -46,7 +46,7 @@ export const offer = {
   promoCode: "BLACKFRIDAY",
   promoLine: "20% off with code BLACKFRIDAY at checkout.",
   dealBarLong: "20% off with code BLACKFRIDAY. Group cohort $960, regular $1,200. Ends Monday, November 30 at 11:59 pm ET.",
-  dealBarShort: "20% off: code BLACKFRIDAY. Ends Nov 30.",
+  dealBarShort: "20% off until Nov 30",
   regularFrom: "On December 1 they go back to $1,200 and $2,297.",
   group: {
     name: "Group cohort",

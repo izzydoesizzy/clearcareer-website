@@ -1186,6 +1186,58 @@ body:has(> .llu) {
     display: none;
   }
 }
+/* Phones: one short line, and the whole bar is the link ("BLACK FRIDAY 20% off until Nov 30 →").
+   The link text stays for screen readers; an arrow shows instead. */
+.llu-dealbar__arrow {
+  margin-left: 2px;
+  font-size: 1.15em;
+  text-decoration: none;
+}
+@media (max-width: 767px) {
+  .llu-dealbar__row {
+    min-height: 40px;
+    gap: 0 8px;
+  }
+  .llu-dealbar__text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .llu-dealbar__label {
+    display: inline;
+    margin-right: 8px;
+  }
+  .llu-dealbar__link {
+    min-height: 40px;
+    text-decoration: none;
+  }
+  .llu-dealbar__link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+  .llu-dealbar__linktext {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+}
+@media (min-width: 768px) {
+  .llu-dealbar__arrow {
+    display: none;
+  }
+}
+.llu-md-only {
+  display: none;
+}
+@media (min-width: 768px) {
+  .llu-md-only {
+    display: inline;
+  }
+}
 /* The nav sticks under the bar from 1024px, and anchors clear both */
 @media (min-width: 1024px) {
   .llu-nav {
@@ -1203,6 +1255,14 @@ body:has(> .llu) {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--fg-muted);
+}
+/* Phones: the note reads as a sentence, so the code chip doesn't break the line apart */
+@media (max-width: 767px) {
+  .llu-bf {
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 500;
+  }
 }
 
 /* ── Book a call form ───────────────────────────────────────────────────── */
