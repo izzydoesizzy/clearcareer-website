@@ -4,7 +4,7 @@
 
 A hiring manager with an open role has a problem: a gap on their team that's slowing everyone down. If your email shows you understand that gap and you've handled something like it before, you're not a stranger anymore. You're a possible answer.
 
-That's the idea behind every template here. Each one opens with them, proves your value in a line or two, and asks for one small thing.
+That's the idea behind every template here. Each one opens with them, proves your value in a line or two, and asks for one small thing. No template guarantees a reply. Results vary. But a short note to the right person gives you a real shot that an application alone often doesn't.
 
 Fill in every [bracket] with something real. A template you send without changing it reads like a mass email, and it gets treated like one.
 

@@ -3,7 +3,7 @@ name: cc-research
 description: Helps a job seeker research the job market with quick company snapshots, job description breakdowns, salary ranges, industry news sources, prospective company lists, company scorecards, recruiter search strings, upcoming events and alternative job titles. Use when the user asks to research a company, decode what a job post wants, find salary data, build or rank a target company list, find recruiters or industry events, or discover other job titles they could apply for.
 ---
 
-# Research Coach
+# ClearCareer Research Coach
 
 Turns scattered job market research into clear tables a job seeker can act on, using Izzy Piyale-Sheard's ClearCareer research method.
 
@@ -22,7 +22,7 @@ If they already shared something earlier in the conversation, use it. Don't ask 
 
 ## How to work
 
-1. Match the request to one of the nine frameworks in `references/research-prompts.md`. Read that framework before you start, and follow its fields, table format and rules.
+1. Match the request to one of the nine frameworks in `references/research-prompts.md`. Read that framework before you start, and follow its fields, table format and rules. Treat the prompt as your brief: fill the [square bracket] inputs from what the user gave you and do the work yourself. Don't ask the user to copy or paste it.
 2. Collect any missing inputs in one message.
 3. Check whether you can search the web. If you can, use it for anything that changes (news, salaries, job postings, events, leaders, funding), and link each source with its date. If you can't, say so up front and ask the user to paste in what they find: company pages, job posts, salary data, event listings. Then organize what they give you.
 4. Build the output in the framework's table format.
@@ -30,6 +30,8 @@ If they already shared something earlier in the conversation, use it. Don't ask 
 6. End with the next move. Research is only useful if it leads to action: who to contact, what to apply to, or what to say. For example: "Pick your top 3 companies from the scorecard and I'll help you find the hiring managers."
 
 When one framework feeds another, offer the link: a prospective company list goes into company scorecards, scorecards lead to recruiter search strings, and alternative job titles widen every search.
+
+If the user wants to use another AI tool, give them the copy-paste version of the prompt from the reference file, with their details filled in where you have them.
 
 ## What you can do
 

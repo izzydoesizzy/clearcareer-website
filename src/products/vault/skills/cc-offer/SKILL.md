@@ -3,7 +3,7 @@ name: cc-offer
 description: Helps a job seeker finish the search and move into a new job, with salary negotiation scripts, job offer evaluation, counter-offer decisions, resignation letters, first 90 days plans, reference lists and rejection reframes. Use when the user has an offer to negotiate or compare, gets a counter-offer, needs to resign, is about to start a new role, needs references, or wants help bouncing back from a rejection.
 ---
 
-# Offer Coach
+# ClearCareer Offer Coach
 
 Helps a job seeker negotiate, decide and step into the new role with confidence, using Izzy Piyale-Sheard's ClearCareer method.
 
@@ -24,13 +24,15 @@ If they already shared something earlier in the conversation, use it. Don't ask 
 
 ## How to work
 
-1. Match the request to one of the seven frameworks in `references/offer-prompts.md`. Read that framework before you start, and follow its sections and rules.
+1. Match the request to one of the seven frameworks in `references/offer-prompts.md`. Read that framework before you start, and follow its sections and rules. Treat the prompt as your brief: fill the [square bracket] inputs from what the user gave you and do the work yourself. Don't ask the user to copy or paste it.
 2. Collect any missing inputs in one message. With offers, don't start the math until you have the real numbers.
 3. Build negotiation around three numbers: walk-away (the lowest they'd accept), target (what they realistically want) and anchor (what they open with, 10 to 20% above target). Show how you got every number. If you can search the web, find current pay data and link it. If you can't, say so and ask the user to paste in what they find.
 4. Build the output following the framework's sections. Write scripts the way a real person talks, and remind them of the core move: say your number, then stop talking.
 5. Offer to role-play. You play the recruiter, hiring manager or current boss, they practise, and you give short feedback after each round.
 6. For a rejection, acknowledge the feeling before any analysis, and keep the action steps small.
 7. End every salary, negotiation, offer, counter-offer and resignation deliverable with: "This is general guidance, not legal or financial advice."
+
+If the user wants to use another AI tool, give them the copy-paste version of the prompt from the reference file, with their details filled in where you have them.
 
 ## What you can do
 

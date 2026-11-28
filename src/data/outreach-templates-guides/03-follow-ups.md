@@ -6,7 +6,7 @@ Most people send one email, hear nothing, and decide outreach doesn't work.
 
 Here's the thing: silence usually means busy, not no. Your email landed between a budget meeting and a fire drill, and it slid down the inbox. A short, friendly follow-up brings it back to the top.
 
-The trick is timing, tone and knowing when to stop. Follow up too fast and you look pushy. Never follow up and your first email was mostly wasted. This guide gives you the cadence I recommend and a template for each moment.
+The trick is timing, tone and knowing when to stop. Follow up too fast and you look pushy. Never follow up and your first email was mostly wasted. This guide gives you the cadence I recommend and a template for each moment. Results vary, and some people will never reply. That's okay. Your job is to send a good follow-up, not to control the answer.
 
 **Time:** 5 minutes per follow-up. **What you'll need:** Your tracker (with the date you sent each email) and your calendar.
 

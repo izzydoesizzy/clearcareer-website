@@ -2,7 +2,7 @@
 
 **14 short notes for connecting with hiring managers, alumni, recruiters and peers, and what to say once they accept.**
 
-LinkedIn is where you find the people. Email is usually where you reach them. The best results come from using both together: email the hiring manager, then send a connection request a day or two later. Your name shows up in two places, and you haven't been pushy in either.
+LinkedIn is where you find the people. Email is usually where you reach them. Results vary, but I like using both together: email the hiring manager, then send a connection request a day or two later. Your name shows up in two places, and you haven't been pushy in either.
 
 LinkedIn also works on its own, especially with alumni, people who post a lot, and anyone whose email you can't find.
 

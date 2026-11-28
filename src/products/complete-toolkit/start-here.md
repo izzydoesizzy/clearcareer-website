@@ -1,6 +1,6 @@
 # Start here: The Complete Job Search Toolkit
 
-Welcome in. This is everything in one place: five products that cover a job search from "What am I even aiming for?" to "I'm happy to accept." You'll use them in order, one stage at a time, so you're never staring at a pile of tools wondering where to start. Each product has its own access page with its own guides, Claude skills and copy-paste prompts. This page is your map. Follow the 14-day plan below, and you'll have your targets, your resume and LinkedIn, your outreach, your interview prep and your offer plan ready.
+Welcome in. This is everything in one place: five products that cover a job search from "What am I even aiming for?" to "I'm happy to accept." You'll use them in order, one stage at a time, so you're never staring at a pile of tools wondering where to start. Each product has its own access page with its own guides, Claude skills and copy-paste prompts. This page is your map. Follow the 14-day plan below and you'll have your targets, resume, LinkedIn, outreach, interview prep and offer plan ready.
 
 ## What's inside
 
@@ -55,7 +55,7 @@ Try these once they're installed:
 
 ## A 14-day plan
 
-- **Day 1:** Open every product page. Install the skills you'll use, or bookmark the prompts. Pick two or three target job titles with the Career Prompt Vault.
+- **Day 1:** Open every product page and install the skills you'll use. Pick two or three target job titles with the Career Prompt Vault.
 - **Day 2:** Set your anchor, target and walk-away with the Salary Number Generator.
 - **Day 3:** Build a list of target companies with the Career Prompt Vault.
 - **Day 4:** Dig up your achievements and draft your resume bullets with the Career Prompt Vault.
@@ -70,11 +70,11 @@ Try these once they're installed:
 - **Day 13:** Read "How to Negotiate Your Offer" and practise the salary question out loud.
 - **Day 14:** Fill in the offer worksheet for your current job (so you know what you'd give up), then plan next week: more outreach, follow-ups and interview practice.
 
-After Day 14, keep the outreach going every week. When an offer arrives, go straight to the Salary Negotiation kit. When you sign, open the bonus Resignation and Transition Scripts.
+After Day 14, keep the outreach going every week. When an offer arrives, open the Salary Negotiation kit. When you sign, open the bonus Resignation Scripts.
 
 ## Good to know
 
-- **Results vary.** These tools help you prepare well and move faster, but nobody can guarantee interviews or offers. Hiring depends on a lot you can't control.
+- **Results vary.** These tools help you prepare well, but nobody can guarantee interviews or offers. Hiring depends on a lot you can't control.
 - **Keep your facts true.** Every achievement, number and title should be one you can explain if someone asks. If you estimate a number, say "about" and know how you got it.
 - **Salary and negotiation material is general guidance, not legal or financial advice.** For contract clauses or tax questions, talk to an employment lawyer or an accountant.
 - **Canada and the US differ** on things like pay transparency, vacation minimums and notice. The guides flag these where they matter.
