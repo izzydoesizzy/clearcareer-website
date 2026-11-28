@@ -1538,6 +1538,19 @@ textarea.llu-input {
   border-color: rgb(1 97 239 / 0.35);
   background: #f4f8ff;
 }
+/* The clip on top of each card: same 3:2 frame for both, so the two cards line up */
+.llu-clip {
+  overflow: hidden;
+  border-radius: 16px;
+  background: #0b1020;
+  aspect-ratio: 3 / 2;
+}
+.llu-clip__video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .llu-fit__title {
   margin: 4px 0 0;
   text-align: center;
