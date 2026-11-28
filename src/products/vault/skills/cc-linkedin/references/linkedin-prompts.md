@@ -303,7 +303,7 @@ Below are examples of strong LinkedIn recommendations for different relationship
 "Sam has been our go-to freelance writer for two years, and I've stopped looking for anyone else. He writes everything for us, from long market reports to newsletters to short social posts, and he nails our voice on the first draft. Readers reply to our newsletter more since he took it over, and his turnaround is fast every single time. If you need a writer you can trust with your brand, hire Sam."
 
 9. For a client
-"Omar is the client every agency hopes for. For two years my team has worked with his marketing group, and every project starts with a clear brief and ends with honest feedback. When a campaign misses, he shares the numbers and asks what we'd try next, instead of looking for someone to blame. That makes our work better. Anyone who gets to work with Omar, as a colleague, employee or vendor, is in good hands."
+"Omar is the kind of client every agency hopes for. For two years my team has worked with his marketing group, and every project starts with a clear brief and ends with honest feedback. When a campaign misses, he shares the numbers and asks what we'd try next, instead of looking for someone to blame. That makes our work better. Anyone who gets to work with Omar, as a colleague, employee or vendor, is in good hands."
 
 10. For a student
 "Taylor took two of my business strategy courses and led the student consulting club I advised. What stood out was how quickly Taylor connected class concepts to real companies in the news, and how they brought quieter classmates into the discussion. Taylor balanced a full course load, a part-time job and club leadership without dropping anything. I'm confident Taylor will be an asset to any team in management consulting or beyond."
@@ -335,7 +335,7 @@ Target companies (if any): [Target companies]
 
 CHARACTER LIMIT (THE MOST IMPORTANT RULE)
 LinkedIn connection notes have a hard limit of 300 characters, including spaces, and some accounts get a lower limit. Write every connection request in 200 characters or fewer so it fits everywhere. Count carefully and show the count after each one, like (168 characters).
-For scale: "Hi Alex, I'm a senior project manager exploring roles in fintech. Your post on payment fraud caught my eye. I'd love to connect and learn from your experience." is 160 characters.
+For scale: "Hi Alex, I'm a senior project manager exploring roles in fintech. Your post on payment fraud caught my eye. I'd love to connect and learn from your experience." is 159 characters.
 
 Follow-up messages (sent after they accept) have no tight limit, but keep them to 100 to 200 words.
 
@@ -584,7 +584,7 @@ TONE AND PERSONALIZATION
 
 ## LinkedIn Post Generator
 
-**What it does:** Writes 2 LinkedIn posts for your week, based on your real expertise, in 3 proven post types.
+**What it does:** Writes 2 LinkedIn posts for your week, using 3 post types built on your real expertise.
 **When to use it:** When you want to show up on LinkedIn as an expert in your field, not only as a job seeker.
 
 ### Step 1: Write this week's posts
