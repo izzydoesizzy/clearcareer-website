@@ -81,7 +81,7 @@ Have you worked in this world before?
 - **1:** a close industry, where your knowledge transfers (hospital operations to a health tech company, for example)
 - **0:** no overlap
 
-A 0 here isn't a dealbreaker if the rest is strong. Career changers score 0 on this part all the time and still land the role. It just means your email and resume need to explain why you're making the move.
+A 0 here isn't a dealbreaker if the rest is strong. If you're changing careers, expect a 0 on this part. It just means your email and resume need to explain why you're making the move.
 
 ### 4. Location / Remote
 
@@ -164,7 +164,7 @@ Required: 5+ years managing projects, PMP, budget management, vendor management,
 | Compensation | 2 | The $105,000 target sits inside the range. |
 | **Total** | **10/12** | **APPLY** |
 
-Sam's next move: apply on Lumen Health's careers page, then email the Director of the project office with one example of a hospital system rollout. And on the first call, ask about flexibility on office days, early, before anyone is attached.
+Sam's next move: apply on Lumen Health's careers page, then email the director who leads the project team, with Sam's strongest hospital project win. And on the first call, ask about flexibility on office days, early, before anyone is attached.
 
 ---
 
