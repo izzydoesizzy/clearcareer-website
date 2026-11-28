@@ -4,7 +4,7 @@ import ProductAccessHub from "@components/products/ProductAccessHub";
 import { PRODUCTS } from "../../../../data/product-config";
 import { verifyAccess } from "../../../../lib/product-access";
 import { serverEnv } from "../../../../lib/server-env";
-import { skillsFor, startHere, promptCards, projectInstructions } from "../../../../lib/product-files";
+import { skillsFor, startHere, promptCards, projectInstructions, platformsFor, PLATFORMS } from "../../../../lib/product-files";
 
 export const prerender = false;
 Astro.response.headers.set("Cache-Control", "private, no-store");
@@ -56,6 +56,9 @@ const included = (product.includes || []).map((s) => ({
     skills={skillsFor(slug)}
     prompts={promptCards(slug)}
     included={included}
-    extraDownloads={projectInstructions(slug) ? [{ label: "Setup text for Claude Projects, GPTs and Gems", file: "project-instructions.md" }] : []}
+    extraDownloads={[
+      ...(projectInstructions(slug) ? [{ label: "Setup text for Claude Projects, GPTs and Gems", file: "project-instructions.md" }] : []),
+      ...platformsFor(slug).map((p) => ({ label: `${PLATFORMS[p]} version (setup steps inside each folder)`, file: `${p}.zip` })),
+    ]}
   />
 </BaseLayout>

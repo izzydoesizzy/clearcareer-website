@@ -5,7 +5,7 @@
  * 2024 network) or this program's own offer (src/data/llu.ts). No 1:1 or done-for-you items:
  * those belong to the private rebuild only.
  */
-import { offer, survey } from "@/data/llu";
+import { offer, survey, toolkit } from "@/data/llu";
 
 const support = [
   {
@@ -51,8 +51,8 @@ const kit = [
   {
     label: "AI that does the heavy lifting",
     items: [
-      "The AI Achievement Interviewer",
-      "30+ tested AI prompts",
+      `${toolkit.skillCount} Claude skills, one for every step of your search`,
+      `The ${toolkit.suiteCount}-tool Career Suite, including the AI Achievement Interviewer and Job Search Autopilot`,
       "AI research on your target companies and the people who hire",
     ],
   },
@@ -121,9 +121,10 @@ const icons: Record<string, string> = {
         </div>
         <p class="llu-cap ev-kit__foot">
           {survey.savesHourPct}% of past clients I surveyed save an hour or more a week. Choose the
-          private rebuild and you also get your resume and LinkedIn rebuilt 1:1 with me before the holidays, plus help
-          building your first hiring manager list. Want 1:1 help with a real offer? Add my salary negotiation pack.
-          <a class="llu-link" href="#pricing">Compare options</a>
+          private rebuild and I also do the heavy lifting for you: I draft your resume and LinkedIn, build your target
+          company and hiring manager lists, and research your salary numbers. Then we polish it all 1:1 before the
+          holidays. <a class="llu-link" href="#toolkit">See every tool</a> or
+          <a class="llu-link" href="#pricing">compare options</a>
         </p>
       </div>
 

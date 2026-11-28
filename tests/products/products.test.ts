@@ -7,7 +7,8 @@ import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { unzipSync, strFromU8 } from 'fflate';
 import { PRODUCTS, bundlesIncluding } from '../../src/data/product-config';
-import { skillsFor, skillZip, startHere, promptCards, productFiles, frontmatter, parsePrompts } from '../../src/lib/product-files';
+import { skillsFor, skillZip, startHere, promptCards, productFiles, frontmatter, parsePrompts, platformZip, platformsFor } from '../../src/lib/product-files';
+import { toolkit, offer } from '../../src/data/llu';
 import { verifyAccess } from '../../src/lib/product-access';
 import { PRODUCT_REDIRECTS } from '../../src/data/product-redirects.mjs';
 import { makeAccessToken } from '../../src/lib/access';
@@ -175,6 +176,49 @@ describe('All-Access', () => {
     const total = PRODUCTS['all-access'].includes!.filter((p) => p !== 'complete-toolkit').reduce((n, p) => n + (singles[p] ?? PRODUCTS[p].price), 0);
     expect(total).toBe(201);
     expect(PRODUCTS['all-access'].price).toBe(99);
+  });
+});
+
+describe('Land and Level Up member toolkit', () => {
+  const env = { ACCESS_SECRET: 'test-secret' };
+  const allAccessSkills = PRODUCTS['all-access'].includes!.flatMap((p) => skillsFor(p).map((s) => s.name)).sort();
+  const pageTools = toolkit.steps.flatMap((s) => s.tools);
+
+  it('the page lists exactly the All-Access skills and the Career Suite, with the right counts', () => {
+    expect(pageTools.filter((t) => !t.suite).map((t) => t.skill).sort()).toEqual(allAccessSkills);
+    expect(allAccessSkills.length).toBe(toolkit.skillCount);
+    expect(pageTools.filter((t) => t.suite).map((t) => t.skill).sort()).toEqual(skillsFor('career-suite').map((s) => s.name).sort());
+    expect(skillsFor('career-suite').length).toBe(toolkit.suiteCount);
+    expect(PRODUCTS['all-access'].includes!.filter((p) => p !== 'complete-toolkit').length).toBe(toolkit.productCount);
+    expect(toolkit.soldSeparately).toBe('$201');
+    expect(toolkit.allAccessPrice).toBe(`$${PRODUCTS['all-access'].price}`);
+  });
+
+  it('a member token opens the Career Suite and every All-Access product, and nothing else', async () => {
+    const t = await makeAccessToken('llu-toolkit', 'sam@example.com', 'test-secret');
+    for (const p of [...PRODUCTS['all-access'].includes!, 'career-suite']) expect((await verifyAccess(p, t, env)).ok, p).toBe(true);
+    expect((await verifyAccess('layoff-survival-kit', t, env)).ok).toBe(false);
+    expect(PRODUCTS['llu-toolkit'].hidden && PRODUCTS['career-suite'].hidden).toBe(true);
+  });
+
+  it('the Career Suite comes in order, as Claude skill zips and as ChatGPT and Gemini folders', () => {
+    expect(skillsFor('career-suite').map((s) => s.name)).toEqual(['career-clarity', 'achievement-interviewer', 'job-match-rubric', 'job-search-autopilot', 'job-alerts-setup']);
+    const zip = Object.keys(unzipSync(skillZip('career-suite', 'achievement-interviewer')!));
+    expect(zip.every((n) => n.startsWith('achievement-interviewer/'))).toBe(true);
+    expect(zip).toContain('achievement-interviewer/SKILL.md');
+    expect(platformsFor('career-suite')).toEqual(['chatgpt', 'gemini']);
+    expect(Object.keys(unzipSync(platformZip('career-suite', 'chatgpt')!))).toContain('career-suite-chatgpt/career-clarity/setup.md');
+    expect(platformZip('career-suite', 'nope')).toBeNull();
+    expect(platformsFor('vault')).toEqual([]);
+    expect(startHere('career-suite')).toBeTruthy();
+    expect(startHere('llu-toolkit')).toBeTruthy();
+  });
+
+  it('the tiers carry the DIY and done-for-you labels, and the new copy has no em dashes', () => {
+    expect(offer.group.mode).toBe('DIY');
+    expect(offer.private.mode).toBe('Done with you + done for you');
+    expect(JSON.stringify({ toolkit, group: offer.group, private: offer.private })).not.toMatch(/[—–]/);
+    expect(readFileSync(join(ROOT, 'src', 'components', 'llu', 'LluToolkit.astro'), 'utf8')).not.toMatch(/[—–]/);
   });
 });
 

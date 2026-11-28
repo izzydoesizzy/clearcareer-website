@@ -839,6 +839,37 @@ export const PRODUCTS: Record<string, Product> = {
     guides: [
     ],
   },
+  // ── LAND AND LEVEL UP MEMBERS ONLY (not sold, not in the shop) ─────────────
+  // Members get one access link for all of it the day they enrol (src/pages/api/stripe.ts).
+  // Their sales-page URLs redirect to /land-and-level-up (src/data/product-redirects.mjs).
+  "career-suite": {
+    slug: "career-suite",
+    hidden: true,
+    name: "The ClearCareer Career Suite",
+    price: 0,
+    currency: "CAD",
+    tier: "free",
+    description:
+      "5 AI tools for members: Career Clarity, the AI Achievement Interviewer, Job Match Scorer, Job Search Autopilot and Job Alerts Setup. For Claude, ChatGPT and Gemini.",
+    stripePriceEnvVar: "",
+    guidesDir: "career-suite-guides",
+    guides: [],
+  },
+  "llu-toolkit": {
+    slug: "llu-toolkit",
+    hidden: true,
+    name: "Your Land and Level Up Toolkit",
+    price: 0,
+    currency: "CAD",
+    tier: "free",
+    description:
+      "Every ClearCareer AI tool: the 5-tool Career Suite and all 17 Claude skills from the All-Access Pass, in the order you'll use them.",
+    stripePriceEnvVar: "",
+    guidesDir: "llu-toolkit-guides",
+    // Flat on purpose: a token for this opens each of these directly.
+    includes: ["career-suite", "vault", "salary-generator", "outreach-templates", "interview-confidence", "salary-negotiation", "resume-linkedin-audit", "interview-dossier", "research-outreach", "linkedin-launch", "complete-toolkit"],
+    guides: [],
+  },
   "career-change-command-center": {
     slug: "career-change-command-center",
     hidden: true,

@@ -37,6 +37,7 @@ const tiers = [
           <div class:list={["llu-surface llu-tier", lead && "llu-tier--lead"]}>
             <div>
               <p class="llu-eyebrow">{t.name}</p>
+              <p class="llu-tier__mode llu-mt-8"><span class="llu-tier__label">{t.mode}</span> {t.modeLine}</p>
               <p class="llu-tier__price llu-mt-16">
                 {t.price} {offer.dealLive && <s class="llu-strike">{t.regular}</s>}
               </p>
@@ -49,12 +50,12 @@ const tiers = [
             </div>
             <ul class="llu-list llu-tier__grow">
               {t.includes.map((i) => <li>{i}</li>)}
-              {lead && <li>The full toolkit: call recordings, 30+ AI prompts, templates, scripts and trackers. <a class="llu-link" href="#everything">See it all</a></li>}
+              {lead && <li>Plus call recordings, templates, scripts and trackers. <a class="llu-link" href="#toolkit">See every tool</a></li>}
             </ul>
             <div>
               <a class="llu-btn llu-btn--wide" href={href} {...(href.startsWith("http") ? { target: "_blank", rel: "noopener" } : {})}>{href.startsWith("http") ? CTA_LABEL : "Book your free fit call"}</a>
               <p class="llu-cap llu-mt-16">
-                <span class="llu-num">{t.seatsLeft} of {t.seatsTotal}</span> seats left.{offer.dealLive && <> {t.regular} plus HST from December 1.</>}
+                <span class="llu-num">{t.seatsLeft} of {t.seatsTotal}</span> seats left.{offer.dealLive && <>{" "}{t.regular} plus HST from December 1.</>}
               </p>
             </div>
           </div>
@@ -116,3 +117,11 @@ const tiers = [
     </div>
   </div>
 </section>
+
+<style>
+  .llu-tier__mode { margin-bottom: 0; color: var(--fg); line-height: 1.5; }
+  .llu-tier__label {
+    display: inline-block; margin-right: 6px; padding: 2px 10px; border-radius: 999px;
+    font-size: 13px; font-weight: 700; color: var(--llu-white); background: var(--llu-blue);
+  }
+</style>

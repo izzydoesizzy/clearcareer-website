@@ -156,3 +156,26 @@ describe('6-week program', async () => {
     expect(ics).toContain('EXDATE;TZID=America/Toronto:20261223T120000,20261230T120000');
   });
 });
+
+describe('member toolkit and the private tier', () => {
+  const url = 'https://joinclearcareer.com/products/llu-toolkit/access/abc.def';
+  it('the welcome and intake-done emails link the toolkit, or say it is coming', () => {
+    const w = welcomeEmail({ firstName: 'Sam', program: 'Group cohort', token: 'abc.def', toolkitUrl: url });
+    expect(w.html).toContain(url);
+    expect(w.html).toContain('Career Clarity');
+    const noLink = welcomeEmail({ firstName: 'Sam', program: 'Group cohort', token: 'abc.def' });
+    expect(noLink.html).toContain('toolkit link is coming');
+    expect(intakeDoneEmail({ firstName: 'Sam', program: 'Group cohort', toolkitUrl: url }).html).toContain(url);
+    expect(intakeDoneEmail({ firstName: 'Sam', program: 'Group cohort' }).html).toContain('on its way');
+  });
+  it('the agreement lists the toolkit for everyone and the done-for-you work for the private tier', () => {
+    expect(DEFAULT_AGREEMENT_HTML).toContain('17 Claude skills');
+    expect(DEFAULT_AGREEMENT_HTML).toMatch(/Done for you: I draft your resume/);
+    expect(DEFAULT_AGREEMENT_HTML).toMatch(/salary research report/);
+  });
+  it('makes a toolkit link only when a secret is set', async () => {
+    const { toolkitUrl } = await import('../../src/lib/onboarding');
+    expect(await toolkitUrl({}, 'sam@example.com')).toBe('');
+    expect(await toolkitUrl({ ACCESS_SECRET: 's' }, 'sam@example.com')).toMatch(/^https:\/\/joinclearcareer\.com\/products\/llu-toolkit\/access\//);
+  });
+});

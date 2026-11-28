@@ -34,13 +34,21 @@ ${button('Sign and start my intake', onboardingUrl(token))}
 ${small('This link is just for you. It saves as you go, so you can come back to it.')}`;
 
 // ── To the client ────────────────────────────────────────────────────────────────
-export function welcomeEmail(c: { firstName: string; program: string; token: string }) {
+/** Every member gets the toolkit the day they join. Without a link (no secret set), say it's coming. */
+const toolkitBlock = (url?: string) => `
+${H('Your AI tools are ready now')}
+${url
+  ? P(`Every tool I've built is waiting for you: the 5-tool Career Suite and 17 Claude skills. ${link('Open your toolkit', url)} and start with Career Clarity. It takes about 20 minutes, and it makes our first call a lot more useful.`)
+  : P("Every tool I've built is yours: the 5-tool Career Suite and 17 Claude skills. Your toolkit link is coming from me before we start.")}`;
+
+export function welcomeEmail(c: { firstName: string; program: string; token: string; toolkitUrl?: string }) {
   const subject = `You're in, ${c.firstName}! Here's your first step`;
   const html = cshell('Welcome', 'Two quick things this week, about 15 minutes.', `
 ${P(`Hey ${esc(c.firstName)},`)}
 ${P(`You did it. Welcome to Land and Level Up${c.program === PROGRAMS.private.name ? ', with the private 1:1 rebuild' : ''}.`)}
 ${P("I know this wasn't a small decision. You looked hard at your search, decided you deserved backup, and backed yourself. That's exactly the energy we need for the next 6 weeks.")}
 ${firstSteps(c.token)}
+${toolkitBlock(c.toolkitUrl)}
 ${H('What happens next')}
 ${list([
   `As soon as your intake is in, you get your invite to our ${esc(welcome.communityName)} community and the Wednesday call details.`,
@@ -78,7 +86,7 @@ ${sign()}`);
   return { subject, html };
 }
 
-export function intakeDoneEmail(c: { firstName: string; program: string }) {
+export function intakeDoneEmail(c: { firstName: string; program: string; toolkitUrl?: string }) {
   const time = callTimeLabel();
   const subject = welcome.communityUrl && time && welcome.callUrl
     ? `Got it, ${c.firstName}. Here's your community invite and our Wednesday call`
@@ -90,10 +98,13 @@ export function intakeDoneEmail(c: { firstName: string; program: string }) {
     time && welcome.callUrl
       ? `<strong>Save the Wednesday call.</strong> Wednesdays at ${esc(time)}: ${esc(offer.callDates)}. ${link('Join link', welcome.callUrl)}. ${link('Add all 6 calls to your calendar', `${SITE_URL}/llu-calls.ics`)}.`
       : `<strong>The Wednesday call details</strong> (time and link) are coming from me before ${esc(offer.firstCallLong)}.`,
+    c.toolkitUrl
+      ? `<strong>Open your AI toolkit.</strong> ${link('Every tool I\'ve built', c.toolkitUrl)}, in the order we'll use them. Start with Career Clarity.`
+      : `<strong>Your AI toolkit</strong> (the Career Suite and 17 Claude skills) is on its way from me before ${esc(offer.startDateShort)}.`,
     ...(c.program === PROGRAMS.private.name
       ? [welcome.privateBookingUrl
-        ? `<strong>Book your 1:1 rebuild.</strong> ${link('Pick your times here', welcome.privateBookingUrl)}. We'll spend 2 to 3 hours together on your resume and LinkedIn.`
-        : "<strong>Your 1:1 rebuild:</strong> I'll email you to book our sessions."]
+        ? `<strong>Book your 1:1 rebuild.</strong> ${link('Pick your times here', welcome.privateBookingUrl)}. I'm starting on your resume and LinkedIn drafts, your target and hiring manager lists, and your salary report now. Then we spend 2 to 3 hours together polishing it all.`
+        : "<strong>Your 1:1 rebuild:</strong> I'm starting on your resume and LinkedIn drafts, your target and hiring manager lists, and your salary report now. I'll email you to book our sessions."]
       : []),
   ];
   const html = cshell('All set', 'Your next steps, and what happens before we start.', `
@@ -148,7 +159,7 @@ ${irow('Seats sold', `Group ${c.seats.group} of ${offer.group.seatsTotal} · Pri
 ${ih('Already done automatically')}
 ${ip('Welcome email with their agreement and intake link. Follow-up emails stopped. Added to the roster. Reminders go out at 2 and 4 days if they stall.')}
 ${ih('Your one job')}
-${ip(`Update the seats left in src/data/llu.ts (seatsLeft) so the page stays honest. ${c.program === PROGRAMS.private.name ? 'Private rebuild: book their 1:1 sessions once intake is in.' : ''}`)}`);
+${ip(`Update the seats left in src/data/llu.ts (seatsLeft) so the page stays honest. ${c.program === PROGRAMS.private.name ? 'Private rebuild: once intake is in, draft their resume, headline and About, build their 50+ target companies and first hiring manager list, write their salary report, then book the 1:1 sessions. All done by Dec 22.' : ''}`)}`);
   return { subject, html };
 }
 

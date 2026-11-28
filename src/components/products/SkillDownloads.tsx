@@ -2,8 +2,16 @@ import { useState } from "react";
 
 export interface SkillSummary { name: string; description: string; zipName: string; files: { path: string; bytes: number }[] }
 
-/** The description is written for Claude; buyers only need its first sentence. */
-const firstSentence = (d: string) => (d.match(/^.*?[.!?](?=\s|$)/)?.[0] || d).replace(/^Helps a job seeker /, "Helps you ");
+/**
+ * The description is written for Claude; buyers only need one sentence of it. Usually the first.
+ * When the first is just the tool's name (the Career Suite: "ClearCareer Job Match Rubric."), use
+ * the first sentence that says what it does instead, skipping the "Use when..." trigger sentence.
+ */
+const firstSentence = (d: string) => {
+  const sentences = d.match(/[^.!?]+[.!?](?=\s|$)/g)?.map((s) => s.trim()) || [d];
+  const pick = sentences[0].split(" ").length > 6 ? sentences[0] : sentences.find((s) => s.split(" ").length > 6 && !/^Use (it )?when/i.test(s)) || sentences[0];
+  return /^Helps a job seeker /.test(pick) ? pick.replace(/^Helps a job seeker /, "Helps you ").replace(/ their (real|top) /g, " your $1 ") : pick;
+};
 
 const kb = (n: number) => (n < 1024 ? `${n} B` : `${(n / 1024).toFixed(1)} KB`);
 

@@ -4,7 +4,7 @@ import { authClient, env, json } from '../../../lib/onboarding-api.js';
 import { ensureFolder, updateRoster } from '../../../lib/clients.js';
 import { brevo } from '../../../lib/brevo-api.js';
 import { google, googleReady } from '../../../lib/google.js';
-import { cleanIntake, COL } from '../../../lib/onboarding.js';
+import { cleanIntake, COL, toolkitUrl } from '../../../lib/onboarding.js';
 import { intakeBrief, intakeDoneEmail } from '../../../lib/onboarding-emails.js';
 
 export const prerender = false;
@@ -50,7 +50,7 @@ export const POST: APIRoute = async ({ request }) => {
 
     const brief = intakeBrief({ name: c.name, email: c.email, program: c.program, intake: data, files, folderUrl, summaryUrl });
     await api.send({ to: env.BOOK_CALL_NOTIFY_EMAIL || 'izzy@joinclearcareer.com', senderName: 'ClearCareer Bookings', subject: brief.subject, html: brief.html, replyTo: { email: c.email, name: c.name }, tags: ['intake'] });
-    const done = intakeDoneEmail({ firstName: data.preferredName || c.firstName, program: c.program });
+    const done = intakeDoneEmail({ firstName: data.preferredName || c.firstName, program: c.program, toolkitUrl: await toolkitUrl(env as unknown as Record<string, unknown>, c.email) });
     await api.send({ to: c.email, toName: c.firstName, subject: done.subject, html: done.html, tags: ['intake-done'] });
     return json({ ok: true });
   } catch (err) {

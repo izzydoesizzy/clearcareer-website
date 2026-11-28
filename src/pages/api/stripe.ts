@@ -17,7 +17,7 @@
 import type { APIRoute } from 'astro';
 import { serverEnv } from '../../lib/server-env.js';
 import { brevo, hmacHex, parseSigHeader, safeEqual } from '../../lib/brevo-api.js';
-import { programFromAmount, makeToken } from '../../lib/onboarding.js';
+import { programFromAmount, makeToken, toolkitUrl } from '../../lib/onboarding.js';
 import { PROGRAMS } from '../../lib/book-call.js';
 import { getClient, ensureFolder, seatsSold, type ServerEnv } from '../../lib/clients.js';
 import { welcomeEmail, enrolmentNotice } from '../../lib/onboarding-emails.js';
@@ -86,7 +86,7 @@ export const POST: APIRoute = async ({ request }) => {
 
   const token = env.ONBOARD_SECRET ? await makeToken(email, env.ONBOARD_SECRET) : '';
   if (token) {
-    const w = welcomeEmail({ firstName: first || 'there', program, token });
+    const w = welcomeEmail({ firstName: first || 'there', program, token, toolkitUrl: await toolkitUrl(env as unknown as Record<string, unknown>, email) });
     await api.send({ to: email, toName: first, subject: w.subject, html: w.html, tags: ['welcome'] });
   } else {
     console.error('ONBOARD_SECRET not set: welcome email not sent');

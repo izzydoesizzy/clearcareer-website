@@ -12,10 +12,25 @@ import { zipSync, strToU8 } from 'fflate';
 
 const RAW = import.meta.glob('/src/products/**/*.md', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
 
+/**
+ * The Career Suite (members only) lives in skills/clearcareer-career-suite/, built by
+ * scripts/build-career-suite.mjs. It's read from there so there's one copy:
+ *   claude/<skill>/...  becomes  career-suite/skills/<skill>/...  (a normal skill, one zip each)
+ *   chatgpt/... and gemini/...   become  career-suite/chatgpt/... and career-suite/gemini/...
+ */
+const SUITE = import.meta.glob(
+  ['/skills/clearcareer-career-suite/claude/**/*.md', '/skills/clearcareer-career-suite/chatgpt/**/*.md', '/skills/clearcareer-career-suite/gemini/**/*.md'],
+  { query: '?raw', import: 'default', eager: true },
+) as Record<string, string>;
+
 /** Paths relative to src/products, e.g. "vault/skills/cc-resume/SKILL.md". */
-const FILES: Record<string, string> = Object.fromEntries(
-  Object.entries(RAW).map(([k, v]) => [k.replace(/^.*\/src\/products\//, ''), v]),
-);
+const FILES: Record<string, string> = Object.fromEntries([
+  ...Object.entries(RAW).map(([k, v]) => [k.replace(/^.*\/src\/products\//, ''), v]),
+  ...Object.entries(SUITE).map(([k, v]) => [
+    k.replace(/^.*\/skills\/clearcareer-career-suite\//, 'career-suite/').replace(/^career-suite\/claude\//, 'career-suite/skills/'),
+    v,
+  ]),
+]);
 
 export interface SkillFile { path: string; bytes: number }
 export interface SkillInfo { name: string; description: string; files: SkillFile[]; zipName: string }
@@ -40,7 +55,7 @@ export function productFiles(slug: string): Record<string, string> {
 }
 
 /** The order buyers should meet the skills in (the job search order). Others follow, A to Z. */
-const SKILL_ORDER = ['cc-resume', 'cc-linkedin', 'cc-interview', 'cc-outreach', 'cc-research', 'cc-offer', 'cc-resume-review', 'cc-linkedin-audit', 'cc-job-scan', 'cc-company-scorecards', 'cc-outreach-campaign'];
+const SKILL_ORDER = ['cc-resume', 'cc-linkedin', 'cc-interview', 'cc-outreach', 'cc-research', 'cc-offer', 'cc-resume-review', 'cc-linkedin-audit', 'cc-job-scan', 'cc-company-scorecards', 'cc-outreach-campaign', 'career-clarity', 'achievement-interviewer', 'job-match-rubric', 'job-search-autopilot', 'job-alerts-setup'];
 
 export function skillsFor(slug: string): SkillInfo[] {
   const files = productFiles(slug);
@@ -71,6 +86,29 @@ export function skillZip(slug: string, skill: string): Uint8Array | null {
     if (k.startsWith(prefix)) tree[`${skill}/${k.slice(prefix.length)}`] = [strToU8(v), { mtime }];
   }
   return zipSync(tree, { level: 9 });
+}
+
+/** Platforms with a ready-made folder (one Custom GPT or Gem per tool, setup.md inside each). */
+export const PLATFORMS = { chatgpt: 'ChatGPT', gemini: 'Gemini' } as const;
+export type Platform = keyof typeof PLATFORMS;
+
+/** Which platform folders a product has, e.g. the Career Suite has ChatGPT and Gemini versions. */
+export function platformsFor(slug: string): Platform[] {
+  const files = Object.keys(productFiles(slug));
+  return (Object.keys(PLATFORMS) as Platform[]).filter((p) => files.some((k) => k.startsWith(`${p}/`)));
+}
+
+/** The whole ChatGPT or Gemini folder as one zip (each tool in its own folder), or null. */
+export function platformZip(slug: string, platform: string): Uint8Array | null {
+  if (!(platform in PLATFORMS)) return null;
+  const files = productFiles(slug);
+  const prefix = `${platform}/`;
+  const mtime = new Date('2026-01-01T00:00:00Z');
+  const tree: Record<string, [Uint8Array, { mtime: Date }]> = {};
+  for (const [k, v] of Object.entries(files)) {
+    if (k.startsWith(prefix)) tree[`${slug}-${platform}/${k.slice(prefix.length)}`] = [strToU8(v), { mtime }];
+  }
+  return Object.keys(tree).length ? zipSync(tree, { level: 9 }) : null;
 }
 
 export function startHere(slug: string): string | null {
