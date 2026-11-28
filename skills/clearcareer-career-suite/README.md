@@ -39,8 +39,8 @@ Each platform also has an all-in-one zip: `dist/<platform>/clearcareer-career-su
 
 ## Website setup (one time)
 
-1. In Stripe, create a product "The Career Suite" with a one-time price (the sales page shows the price set in `src/data/career-suite.ts`, so keep them matching).
-2. Add `STRIPE_CAREER_SUITE_PRICE_ID` to the Vercel environment variables.
+1. Done: the live Stripe product "The Career Suite" (prod_Vi4AcGrWXezw2D) has a $47 CAD one-time price, set as the default in `src/data/career-suite.ts`. To change the price, create a new price in Stripe and update both the ID and the label there (or set `STRIPE_CAREER_SUITE_PRICE_ID` in Vercel).
+2. Test code: SUITETEST100 (100% off, 5 uses, this product only). Deactivate it in Stripe once testing is done.
 3. For Land and Level Up members, create a 100% off promotion code in Stripe and share it in the community. Free checkouts get the same access page and email.
 4. The existing Stripe webhook (`/api/vault/webhook`) sends the delivery email. No new webhook needed.
 

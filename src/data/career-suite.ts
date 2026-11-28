@@ -5,7 +5,11 @@
 
 export const CAREER_SUITE_PRODUCT = "career-suite";
 
-// Shown on the sales page. Must match the Stripe price set in STRIPE_CAREER_SUITE_PRICE_ID.
+// Live Stripe price for "The Career Suite" ($47 CAD one-time, product prod_Vi4AcGrWXezw2D).
+// Price IDs aren't secret. STRIPE_CAREER_SUITE_PRICE_ID in Vercel overrides this if set.
+export const CAREER_SUITE_STRIPE_PRICE_ID = "price_1Uge1zH8o32Pij57oewNOxw2";
+
+// Shown on the sales page. Must match the Stripe price above.
 export const CAREER_SUITE_PRICE = "$47 CAD";
 export const CAREER_SUITE_PRICE_COMPARE = "$197";
 
