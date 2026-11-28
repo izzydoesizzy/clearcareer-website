@@ -3,7 +3,7 @@ import { navLinks } from "@/data/llu";
 import LluButton from "./LluButton.astro";
 ---
 
-<header class="llu-nav">
+<header class="llu-nav llu-nav--landing">
   <div class="llu-wrap llu-nav__row">
     <nav class="llu-nav__links" aria-label="Sections">
       {navLinks.map((l) => <a class="llu-navlink" href={l.href}>{l.label}</a>)}
