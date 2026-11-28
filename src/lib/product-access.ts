@@ -12,6 +12,14 @@ import { bundlesIncluding } from '../data/product-config.js';
 
 export interface Access { ok: boolean; email?: string; name?: string; via?: string }
 
+/**
+ * A finished checkout: paid, or a completed $0 checkout from a 100% promotion code
+ * (Stripe reports those as "no_payment_required", never "paid").
+ */
+export function checkoutSettled(s: { payment_status?: string | null; status?: string | null }): boolean {
+  return s.payment_status === 'paid' || (s.payment_status === 'no_payment_required' && s.status === 'complete');
+}
+
 export async function verifyAccess(product: string, token: string | null | undefined, env: Record<string, string | undefined>, url?: URL): Promise<Access> {
   if (!token) return { ok: false };
   const owners = [product, ...bundlesIncluding(product)];
@@ -32,7 +40,7 @@ export async function verifyAccess(product: string, token: string | null | undef
     try {
       const s = await new Stripe(key).checkout.sessions.retrieve(token);
       const bought = String(s.metadata?.product || '');
-      if (s.payment_status === 'paid' && owners.includes(bought)) {
+      if (checkoutSettled(s) && owners.includes(bought)) {
         return { ok: true, email: s.customer_details?.email || '', name: s.customer_details?.name || '', via: bought };
       }
     } catch {

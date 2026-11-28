@@ -63,7 +63,7 @@ export const offer = {
       "6 weeks in the Land and Level Up community",
       "6 live group calls on Wednesdays (with a holiday break)",
       "Resume and LinkedIn rebuild workshop, with hot seats",
-      "Every ClearCareer AI tool: 17 Claude skills and the 5-tool Career Suite, sent to you the day you join",
+      "Every ClearCareer AI tool: 17 Claude skills and the 6-tool Career Suite, sent to you the day you join",
     ],
   },
   private: {
@@ -581,7 +581,7 @@ export interface ToolkitStep { n: string; title: string; from: string; to: strin
 
 export const toolkit = {
   skillCount: 17,
-  suiteCount: 5,
+  suiteCount: 6,
   productCount: 9,
   soldSeparately: "$201",
   allAccessPrice: "$99",
@@ -615,6 +615,7 @@ export const toolkit = {
       from: "A LinkedIn profile nobody finds.",
       to: "A headline and About section that bring recruiters and hiring managers to you.",
       tools: [
+        { skill: "linkedin-profile-builder", name: "LinkedIn Profile Builder", suite: true, what: "Rebuilds your headline, About, experience and skills from your numbers, then walks you through pasting it in." },
         { skill: "cc-linkedin-launch", name: "LinkedIn Launch", what: "My own formats: 10 headlines to test, the 4-part About, and posts from your stories." },
         { skill: "cc-linkedin-audit", name: "LinkedIn Audit", what: "Photo, banner, headline, About and Experience, checked against my 5-area rubric." },
         { skill: "cc-linkedin", name: "LinkedIn Writer", what: "Experience sections, banner lines, search strings, connection notes and weekly posts." },

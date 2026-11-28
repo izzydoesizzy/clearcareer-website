@@ -11,6 +11,6 @@
    - Rebuild my profile
    - Write my bullets and professional summaries
 7. Save the Gem. Gemini uses Google Search automatically when needed. Use Canvas for the documents.
-8. Test it with a sample resume, then share the Gem link with members.
+8. Test it with your resume. The Gem is private to you unless you share it.
 
 Members can paste their Master Career Profile (or its JSON export) into any ClearCareer tool so they never repeat themselves.

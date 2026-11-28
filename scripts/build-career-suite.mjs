@@ -201,7 +201,7 @@ for (const [platform, cfg] of Object.entries(PLATFORM)) {
       platform === "chatgpt"
         ? `7. **Capabilities:** turn on Canvas${meta.browsing ? ", Web Search" : ""}. Code Interpreter is optional (helps read PDF resumes and check math).`
         : `7. Save the Gem. Gemini uses Google Search automatically when needed${meta.browsing ? " (this one needs it for live research)" : ""}. Use Canvas for the documents.`,
-      `8. Test it with a sample resume, then share the ${product} link with members.`,
+      `8. Test it with your resume. The ${product} is private to you unless you share it.`,
       "",
       "Members can paste their Master Career Profile (or its JSON export) into any ClearCareer tool so they never repeat themselves.",
       "",

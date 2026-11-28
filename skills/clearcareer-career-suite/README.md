@@ -25,30 +25,24 @@ Everything connects through the **Master Career Profile**: one living document w
 
 The interviewer never lets "I don't know" end a question. It walks down an estimation ladder (exact, rough, order of magnitude, range, derive it, pick the conservative lower bound) and uses simple impact math (people x frequency x time saved x weeks). The agreed number goes on your resume as a plain, confident figure. The reasoning behind it is saved in your profile's Interview Defense Sheet so you can explain it if anyone asks.
 
-## Downloads and install
+## How it's sold and delivered
 
-Buyers download from the Stripe-gated page `/tools/career-suite/access` (sales page: `/tools/career-suite`). Every tool comes in three formats:
+The Career Suite is part of the site's product system (`src/data/product-config.ts`, slug `career-suite`):
 
-| Platform | File | Install |
-|---|---|---|
-| Claude | `dist/claude/<tool>.zip`: one skill folder with `SKILL.md` and `references/` | Upload the zip as a skill in Claude settings, or unzip into `~/.claude/skills/` for Claude Code |
-| ChatGPT | `dist/chatgpt/<tool>.zip`: `instructions.md`, `knowledge/`, `setup.md` | Create a Custom GPT per tool, following `setup.md` |
-| Gemini | `dist/gemini/<tool>.zip`: `gem-instructions.md`, `knowledge/`, `setup.md` | Create a Gem per tool, following `setup.md` |
-
-Each platform also has an all-in-one zip: `dist/<platform>/clearcareer-career-suite-<platform>-all.zip`.
-
-## Website setup (one time)
-
-1. Done: the live Stripe product "The Career Suite" (prod_Vi4AcGrWXezw2D) has a $47 CAD one-time price, set as the default in `src/data/career-suite.ts`. To change the price, create a new price in Stripe and update both the ID and the label there (or set `STRIPE_CAREER_SUITE_PRICE_ID` in Vercel).
-2. Test code: SUITETEST100 (100% off, 5 uses, this product only). Deactivate it in Stripe once testing is done.
-3. For Land and Level Up members, create a 100% off promotion code in Stripe and share it in the community. Free checkouts get the same access page and email.
-4. The existing Stripe webhook (`/api/vault/webhook`) sends the delivery email. No new webhook needed.
+- **Sold on its own** at `/products/career-suite` for $47 CAD (live Stripe price `price_1Uge1zH8o32Pij57oewNOxw2`, set as `stripePriceId`; `STRIPE_CAREER_SUITE_PRICE_ID` in Vercel overrides it).
+- **Free for Land and Level Up members** through the `llu-toolkit` product, which includes it.
+- Buyers and members open it in the access hub at `/products/career-suite/access/<token>`. `src/lib/product-files.ts` reads the files straight from this folder at build time and zips them on request:
+  - `claude/<tool>/` becomes one Claude skill zip per tool
+  - `chatgpt/` and `gemini/` become one zip each (a Custom GPT or Gem per tool, with `setup.md`)
+  - `shared/career-suite-guide.md` becomes the product's Start Here
+- Delivery emails go through Brevo (`src/lib/purchase-emails.ts`). $0 checkouts from a 100% promotion code count as purchases.
+- Test code: `SUITETEST100` (100% off, 5 uses, this product only). Deactivate it in Stripe once testing is done.
 
 ## Editing (for ClearCareer)
 
 - The method lives in `shared/` (one copy of every playbook, rubric and template) and `shared/condensed/` (the short instruction versions for GPTs and Gems).
 - The Claude skills are in `claude/<skill>/SKILL.md`.
-- After any edit, run `node scripts/build-career-suite.mjs` from the website repo root. It copies the shared files into every platform folder, fills in the platform-specific steps, checks for em dashes, banned words and the ChatGPT 8,000-character limit, and rebuilds the zips in `dist/`. Commit the rebuilt `dist/`: the website serves those exact files.
+- After any edit, run `node scripts/build-career-suite.mjs` from the website repo root. It copies the shared files into every platform folder, fills in the platform-specific steps, checks for em dashes, banned words and the ChatGPT 8,000-character limit, and builds local zips in `dist/` (ignored by git; the website zips the files itself). Commit the rebuilt platform folders.
 - Don't edit `claude/*/references/`, `chatgpt/` or `gemini/` by hand: the build overwrites them.
 
 ## Sources this was built from

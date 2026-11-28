@@ -2,17 +2,91 @@
 ready to upload to Google Drive as a Google Doc (Drive converts HTML on upload).
 
 Run from the website repo root:  python3 scripts/build-career-suite-doc.py [out.html]
-Needs: pip install markdown. Reads skills/clearcareer-career-suite and src/data/career-suite.ts.
+Needs: pip install markdown. Reads skills/clearcareer-career-suite. Install steps and tool summaries are below.
 """
-import json, re, html, sys, os, subprocess
+import json, re, html, sys, os
 import markdown
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 S = os.path.join(ROOT, "skills", "clearcareer-career-suite")
 OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(S, "dist", "career-suite-complete.html")
-data = json.loads(subprocess.check_output(
-    ["npx", "--yes", "tsx", "-e",
-     "import {PLATFORMS,SUITE_SKILLS} from './src/data/career-suite.ts'; console.log(JSON.stringify({PLATFORMS,SUITE_SKILLS}))"],
-    cwd=ROOT, text=True))
+data = {
+ "PLATFORMS": [
+  {
+   "id": "claude",
+   "name": "Claude",
+   "format": "Claude Skill (SKILL.md folder)",
+   "install": [
+    "Download the tool's zip from your Career Suite page. Don't unzip it.",
+    "In Claude, open Settings > Capabilities and make sure Skills are turned on.",
+    "Under Skills, upload the zip. Repeat for each tool.",
+    "Start a new chat and ask for it by name, for example: \"Start my achievement interview.\"",
+    "Using Claude Code? Unzip each one into ~/.claude/skills/ and type / to see them."
+   ]
+  },
+  {
+   "id": "chatgpt",
+   "name": "ChatGPT",
+   "format": "Custom GPT (instructions + knowledge files)",
+   "install": [
+    "Download and unzip the tool. Each one becomes its own Custom GPT.",
+    "In ChatGPT, go to Explore GPTs > Create, then the Configure tab.",
+    "Copy the name and description from setup.md. Paste everything in instructions.md into Instructions.",
+    "Upload every file in the knowledge folder under Knowledge.",
+    "Add the conversation starters from setup.md, turn on Canvas (and Web Search where setup.md says), then save."
+   ]
+  },
+  {
+   "id": "gemini",
+   "name": "Gemini",
+   "format": "Gem (instructions + knowledge files)",
+   "install": [
+    "Download and unzip the tool. Each one becomes its own Gem.",
+    "In Gemini on the web, open Gems manager > New Gem.",
+    "Copy the name from setup.md. Paste everything in gem-instructions.md into Instructions.",
+    "Upload every file in the knowledge folder (Add files under Knowledge).",
+    "Save the Gem, then open it and say hello to start."
+   ]
+  }
+ ],
+ "SUITE_SKILLS": [
+  {
+   "slug": "career-clarity",
+   "step": "Steps 1 and 3",
+   "name": "Career Clarity",
+   "summary": "Quick Start gives you working job titles in 15 minutes. The Full Report (after your interview) gives your final 5 titles, pay for your city with sources, and 20 to 30 target companies."
+  },
+  {
+   "slug": "achievement-interviewer",
+   "step": "Steps 2 and 4",
+   "name": "AI Achievement Interviewer",
+   "summary": "Talk through every role in voice mode. It asks one question at a time until your work has numbers on it, then writes your bullets and 8 professional summaries."
+  },
+  {
+   "slug": "linkedin-profile-builder",
+   "step": "Step 5",
+   "name": "LinkedIn Profile Builder",
+   "summary": "Headline, About, experience entries, skills and Open to Work settings, written from your profile and ready to paste."
+  },
+  {
+   "slug": "job-alerts-setup",
+   "step": "Step 6",
+   "name": "Job Alerts Setup",
+   "summary": "Copy-paste LinkedIn, Google and Indeed alerts for your titles and target companies, with click-by-click steps."
+  },
+  {
+   "slug": "job-search-autopilot",
+   "step": "Step 7",
+   "name": "Job Search Autopilot",
+   "summary": "Scheduled daily and weekly searches that find, check and score new jobs, and hand you the top 3 to apply to today."
+  },
+  {
+   "slug": "job-match-rubric",
+   "step": "Step 8, ongoing",
+   "name": "Job Match Scorer",
+   "summary": "Paste any job. Get a score out of 100 on your real chances, the proof to lead with, your gaps and a tailored summary."
+  }
+ ]
+}
 ORDER = [s["slug"] for s in data["SUITE_SKILLS"]]
 NAMES = {s["slug"]: s["name"] for s in data["SUITE_SKILLS"]}
 STEPS = {s["slug"]: s["step"] for s in data["SUITE_SKILLS"]}
@@ -68,7 +142,7 @@ A("<table><tr><th>When</th><th>Tool</th><th>What it does</th></tr>" + "".join(
 
 # 2. Install
 A("<h1>2. Pick your AI and install it</h1>")
-A("<p>Each version is formatted exactly the way that AI needs it. Use the one you already pay for. Not sure? Claude keeps everything in one conversation most easily. Download every tool from your Career Suite download page: one \"All 6 tools\" button per AI, or one tool at a time.</p>")
+A("<p>Each version is formatted exactly the way that AI needs it. Use the one you already pay for. Not sure? Claude keeps everything in one conversation most easily. Download every tool from your Career Suite page (the Install tab), or from your Land and Level Up toolkit if you're a member.</p>")
 for p in data["PLATFORMS"]:
     A(f"<h2>{html.escape(p['name'])}: {html.escape(p['format'])}</h2><ol>" + "".join(f"<li>{html.escape(s)}</li>" for s in p["install"]) + "</ol>")
 

@@ -198,11 +198,15 @@ describe('Land and Level Up member toolkit', () => {
     const t = await makeAccessToken('llu-toolkit', 'sam@example.com', 'test-secret');
     for (const p of [...PRODUCTS['all-access'].includes!, 'career-suite']) expect((await verifyAccess(p, t, env)).ok, p).toBe(true);
     expect((await verifyAccess('layoff-survival-kit', t, env)).ok).toBe(false);
-    expect(PRODUCTS['llu-toolkit'].hidden && PRODUCTS['career-suite'].hidden).toBe(true);
+    // The member toolkit isn't sold; the Career Suite is also sold on its own ($47).
+    expect(PRODUCTS['llu-toolkit'].hidden).toBe(true);
+    expect(PRODUCTS['career-suite'].hidden).toBeFalsy();
+    expect(PRODUCTS['career-suite'].price).toBe(47);
+    expect(PRODUCTS['llu-toolkit'].includes).toContain('career-suite');
   });
 
   it('the Career Suite comes in order, as Claude skill zips and as ChatGPT and Gemini folders', () => {
-    expect(skillsFor('career-suite').map((s) => s.name)).toEqual(['career-clarity', 'achievement-interviewer', 'job-match-rubric', 'job-search-autopilot', 'job-alerts-setup']);
+    expect(skillsFor('career-suite').map((s) => s.name)).toEqual(['career-clarity', 'achievement-interviewer', 'linkedin-profile-builder', 'job-alerts-setup', 'job-search-autopilot', 'job-match-rubric']);
     const zip = Object.keys(unzipSync(skillZip('career-suite', 'achievement-interviewer')!));
     expect(zip.every((n) => n.startsWith('achievement-interviewer/'))).toBe(true);
     expect(zip).toContain('achievement-interviewer/SKILL.md');

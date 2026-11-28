@@ -1,6 +1,6 @@
 # Start here: your Land and Level Up toolkit
 
-Hey, it's Izzy. Welcome in. This page holds every AI tool I've built: the 5-tool Career Suite and all 17 Claude skills from my shop. That's a lot, so don't install everything today. Follow the weeks below and pick up each tool when we get there on the calls.
+Hey, it's Izzy. Welcome in. This page holds every AI tool I've built: the 6-tool Career Suite and all 17 Claude skills from my shop. That's a lot, so don't install everything today. Follow the weeks below and pick up each tool when we get there on the calls.
 
 Everything works from your real resume and your real wins. None of it makes up numbers.
 
@@ -8,7 +8,7 @@ Everything works from your real resume and your real wins. None of it makes up n
 
 Open **Your products** on this page. Each one has its own page with its skills, copy-paste prompts, guides and a Start Here of its own.
 
-- **The Career Suite** (start here): Career Clarity, the AI Achievement Interviewer, Job Match Scorer, Job Search Autopilot and Job Alerts Setup. For Claude, ChatGPT and Gemini.
+- **The Career Suite** (start here): Career Clarity, the AI Achievement Interviewer, LinkedIn Profile Builder, Job Alerts Setup, Job Search Autopilot and Job Match Scorer. For Claude, ChatGPT and Gemini. Its own Start Here has the full step-by-step order.
 - **Career Prompt Vault:** 6 Claude skills for your resume, LinkedIn, interviews, outreach, research and offers, plus 50 copy-paste prompts.
 - **Resume and LinkedIn Audit Kit:** my rubrics for your resume and your profile, with your top 3 fixes.
 - **LinkedIn Launch Pack:** my headline and About formats, messages for 5 situations, and posts from your stories.
@@ -21,13 +21,14 @@ Open **Your products** on this page. Each one has its own page with its skills, 
 ## Week by week
 
 **Before December 9: get clear**
-- Career Clarity (Career Suite). Pick 2 or 3 target titles.
+- Career Clarity Quick Start (Career Suite). Pick 2 or 3 working target titles.
 - Start the AI Achievement Interviewer. One role per sitting.
 
 **December 9 to 16: targeting and the rebuild**
 - Company Scorecards (Research and Outreach Kit). Rank your top 10 to 20 companies.
-- Finish the Achievement Interviewer, then run the Resume Audit (Audit Kit) on your new resume.
-- LinkedIn Audit, then LinkedIn Launch for your headline and About. Bring both to the workshop on the 16th.
+- Finish the Achievement Interviewer, then run the Career Clarity Full Report with your new profile: final titles, pay for your city and your company list.
+- Run the Resume Audit (Audit Kit) on your new resume.
+- LinkedIn Audit, then the LinkedIn Profile Builder (Career Suite) or LinkedIn Launch for your headline and About. Bring both to the workshop on the 16th.
 
 **The holiday break**
 - Rest. If you have energy, set up Job Alerts and start your hiring manager list with the Outreach Campaign skill.

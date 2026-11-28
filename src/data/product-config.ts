@@ -14,6 +14,8 @@ export interface Product {
   tier: "free" | "$9" | "$19-29" | "$47-67" | "$97+";
   description: string;
   stripePriceEnvVar: string;
+  /** Default Stripe price ID, used when the env var above isn't set. Price IDs aren't secret. */
+  stripePriceId?: string;
   guidesDir: string;
   guides: ProductGuide[];
   badge?: string;
@@ -839,22 +841,25 @@ export const PRODUCTS: Record<string, Product> = {
     guides: [
     ],
   },
-  // ── LAND AND LEVEL UP MEMBERS ONLY (not sold, not in the shop) ─────────────
-  // Members get one access link for all of it the day they enrol (src/pages/api/stripe.ts).
-  // Their sales-page URLs redirect to /land-and-level-up (src/data/product-redirects.mjs).
+  // ── THE CAREER SUITE ($47 on its own, free for Land and Level Up members via "llu-toolkit") ──
   "career-suite": {
     slug: "career-suite",
-    hidden: true,
     name: "The ClearCareer Career Suite",
-    price: 0,
+    price: 47,
     currency: "CAD",
-    tier: "free",
+    tier: "$47-67",
     description:
-      "5 AI tools for members: Career Clarity, the AI Achievement Interviewer, Job Match Scorer, Job Search Autopilot and Job Alerts Setup. For Claude, ChatGPT and Gemini.",
-    stripePriceEnvVar: "",
+      "6 AI tools for Claude, ChatGPT and Gemini: Career Clarity, the AI Achievement Interviewer, LinkedIn Profile Builder, Job Alerts Setup, Job Search Autopilot and Job Match Scorer. Free for Land and Level Up members.",
+    stripePriceEnvVar: "STRIPE_CAREER_SUITE_PRICE_ID",
+    // Live price for "The Career Suite" ($47 CAD, product prod_Vi4AcGrWXezw2D).
+    stripePriceId: "price_1Uge1zH8o32Pij57oewNOxw2",
     guidesDir: "career-suite-guides",
+    badge: "New",
     guides: [],
   },
+  // ── LAND AND LEVEL UP MEMBERS ONLY (not sold, not in the shop) ─────────────
+  // Members get one access link for all of it the day they enrol (src/pages/api/stripe.ts).
+  // Its sales-page URL redirects to /land-and-level-up (src/data/product-redirects.mjs).
   "llu-toolkit": {
     slug: "llu-toolkit",
     hidden: true,
@@ -863,7 +868,7 @@ export const PRODUCTS: Record<string, Product> = {
     currency: "CAD",
     tier: "free",
     description:
-      "Every ClearCareer AI tool: the 5-tool Career Suite and all 17 Claude skills from the All-Access Pass, in the order you'll use them.",
+      "Every ClearCareer AI tool: the 6-tool Career Suite and all 17 Claude skills from the All-Access Pass, in the order you'll use them.",
     stripePriceEnvVar: "",
     guidesDir: "llu-toolkit-guides",
     // Flat on purpose: a token for this opens each of these directly.

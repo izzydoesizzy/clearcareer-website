@@ -22,6 +22,7 @@ import { PROGRAMS } from '../../lib/book-call.js';
 import { getClient, ensureFolder, seatsSold, type ServerEnv } from '../../lib/clients.js';
 import { welcomeEmail, enrolmentNotice } from '../../lib/onboarding-emails.js';
 import { orderFromSession, deliverPurchase } from '../../lib/purchase-emails.js';
+import { checkoutSettled } from '../../lib/product-access.js';
 
 export const prerender = false;
 
@@ -42,7 +43,7 @@ export const POST: APIRoute = async ({ request }) => {
   if (!['checkout.session.completed', 'checkout.session.async_payment_succeeded'].includes(event.type)) return json({ ok: true, ignored: event.type });
   const s = event.data?.object || {};
   if (s.metadata?.product && s.metadata.product !== 'land-and-level-up') {
-    if (s.payment_status !== 'paid') return json({ ok: true, waiting: s.payment_status });
+    if (!checkoutSettled(s)) return json({ ok: true, waiting: s.payment_status });
     const order = await orderFromSession(s, env as unknown as Record<string, unknown>);
     if (!order) return json({ ok: true, ignored: `unknown product ${s.metadata.product}` });
     const delivery = await deliverPurchase(env as unknown as Record<string, unknown>, order, { record: true });

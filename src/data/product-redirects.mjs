@@ -18,6 +18,5 @@ export const PRODUCT_REDIRECTS = {
   'over-40-toolkit': '/shop',
   'adhd-command-center': '/shop',
   // Land and Level Up members only.
-  'career-suite': '/land-and-level-up',
   'llu-toolkit': '/land-and-level-up',
 };

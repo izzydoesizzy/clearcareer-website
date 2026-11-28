@@ -29,7 +29,7 @@ export const POST: APIRoute = async ({ params, request }) => {
 
   const env = serverEnv();
   const stripeSecret = env.STRIPE_SECRET_KEY;
-  const priceId = env[product.stripePriceEnvVar];
+  const priceId = env[product.stripePriceEnvVar] || product.stripePriceId;
 
   if (!stripeSecret || !priceId) {
     return new Response(

@@ -38,8 +38,8 @@ ${small('This link is just for you. It saves as you go, so you can come back to 
 const toolkitBlock = (url?: string) => `
 ${H('Your AI tools are ready now')}
 ${url
-  ? P(`Every tool I've built is waiting for you: the 5-tool Career Suite and 17 Claude skills. ${link('Open your toolkit', url)} and start with Career Clarity. It takes about 20 minutes, and it makes our first call a lot more useful.`)
-  : P("Every tool I've built is yours: the 5-tool Career Suite and 17 Claude skills. Your toolkit link is coming from me before we start.")}`;
+  ? P(`Every tool I've built is waiting for you: the 6-tool Career Suite and 17 Claude skills. ${link('Open your toolkit', url)} and start with Career Clarity. It takes about 20 minutes, and it makes our first call a lot more useful.`)
+  : P("Every tool I've built is yours: the 6-tool Career Suite and 17 Claude skills. Your toolkit link is coming from me before we start.")}`;
 
 export function welcomeEmail(c: { firstName: string; program: string; token: string; toolkitUrl?: string }) {
   const subject = `You're in, ${c.firstName}! Here's your first step`;

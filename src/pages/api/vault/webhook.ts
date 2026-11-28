@@ -11,6 +11,7 @@ import type { APIRoute } from "astro";
 import { serverEnv } from "../../../lib/server-env";
 import Stripe from "stripe";
 import { orderFromSession, deliverPurchase } from "../../../lib/purchase-emails";
+import { checkoutSettled } from "../../../lib/product-access.js";
 
 export const prerender = false;
 
@@ -38,7 +39,7 @@ export const POST: APIRoute = async ({ request }) => {
 
   if (event.type === "checkout.session.completed" || event.type === "checkout.session.async_payment_succeeded") {
     const session = event.data.object as Stripe.Checkout.Session;
-    if (session.payment_status === "paid") {
+    if (checkoutSettled(session)) {
       const order = await orderFromSession(session as never, env);
       if (order) {
         const result = await deliverPurchase(env, order, { record: true });

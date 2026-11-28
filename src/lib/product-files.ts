@@ -27,7 +27,8 @@ const SUITE = import.meta.glob(
 const FILES: Record<string, string> = Object.fromEntries([
   ...Object.entries(RAW).map(([k, v]) => [k.replace(/^.*\/src\/products\//, ''), v]),
   ...Object.entries(SUITE).map(([k, v]) => [
-    k.replace(/^.*\/skills\/clearcareer-career-suite\//, 'career-suite/').replace(/^career-suite\/claude\//, 'career-suite/skills/'),
+    k.replace(/^.*\/skills\/clearcareer-career-suite\//, 'career-suite/')
+      .replace(/^career-suite\/claude\//, 'career-suite/skills/'),
     v,
   ]),
 ]);
@@ -55,7 +56,7 @@ export function productFiles(slug: string): Record<string, string> {
 }
 
 /** The order buyers should meet the skills in (the job search order). Others follow, A to Z. */
-const SKILL_ORDER = ['cc-resume', 'cc-linkedin', 'cc-interview', 'cc-outreach', 'cc-research', 'cc-offer', 'cc-resume-review', 'cc-linkedin-audit', 'cc-job-scan', 'cc-company-scorecards', 'cc-outreach-campaign', 'career-clarity', 'achievement-interviewer', 'job-match-rubric', 'job-search-autopilot', 'job-alerts-setup'];
+const SKILL_ORDER = ['cc-resume', 'cc-linkedin', 'cc-interview', 'cc-outreach', 'cc-research', 'cc-offer', 'cc-resume-review', 'cc-linkedin-audit', 'cc-job-scan', 'cc-company-scorecards', 'cc-outreach-campaign', 'career-clarity', 'achievement-interviewer', 'linkedin-profile-builder', 'job-alerts-setup', 'job-search-autopilot', 'job-match-rubric'];
 
 export function skillsFor(slug: string): SkillInfo[] {
   const files = productFiles(slug);
