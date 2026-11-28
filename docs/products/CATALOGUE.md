@@ -128,3 +128,67 @@ The 11 shop products can't be bought today: their buy buttons point at a checkou
 3. **US buyers:** most guides assume Canada. Add a short "In the US" box where the rules differ (severance, taxes, benefits).
 4. **Calls to action:** older lead magnets still point to the $2,497 program. Point them to Land and Level Up.
 5. **A missing file:** the client portal's "rapidfire" achievement questions (`packages/core/src/data/interview-questions.ts`) aren't in the repo, because every `data/` folder is gitignored. Copy them from your computer if you want them in a product.
+
+---
+
+## 7. Deep dive: the client-manager system (Nov 28, 2026)
+
+The tools you built to deliver coaching, beyond the content folder. Paths are in `clearcareer-client-manager`.
+Most of this is production code that already makes branded PDFs for clients, so it's closer to a product
+than the prompt library was. Prices are suggestions.
+
+### Audits (upload a resume or LinkedIn screenshots, get a scored report)
+| Tool | What clients got | Where | Product idea |
+|---|---|---|---|
+| **Resume Review, 3 tiers** | Concise verdict, a 6-section diagnosis, or a full "Rewrite Guide" that quotes their resume and rewrites it | `packages/core/src/services/resume-feedback-service.ts`, `content/rubrics/resume-rubric.json`, skill `reports/resume-feedback` | Free snapshot / $19 audit / $39 rewrite guide (Claude skill or web tool) |
+| **LinkedIn Audit, 3 tiers** (from screenshots) | Same ladder: verdict table, 5-section diagnosis, Rewrite Guide with 3 headlines, a full About and new bullets | `linkedin-audit-service.ts`, `content/rubrics/linkedin-rubric.json`, skills `linkedin/linkedin-audit*` | Free snapshot / $19 / $39 |
+| **Career Clarity Audit** | 5 job titles to target (with fit %, salary, LinkedIn search links) plus anchor, target and walk-away numbers | `audit-service.ts`, skill `market-research/clarity-audit` | Free lead magnet (web tool), feeds everything else |
+
+### Interviews
+| Tool | What clients got | Where | Product idea |
+|---|---|---|---|
+| **Interview Prep Dossier** (your flagship) | 15 to 20 pages for one job: company intel and red flags, the people interviewing them, objection cards with talking points, a researched "tell me about yourself", 10 custom questions with answers, STAR-to-job matrix, salary positioning, questions to ask, tips | `interview-prep-service.ts` (company-specific), skill `reports/interview-prep-pdf` | $39 to $49 per interview, upsell from the Interview Kit |
+
+### Search and strategy
+| Tool | What clients got | Where | Product idea |
+|---|---|---|---|
+| **Live Job Postings Report** | Postings from the last 7 days, links checked, each scored /12 on a 6-part fit rubric (Apply / Consider / Skip) | `job-postings-report-service.ts`, skills `reports/job-postings-report`, `deep-research/job-market-scan` | $9 per scan or $19/month; the fit rubric alone is a free scorecard |
+| **Target Company Scorecards** | 10 to 20 companies researched and scored | skill `market-research/company-scorecards-deep`, `target-companies-pdf-service.ts` | $29 |
+| **Company Dossier** | Deep research on one company | skill `deep-research/company-deep-dive` | $19 |
+| **Hidden Job Titles report** | 5 to 12 titles, one per page, with salary and LinkedIn searches | `job-titles-report-service.ts` | Fold into the Clarity Audit |
+| **Search tools pack** | Boolean strings, 15 to 20 Google Alerts, a tracker, a daily action plan, an events list | `prompt-builder.ts` (#10 to #12), `placement-prompt-builder.ts` (#13, #15) | $9 pack or toolkit bonus |
+| **Industry Pivot Report** | Industry analysis for career changers | skill `deep-research/industry-analysis` | $29 |
+
+### Outreach
+| Tool | What clients got | Where | Product idea |
+|---|---|---|---|
+| **Cold Outreach Campaign** | One real contact per target company, email pattern, a "notable work" hook, a short email each (8 opener patterns, banned phrases), one-click drafts, tracker | `outreach-campaign-service.ts`, skill `outreach/cold-outreach-campaign` | $29 builder; the email rules strengthen Outreach Templates now |
+
+### Resume and LinkedIn writing (your strongest formats)
+| Tool | Where | Product idea |
+|---|---|---|
+| **Achievement Mining**: the Experience Deep-Dive question bank with drill-downs, the achievement extractor and the fact-checker | portal `packages/web/src/components/portal/*`, `achievement-generator.ts`, `fact-check-service.ts`. **The question bank file is missing from git** (`packages/core/src/data/interview-questions.ts`, ignored by the `data/` rule): copy it from your computer | Workbook or web tool; the fact-checker becomes a step in every skill |
+| **LinkedIn Launch Pack**: 10 pipe-style headlines, your 4-part About with emoji highlights, DM templates for 5 scenarios, 4 posts from their own stories, ready-made search links | `pipeline-service.ts` (about lines 376 to 695) | $19 pack, or an upgrade to the Vault's LinkedIn skill |
+| **10 professional summaries** (with your few-shot examples) | `pipeline-service.ts` 308 to 374 | Upgrade to the Vault's resume skill |
+| **First LinkedIn profile build guide** (new grads, veterans) | `client-guide-service.ts` 503 to 715 | $19 |
+
+### Career transition and visuals
+| Tool | Where | Product idea |
+|---|---|---|
+| Military-to-Civilian Transition Guide | `transition-guide-service.ts`, the .docx | $39 or a partner product; confirm rights with Soldiers in Tech. Clone the format for teachers, nurses and other career changers |
+| LinkedIn banner generator (11 layouts) | `scripts/generate-linkedin-banner.ts` | Template pack or add-on |
+| AI headshot prompts (15 styles) | `scripts/generate-headshots.ts`, `scripts/assets/headshot-favorites/FAVORITES.md` | Prompt pack. The reference images are from real client runs: keep private |
+
+### Done for you, automated
+- **Zero-touch placement funnel:** a form → an AI voice intake call ("Alex") → 15 deliverables → a "your toolkit is ready" email (`retell/*`, `placement-runner.ts`, `pipeline-service.ts`). A low-ticket automated offer, for example $97 to $297.
+- **The Job Search Toolkit report**: the password-protected web report with copy buttons that clients received (`report-viewer.tsx`, `client-report-service.ts`).
+
+### For other coaches (a separate audience)
+Client portal with contract, payment and intake; the toolkit report viewer; 29 lifecycle emails; the Google Form intake automation; contract templates; the Fathom transcript pipeline; the "career to consultancy" launch kit and Voice Print. A white-label tool for coaches and outplacement firms.
+
+### Fix before productizing
+1. Copy the missing Experience Deep-Dive question bank into the repo.
+2. The "generic" interview prep (role-type version) is hard-coded with one real client's details: make it generic first.
+3. Named testimonials are built into the audit PDFs: confirm consent.
+4. Pick one generator per asset (four systems make overlapping versions).
+5. Prices and social-proof numbers disagree across files.
