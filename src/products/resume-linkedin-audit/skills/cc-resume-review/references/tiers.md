@@ -4,7 +4,7 @@ The exact output for each depth of the resume audit, plus the re-audit you run a
 
 Verdicts are always one of: Needs Attention, Mixed Signals, Good Foundation, Strong.
 
-## Snapshot
+## Resume Snapshot
 
 **What it does:** Gives you an overall impression and a one-line verdict for each of the 6 areas of your resume, plus the one fix to make first.
 **When to use it:** When you want a quick read on where your resume stands before you spend time on it.
@@ -56,7 +56,7 @@ Rules:
 
 **Replace:** [Target role], [Paste the job post, or write "none"], [Paste your resume]
 
-## Full audit
+## Resume Full audit
 
 **What it does:** Diagnoses each of the 6 areas with a verdict, a short headline and 3 points of evidence, then ranks the 3 fixes that matter most.
 **When to use it:** When you're ready to work on your resume and want to know exactly what's holding it back and what to change.
@@ -165,7 +165,7 @@ Rules:
 
 **Replace:** [Target role], [Paste the job post, or write "none"], [Paste your resume]
 
-## Rewrite Guide
+## Resume Rewrite Guide
 
 **What it does:** Quotes your actual resume lines, says what isn't working, and gives you a ready-to-paste rewrite and why it's better, using only the facts already on your resume.
 **When to use it:** After a Full audit (or instead of one), when you're ready to make the changes.
@@ -294,7 +294,7 @@ Then give me my final lines as one clean list I can paste into my resume: the su
 
 **Replace:** [Paste your answers, one per line, with the bullet number]
 
-## Re-audit after edits
+## Resume re-audit after edits
 
 **What it does:** Re-scores your updated resume and shows what changed since your last audit, what's still left, and anything the edits broke.
 **When to use it:** Every time you finish a round of edits, and before you send your resume for a role that's different from your usual target.

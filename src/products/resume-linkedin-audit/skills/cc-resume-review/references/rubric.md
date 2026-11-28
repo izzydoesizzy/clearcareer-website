@@ -45,7 +45,7 @@ AREA 2: STORY AND POSITIONING
 
 Verdict rules:
 - Needs Attention: either REQUIRED check fails. There's no summary, or the summary has no target.
-- Mixed Signals: both REQUIRED checks are met, but the summary is generic or full of cliches, or the career story has a visible gap or pivot that nothing explains.
+- Mixed Signals: both REQUIRED checks are met, but the summary is generic or full of clichés, or the career story has a visible gap or pivot that nothing explains.
 - Good Foundation: clear positioning and a clear career thread. Small clarity issues that a quick rewrite would fix.
 - Strong: the summary says right away who this person is and who they're for. The career story backs up the target.
 
@@ -96,7 +96,7 @@ Verdict rules:
 AREA 6: LANGUAGE AND PRESENCE
 
 [ ] REQUIRED No filler phrases: no "responsible for", "assisted with", "helped to", "worked on", "involved in", "participated in" or "supported the team".
-[ ] No tired cliches: no "detail-oriented", "team player", "results-driven", "passionate about", "dynamic", "go-getter" or "motivated self-starter".
+[ ] No tired clichés: no "detail-oriented", "team player", "results-driven", "passionate about", "dynamic", "go-getter" or "motivated self-starter".
 [ ] Consistent tense: present tense for the current job, past tense for past jobs, and no mixing within one job.
 [ ] No first person: no "I", "my", "me" or "our" in the body text.
 [ ] Matches seniority: the words fit the career level. Junior people shouldn't sound like executives, and senior people shouldn't sound like coordinators.
@@ -104,8 +104,8 @@ AREA 6: LANGUAGE AND PRESENCE
 Verdict rules:
 - Needs Attention: the REQUIRED check fails (filler phrases throughout: in 3 or more jobs, or in the summary), or the language signals a much lower level than the experience.
 - Mixed Signals: some filler in 1 or 2 jobs. Cliches weaken the impact. Tense or pronoun slips show up more than once.
-- Good Foundation: the language is mostly strong. A bit of filler or a cliche or two that a 30-minute edit would clear up.
-- Strong: clear, confident language that fits the person's level. No filler, no cliches, no passive phrasing.
+- Good Foundation: the language is mostly strong. A bit of filler or a cliché or two that a 30-minute edit would clear up.
+- Strong: clear, confident language that fits the person's level. No filler, no clichés, no passive phrasing.
 
 HOW TO USE THIS RUBRIC
 
