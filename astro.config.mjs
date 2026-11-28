@@ -3,7 +3,6 @@ import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
-import { PRODUCT_REDIRECTS } from './src/data/product-redirects.mjs';
 
 // Only load Vercel adapter for production builds
 const isProduction = process.env.NODE_ENV === 'production' || process.argv.includes('build');
@@ -31,7 +30,6 @@ export default defineConfig({
     '/programs/community': '/land-and-level-up',
     '/community': '/land-and-level-up',
     '/blog/build-your-target-company-list-with-chatgpt': '/blog/build-your-target-company-list-with-ai',
-    // Retired and hidden products (src/data/product-redirects.mjs).
-    ...Object.fromEntries(Object.entries(PRODUCT_REDIRECTS).map(([slug, to]) => [`/products/${slug}`, to])),
+    // Retired and hidden products redirect in src/pages/products/[slug]/index.astro.
   },
 });

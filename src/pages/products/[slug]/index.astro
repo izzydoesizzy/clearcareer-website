@@ -1,8 +1,7 @@
 ---
 /**
- * Old product pages with a trailing slash (/products/script-vault/). The exact URLs redirect in
- * astro.config.mjs; this catches the slash version and sends it to the same place. Anything else
- * that isn't a real product page gets the normal 404.
+ * Old product pages (/products/script-vault, with or without the slash) redirect to their new
+ * home. Real product pages are their own folders and win over this. Anything else gets the 404.
  */
 import NotFound from "../../404.astro";
 import { PRODUCT_REDIRECTS } from "../../../data/product-redirects.mjs";

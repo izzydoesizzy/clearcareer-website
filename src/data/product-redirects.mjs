@@ -1,6 +1,6 @@
-// Old product pages and where they go now. Used by astro.config.mjs (exact URLs) and by
-// src/pages/products/[slug]/index.astro (the same URLs with a trailing slash). Buyers' access
-// links (/products/<slug>/access/...) still work for every product listed here.
+// Old product pages and where they go now, with or without a trailing slash. Handled by
+// src/pages/products/[slug]/index.astro (not astro.config redirects: on Vercel those break the
+// slash version). Buyers' access links (/products/<slug>/access/...) still work for all of these.
 export const PRODUCT_REDIRECTS = {
   // Retired: folded into the new packs.
   'script-vault': '/products/complete-toolkit',
