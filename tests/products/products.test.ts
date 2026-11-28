@@ -9,6 +9,7 @@ import { unzipSync, strFromU8 } from 'fflate';
 import { PRODUCTS, bundlesIncluding } from '../../src/data/product-config';
 import { skillsFor, skillZip, startHere, promptCards, productFiles, frontmatter, parsePrompts } from '../../src/lib/product-files';
 import { verifyAccess } from '../../src/lib/product-access';
+import { PRODUCT_REDIRECTS } from '../../src/data/product-redirects.mjs';
 import { makeAccessToken } from '../../src/lib/access';
 import testimonials from '../../src/data/testimonials.json';
 
@@ -174,6 +175,15 @@ describe('All-Access', () => {
     const total = PRODUCTS['all-access'].includes!.filter((p) => p !== 'complete-toolkit').reduce((n, p) => n + (singles[p] ?? PRODUCTS[p].price), 0);
     expect(total).toBe(201);
     expect(PRODUCTS['all-access'].price).toBe(99);
+  });
+});
+
+describe('old product pages', () => {
+  it('every hidden or retired product redirects somewhere', () => {
+    for (const p of Object.values(PRODUCTS)) {
+      if (p.hidden || p.retired) expect((PRODUCT_REDIRECTS as Record<string, string>)[p.slug], p.slug).toBeTruthy();
+    }
+    for (const slug of Object.keys(PRODUCT_REDIRECTS)) expect(existsSync(join(ROOT, 'src', 'pages', 'products', slug)), slug).toBe(false);
   });
 });
 

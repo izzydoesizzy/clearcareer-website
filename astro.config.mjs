@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
+import { PRODUCT_REDIRECTS } from './src/data/product-redirects.mjs';
 
 // Only load Vercel adapter for production builds
 const isProduction = process.env.NODE_ENV === 'production' || process.argv.includes('build');
@@ -30,20 +31,7 @@ export default defineConfig({
     '/programs/community': '/land-and-level-up',
     '/community': '/land-and-level-up',
     '/blog/build-your-target-company-list-with-chatgpt': '/blog/build-your-target-company-list-with-ai',
-    // Retired products: folded into the new packs. Buyers' access links still work.
-    '/products/script-vault': '/products/complete-toolkit',
-    '/products/cold-outreach-pack': '/products/outreach-templates',
-    // Hidden for now (see src/pages/products/_hidden/README.md).
-    '/products/adhd-cheat-sheet': '/shop',
-    '/products/job-search-scorecard': '/shop',
-    '/products/rejection-cards': '/shop',
-    '/products/ghost-job-checklist': '/shop',
-    '/products/adhd-focus-kit': '/shop',
-    '/products/linkedin-detox': '/shop',
-    '/products/emotional-survival-kit': '/shop',
-    '/products/adhd-career-change': '/shop',
-    '/products/career-change-command-center': '/shop',
-    '/products/over-40-toolkit': '/shop',
-    '/products/adhd-command-center': '/shop',
+    // Retired and hidden products (src/data/product-redirects.mjs).
+    ...Object.fromEntries(Object.entries(PRODUCT_REDIRECTS).map(([slug, to]) => [`/products/${slug}`, to])),
   },
 });
