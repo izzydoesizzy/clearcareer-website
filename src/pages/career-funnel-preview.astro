@@ -281,8 +281,9 @@ const upsellTotal = FUNNEL.upsell.amount + upsellTaxAmount;
   .skip { display: block; width: 100%; min-height: 44px; color: var(--llu-blue); text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
   .items { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
   .items li { display: flex; gap: 16px; align-items: center; justify-content: space-between; padding: 16px; border-radius: 14px; border: 1px solid var(--llu-hairline); }
+  .items li a.llu-btn { white-space: nowrap; flex: none; }
   @media (max-width: 639px) { .items li { flex-direction: column; align-items: stretch; } }
-  .months { display: grid; gap: 16px; grid-template-columns: minmax(0, 1fr); }
+  .months { display: grid; gap: 16px; margin-bottom: 12px; grid-template-columns: minmax(0, 1fr); }
   @media (min-width: 768px) { .months { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   .months > div { padding: 20px; border-radius: 16px; background: rgb(255 255 255 / 0.08); }
   .months p { margin: 0; }
