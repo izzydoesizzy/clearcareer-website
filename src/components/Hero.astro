@@ -54,9 +54,9 @@ const isSplit = variant === "split";
 
   <div class="relative mx-auto max-w-[1080px] px-4 sm:px-6 lg:px-8">
     {isSplit ? (
-      <div class="grid grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-12">
+      <div class="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-12">
         {/* Text column */}
-        <div class="text-center md:text-left" data-animate="fade-up">
+        <div class="text-center lg:text-left" data-animate="fade-up">
           {eyebrow && (
             <p class="mb-4 inline-block rounded-full bg-blue/10 px-4 py-1.5 text-sm font-semibold text-blue">
               {eyebrow}
@@ -64,19 +64,19 @@ const isSplit = variant === "split";
           )}
 
           <h1
-            class="mx-auto max-w-4xl font-display text-[clamp(2rem,5vw,3.5rem)] leading-[1.05] text-white md:mx-0"
+            class="mx-auto max-w-4xl font-display text-[clamp(2rem,5vw,3.5rem)] leading-[1.05] text-white lg:mx-0"
             set:html={headline}
           />
 
           {subheadline && (
-            <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-gray-300 md:mx-0">
+            <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-gray-300 lg:mx-0">
               {subheadline}
             </p>
           )}
           <slot name="proof" />
 
           {(primaryCTA || secondaryCTA) && (
-            <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row md:justify-start">
+            <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row lg:justify-start">
               {primaryCTA && (
                 <a
                   href={primaryCTA.href}
@@ -97,7 +97,7 @@ const isSplit = variant === "split";
           )}
 
           {trustText && (
-            <p class="mt-8 text-sm text-gray-500">{trustText}</p>
+            <p class="mt-8 text-sm text-gray-500">{trustText.split(" · ").map((part, i) => <>{i > 0 && " · "}<span class="whitespace-nowrap">{part}</span></>)}</p>
           )}
         </div>
 
@@ -159,7 +159,7 @@ const isSplit = variant === "split";
         )}
 
         {trustText && (
-          <p class="mt-8 text-sm text-gray-500">{trustText}</p>
+          <p class="mt-8 text-sm text-gray-500">{trustText.split(" · ").map((part, i) => <>{i > 0 && " · "}<span class="whitespace-nowrap">{part}</span></>)}</p>
         )}
       </div>
     )}

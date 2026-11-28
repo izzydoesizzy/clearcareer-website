@@ -5,7 +5,7 @@ const max = Math.max(...survey.timeToLand.map((t) => t.count));
 const dots = Array.from({ length: survey.n }, (_, i) => i < survey.landed);
 const pct = (a: number, b: number) => Math.round((a / b) * 100);
 const minis = [
-  { count: survey.fiveStar, of: survey.n, label: "rated the program 5 out of 5" },
+  { count: survey.fiveStar, of: survey.n, label: "rated the program 5\u00a0out\u00a0of\u00a05" },
   { count: survey.fiveOrFewerInterviewsBefore, of: survey.n, label: "had 5 or fewer interviews before joining" },
   { count: survey.searching7PlusMonthsBefore, of: survey.n, label: "had searched 7 months or more before joining" },
 ];

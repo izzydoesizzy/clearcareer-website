@@ -190,6 +190,17 @@ body:has(> .llu) {
   }
 }
 
+/* Card grids that need room (people cards, price cards): side by side only from 1024px.
+   On tablets they stack, one card per row, not too wide. */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .llu-grid.llu-grid--wide-cards {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
 /* Two-column row: words on one side, one visual on the other */
 .llu-row {
   display: grid;
@@ -1136,6 +1147,10 @@ body:has(> .llu) {
 .llu-dealbar__text {
   flex: 0 1 auto;
   min-width: 0;
+  /* Always one line: never wraps a stray word onto a second row */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   font-size: var(--llu-fs-cap);
   font-weight: 600;
   line-height: 1.4;
@@ -1174,7 +1189,7 @@ body:has(> .llu) {
   outline: 2px solid var(--llu-white);
   outline-offset: 2px;
 }
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .llu-dealbar__label {
     display: inline;
     margin-right: 8px;
@@ -1186,14 +1201,14 @@ body:has(> .llu) {
     display: none;
   }
 }
-/* Phones: one short line, and the whole bar is the link ("BLACK FRIDAY 20% off until Nov 30 →").
+/* Phones and tablets: one short line, and the whole bar is the link ("BLACK FRIDAY 20% off until Nov 30 →").
    The link text stays for screen readers; an arrow shows instead. */
 .llu-dealbar__arrow {
   margin-left: 2px;
   font-size: 1.15em;
   text-decoration: none;
 }
-@media (max-width: 767px) {
+@media (max-width: 1023px) {
   .llu-dealbar__row {
     min-height: 40px;
     gap: 0 8px;
@@ -1225,7 +1240,7 @@ body:has(> .llu) {
     white-space: nowrap;
   }
 }
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .llu-dealbar__arrow {
     display: none;
   }
@@ -1256,8 +1271,8 @@ body:has(> .llu) {
   text-transform: uppercase;
   color: var(--fg-muted);
 }
-/* Phones: the note reads as a sentence, so the code chip doesn't break the line apart */
-@media (max-width: 767px) {
+/* Phones and tablets: the note reads as a sentence, so the code chip doesn't break the line apart */
+@media (max-width: 1023px) {
   .llu-bf {
     text-transform: none;
     letter-spacing: 0;

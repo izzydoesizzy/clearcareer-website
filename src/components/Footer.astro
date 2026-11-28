@@ -127,31 +127,34 @@ const currentYear = new Date().getFullYear();
 
     <!-- Newsletter -->
     <div class="mt-12 rounded-xl border border-white/10 bg-white/5 p-6 sm:p-8">
-      <div class="sm:flex sm:items-center sm:justify-between sm:gap-8">
-        <div class="mb-4 sm:mb-0">
+      <div class="lg:flex lg:items-center lg:justify-between lg:gap-10">
+        <div class="mb-4 lg:mb-0 lg:max-w-xs">
           <h3 class="text-lg font-semibold text-white">Get career tips in your inbox</h3>
           <p class="mt-1 text-sm text-gray-400">
             Actionable job search strategies. No fluff.
           </p>
         </div>
-        <form class="flex w-full max-w-md gap-3" id="footer-newsletter-form">
-          <label for="footer-email" class="sr-only">Email address</label>
-          <input
-            id="footer-email"
-            type="email"
-            name="email"
-            required
-            placeholder="your@email.com"
-            class="min-w-0 flex-1 rounded-lg border border-white/20 bg-white/10 px-4 py-2.5 text-sm text-white placeholder:text-gray-500 focus:border-blue focus:outline-none focus:ring-2 focus:ring-blue/50"
-          />
-          <button
-            type="submit"
-            class="rounded-lg bg-blue px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-blue-dark"
-          >
-            Subscribe
-          </button>
-        </form>
-        <p class="mt-2 max-w-md text-xs text-gray-400">{NEWSLETTER_CONSENT_TEXT}</p>
+        {/* The form and its consent note stay together, so the heading keeps its width */}
+        <div class="w-full max-w-md">
+          <form class="flex w-full gap-3" id="footer-newsletter-form">
+            <label for="footer-email" class="sr-only">Email address</label>
+            <input
+              id="footer-email"
+              type="email"
+              name="email"
+              required
+              placeholder="your@email.com"
+              class="min-w-0 flex-1 rounded-lg border border-white/20 bg-white/10 px-4 py-2.5 text-sm text-white placeholder:text-gray-500 focus:border-blue focus:outline-none focus:ring-2 focus:ring-blue/50"
+            />
+            <button
+              type="submit"
+              class="rounded-lg bg-blue px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-blue-dark"
+            >
+              Subscribe
+            </button>
+          </form>
+          <p class="mt-2 text-xs text-gray-400">{NEWSLETTER_CONSENT_TEXT}</p>
+        </div>
       </div>
     </div>
 

@@ -84,7 +84,7 @@ const items = [
         <h2 id="ai-tools-heading" class="llu-h2">AI prompts, tools and templates.</h2>
         <p class="llu-lead">It's like Batman's utility belt, but for your job search.</p>
       </div>
-      <div class="llu-mt-48 grid gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-3">
+      <div class="llu-mt-48 grid gap-4 sm:grid-cols-2 md:grid-cols-3 md:gap-6">
         {items.map((item) => (
           <div class="flex flex-col rounded-lg border border-white/20 bg-white p-6 shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
             <span class="mb-6 block h-10 w-10" set:html={icon(item.icon)} />
@@ -105,7 +105,7 @@ const items = [
         </h2>
         <p class="mx-auto mt-4 max-w-[720px] text-lg leading-relaxed text-text-muted">It's like Batman's Utility Belt, but for your job search.</p>
       </div>
-      <div class="mt-12 grid gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-3" data-animate-stagger>
+      <div class="mt-12 grid gap-4 sm:grid-cols-2 md:grid-cols-3 md:gap-6" data-animate-stagger>
         {items.map((item) => (
           <div class="flex flex-col rounded-lg border border-white/20 bg-white p-6 shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
             <span class="mb-6 block h-10 w-10" set:html={icon(item.icon)} />
