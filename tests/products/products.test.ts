@@ -13,9 +13,9 @@ import { makeAccessToken } from '../../src/lib/access';
 import testimonials from '../../src/data/testimonials.json';
 
 const ROOT = join(__dirname, '..', '..');
-const NEW_PACKS = ['vault', 'salary-generator', 'outreach-templates', 'interview-confidence', 'salary-negotiation'];
-const WITH_START_HERE = [...NEW_PACKS, 'complete-toolkit'];
-const GUIDE_DIRS = ['outreach-templates-guides', 'salary-negotiation-guides', 'complete-toolkit-guides', 'interview-confidence-guides', 'salary-generator-guides'];
+const NEW_PACKS = ['vault', 'salary-generator', 'outreach-templates', 'interview-confidence', 'salary-negotiation', 'resume-linkedin-audit', 'interview-dossier', 'research-outreach', 'linkedin-launch', 'career-clarity-audit'];
+const WITH_START_HERE = [...NEW_PACKS, 'complete-toolkit', 'all-access'];
+const GUIDE_DIRS = ['outreach-templates-guides', 'salary-negotiation-guides', 'complete-toolkit-guides', 'interview-confidence-guides', 'salary-generator-guides', 'resume-linkedin-audit-guides', 'interview-dossier-guides', 'research-outreach-guides', 'linkedin-launch-guides', 'career-clarity-audit-guides'];
 
 function walk(dir: string): string[] {
   if (!existsSync(dir)) return [];
@@ -107,7 +107,7 @@ describe('writing rules (all new product content)', () => {
   });
 
   it('negotiation content says it is not legal or financial advice', () => {
-    for (const slug of ['salary-negotiation', 'salary-generator']) {
+    for (const slug of ['salary-negotiation', 'salary-generator', 'career-clarity-audit']) {
       const md = productFiles(slug);
       const all = Object.values(md).join('\n');
       expect(all, slug).toMatch(/not legal or financial advice/i);
@@ -159,6 +159,21 @@ describe('access', () => {
     expect((await verifyAccess('salary-negotiation', t, env)).ok).toBe(false);
     expect((await verifyAccess('outreach-templates', '', env)).ok).toBe(false);
     expect((await verifyAccess('outreach-templates', 'not-a-token', env)).ok).toBe(false);
+  });
+});
+
+describe('All-Access', () => {
+  it('opens every product, including the toolkit bonus page', async () => {
+    const env = { ACCESS_SECRET: 'test-secret' };
+    const t = await makeAccessToken('all-access', 'sam@example.com', 'test-secret');
+    for (const p of PRODUCTS['all-access'].includes!) expect((await verifyAccess(p, t, env)).ok, p).toBe(true);
+    expect((await verifyAccess('layoff-survival-kit', t, env)).ok).toBe(false);
+  });
+  it('adds up to the price on the page', () => {
+    const singles: Record<string, number> = { vault: 9 };
+    const total = PRODUCTS['all-access'].includes!.filter((p) => p !== 'complete-toolkit').reduce((n, p) => n + (singles[p] ?? PRODUCTS[p].price), 0);
+    expect(total).toBe(201);
+    expect(PRODUCTS['all-access'].price).toBe(99);
   });
 });
 

@@ -1,0 +1,29 @@
+---
+import ProductLayout from "@layouts/ProductLayout.astro";
+---
+
+<ProductLayout
+  productSlug="career-clarity-audit"
+  mockups="career-clarity-audit"
+  free
+  title="Free Career Clarity Audit | ClearCareer"
+  description="Free: from your resume, 5 job titles to target with fit and salary, ready LinkedIn searches, and your anchor, target and walk-away numbers."
+  headline="Not sure what to apply for,<br />or what to ask for?"
+  subheadline="The same clarity audit I give people before we work together, free. Run it on your resume and you'll know the 5 job titles to target and the 3 salary numbers to know before any offer."
+  bullets={[
+    "5 job titles that fit your background, each with a fit score and why",
+    "A typical salary range and demand for each title",
+    "A ready LinkedIn job search for each one",
+    "Your anchor, target and walk-away numbers, with sources",
+    "Works as a Claude skill or a copy-paste prompt in any AI",
+  ]}
+  price="Free"
+  ctaHref="#checkout"
+  ctaText="Get the free audit"
+  guaranteeText="Free. No card needed."
+  faq={[
+    { q: "Is it really free?", a: "Yes. You get the audit and the link by email. You can also choose to get my job search emails, but you don't have to." },
+    { q: "Where do the salary numbers come from?", a: "When your AI can search the web, it finds current ranges and cites them. If not, it shows you where to look and builds your numbers from what you find. This is general guidance, not financial advice." },
+    { q: "What do I do after?", a: "Use the 5 searches this week. If you want your resume and LinkedIn checked too, that's the Resume and LinkedIn Audit Kit." },
+  ]}
+/>

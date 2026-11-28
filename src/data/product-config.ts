@@ -11,7 +11,7 @@ export interface Product {
   name: string;
   price: number;
   currency: string;
-  tier: "free" | "$9" | "$19-29" | "$47-67";
+  tier: "free" | "$9" | "$19-29" | "$47-67" | "$97+";
   description: string;
   stripePriceEnvVar: string;
   guidesDir: string;
@@ -647,6 +647,196 @@ export const PRODUCTS: Record<string, Product> = {
         icon: "🚪",
         type: "guide",
       },
+    ],
+  },
+  "resume-linkedin-audit": {
+    slug: "resume-linkedin-audit",
+    name: "Resume and LinkedIn Audit Kit",
+    price: 29,
+    currency: "CAD",
+    tier: "$19-29",
+    description:
+      "The audits I run for clients, as two Claude skills: a quick snapshot, a full section-by-section audit, or a Rewrite Guide that quotes your resume and LinkedIn and rewrites them.",
+    stripePriceEnvVar: "STRIPE_RESUME_LINKEDIN_AUDIT_PRICE_ID",
+    guidesDir: "resume-linkedin-audit-guides",
+    badge: "New",
+    guides: [
+      {
+        id: "01-how",
+        file: "01-how-the-audits-work.md",
+        title: "How the Audits Work",
+        icon: "🔍",
+        type: "guide",
+      },
+      {
+        id: "02-resume",
+        file: "02-resume-checklist.md",
+        title: "Resume Checklist",
+        icon: "📄",
+        type: "guide",
+      },
+      {
+        id: "03-linkedin",
+        file: "03-linkedin-checklist.md",
+        title: "LinkedIn Checklist",
+        icon: "💼",
+        type: "guide",
+      },
+    ],
+  },
+  "interview-dossier": {
+    slug: "interview-dossier",
+    name: "Interview Prep Dossier",
+    price: 39,
+    currency: "CAD",
+    tier: "$19-29",
+    description:
+      "My flagship client deliverable, as a Claude skill: a full prep pack for one specific job, with company research, likely objections and your answers, custom questions, STAR stories mapped to the role, and questions to ask.",
+    stripePriceEnvVar: "STRIPE_INTERVIEW_DOSSIER_PRICE_ID",
+    guidesDir: "interview-dossier-guides",
+    badge: "New",
+    guides: [
+      {
+        id: "01-how",
+        file: "01-how-to-use-your-dossier.md",
+        title: "How to Use Your Dossier",
+        icon: "🗂️",
+        type: "guide",
+      },
+      {
+        id: "02-tips",
+        file: "02-interview-day-tips.md",
+        title: "Interview Day Tips",
+        icon: "✅",
+        type: "guide",
+      },
+    ],
+  },
+  "research-outreach": {
+    slug: "research-outreach",
+    name: "Research and Outreach Kit",
+    price: 29,
+    currency: "CAD",
+    tier: "$19-29",
+    description:
+      "Three Claude skills: find fresh jobs and score each one out of 12, research and rank your target companies, then email the people who hire with short, specific notes.",
+    stripePriceEnvVar: "STRIPE_RESEARCH_OUTREACH_PRICE_ID",
+    guidesDir: "research-outreach-guides",
+    badge: "New",
+    guides: [
+      {
+        id: "01-fit",
+        file: "01-the-fit-score.md",
+        title: "The Fit Score",
+        icon: "🎯",
+        type: "guide",
+      },
+      {
+        id: "02-scorecards",
+        file: "02-company-scorecards.md",
+        title: "Company Scorecards",
+        icon: "🏢",
+        type: "guide",
+      },
+      {
+        id: "03-campaign",
+        file: "03-cold-outreach-campaign.md",
+        title: "Cold Outreach Campaign",
+        icon: "📬",
+        type: "guide",
+      },
+      {
+        id: "04-tools",
+        file: "04-search-tools.md",
+        title: "Search Tools",
+        icon: "🔎",
+        type: "guide",
+      },
+    ],
+  },
+  "linkedin-launch": {
+    slug: "linkedin-launch",
+    name: "LinkedIn Launch Pack",
+    price: 19,
+    currency: "CAD",
+    tier: "$19-29",
+    description:
+      "My own LinkedIn formats, as a Claude skill: pipe-style headlines, the 4-part About section, messages for 5 situations, and posts from your own stories. Plus a build-from-scratch guide.",
+    stripePriceEnvVar: "STRIPE_LINKEDIN_LAUNCH_PRICE_ID",
+    guidesDir: "linkedin-launch-guides",
+    badge: "New",
+    guides: [
+      {
+        id: "01-headlines",
+        file: "01-headlines.md",
+        title: "Headlines",
+        icon: "✍️",
+        type: "guide",
+      },
+      {
+        id: "02-about",
+        file: "02-the-4-part-about.md",
+        title: "The 4-Part About",
+        icon: "📝",
+        type: "guide",
+      },
+      {
+        id: "03-dms",
+        file: "03-dms-for-5-situations.md",
+        title: "Messages for 5 Situations",
+        icon: "💬",
+        type: "guide",
+      },
+      {
+        id: "04-posts",
+        file: "04-posts-from-your-stories.md",
+        title: "Posts From Your Stories",
+        icon: "📣",
+        type: "guide",
+      },
+      {
+        id: "05-scratch",
+        file: "05-build-your-profile-from-scratch.md",
+        title: "Build Your Profile From Scratch",
+        icon: "🧱",
+        type: "guide",
+      },
+    ],
+  },
+  "career-clarity-audit": {
+    slug: "career-clarity-audit",
+    name: "Career Clarity Audit",
+    price: 0,
+    currency: "CAD",
+    tier: "free",
+    description:
+      "Free. From your resume: 5 job titles to target with fit and salary, ready LinkedIn searches, and your anchor, target and walk-away numbers.",
+    stripePriceEnvVar: "",
+    guidesDir: "career-clarity-audit-guides",
+    badge: "Free",
+    guides: [
+      {
+        id: "01-read",
+        file: "01-how-to-read-your-audit.md",
+        title: "How to Read Your Audit",
+        icon: "🧭",
+        type: "guide",
+      },
+    ],
+  },
+  "all-access": {
+    slug: "all-access",
+    name: "The All-Access Pass",
+    price: 99,
+    currency: "CAD",
+    tier: "$97+",
+    description:
+      "Every ClearCareer product in one: the Complete Job Search Toolkit plus the Resume and LinkedIn Audit Kit, Interview Prep Dossier, Research and Outreach Kit and LinkedIn Launch Pack. 17 Claude skills.",
+    stripePriceEnvVar: "STRIPE_ALL_ACCESS_PRICE_ID",
+    guidesDir: "all-access-guides",
+    badge: "Best value",
+    includes: ["vault", "salary-generator", "outreach-templates", "interview-confidence", "salary-negotiation", "resume-linkedin-audit", "interview-dossier", "research-outreach", "linkedin-launch", "complete-toolkit"],
+    guides: [
     ],
   },
   "career-change-command-center": {

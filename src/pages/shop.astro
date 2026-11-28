@@ -3,6 +3,13 @@ import PageLayout from "@layouts/PageLayout.astro";
 
 const tiers = [
   {
+    label: "Start free",
+    sublabel: "Know what to aim for before you change anything",
+    products: [
+      { name: "Career Clarity Audit", price: "Free", description: "From your resume: 5 job titles to target with fit and salary, ready LinkedIn searches, and your anchor, target and walk-away numbers.", href: "/products/career-clarity-audit", cta: "Get it free", badge: "Free", img: "/images/products/career-clarity-audit/cover.webp" },
+    ],
+  },
+  {
     label: "$9 Quick Wins",
     sublabel: "Solve one specific problem fast",
     products: [
@@ -12,11 +19,15 @@ const tiers = [
     ],
   },
   {
-    label: "$19 to $29 Systems",
+    label: "$19 to $39 Systems",
     sublabel: "Complete frameworks that stand alone",
     products: [
       { name: "Outreach and Email Templates", price: "$19 CAD", description: "80+ templates to reach hiring managers directly, plus a Claude skill that personalizes them.", href: "/products/outreach-templates", cta: "Learn More", badge: "Claude skill", img: "/images/products/outreach-templates/cover.webp" },
       { name: "The Interview Confidence Kit", price: "$19 CAD", description: "STAR stories, mock interviews with a Claude coach, answer frameworks and thank-you emails.", href: "/products/interview-confidence", cta: "Learn More", badge: "Claude skill", img: "/images/products/interview-confidence/cover.webp" },
+      { name: "LinkedIn Launch Pack", price: "$19 CAD", description: "My own LinkedIn formats: headlines, the 4-part About, messages for 5 situations and posts from your stories.", href: "/products/linkedin-launch", cta: "Learn More", badge: "Claude skill", img: "/images/products/linkedin-launch/cover.webp" },
+      { name: "Resume and LinkedIn Audit Kit", price: "$29 CAD", description: "The audits I run for clients: a snapshot, a full audit, or a Rewrite Guide for your resume and LinkedIn.", href: "/products/resume-linkedin-audit", cta: "Learn More", badge: "Claude skills", img: "/images/products/resume-linkedin-audit/cover.webp" },
+      { name: "Research and Outreach Kit", price: "$29 CAD", description: "Score fresh jobs out of 12, rank your target companies, and email the people who hire.", href: "/products/research-outreach", cta: "Learn More", badge: "Claude skills", img: "/images/products/research-outreach/cover.webp" },
+      { name: "Interview Prep Dossier", price: "$39 CAD", description: "A full prep pack for one specific job: research, objections, answers and questions to ask.", href: "/products/interview-dossier", cta: "Learn More", badge: "Claude skill", img: "/images/products/interview-dossier/cover.webp" },
       { name: "Salary Negotiation Scripts and Advice", price: "$29 CAD", description: "Scripts for every stage of the offer, the advice behind them, and a Claude negotiation coach.", href: "/products/salary-negotiation", cta: "Learn More", badge: "Claude skill", img: "/images/products/salary-negotiation/cover.webp" },
     ],
   },
@@ -38,15 +49,24 @@ const tiers = [
         </p>
       </div>
 
-      <a href="/products/complete-toolkit" class="group mt-14 grid items-center gap-8 overflow-hidden rounded-3xl bg-navy p-8 text-white md:grid-cols-2 md:p-10">
+      <a href="/products/all-access" class="group mt-14 grid items-center gap-8 overflow-hidden rounded-3xl bg-navy p-8 text-white md:grid-cols-2 md:p-10">
         <div>
-          <span class="inline-block rounded-full bg-white px-3 py-1 text-xs font-semibold text-green-700">Best value: save $36</span>
-          <h2 class="mt-4 font-display text-3xl leading-tight md:text-4xl">The Complete Job Search Toolkit</h2>
-          <p class="mt-3 text-blue-100">The Prompt Vault, Salary Number Generator, Outreach Templates, Interview Kit and Negotiation Scripts. 10 Claude skills, and copy-paste prompts for any AI.</p>
-          <p class="mt-5 text-3xl font-bold">$49 CAD <s class="text-lg font-medium text-blue-100/70">$85</s></p>
-          <span class="mt-5 inline-flex items-center rounded-lg bg-white px-5 py-2.5 text-sm font-semibold text-navy transition-colors group-hover:bg-blue-bg">See the toolkit <span class="ml-2">&rarr;</span></span>
+          <span class="inline-block rounded-full bg-white px-3 py-1 text-xs font-semibold text-green-700">Everything: save $102</span>
+          <h2 class="mt-4 font-display text-3xl leading-tight md:text-4xl">The All-Access Pass</h2>
+          <p class="mt-3 text-blue-100">Every product below in one: 9 products and 17 Claude skills, from your resume and LinkedIn to outreach, interviews and the offer.</p>
+          <p class="mt-5 text-3xl font-bold">$99 CAD <s class="text-lg font-medium text-blue-100/70">$201</s></p>
+          <span class="mt-5 inline-flex items-center rounded-lg bg-white px-5 py-2.5 text-sm font-semibold text-navy transition-colors group-hover:bg-blue-bg">See All-Access <span class="ml-2">&rarr;</span></span>
         </div>
-        <img src="/images/products/complete-toolkit/bundle.webp" alt="The five products in the Complete Job Search Toolkit" width="1600" height="1000" loading="lazy" decoding="async" class="h-auto w-full rounded-2xl" />
+        <img src="/images/products/all-access/bundle.webp" alt="Every ClearCareer product in the All-Access Pass" width="1600" height="1000" loading="lazy" decoding="async" class="h-auto w-full rounded-2xl" />
+      </a>
+
+      <a href="/products/complete-toolkit" class="group mt-6 flex flex-col gap-4 rounded-2xl border border-border bg-white p-6 transition-shadow hover:shadow-lg md:flex-row md:items-center md:justify-between">
+        <div>
+          <p class="text-sm font-semibold text-blue">Starter bundle: save $36</p>
+          <h2 class="mt-1 text-xl font-bold text-text group-hover:text-blue">The Complete Job Search Toolkit</h2>
+          <p class="mt-1 text-sm text-text-muted">The Prompt Vault, Salary Number Generator, Outreach Templates, Interview Kit and Negotiation Scripts.</p>
+        </div>
+        <p class="shrink-0 text-2xl font-bold text-navy">$49 CAD <s class="text-base font-medium text-text-muted">$85</s></p>
       </a>
 
       {tiers.map((tier) => (

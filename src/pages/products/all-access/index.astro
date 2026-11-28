@@ -1,0 +1,31 @@
+---
+import ProductLayout from "@layouts/ProductLayout.astro";
+---
+
+<ProductLayout
+  productSlug="all-access"
+  mockups="all-access"
+  title="The All-Access Pass | ClearCareer"
+  description="Every ClearCareer product in one: 9 products and 17 Claude skills, from your resume and LinkedIn to outreach, interviews and the offer."
+  headline="Everything I use with clients,<br />in one place."
+  subheadline="Nine products and 17 Claude skills that cover the whole search: get clear on your target, fix your resume and LinkedIn, reach the people who hire, prepare for each interview, and negotiate the offer."
+  bullets={[
+    "The Complete Job Search Toolkit: the Prompt Vault, Salary Number Generator, Outreach Templates, Interview Kit and Negotiation Scripts",
+    "Resume and LinkedIn Audit Kit ($29)",
+    "Interview Prep Dossier ($39)",
+    "Research and Outreach Kit ($29)",
+    "LinkedIn Launch Pack ($19)",
+    "Plus the bonus rejection and resignation scripts",
+  ]}
+  price="$99 CAD"
+  originalPrice="$201"
+  ctaHref="#checkout"
+  ctaText="Get the All-Access Pass"
+  guaranteeText="One payment, everything included. Questions? Reply to your purchase email and I'll help."
+  faq={[
+    { q: "What do I get after I pay?", a: "One page that links to every product, each with its own Claude skills, copy-paste prompts and Start Here guide. The links are emailed to you too." },
+    { q: "Do I need Claude?", a: "No. Every product works with ChatGPT, Gemini or any AI through copy-paste prompts. Claude users can install the skills." },
+    { q: "I already bought some of these. Can I upgrade?", a: "Reply to your purchase email and I'll sort out a fair price." },
+    { q: "Will this get me a job?", a: "No product can promise that, and I won't. Results vary. These are the tools I use with my clients, so you can do the work faster and with less guesswork." },
+  ]}
+/>

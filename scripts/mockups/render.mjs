@@ -106,6 +106,60 @@ const PRODUCTS = {
     },
   },
 };
+// Release 2
+PRODUCTS['resume-linkedin-audit'] = {
+  name: 'Resume and LinkedIn Audit Kit', price: '$29', kicker: 'Snapshot · full audit · Rewrite Guide', accent: '#0891B2', glyph: '✓',
+  skills: [['cc-resume-review', 'Audits your resume: a snapshot, a full audit or a Rewrite Guide'], ['cc-linkedin-audit', 'Audits your LinkedIn from screenshots, with the same three depths']],
+  pages: ['Start here', 'How the Audits Work', 'Resume Checklist', 'LinkedIn Checklist'],
+  chat: { skill: 'cc-resume-review', turns: [
+    ['you', 'Run a Full audit on my resume for a senior analyst role.'],
+    ['card', 'Achievements vs duties: needs work', '6 of your 9 bullets describe tasks. Lead with what changed because of you, and add the number.'],
+    ['card', 'Keywords: strong', 'Your skills match 8 of the 10 must-haves in the job post. Add SQL and stakeholder reporting.'],
+    ['ai', 'Want the Rewrite Guide for your bullets next? I will only use facts from your resume.'],
+  ] },
+};
+PRODUCTS['interview-dossier'] = {
+  name: 'Interview Prep Dossier', price: '$39', kicker: 'One job · full prep pack', accent: '#B45309', glyph: '◎',
+  skills: [['cc-interview-dossier', 'Builds a full prep pack for one job: research, objections, answers and questions to ask']],
+  pages: ['Start here', 'Company research', 'Objection cards', 'Your answers', 'Questions to ask'],
+  chat: { skill: 'cc-interview-dossier', turns: [
+    ['you', 'Build my prep pack for the Senior Product Manager role at Northwind Bank.'],
+    ['ai', 'Researching Northwind Bank now. I will cite every source and mark anything older than a year.'],
+    ['card', 'Objection card: medium', "Concern: no banking experience. Say: \"At Lumen I shipped billing for 40,000 users, with the same compliance and scale problems.\""],
+    ['ai', 'Next: your tell me about yourself, timed at 75 seconds.'],
+  ] },
+};
+PRODUCTS['research-outreach'] = {
+  name: 'Research and Outreach Kit', price: '$29', kicker: 'Job scan · scorecards · outreach', accent: '#4F46E5', glyph: '◇',
+  skills: [['cc-job-scan', 'Finds jobs from the last 7 days and scores each one out of 12'], ['cc-company-scorecards', 'Researches and ranks your target companies'], ['cc-outreach-campaign', 'Finds the right person and writes a short, specific email']],
+  pages: ['Start here', 'The Fit Score', 'Company Scorecards', 'Cold Outreach Campaign', 'Search Tools'],
+  chat: { skill: 'cc-job-scan', turns: [
+    ['you', "Find this week's project manager jobs in Toronto and score them."],
+    ['table', [['Northwind Bank, Senior PM', '11/12 Apply'], ['Lumen Health, PM', '8/12 Consider'], ['Acme Retail, PM', '5/12 Skip']], 'Sample results. Yours come from live postings.'],
+    ['ai', 'Two strong matches. Want me to research the hiring managers at both?'],
+  ] },
+};
+PRODUCTS['linkedin-launch'] = {
+  name: 'LinkedIn Launch Pack', price: '$19', kicker: 'Headlines · About · messages · posts', accent: '#0A66C2', glyph: 'in',
+  skills: [['cc-linkedin-launch', 'Headlines, the 4-part About, messages for 5 situations and posts from your stories']],
+  pages: ['Start here', 'Headlines', 'The 4-Part About', 'Messages for 5 Situations', 'Posts From Your Stories'],
+  chat: { skill: 'cc-linkedin-launch', turns: [
+    ['you', 'Write my headline and About section.'],
+    ['card', 'Headline', 'Product Manager | B2B Payments | Shipped 3 launches to 40K users | Toronto'],
+    ['ai', 'Now your About: a short summary, a divider, then your 5 career highlights. Send me 5 wins and I will write it.'],
+  ] },
+};
+PRODUCTS['career-clarity-audit'] = {
+  name: 'Career Clarity Audit', price: 'Free', kicker: '5 job titles · your 3 numbers', accent: '#16A34A', glyph: '➚',
+  skills: [['cc-clarity-audit', '5 job titles to target, ready LinkedIn searches, and your salary numbers']],
+  pages: ['Start here', 'How to Read Your Audit'],
+  chat: { skill: 'cc-clarity-audit', turns: [
+    ['you', "Here's my resume. What should I be applying for?"],
+    ['table', [['Product Operations Manager', '88% fit'], ['Program Manager', '82% fit'], ['Customer Success Lead', '76% fit']], 'Sample. Yours come from your resume.'],
+    ['ai', 'Next: your anchor, target and walk-away numbers for the top title.'],
+  ] },
+};
+
 // Covers only (no skills to show): used on the shop.
 PRODUCTS['layoff-survival-kit'] = {
   name: 'Layoff Survival Kit', price: '$9', kicker: 'Severance · runway · lawyers · plan', accent: '#0EA5E9', glyph: '☂', only: ['cover'],
@@ -116,6 +170,14 @@ PRODUCTS['complete-toolkit'] = {
   pages: ['Start here', 'Prompt Vault', 'Outreach Templates', 'Interview Kit', 'Negotiation Scripts'],
   chat: PRODUCTS.vault.chat,
   bundle: ['vault', 'salary-generator', 'outreach-templates', 'interview-confidence', 'salary-negotiation'],
+};
+PRODUCTS['all-access'] = {
+  name: 'The All-Access Pass', price: '$99', was: '$201', kicker: '9 products · 17 Claude skills', accent: '#0161EF', glyph: '★',
+  skills: ['vault', 'resume-linkedin-audit', 'research-outreach', 'interview-dossier', 'linkedin-launch', 'salary-negotiation'].flatMap((s) => PRODUCTS[s].skills).slice(0, 9),
+  pages: ['Start here', 'Prompt Vault', 'Audit Kit', 'Interview Dossier', 'Outreach Kit'],
+  chat: PRODUCTS['interview-dossier'].chat,
+  bundle: ['vault', 'salary-generator', 'outreach-templates', 'interview-confidence', 'salary-negotiation', 'resume-linkedin-audit', 'research-outreach', 'interview-dossier', 'linkedin-launch'],
+  bundleText: ['Everything,<br>one price.', '9 products, 17 Claude skills,<br>from resume to signed offer', 'Save $102'],
 };
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -255,13 +317,21 @@ const scenes = {
 
   bundle: (p) => {
     // A neat stack: each product's cover peeks out above the next, the last one fully visible.
-    const covers = p.bundle.map((s, i) => cover(PRODUCTS[s], 110 + i * 46, 120 + i * 92, 470, 270, `z-index:${i};transform:rotate(${-3 + i * 1.5}deg)`)).join('');
+    const n = p.bundle.length;
+    const dy = Math.min(92, Math.floor(620 / Math.max(1, n - 1)));
+    const dx = Math.min(46, Math.floor(260 / Math.max(1, n - 1)));
+    // Up to 6 products: a stack. More: a 3 by 3 grid of smaller covers, so every name stays readable.
+    const covers = n > 6
+      ? p.bundle.map((s, i) => cover(PRODUCTS[s], 80 + (i % 3) * 272, 250 + Math.floor(i / 3) * 172, 470, 270, `transform:scale(0.55);transform-origin:top left`)).join('')
+      : p.bundle.map((s, i) => cover(PRODUCTS[s], 110 + i * dx, 80 + i * dy, 470, 270, `z-index:${i};transform:rotate(${-3 + (i * 6) / Math.max(1, n - 1)}deg)`)).join('');
+    const textLeft = n > 6 ? 960 : 900;
+    const [head, sub, save] = p.bundleText || ['Everything,<br>one price.', '5 products, 10 Claude skills,<br>and 150+ prompts, templates and scripts', 'Save $36'];
     return doc(1600, 1000, `${covers}
-      <div style="position:absolute;left:900px;top:250px;width:600px;z-index:20">
-        <div class="chip" style="background:#fff;color:#059669;font-size:18px;box-shadow:0 10px 30px -12px rgba(0,0,0,.4)">Save $36</div>
-        <div class="serif" style="font-size:72px;line-height:1;margin-top:22px">Everything,<br>one price.</div>
-        <div style="margin-top:20px;font-size:23px;line-height:1.4;opacity:.92">5 products, 10 Claude skills,<br>and 150+ prompts, templates and scripts</div>
-        <div style="margin-top:26px;font-size:52px;font-weight:800">$49 <s style="font-size:28px;font-weight:500;opacity:.55">$85</s></div>
+      <div style="position:absolute;left:${textLeft}px;top:250px;width:560px;z-index:20">
+        <div class="chip" style="background:#fff;color:#059669;font-size:18px;box-shadow:0 10px 30px -12px rgba(0,0,0,.4)">${save}</div>
+        <div class="serif" style="font-size:72px;line-height:1;margin-top:22px">${head}</div>
+        <div style="margin-top:20px;font-size:23px;line-height:1.4;opacity:.92">${sub}</div>
+        <div style="margin-top:26px;font-size:52px;font-weight:800">${esc(p.price)} <s style="font-size:28px;font-weight:500;opacity:.55">${esc(p.was || '')}</s></div>
       </div>`, p.accent, 'bg-navy');
   },
 

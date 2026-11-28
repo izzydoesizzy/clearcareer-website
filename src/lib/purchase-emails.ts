@@ -64,6 +64,42 @@ export const CATALOG: Record<string, CatalogItem> = {
     open: 'Open your toolkit',
     start: 'Open the toolkit page first. It links to every product and gives you a 14-day plan.',
   },
+  'resume-linkedin-audit': {
+    name: 'Resume and LinkedIn Audit Kit',
+    blurb: 'Two Claude skills that audit your resume and LinkedIn: a quick snapshot, a full audit, or a Rewrite Guide.',
+    open: 'Open the Audit Kit',
+    start: 'Run a Full audit on your resume first, fix the top three things, then run it again.',
+  },
+  'interview-dossier': {
+    name: 'Interview Prep Dossier',
+    blurb: 'A Claude skill that builds a full prep pack for one specific job: research, objections, answers and questions to ask.',
+    open: 'Open the Interview Dossier',
+    start: 'Run it as soon as an interview is booked, so you have three days to rehearse.',
+  },
+  'research-outreach': {
+    name: 'Research and Outreach Kit',
+    blurb: 'Three Claude skills: score fresh jobs out of 12, rank your target companies, and email the people who hire.',
+    open: 'Open the Research and Outreach Kit',
+    start: 'Score this week\'s jobs first, then pick five companies for your first outreach campaign.',
+  },
+  'linkedin-launch': {
+    name: 'LinkedIn Launch Pack',
+    blurb: 'My own LinkedIn formats: headlines, the 4-part About, messages for 5 situations and posts from your stories.',
+    open: 'Open the LinkedIn Launch Pack',
+    start: 'Start with your headline and About. They do the most work for the least time.',
+  },
+  'career-clarity-audit': {
+    name: 'Career Clarity Audit',
+    blurb: 'Your 5 job titles to target, ready LinkedIn searches, and your anchor, target and walk-away numbers.',
+    open: 'Open your free audit',
+    start: 'Run it with your resume, then save the 5 job searches it gives you.',
+  },
+  'all-access': {
+    name: 'All-Access Pass',
+    blurb: 'Every ClearCareer product, with 17 Claude skills: the full toolkit plus the audits, the interview dossier, research and outreach, and the LinkedIn Launch Pack.',
+    open: 'Open your All-Access page',
+    start: 'Open your All-Access page first. It links to every product and suggests an order.',
+  },
   'layoff-survival-kit': {
     name: 'Layoff Survival Kit',
     blurb: 'Severance calculator, lawyer directory and 10 complete guides.',
@@ -106,10 +142,11 @@ export function purchaseSubject(o: Order): string {
 }
 
 const REASON = "You're getting this because you bought something from ClearCareer. It's your receipt and your access links, so it's sent even if you're not on my email list.";
+const FREE_REASON = "You're getting this because you asked for a free ClearCareer download. It's a one-time email with your link.";
 const UNSUB = 'mailto:izzy@joinclearcareer.com?subject=Question%20about%20my%20order';
 
 /** Products with a cover image (scripts/mockups/render.mjs makes them). */
-const COVERS = new Set(['vault', 'salary-generator', 'outreach-templates', 'interview-confidence', 'salary-negotiation', 'complete-toolkit']);
+const COVERS = new Set(['vault', 'salary-generator', 'outreach-templates', 'interview-confidence', 'salary-negotiation', 'complete-toolkit', 'resume-linkedin-audit', 'interview-dossier', 'research-outreach', 'linkedin-launch', 'career-clarity-audit', 'all-access', 'layoff-survival-kit']);
 
 /** The product's cover, served from the same site as the access link (so previews show preview images). */
 function coverImage(product: string, url: string): string {
@@ -150,22 +187,25 @@ export function purchaseEmail(o: Order): { subject: string; html: string } {
     row(`Total (${cur})`, money(o.total, cur), true) +
     `</table>`;
 
+  // A free download (a lead magnet) has no order to summarize.
+  const free = o.total === 0 && o.lines.every((l) => l.amount === 0);
   const body =
     (o.firstName ? P(`Hey ${esc(o.firstName)},`) : P('Hey there,')) +
     P(
-      one
-        ? "Thanks for your order. Your link is below. It doesn't expire, so keep this email somewhere you can find it."
-        : "Thanks for your order. Your links are below. They don't expire, so keep this email somewhere you can find it.",
+      free
+        ? "Here's your free copy. The link doesn't expire, so keep this email somewhere you can find it."
+        : one
+          ? "Thanks for your order. Your link is below. It doesn't expire, so keep this email somewhere you can find it."
+          : "Thanks for your order. Your links are below. They don't expire, so keep this email somewhere you can find it.",
     ) +
     blocks +
-    H('Your order') +
-    summary +
+    (free ? '' : H('Your order') + summary) +
     P("Something not working, or not sure how to use it? Reply to this email. It comes straight to me.") +
     sign('Happy searching,') +
     P(`P.S. ${esc(LLU_PITCH.headline)} ${esc(LLU_PITCH.description)} ${link(LLU_PITCH.button, LLU_URL)}`, 'font-size:15px;');
 
   const headline = one ? 'Your link is inside, and it never expires.' : 'Your links are inside, and they never expire.';
-  return { subject: purchaseSubject(o), html: shell('', headline, body, REASON, UNSUB) };
+  return { subject: purchaseSubject(o), html: shell('', headline, body, free ? FREE_REASON : REASON, UNSUB) };
 }
 
 /** The signed "open it" link for one product, or a Checkout Session link when no secret is set. */
