@@ -9,10 +9,16 @@ const json = (body: unknown, status = 200) =>
 
 export const POST: APIRoute = async ({ url }) => {
   const stripeKey = import.meta.env.STRIPE_SECRET_KEY;
-  if (!stripeKey) return json({ error: "Stripe is not configured" }, 500);
+  if (!stripeKey) {
+    console.error("Career Suite checkout: STRIPE_SECRET_KEY is not set for this environment");
+    return json({ error: "Stripe secret key is not set for this environment" }, 500);
+  }
 
   const priceId = import.meta.env.STRIPE_CAREER_SUITE_PRICE_ID || CAREER_SUITE_STRIPE_PRICE_ID;
-  if (!priceId) return json({ error: "Career Suite price is not configured" }, 500);
+  if (!priceId) {
+    console.error("Career Suite checkout: no price ID");
+    return json({ error: "Career Suite price is not configured" }, 500);
+  }
 
   try {
     const stripe = new Stripe(stripeKey);
