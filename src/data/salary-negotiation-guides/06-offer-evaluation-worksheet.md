@@ -9,7 +9,7 @@
 
 ---
 
-Here's the thing: two offers with the same base salary can be very different jobs. Bonus, benefits, vacation and flexibility all add up. This worksheet makes the full picture visible so you can decide with your head, not just your nerves.
+Here's the thing: two offers with the same base salary can be very different jobs. Bonus, benefits, vacation and flexibility all add up. This worksheet makes the full picture visible so you can decide with your head instead of your nerves.
 
 Use the third column for your current job if you're weighing an offer against staying (for example, after a counter-offer).
 
