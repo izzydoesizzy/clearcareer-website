@@ -243,7 +243,7 @@ const upsellTotal = FUNNEL.upsell.amount + upsellTaxAmount;
   .hero__grid { display: grid; gap: 40px; grid-template-columns: minmax(0, 1fr); align-items: start; }
   @media (min-width: 1024px) { .hero__grid { grid-template-columns: minmax(0, 1fr) 460px; } }
   @media (max-width: 767px) { .funnel :global(.llu-display) { font-size: clamp(36px, 10vw, 52px); } }
-  .ticks { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+  .ticks { display: grid; gap: 8px; margin: 12px 0 0; padding: 0; list-style: none; }
   .ticks li { display: flex; gap: 10px; }
   .ticks li::before { content: "✓"; font-weight: 700; color: #7fb2ff; }
   .ticks--ink li::before { color: var(--llu-blue); }
@@ -270,7 +270,7 @@ const upsellTotal = FUNNEL.upsell.amount + upsellTaxAmount;
   .quotes blockquote { margin: 0; font-size: 18px; line-height: 1.5; color: var(--llu-ink); }
   .two { display: grid; gap: 48px; grid-template-columns: minmax(0, 1fr); }
   @media (min-width: 1024px) { .two { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  .nums { display: grid; gap: 10px; margin: 0; padding-left: 22px; line-height: 1.5; }
+  .nums { display: grid; gap: 10px; margin: 8px 0 16px; padding-left: 22px; line-height: 1.5; }
   .faq { border-bottom: 1px solid var(--llu-hairline); padding: 12px 0; }
   .faq summary { cursor: pointer; font-weight: 700; color: var(--llu-ink); }
   .faq p { margin: 8px 0 0; color: var(--llu-body); }
