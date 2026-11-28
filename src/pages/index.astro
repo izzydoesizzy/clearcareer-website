@@ -11,6 +11,7 @@ import { winNames } from "@data/proof";
 import PricingCard from "@components/PricingCard.astro";
 import { offer } from "@data/llu";
 import CTASection from "@components/CTASection.astro";
+import AiToolsGrid from "@components/AiToolsGrid.astro";
 import { getCollection } from "astro:content";
 
 import IndustryStatCard from "@components/IndustryStatCard.astro";
@@ -237,6 +238,9 @@ const latestPosts = (await getCollection("blog", ({ data }) => {
   </section>
 
   {/* ── 7. Featured Testimonials ── */}
+  <!-- AI Prompts, Tools, & Templates (the 2024 site's "utility belt" grid) -->
+  <AiToolsGrid />
+
   <section class="bg-blue-bg/30 py-16 md:py-24">
     <div class="mx-auto max-w-[1080px] px-4 sm:px-6 lg:px-8">
       <div class="text-center" data-animate="fade-up">
