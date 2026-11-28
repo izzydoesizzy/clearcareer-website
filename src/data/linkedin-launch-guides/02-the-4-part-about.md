@@ -43,7 +43,7 @@ LinkedIn allows up to 2,600 characters in the About section. Sam's full example 
 
 ## Part 1: The summary
 
-Only the first few lines show before someone clicks "see more". So this part does the heavy lifting. Put in:
+Only the first few lines show before someone clicks "see more", so this part matters most. Put in:
 
 - Your job title (the one you want next, or the closest one you can honestly claim)
 - Your years of experience

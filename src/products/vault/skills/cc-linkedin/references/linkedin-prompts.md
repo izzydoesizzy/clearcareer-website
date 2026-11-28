@@ -22,8 +22,8 @@ These headlines should make my profile hard for recruiters to skip. Focus on imp
 Output a 2-column table: # | LinkedIn headline. Follow the structure and style of the examples, with my details in place of theirs. Write all 10.
 
 EXAMPLES (fictional, for structure only)
-1. Sales Planning Analyst | 8+ Years in CPG and Commodities | $40M+ Portfolio Across National Grocery Chains | Saved $600K+ by Streamlining Client Promotions
-2. Senior Accounts Receivable Manager | $1B+ Portfolio Including Fortune 500 Accounts | Recovered 40% of Past-Due Balances ($56M) in Under 9 Months
+1. Category Planning Analyst | 7+ Years in Consumer Goods | $25M+ Portfolio Across Regional Retailers | Saved $300K+ by Simplifying Promotions
+2. Senior Collections Manager | $400M+ Portfolio Including Enterprise Accounts | Recovered 30% of Past-Due Balances in Under a Year
 3. Strategic Program Manager in Technology and Manufacturing | SAP | Oracle | Power BI | Saving 60 Hours a Week Through Automation | Retained a $20M Project at Risk of Churn
 4. Marketing Director | 15+ Years in B2B and B2C | Led Campaigns for Global Consumer Brands | Grew Online Engagement 120% in 6 Months
 5. Financial Analyst | Financial Modelling and Forecasting | Managed $500M+ in Portfolios for Investment Banking Clients | Cut Operating Costs 15%
@@ -70,26 +70,26 @@ Then my email address.
 
 SAMPLE RESULT (fictional person; keep this exact structure, especially the line breaks)
 
-Senior Project Manager with 20+ years of experience designing and improving processes in banking, manufacturing and logistics. Led $2M+ projects that delivered six- and seven-figure gains and savings for national banks and manufacturers.
+Operations Manager with 15+ years of experience improving how hospitals and clinics schedule, stock and serve patients. Led projects that cut wait times and costs across a 12-site health network.
 
 • • • • •
 
 Career Highlights:
 
-💰 $850K Cost Savings (Regional Bank)
-Lowered operating costs by $850K, including a 39% price decrease on bank card manufacturing and a 57% cut in shipping rates.
+💰 $400K Cost Savings (Health Network)
+Lowered supply costs by $400K a year by consolidating 9 vendors into 3 and renegotiating delivery terms.
 
-⏱️ 88% Faster Processing (Regional Bank)
-Cut processing time by 88% on a debit card instant-issue project, improving efficiency and the customer experience.
+⏱️ 40% Shorter Wait Times (Outpatient Clinics)
+Cut average clinic wait times by 40% by redesigning booking rules and adding a same-day triage line.
 
-💲 5% Higher Profit Margins (Window Manufacturer)
-Raised installation profit margins 5% without raising prices. Increased daily installations 30% by organizing specialized crews and better scheduling.
+💲 Balanced Budget for 3 Years (Regional Hospital)
+Kept a $6M operating budget on target three years running while patient volume grew.
 
-📦 50% Less On-Hand Inventory (Window Manufacturer)
-Cut on-hand inventory and carrying costs in half by putting just-in-time ordering into practice.
+📦 25% Less Expired Stock (Health Network)
+Reduced expired supplies by a quarter with a simple first-in, first-out shelving and ordering system.
 
-🛒 35% Shorter Sales Booking Cycle (Window Manufacturer)
-Shortened the sales booking cycle 35% by training salespeople to measure installation openings.
+🛒 2 Weeks Faster Onboarding (Clinic Staff)
+Shortened new-hire onboarding from 4 weeks to 2 with a shared checklist and buddy system.
 
 • • • • •
 
